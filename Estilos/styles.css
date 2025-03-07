@@ -1,0 +1,50 @@
+#navb1{
+    background-color:#60bdf2;
+}
+
+#nn1{
+    border-radius: 5%;
+}
+
+
+/* CSS para imagenes */
+.img1{
+    height: 5%;
+    width: 5%;
+}
+
+.img2{
+    height: 4%;
+    width: 4%;
+}
+
+.img4{
+    height: 10%;
+    width: 10%;
+}
+
+
+.img3{
+    height: 100%;
+    width: 100%;
+    border-radius: 5%;
+}
+
+
+/* CSS para botones */
+#btn1{
+    background-color:#60bdf2 ;
+}
+
+/* CSS para textos */
+.text1{
+    color: #004770;
+}
+
+#text2{
+    color: #004770;
+}
+
+.text2{
+    opacity: 50%;
+}

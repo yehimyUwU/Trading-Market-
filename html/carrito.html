@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="../Estilos/inico.css" />
+    
+    <link rel="stylesheet" href="styles.css"> <!-- Archivo CSS separado -->
+    <title>Carrito de Compras</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
+</head>
+
+<header>
+    <nav class="navbar">
+        <div class="logo">
+            <img src="../imagenes/tran.png" alt="Trading Market Logo" class="logo-img">
+        </div>
+        <ul class="nav-links">
+            <li><a href="#">Inicio</a></li>
+            <li><a href="categoria.html">Categorías</a></li>
+            <li><a href="#">Ofertas</a></li>
+            <li><a href="#">Cupones</a></li>
+            <li><a href="#">Popular</a></li>
+            <li><a href="#">Vender</a></li>
+            <li><a href="#">Ayuda</a></li>
+        </ul>
+        <div class="search-box">
+            <input type="text" placeholder="Buscar productos...">
+            <button>🔍</button>
+        </div>
+        <div class="user-actions">
+            <a href="#" class="cart-icon">🛒</a>
+            <div class="auth-buttons">
+                <a href="javascript:void(0);" class="profile-btn" onclick="mostrarPerfil()">
+                    <i class="fas fa-user-circle"></i>
+                    Mi Perfil
+                </a>
+                <a href="#" class="logout-btn" onclick="cerrarSesion()">Cerrar Sesión</a>
+            </div>
+        </div>
+    </nav>
+</header> 
+<br>
+<br>
+<br>
+
+<body>
+    <div class="container">
+        <h1>Carrito de Compras</h1>
+        <br>
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <th>Producto</th>
+                    <th>Precio</th>
+                    <th>Cantidad</th>
+                    <th>Categoria</th>
+                    <th>Acciones</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>Camisa de manga larga</td>
+                    <td>$20.00</td>
+                    <td>
+                        <input type="number" value="1" min="1">
+                        <button class="btn btn-sm btn-primary">+</button>
+                        <button class="btn btn-sm btn-danger">-</button>
+                    </td>
+                    <td>Ropa basica</td>
+                    <td>
+                        <button class="btn btn-sm btn-danger">Borrar</button>
+                    </td>
+                </tr>
+                <tr>
+                    <td>Pantalones de jeans</td>
+                    <td>$30.00</td>
+                    <td>
+                        <input type="number" value="1" min="1">
+                        <button class="btn btn-sm btn-primary">+</button>
+                        <button class="btn btn-sm btn-danger">-</button>
+                    </td>
+                    <td>Ropa basica</td>
+                    <td>
+                        <button class="btn btn-sm btn-danger">Borrar</button>
+                    </td>
+                </tr>
+                <tr>
+                    <td>Zapatillas de running</td>
+                    <td>$50.00</td>
+                    <td>
+                        <input type="number" value="1" min="1">
+                        <button class="btn btn-sm btn-primary">+</button>
+                        <button class="btn btn-sm btn-danger">-</button>
+                    </td>
+                    <td>Ropa deportiva</td>
+                    <td>
+                        <button class="btn btn-sm btn-danger">Borrar</button>
+                    </td>
+                </tr>
+            </tbody>
+            <tr>
+                <td>Smartwatch Elite</td>
+                <td>$50.00</td>
+                <td>
+                    <input type="number" value="1" min="1">
+                    <button class="btn btn-sm btn-primary">+</button>
+                    <button class="btn btn-sm btn-danger">-</button>
+                </td>
+                <td>Tecnologia</td>
+                <td>
+                    <button class="btn btn-sm btn-danger">Borrar</button>
+                </td>
+            </tr>
+            <tr>
+                <td>Auriculares BT</td>
+                <td>$40.00</td>
+                <td>
+                    <input type="number" value="1" min="1">
+                    <button class="btn btn-sm btn-primary">+</button>
+                    <button class="btn btn-sm btn-danger">-</button>
+                </td>
+                <td>Tecnologia</td>
+                <td>
+                    <button class="btn btn-sm btn-danger">Borrar</button>
+                </td>
+            </tr>
+            <tr>
+                <td>Laptop pro</td>
+                <td>$200.00</td>
+                <td>
+                    <input type="number" value="1" min="1">
+                    <button class="btn btn-sm btn-primary">+</button>
+                    <button class="btn btn-sm btn-danger">-</button>
+                </td>
+                <td>Gaming</td>
+                <td>
+                    <button class="btn btn-sm btn-danger">Borrar</button>
+                </td>
+            </tr>
+            <tfoot>
+                <tr>
+                    <td colspan="1">Total:</td>
+                    <td>$390.00</td>
+                    <td></td>
+                </tr>
+            </tfoot>
+        </table>
+        <button class="btn btn-primary">Pagar</button>
+    </div>
+</body>
+</html>

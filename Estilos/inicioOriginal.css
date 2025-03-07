@@ -1,0 +1,453 @@
+/* Estilos generales */
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    background: rgb(252, 252, 252);
+    background: linear-gradient(150deg, rgb(126, 206, 206) 6%, rgba(255, 255, 255, 0.928) 64%,rgba(255, 255, 255, 0.928) 74%, rgb(1, 140, 253) 95%);
+    color: white;
+}
+
+/* Fondo con efecto borroso */
+.fondo-blur {
+    position: fixed;
+    width: 100%;
+    height: 100%;
+    backdrop-filter: blur(10px);
+    z-index: -1;
+}
+
+/* Barra de navegación */
+.navbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 15px 30px;
+    background: linear-gradient(80deg, #03eeff, #56f5c0, #0ed1a7, #c9a1db);
+    background-size: 400% 400%;
+    animation: cambiarFondo 10s ease-in-out infinite;
+    box-shadow: 0px 4px 15px rgba(0, 0, 0, 0.5);
+    border-radius: 10px;
+    position: relative;
+}
+
+@keyframes cambiarFondo {
+    0% {
+        background-position: 0 50%;
+    }
+    50% {
+        background-position: 100% 50%;
+    }
+    100% {
+        background-position: 0 50%;
+    }
+}
+
+/* Aseguramos que los elementos dentro de la navbar sean visibles */
+.navbar > * {
+    position: relative;
+    z-index: 2;
+}
+
+/* Ajuste del logo */
+.logo {
+    display: flex;
+    align-items: center;
+}
+
+.logo-img {
+    width: 180px;  /* Ajusta este valor según necesites */
+    height: auto;
+    margin-right: 20px;
+}
+
+/* Quitar el texto "Trading Market" que estaba antes */
+.logo {
+    font-size: 0;  /* Esto ocultará el texto si existe */
+}
+
+.nav-links {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1rem;
+    list-style: none;
+}
+
+.nav-links li {
+    margin: 0 15px;
+}
+
+.nav-links a {
+    text-decoration: none;
+    color: white;
+    font-size: 1.2em;
+    transition: color 0.3s;
+}
+
+.nav-links a:hover {
+    color: #0EAFD1;
+}
+
+.nav-links li a {
+    padding: 0.5rem;
+}
+
+/* Barra de búsqueda */
+.search-box {
+    display: flex;
+    align-items: center;
+    background: rgba(14, 175, 209, 0.2);
+    border-radius: 25px;
+    padding: 8px 15px;
+    box-shadow: inset 0px 0px 10px rgba(140, 232, 235, 0.3);
+}
+
+.search-box input {
+    border: none;
+    padding: 10px;
+    border-radius: 20px;
+    outline: none;
+    width: 200px;
+    background: transparent;
+    color: white;
+}
+
+.search-box input::placeholder {
+    color: rgba(255, 255, 255, 0.6);
+}
+
+.search-box button {
+    background: none;
+    border: none;
+    font-size: 1.2em;
+    cursor: pointer;
+    color: white;
+}
+
+/* Banner con carrusel */
+.banner {
+    position: relative;
+    padding: 0;
+    background: rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(10px);
+    border-radius: 10px;
+    overflow: hidden;
+    margin: 20px;
+}
+
+.carousel {
+    position: relative;
+    width: 100%;
+    height: 500px;
+}
+
+.carousel-inner {
+    position: relative;
+    width: 95%;
+    height: 100%;
+}
+
+.carousel-item {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    opacity: 0;
+    transition: opacity 0.5s ease-in-out;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.carousel-item.active {
+    opacity: 1;
+}
+
+.carousel-item img {
+    position: absolute;
+    width: 100%;
+    height: 600px;
+    object-fit: cover;
+    z-index: 1;
+}
+
+.carousel-content {
+    position: relative;
+    z-index: 2;
+    text-align: center;
+    color: white;
+    padding: 20px;
+    background: rgba(255, 255, 255, 0.603);
+    border-radius: 10px;
+    max-width: 2000px;
+}
+
+.carousel-control {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    background: rgba(0, 0, 0, 0.5);
+    color: white;
+    border: none;
+    padding: 20px;
+    cursor: pointer;
+    font-size: 24px;
+    z-index: 3;
+    border-radius: 50%;
+    transition: background 0.3s;
+}
+
+.carousel-control:hover {
+    background: rgba(0, 0, 0, 0.8);
+}
+
+.prev {
+    left: 20px;
+}
+
+.next {
+    right: 20px;
+}
+
+.carousel-indicators {
+    position: absolute;
+    bottom: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    gap: 10px;
+    z-index: 3;
+}
+
+.indicator {
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.5);
+    border: none;
+    cursor: pointer;
+    transition: background 0.3s;
+}
+
+.indicator.active {
+    background: white;
+}
+
+.banner h1 {
+    font-size: 3em;
+    color: #8CE8EB;
+}
+
+.banner p {
+    font-size: 1.2em;
+    margin-bottom: 20px;
+}
+
+.btn {
+    background: #0EAFD1;
+    color: #021024;
+    padding: 10px 20px;
+    font-size: 1.2em;
+    text-decoration: none;
+    border-radius: 5px;
+    transition: background 0.3s;
+}
+
+.btn:hover {
+    background: #5483B3;
+}
+
+/* Sección de productos */
+.productos {
+    text-align: center;
+    padding: 50px 150px;
+    max-width: 95%;
+    margin: 0 auto;
+}
+
+.productos h2 {
+    font-size: 2.5em;
+    color: #8CE8EB;
+}
+
+.productos-container {
+    display: grid;
+    grid-template-columns: repeat(7, minmax(200px, 1fr));
+    gap: 80px;
+    padding: 40px;
+    margin: 0 auto;
+    justify-content: center;
+}
+
+.producto {
+    background: rgba(135, 206, 235, 0.3);
+    backdrop-filter: blur(5px);
+    padding: 15px;
+    border-radius: 15px;
+    width: 250px;
+    height: 380px;
+    text-align: center;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+    transition: all 0.3s ease;
+    margin: 15px auto;
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.producto:hover {
+    transform: translateY(-5px);
+    background: rgba(135, 206, 235, 0.4);
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.3);
+}
+
+.producto img {
+    width: 80%;
+    height: 250px;
+    object-fit: cover;
+    border-radius: 10px;
+    margin-bottom: 15px;
+    transition: transform 0.3s ease;
+}
+
+.producto img:hover {
+    transform: scale(1.05);
+}
+
+.producto .img-container {
+    position: relative;
+    overflow: hidden;
+    border-radius: 10px;
+    margin-bottom: 15px;
+}
+
+.producto h3 {
+    margin: 15px 0;
+    font-size: 1.2em;
+    color: #2c3e50;
+}
+
+.producto p {
+    font-size: 1.1em;
+    color: #2c3e50;
+    margin: 15px 0;
+}
+
+.producto .btn {
+    background: rgba(14, 175, 209, 0.6);
+    color: white;
+    border: none;
+}
+
+.producto .btn:hover {
+    background: rgba(14, 175, 209, 0.8);
+}
+
+/* Media queries para responsividad */
+@media (max-width: 1800px) {
+    .productos-container {
+        grid-template-columns: repeat(6, minmax(200px, 1fr));
+        gap: 60px;
+    }
+}
+
+@media (max-width: 1500px) {
+    .productos-container {
+        grid-template-columns: repeat(5, minmax(200px, 1fr));
+        gap: 50px;
+    }
+}
+
+@media (max-width: 1200px) {
+    .productos-container {
+        grid-template-columns: repeat(4, minmax(200px, 1fr));
+        gap: 40px;
+    }
+}
+
+@media (max-width: 900px) {
+    .productos-container {
+        grid-template-columns: repeat(3, 1fr);
+    }
+}
+
+@media (max-width: 600px) {
+    .productos-container {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+@media (max-width: 400px) {
+    .productos-container {
+        grid-template-columns: 1fr;
+    }
+}
+
+/* Pie de página */
+footer {
+    text-align: center;
+    padding: 20px;
+    background: linear-gradient(80deg, #23c2ce, #56f5c0, #0ed1a7, #cb7df0);
+    background-size: 400% 400%;
+    animation: cambiarFondo 10s ease-in-out infinite;
+    border-radius: 10px;
+    margin-top: 30px;
+}
+
+footer p {
+    color: white;
+    font-size: 1.1em;
+    margin: 0;
+    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.2);
+}
+
+/* Estilos para acciones de usuario */
+.user-actions {
+    display: flex;
+    align-items: center;
+    gap: 1.5rem;
+    margin-left: 2rem;
+}
+
+.cart-icon {
+    font-size: 1.5em;
+    text-decoration: none;
+    color: white;
+    transition: color 0.3s;
+}
+
+.cart-icon:hover {
+    color: #0EAFD1;
+}
+
+.auth-buttons {
+    display: flex;
+    gap: 1rem;
+}
+
+.login-btn, .register-btn {
+    padding: 0.5rem 1rem;
+    text-decoration: none;
+    border-radius: 5px;
+    transition: all 0.3s;
+}
+
+.login-btn {
+    color: white;
+    border: 1px solid #8CE8EB;
+}
+
+.login-btn:hover {
+    background-color: rgba(140, 232, 235, 0.1);
+}
+
+.register-btn {
+    background-color: #0EAFD1;
+    color: white;
+}
+
+.register-btn:hover {
+    background-color: #0c93b0;
+}
