@@ -13,14 +13,22 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $email = $_POST['email'] ?? null;
     $password = $_POST['password'] ?? null;
 
+    // Verificar si todos los campos requeridos están presentes
+    if (!$tipo_documento || !$documento || !$nombre || !$apellido || !$fecha_nacimiento || !$genero || !$email || !$password) {
+        echo json_encode(['success' => false, 'message' => 'Todos los campos son obligatorios.']);
+        exit;
+    }
+
     // Hash de la contraseña
     $hashed_password = password_hash($password, PASSWORD_DEFAULT);
 
     try {
-        // para coincidir con el nombre de la tabla en la base de datos
+        // Los signos de interrogación son marcadores de posición para los valores que se enlazarán a la declaración preparada
+        // Esto ayuda a prevenir ataques de inyección SQL al asegurar que los valores se escapen correctamente
         $stmt = $pdo->prepare("INSERT INTO usuario (tipo_documento, documento, nombre, apellido, fecha_nacimiento, genero, email, password) 
                               VALUES (?, ?, ?, ?, ?, ?, ?, ?)");
         
+        // Ejecuta la declaración preparada con los valores proporcionados
         if ($stmt->execute([$tipo_documento, $documento, $nombre, $apellido, $fecha_nacimiento, $genero, $email, $hashed_password])) {
             echo json_encode(['success' => true, 'message' => 'Registro exitoso.']);
         } else {

@@ -75,113 +75,8 @@
     <!-- Sección de Productos -->
     <section class="productos">
         <h2>Nuestros Productos Destacados</h2>
-        <div class="productos-container">
-            <!-- Fila 1 -->
-            <div class="producto">
-                <div class="img-container">
-                    <img src="../imagenes/1.jpg" alt="Producto 1">
-                </div>
-                <div class="producto-info">
-                    <h3>Smartphone XYZ</h3>
-                    <p>$599.99</p>
-                    <a href="#" class="btn">Comprar</a>
-                </div>
-            </div>
-            <div class="producto">
-                <img src="../imagenes/2.jpg" alt="Producto 2">
-                <h3>Laptop Pro</h3>
-                <p>$999.99</p>
-                <a href="#" class="btn">Comprar</a>
-            </div>
-            <div class="producto">
-                <img src="../imagenes/3.jpg" alt="Producto 3">
-                <h3>Auriculares BT</h3>
-                <p>$129.99</p>
-                <a href="#" class="btn">Comprar</a>
-            </div>
-            <div class="producto">
-                <img src="../imagenes/4.jpg" alt="Producto 4">
-                <h3>Smartwatch Elite</h3>
-                <p>$299.99</p>
-                <a href="#" class="btn">Comprar</a>
-            </div>
-            <div class="producto">
-                <img src="../imagenes/5.jpg" alt="Producto 5">
-                <h3>Tablet Ultra</h3>
-                <p>$449.99</p>
-                <a href="#" class="btn">Comprar</a>
-            </div>
-            <div class="producto">
-                <img src="../imagenes/6.jpg" alt="Producto 6">
-                <h3>Cámara 4K</h3>
-                <p>$799.99</p>
-                <a href="#" class="btn">Comprar</a>
-            </div>
-            <div class="producto">
-                <img src="../imagenes/7.jpg" alt="Producto 7">
-                <h3>Drone Pro</h3>
-                <p>$899.99</p>
-                <a href="#" class="btn">Comprar</a>
-            </div>
-
-            <div class="producto">
-                <img src="../imagenes/" alt="Producto 8">
-                <h3>Smart TV 4K</h3>
-                <p>$1,299.99</p>
-                <a href="#" class="btn">Comprar</a>
-            </div>
-
-            <div class="producto">
-                <img src="../imagenes/producto9.jpg" alt="Producto 9">
-                <h3>Consola Gaming Pro</h3>
-                <p>$499.99</p>
-                <a href="#" class="btn">Comprar</a>
-            </div>
-
-            <div class="producto">
-                <img src="../imagenes/producto10.jpg" alt="Producto 10">
-                <h3>Robot Aspiradora</h3>
-                <p>$349.99</p>
-                <a href="#" class="btn">Comprar</a>
-            </div>
-
-            <div class="producto">
-                <img src="../imagenes/producto11.jpg" alt="Producto 11">
-                <h3>Cámara Deportiva HD</h3>
-                <p>$299.99</p>
-                <a href="#" class="btn">Comprar</a>
-            </div>
-
-            <div class="producto">
-                <img src="../imagenes/producto12.jpg" alt="Producto 12">
-                <h3>Monitor Gaming 144Hz</h3>
-                <p>$449.99</p>
-                <a href="#" class="btn">Comprar</a>
-            </div>
-
-            <div class="producto">
-                <img src="../imagenes/producto13.jpg" alt="Producto 13">
-                <h3>Teclado Mecánico RGB</h3>
-                <p>$159.99</p>
-                <a href="#" class="btn">Comprar</a>
-            </div>
-
-            <div class="producto">
-                <img src="../imagenes/producto14.jpg" alt="Producto 14">
-                <h3>Mouse Gamer Pro</h3>
-                <p>$89.99</p>
-                <a href="#" class="btn">Comprar</a>
-            </div>
-
-            <div class="producto">
-                <img src="../imagenes/producto15.jpg" alt="Producto 15">
-                <h3>Silla Gaming Ergonómica</h3>
-                <p>$299.99</p>
-                <a href="#" class="btn">Comprar</a>
-            </div>
-
-            <!-- Repite este bloque 7 veces más para completar las 8 filas -->
-            <!-- ... Productos 8-56 ... -->
+        <div class="productos-container" id="productosGrid">
+            <!-- Productos se cargarán aquí -->
         </div>
     </section>
 
@@ -228,6 +123,38 @@
 
         // Auto slide
         setInterval(nextSlide, 5000);
+    });
+
+    document.addEventListener('DOMContentLoaded', function() {
+        fetch('../php/listar_productos.php')
+            .then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    const productosGrid = document.getElementById('productosGrid');
+                    productosGrid.innerHTML = ''; // Clear existing content
+                    data.listaProductos.forEach(producto => {
+                        const productoCard = document.createElement('div');
+                        productoCard.classList.add('producto');
+                        productoCard.innerHTML = `
+                            <div class="img-container">
+                                <img src="../imagenes_P/${producto.imagen || 'default.jpeg'}" alt="${producto.nombre}" onerror="this.onerror=null;this.src='../imagenes_P/default.jpeg';">
+                            </div>
+                            <div class="producto-info">
+                                <h3>${producto.nombre}</h3>
+                                <p>$${producto.precio}</p>
+                                <a href="#" class="btn">Comprar</a>
+                            </div>
+                        `;
+                        productosGrid.appendChild(productoCard);
+                    });
+                } else {
+                    alert('No se pudieron cargar los productos');
+                }
+            })
+            .catch(error => {
+                console.error('Error al cargar los productos:', error);
+                alert('Error al cargar los productos');
+            });
     });
     </script>
 
