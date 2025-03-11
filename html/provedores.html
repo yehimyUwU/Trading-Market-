@@ -155,7 +155,7 @@
               <form id="formularioProducto" enctype="multipart/form-data">
                   <div class="form-group">
                       <label for="nombreProducto">Nombre del Producto*</label>
-                      <input type="text" id="nombreProducto" name="nombreProducto" required minlength="3" maxlength="100"
+                      <input type="text" id="nombreProducto" name="nombre" required minlength="3" maxlength="100"
                           placeholder="Ingrese el nombre del producto">
                       <span id="errorNombre" class="error-mensaje"></span>
                   </div>
@@ -187,7 +187,7 @@
                   <div class="form-row">
                       <div class="form-group half">
                           <label for="categoriaGeneral">Categoría*</label>
-                          <select id="categoriaGeneral" name="categoriaGeneral" required>
+                          <select id="categoriaGeneral" name="categoria" required>
                               <option value="">Seleccione una categoría</option>
                               <option value="cosmeticos">Cosméticos</option>
                               <option value="cuidadoPersonal">Cuidado Personal</option>
@@ -208,7 +208,7 @@
                   <div class="form-group">
                       <label for="imagenProducto">Imagen del Producto*</label>
                       <div class="upload-container">
-                          <input type="file" id="imagenProducto" name="imagenProducto" accept="image/*" required>
+                          <input type="file" id="imagenProducto" name="imagen" accept="image/*" required>
                           <div class="upload-button">
                               <span class="material-symbols-outlined">upload</span>
                               Seleccionar Imagen

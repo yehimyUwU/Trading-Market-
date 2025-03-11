@@ -71,12 +71,9 @@ class ProductoControl {
 
     public function ctrreturnUsuarios() {
         $objRespuesta = ProductoModelo::mdlreturnUsuarios();
-        echo json_encode($objRespuesta);   
+        echo json_encode($objRespuesta);
     }
-
-
 }
-
 if (isset($_POST["nombre"], $_POST["categoria"], $_POST["precio"], $_POST["descripcion"], $_POST["subcategoria"], $_POST["stock"])) {
     $objProducto = new ProductoControl();
     $objProducto->nombre = $_POST["nombre"];
@@ -134,49 +131,4 @@ if (isset($_POST["subirProductos"]) && $_POST["subirProductos"] == "ok") {
     $objProducto->ctrSubirExcel();
 }
 
-if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    $nombre = $_POST['nombre'];
-    $descripcion = $_POST['descripcion'];
-    $precio = $_POST['precio'];
-    $categoria = $_POST['categoria'];
-    $subcategoria = $_POST['subcategoria'];
-    $stock = $_POST['stock'];
-
-    // Manejo de la imagen
-    if (isset($_FILES['imagen']) && $_FILES['imagen']['error'] === UPLOAD_ERR_OK) {
-        $imagenTmpPath = $_FILES['imagen']['tmp_name'];
-        $imagenName = $_FILES['imagen']['name'];
-        $imagenSize = $_FILES['imagen']['size'];
-        $imagenType = $_FILES['imagen']['type'];
-        $imagenExtension = pathinfo($imagenName, PATHINFO_EXTENSION);
-        $imagenNewName = uniqid('img_', true) . '.' . $imagenExtension;
-        $imagenUploadPath = '../img/' . $imagenNewName;
-
-        if (move_uploaded_file($imagenTmpPath, $imagenUploadPath)) {
-            // Guardar la ruta de la imagen en la base de datos
-            $imagenRuta = 'img/' . $imagenNewName;
-        } else {
-            $response = ['codigo' => '500', 'mensaje' => 'Error al subir la imagen'];
-            echo json_encode($response);
-            exit;
-        }
-    } else {
-        $response = ['codigo' => '400', 'mensaje' => 'Imagen no válida'];
-        echo json_encode($response);
-        exit;
-    }
-
-    // Insertar el producto en la base de datos
-    $sql = "INSERT INTO producto (id_empresa, id_categoria, nombre, descripcion, precio, stock, imagen) VALUES (?, ?, ?, ?, ?, ?, ?)";
-    $stmt = $conn->prepare($sql);
-    $stmt->bind_param('iissdis', $id_empresa, $id_categoria, $nombre, $descripcion, $precio, $stock, $imagenRuta);
-
-    if ($stmt->execute()) {
-        $response = ['codigo' => '200', 'mensaje' => 'Producto publicado exitosamente'];
-    } else {
-        $response = ['codigo' => '500', 'mensaje' => 'Error al publicar el producto'];
-    }
-
-    echo json_encode($response);
-}
 ?>
