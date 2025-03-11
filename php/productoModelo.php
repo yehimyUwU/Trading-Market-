@@ -3,25 +3,28 @@ include_once "conexion.php";
 
 class ProductoModelo {
 
-    public static function mdlRegistrarProducto($nombre, $categoria, $precio, $descripcion, $subcategoria, $stock) {
+    public static function mdlRegistrarProducto($nombre, $categoria, $precio, $descripcion, $subcategoria, $stock, $imagenRuta) {
         $mensaje = array();
 
         try {
-            $objRespuesta = Conexion::conectar()->prepare("INSERT INTO producto (nombre, descripcion, precio, stock, id_categoria) VALUES (:nombre, :descripcion, :precio, :stock, :id_categoria)");
-            $objRespuesta->bindParam(":nombre", $nombre);
-            $objRespuesta->bindParam(":descripcion", $descripcion);
-            $objRespuesta->bindParam(":precio", $precio);
-            $objRespuesta->bindParam(":stock", $stock);
-            $objRespuesta->bindParam(":id_categoria", $categoria);
-            if ($objRespuesta->execute()) {
+            $conexion = Conexion::conectar();
+            $stmt = $conexion->prepare("INSERT INTO producto (nombre, descripcion, precio, stock, id_categoria, imagen) VALUES (:nombre, :descripcion, :precio, :stock, :id_categoria, :imagen)");
+            $stmt->bindParam(":nombre", $nombre);
+            $stmt->bindParam(":descripcion", $descripcion);
+            $stmt->bindParam(":precio", $precio);
+            $stmt->bindParam(":stock", $stock);
+            $stmt->bindParam(":id_categoria", $categoria);
+            $stmt->bindParam(":imagen", $imagenRuta);
+            if ($stmt->execute()) {
                 $mensaje = array("codigo" => "200", "mensaje" => "Producto registrado correctamente.");
             } else {
-                $mensaje = array("codigo" => "401", "mensaje" => "Error. No fue posible registrar el producto.");
+                $mensaje = array("codigo" => "500", "mensaje" => "Error al registrar el producto.");
             }
-            $objRespuesta = null;
-        } catch (Exception $e) {
-            $mensaje = array("codigo" => "401", "mensaje" => $e->getMessage());
+        } catch (PDOException $e) {
+            $mensaje = array("codigo" => "500", "mensaje" => "Error: " . $e->getMessage());
         }
+
+
         return $mensaje;
     }
 
@@ -82,6 +85,7 @@ class ProductoModelo {
         return $mensaje;
     }
 
+    
     public static function mdlListarCategorias() {
         $mensaje = array();
 

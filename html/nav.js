@@ -3,20 +3,19 @@ fetch('barra.html')
   .then(html => {
     document.getElementById('nav-container').innerHTML = html;
   });
-
-  function cerrarSesion() {
+function cerrarSesion() {
     fetch('../php/logout.php')
         .then(response => response.json())
         .then(data => {
             if (data.success) {
                 localStorage.removeItem('usuario'); // Limpiar datos del usuario
-                window.location.href = 'longin.html';
+                window.location.href = 'login.html';
             }
         })
         .catch(error => {
             console.error('Error:', error);
             localStorage.removeItem('usuario'); // Limpiar datos del usuario
-            window.location.href = 'longin.html';
+            window.location.href = 'login.html';
         });
 }
 
@@ -50,10 +49,10 @@ function cerrarPerfil() {
     $('#userProfileModal').modal('hide'); // Cierra el modal
 }
 
-// Cerrar modal al hacer clic en el fondo
-document.getElementById('perfilContenedor').addEventListener('click', cerrarPerfil);
-
-
-
-
-
+// Asegúrate de que el elemento con id 'perfilContenedor' exista antes de agregar el event listener
+document.addEventListener('DOMContentLoaded', function() {
+    const perfilContenedor = document.getElementById('perfilContenedor');
+    if (perfilContenedor) {
+        perfilContenedor.addEventListener('click', cerrarPerfil);
+    }
+});

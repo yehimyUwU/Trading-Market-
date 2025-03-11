@@ -3,6 +3,7 @@ session_start();
 require_once 'conexion.php';
 header('Content-Type: application/json');
 
+
 try {
     // Por ahora usaremos un ID de vendedor fijo (después se puede implementar un sistema de login)
     $id_vendedor = 1;

@@ -3,6 +3,7 @@ session_start(); // Inicia la sesión
 
 require 'conexion.php'; // Asegúrate de que este archivo se incluya correctamente
 
+
 if (isset($_SESSION['documento'])) { // Verifica si el usuario ha iniciado sesión
     $documento = $_SESSION['documento']; // Obtiene el documento del usuario de la sesión
 

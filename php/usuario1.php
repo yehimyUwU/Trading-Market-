@@ -7,6 +7,7 @@ if (isset($_SESSION['usuario'])) {
     // Obtiene los datos del usuario de la sesión
     $usuario = $_SESSION['usuario'];
     
+    
     // Devuelve los datos en formato JSON
     echo json_encode([
         'success' => true,
