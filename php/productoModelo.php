@@ -24,6 +24,7 @@ class ProductoModelo {
             $mensaje = array("codigo" => "500", "mensaje" => "Error: " . $e->getMessage());
         }
 
+        
         return $mensaje;
     }
 
