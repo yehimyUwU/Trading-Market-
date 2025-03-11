@@ -85,7 +85,6 @@ if (isset($_POST["nombre"], $_POST["categoria"], $_POST["precio"], $_POST["descr
     $objProducto->ctrRegistrarProducto();
 }
 
-
 if (isset($_POST["listarProductos"]) && $_POST["listarProductos"] == "ok") {
     $objProducto = new ProductoControl();
     $objProducto->ctrListarProductos();
