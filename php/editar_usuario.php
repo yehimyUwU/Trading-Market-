@@ -22,3 +22,4 @@ if (isset($_SESSION['documento']) && $_SERVER['REQUEST_METHOD'] === 'POST') {
     echo json_encode(['success' => false, 'message' => 'No hay sesión activa.']);
 }
 ?>
+
