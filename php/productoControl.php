@@ -19,8 +19,29 @@ class ProductoControl {
     public $nuevoPrecio;
 
     public function ctrRegistrarProducto() {
-        $objRespuesta = ProductoModelo::mdlRegistrarProducto($this->nombre, $this->categoria, $this->precio, $this->descripcion, $this->subcategoria, $this->stock);
-        echo json_encode($objRespuesta);
+        // Manejo de la imagen
+        if (isset($_FILES['imagen']) && $_FILES['imagen']['error'] === UPLOAD_ERR_OK) {
+            $imagenTmpPath = $_FILES['imagen']['tmp_name'];
+            $imagenName = $_FILES['imagen']['name'];
+            $imagenExtension = pathinfo($imagenName, PATHINFO_EXTENSION);
+            $imagenNewName = uniqid('img_', true) . '.' . $imagenExtension;
+            $imagenUploadPath = '../img/' . $imagenNewName;
+
+            if (move_uploaded_file($imagenTmpPath, $imagenUploadPath)) {
+                // Guardar la ruta de la imagen en la base de datos
+                $imagenRuta = 'img/' . $imagenNewName;
+                $objRespuesta = ProductoModelo::mdlRegistrarProducto($this->nombre, $this->categoria, $this->precio, $this->descripcion, $this->subcategoria, $this->stock, $imagenRuta);
+                echo json_encode($objRespuesta);
+            } else {
+                $response = ['codigo' => '500', 'mensaje' => 'Error al subir la imagen'];
+                echo json_encode($response);
+                exit;
+            }
+        } else {
+            $response = ['codigo' => '400', 'mensaje' => 'Imagen no válida'];
+            echo json_encode($response);
+            exit;
+        }
     }
 
     public function ctrListarProductos() {
@@ -59,7 +80,7 @@ class ProductoControl {
 if (isset($_POST["nombre"], $_POST["categoria"], $_POST["precio"], $_POST["descripcion"], $_POST["subcategoria"], $_POST["stock"])) {
     $objProducto = new ProductoControl();
     $objProducto->nombre = $_POST["nombre"];
-    $objProducto->categoria = 1;
+    $objProducto->categoria = $_POST["categoria"];
     $objProducto->precio = $_POST["precio"];
     $objProducto->descripcion = $_POST["descripcion"];
     $objProducto->subcategoria = $_POST["subcategoria"];
@@ -111,5 +132,51 @@ if (isset($_POST["ProductosEliminados"]) && $_POST["ProductosEliminados"] == "ok
 if (isset($_POST["subirProductos"]) && $_POST["subirProductos"] == "ok") {
     $objProducto = new ProductoControl();
     $objProducto->ctrSubirExcel();
+}
+
+if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+    $nombre = $_POST['nombre'];
+    $descripcion = $_POST['descripcion'];
+    $precio = $_POST['precio'];
+    $categoria = $_POST['categoria'];
+    $subcategoria = $_POST['subcategoria'];
+    $stock = $_POST['stock'];
+
+    // Manejo de la imagen
+    if (isset($_FILES['imagen']) && $_FILES['imagen']['error'] === UPLOAD_ERR_OK) {
+        $imagenTmpPath = $_FILES['imagen']['tmp_name'];
+        $imagenName = $_FILES['imagen']['name'];
+        $imagenSize = $_FILES['imagen']['size'];
+        $imagenType = $_FILES['imagen']['type'];
+        $imagenExtension = pathinfo($imagenName, PATHINFO_EXTENSION);
+        $imagenNewName = uniqid('img_', true) . '.' . $imagenExtension;
+        $imagenUploadPath = '../img/' . $imagenNewName;
+
+        if (move_uploaded_file($imagenTmpPath, $imagenUploadPath)) {
+            // Guardar la ruta de la imagen en la base de datos
+            $imagenRuta = 'img/' . $imagenNewName;
+        } else {
+            $response = ['codigo' => '500', 'mensaje' => 'Error al subir la imagen'];
+            echo json_encode($response);
+            exit;
+        }
+    } else {
+        $response = ['codigo' => '400', 'mensaje' => 'Imagen no válida'];
+        echo json_encode($response);
+        exit;
+    }
+
+    // Insertar el producto en la base de datos
+    $sql = "INSERT INTO producto (id_empresa, id_categoria, nombre, descripcion, precio, stock, imagen) VALUES (?, ?, ?, ?, ?, ?, ?)";
+    $stmt = $conn->prepare($sql);
+    $stmt->bind_param('iissdis', $id_empresa, $id_categoria, $nombre, $descripcion, $precio, $stock, $imagenRuta);
+
+    if ($stmt->execute()) {
+        $response = ['codigo' => '200', 'mensaje' => 'Producto publicado exitosamente'];
+    } else {
+        $response = ['codigo' => '500', 'mensaje' => 'Error al publicar el producto'];
+    }
+
+    echo json_encode($response);
 }
 ?>

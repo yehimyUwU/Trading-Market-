@@ -152,7 +152,7 @@
             </div>
             
             <div class="modal-body">
-              <form id="formularioProducto">
+              <form id="formularioProducto" enctype="multipart/form-data">
                   <div class="form-group">
                       <label for="nombreProducto">Nombre del Producto*</label>
                       <input type="text" id="nombreProducto" name="nombreProducto" required minlength="3" maxlength="100"
@@ -208,8 +208,7 @@
                   <div class="form-group">
                       <label for="imagenProducto">Imagen del Producto*</label>
                       <div class="upload-container">
-                          <input type="file" id="imagenProducto" name="imagenProducto" accept="image/*"
-                              onchange="previsualizarImagen(event)">
+                          <input type="file" id="imagenProducto" name="imagenProducto" accept="image/*" required>
                           <div class="upload-button">
                               <span class="material-symbols-outlined">upload</span>
                               Seleccionar Imagen
@@ -222,7 +221,7 @@
           
                   <div class="form-actions">
                       <button type="button" class="btn-secundario" onclick="cerrarModal()">Cancelar</button>
-                      <button type="button" id="publicarBtn" class="btn-primario">
+                      <button type="submit" id="publicarBtn" class="btn-primario">
                           <span class="material-symbols-outlined">publish</span>
                           Publicar Producto
                       </button>
@@ -236,133 +235,69 @@
           </div>
         </div>
     </div>
-    <!-- <script src="subir-producto.js" defer></script> -->
     <script>
-    // const categoriasProductos = {
-    //     cosmeticos: [
-    //         "Maquillaje facial",
-    //         "Maquillaje de ojos",
-    //         "Maquillaje de labios",
-    //         "Esmaltes de uñas",
-    //         "Productos para cejas",
-    //         "Bases y correctores",
-    //         "Polvos y rubores"
-    //     ],
-    //     cuidadoPersonal: [
-    //         "Cremas corporales",
-    //         "Productos capilares",
-    //         "Productos faciales",
-    //         "Desodorantes",
-    //         "Jabones",
-    //         "Protección solar",
-    //         "Higiene bucal"
-    //     ],
-    //     productosNaturales: [
-    //         "Aceites esenciales",
-    //         "Cremas naturales",
-    //         "Productos orgánicos",
-    //         "Hierbas medicinales",
-    //         "Suplementos naturales",
-    //         "Productos veganos",
-    //         "Productos biodegradables"
-    //     ],
-    //     accesorios: [
-    //         "Brochas de maquillaje",
-    //         "Esponjas y aplicadores",
-    //         "Neceseres y organizadores",
-    //         "Espejos",
-    //         "Limas y cortaúñas",
-    //         "Pinzas y tijeras",
-    //         "Accesorios para el cabello"
-    //     ]
-    // };
 
-    // function actualizarSubcategorias() {
-    //     const categoriaGeneral = document.getElementById('categoriaGeneral').value;
-    //     const subcategoriaSelect = document.getElementById('subcategoria');
-    //     subcategoriaSelect.innerHTML = '';
-
-    //     if (!categoriaGeneral) {
-    //         subcategoriaSelect.innerHTML = '<option value="">Primero seleccione una categoría general</option>';
-    //         return;
-    //     }
-
-    //     subcategoriaSelect.innerHTML = '<option value="">Seleccione una subcategoría</option>';
-    //     categoriasProductos[categoriaGeneral].forEach(subcategoria => {
-    //         const option = document.createElement('option');
-    //         option.value = subcategoria.toLowerCase().replace(/ /g, '_');
-    //         option.textContent = subcategoria;
-    //         subcategoriaSelect.appendChild(option);
-    //     });
-    // }
     document.getElementById('publicarBtn').addEventListener('click', validarFormulario);
-
-function validarFormulario() {
-    const mensajesError = document.querySelectorAll('.error-mensaje');
-    mensajesError.forEach(mensaje => mensaje.textContent = '');
-    let hayErrores = false;
-    const nombre = document.getElementById('nombreProducto').value.trim();
-    const descripcion = document.getElementById('descripcion').value.trim();
-    const precio = document.getElementById('precio').value;
-    const categoriaGeneral = document.getElementById('categoriaGeneral').value;
-    const subcategoria = document.getElementById('subcategoria').value;
-    const stock = document.getElementById('precio').value;
-
-    if (!nombre) {
-        document.getElementById('errorNombre').textContent = 'El nombre del producto es obligatorio';
-        hayErrores = true;
-    }
-    if (!descripcion) {
-        document.getElementById('errorDescripcion').textContent = 'La descripción es obligatoria';
-        hayErrores = true;
-    }
-    if (!precio || precio <= 0) {
-        document.getElementById('errorPrecio').textContent = 'Ingrese un precio válido';
-        hayErrores = true;
-    }
-    if (!categoriaGeneral) {
-        document.getElementById('errorCategoria').textContent = 'Seleccione una categoría';
-        hayErrores = true;
+    
+    function validarFormulario() {
+        const mensajesError = document.querySelectorAll('.error-mensaje');
+        mensajesError.forEach(mensaje => mensaje.textContent = '');
+        let hayErrores = false;
+        const nombre = document.getElementById('nombreProducto').value.trim();
+        const descripcion = document.getElementById('descripcion').value.trim();
+        const precio = document.getElementById('precio').value;
+        const categoriaGeneral = document.getElementById('categoriaGeneral').value;
+        const subcategoria = document.getElementById('subcategoria').value;
+        const stock = document.getElementById('stock').value;
+        const imagen = document.getElementById('imagenProducto').files[0];
+    
+        if (!nombre) {
+            document.getElementById('errorNombre').textContent = 'El nombre del producto es obligatorio';
+            hayErrores = true;
+        }
+        if (!descripcion) {
+            document.getElementById('errorDescripcion').textContent = 'La descripción es obligatoria';
+            hayErrores = true;
+        }
+        if (!precio || precio <= 0) {
+            document.getElementById('errorPrecio').textContent = 'Ingrese un precio válido';
+            hayErrores = true;
+        }
+        if (!categoriaGeneral) {
+            document.getElementById('errorCategoria').textContent = 'Seleccione una categoría';
+            hayErrores = true;
+        }
+        if (!imagen) {
+            document.getElementById('errorImagen').textContent = 'Seleccione una imagen';
+            hayErrores = true;
+        }
+    
+        if (!hayErrores) {
+            const formData = new FormData(document.getElementById('formularioProducto'));
+    
+            fetch('../php/productoControl.php', {
+                method: 'POST',
+                body: formData
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.codigo === "200") {
+                    alert('Producto publicado exitosamente');
+                    document.getElementById('formularioProducto').reset();
+                    cerrarModal();
+                } else {
+                    alert('Ocurrió un error al publicar el producto: ' + data.mensaje);
+                }
+            })
+            .catch(error => {
+                console.error('Error al publicar el producto:', error);
+                alert('Ocurrió un error al publicar el producto');
+            });
+        } else {
+            alert('Por favor, corrija los errores en el formulario');
+        }
     }
     
-    if (!hayErrores) {
-        
-        
-        const formData = new FormData();
-        formData.append('nombre', nombre);
-        formData.append('descripcion', descripcion);
-        formData.append('precio', precio);
-        formData.append('categoria', categoriaGeneral);
-        formData.append('subcategoria', subcategoria);
-        formData.append('stock', stock);
-        // formData.append('imagen', imagen);
-        
-          fetch('../php/productoControl.php', {
-            method: 'POST',
-            body: formData
-        })
-        .then(response => response.json())
-        .then(data => {
-            if (data.success) {
-                alert('Producto publicado exitosamente');
-                document.getElementById('formularioProducto').reset();
-                cerrarModal();
-            } else {
-                alert('Ocurrió un error al publicar el producto');
-            }
-        })
-        .catch(error => {
-            console.error('Error al publicar el producto:', error);
-            alert('Ocurrió un error al publicar el producto');
-        });
-        document.getElementById('formularioProducto').reset();
-        // subirproductos();
-        cerrarModal();
-    } else {
-        alert('Por favor, corrija los errores en el formulario');
-    }
-}
-
     function abrirModal() {
         document.getElementById('modalProducto').style.display = 'block';
     }
@@ -373,73 +308,7 @@ function validarFormulario() {
         document.getElementById('previewProducto').style.display = 'none';
     }
 
-    // function subirproductos() {
-    //     const nombre = document.getElementById('nombreProducto').value;
-    //     const descripcion = document.getElementById('descripcion').value;
-    //     const precio = document.getElementById('precio').value;
-    //     const categoria = document.getElementById('categoriaGeneral').value;
-    //     const subcategoria = document.getElementById('subcategoria').value;
-    //     const stock = document.getElementById('stock').value;
-    //     // const imagen = document.getElementById('imagenProducto').files[0];
-        
-    //     const formData = new FormData();
-    //     formData.append('nombre', nombre);
-    //     formData.append('descripcion', descripcion);
-    //     formData.append('precio', precio);
-    //     formData.append('categoria', categoria);
-    //     formData.append('subcategoria', subcategoria);
-    //     formData.append('stock', stock);
-        // formData.append('imagen', imagen);
-        
-        // fetch('../php/subir_producto.php', {
-        //     method: 'POST',
-        //     body: formData
-        // })
-        // .then(response => response.json())
-        // .then(data => {
-        //     if (data.success) {
-        //         alert('Producto publicado exitosamente');
-        //         document.getElementById('formularioProducto').reset();
-        //         cerrarModal();
-        //     } else {
-        //         alert('Ocurrió un error al publicar el producto');
-        //     }
-        // })
-        // .catch(error => {
-        //     console.error('Error al publicar el producto:', error);
-        //     alert('Ocurrió un error al publicar el producto');
-        // });
-    // }
-
-    // function previsualizarImagen(event) {
-    //     const archivo = event.target.files[0];
-    //     if (archivo) {
-    //         const reader = new FileReader();
-    //         reader.onload = function(e) {
-    //             const preview = document.getElementById('previewProducto');
-    //             preview.style.display = 'block';
-    //             const previewContenido = document.getElementById('previewContenido');
-                
-    //             const nombre = document.getElementById('nombreProducto').value || 'Nombre del Producto';
-    //             const precio = document.getElementById('precio').value || '0.00';
-                
-    //             previewContenido.innerHTML = `
-    //                 <div class="producto-card">
-    //                     <div class="producto-imagen">
-    //                         <img src="${e.target.result}" alt="${nombre}" style="max-width: 200px;">
-    //                     </div>
-    //                     <div class="producto-info">
-    //                         <h4>${nombre}</h4>
-    //                         <div class="producto-detalles">
-    //                             <span class="precio">$${precio}</span>
-    //                         </div>
-    //                     </div>
-    //                 </div>
-    //             `;
-    //         };
-    //         reader.readAsDataURL(archivo);
-    //     }
-    // }
+ 
 
     // Event Listeners
     document.getElementById('btnAbrirModal').addEventListener('click', abrirModal);
@@ -453,97 +322,7 @@ function validarFormulario() {
         }
     }
 
-    // function filtrarProductos() {
-    //     const busqueda = document.getElementById('buscarProducto').value.toLowerCase();
-    //     const productos = document.querySelectorAll('.producto-card');
-        
-    //     productos.forEach(producto => {
-    //         const nombre = producto.querySelector('h4').textContent.toLowerCase();
-    //         if (nombre.includes(busqueda)) {
-    //             producto.style.display = 'block';
-    //         } else {
-    //             producto.style.display = 'none';
-    //         }
-    //     });
-    // }
-
-    // function ordenarProductos() {
-    //     const orden = document.getElementById('ordenarPor').value;
-    //     const productosGrid = document.getElementById('productosGrid');
-    //     const productos = Array.from(productosGrid.getElementsByClassName('producto-card'));
-        
-    //     productos.sort((a, b) => {
-    //         switch(orden) {
-    //             case 'precio-asc':
-    //                 return getPrecio(a) - getPrecio(b);
-    //             case 'precio-desc':
-    //                 return getPrecio(b) - getPrecio(a);
-    //             case 'reciente':
-    //                 return -1; // Implementar lógica de fecha
-    //             case 'antiguo':
-    //                 return 1; // Implementar lógica de fecha
-    //         }
-    //     });
-        
-    //     productos.forEach(producto => productosGrid.appendChild(producto));
-    // }
-
-    // function getPrecio(productoCard) {
-    //     return parseFloat(productoCard.querySelector('.precio').textContent.replace('$', ''));
-    // }
-
-    // function editarProducto(id) {
-    //     // Implementar lógica de edición
-    //     console.log('Editando producto:', id);
-    // }
-
-    // function eliminarProducto(id) {
-    //     if (confirm('¿Estás seguro de que deseas eliminar este producto?')) {
-    //         // Implementar lógica de eliminación
-    //         console.log('Eliminando producto:', id);
-    //     }
-    // }
-
-    // function actualizarVistaPrevia() {
-    //     const preview = document.getElementById('previewContenido');
-    //     if (preview.innerHTML !== '') {
-    //         const nombre = document.getElementById('nombreProducto').value || 'Nombre del Producto';
-    //         const precio = document.getElementById('precio').value || '0.00';
-            
-    //         const nombreElement = preview.querySelector('h4');
-    //         const precioElement = preview.querySelector('.precio');
-            
-    //         if (nombreElement) nombreElement.textContent = nombre;
-    //         if (precioElement) precioElement.textContent = `$${precio}`;
-    //     }
-    // }
-
-    // // Función para cargar la información del vendedor
-    // async function cargarInfoVendedor() {
-    //     try {
-    //         const response = await fetch('../php/obtener_vendedor.php');
-    //         const data = await response.json();
-            
-    //         if (data.success) {
-    //             const vendedor = data.vendedor;
-    //             document.getElementById('nombreVendedor').textContent = vendedor.nombre;
-    //             document.getElementById('nombreCompletoVendedor').textContent = `${vendedor.nombre} ${vendedor.apellido}`;
-    //             document.getElementById('emailVendedor').textContent = vendedor.email;
-                
-    //             if (vendedor.imagen_perfil) {
-    //                 document.getElementById('imagenPerfil').src = `../imagenes/vendedores/${vendedor.imagen_perfil}`;
-    //             }
-    //         }
-    //     } catch (error) {
-    //         console.error('Error al cargar la información del vendedor:', error);
-    //     }
-    // }
-
-    // // Cargar la información del vendedor cuando se carga la página
-    // document.addEventListener('DOMContentLoaded', function() {
-    //     cargarInfoVendedor();
-    //     // ... resto del código existente ...
-    // });
+  
     document.addEventListener('DOMContentLoaded', function() {
         fetch('../php/listar_productos.php')
             .then(response => response.json())
@@ -587,6 +366,11 @@ function validarFormulario() {
                 console.error('Error al cargar los productos:', error);
                 alert('Error al cargar los productos');
             });
+    });
+
+    document.getElementById('formularioProducto').addEventListener('submit', function(event) {
+        event.preventDefault();
+        validarFormulario();
     });
 </script>
 </body>

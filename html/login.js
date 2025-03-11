@@ -1,5 +1,3 @@
-// ... código existente ...
-
 // Función para verificar el login
 function verificarLogin() {
     const documento = document.getElementById("username").value; // Captura el documento
@@ -24,19 +22,11 @@ function verificarLogin() {
             password: password // Envía la contraseña
         })
     })
-    .then(response => {//Esta es una función de callback que se ejecuta cuando se recibe la respuesta de la solicitud fetch
+    .then(response => {
         if (!response.ok) {
             throw new Error(`Error HTTP: ${response.status}`);
         }
-        return response.text().then(text => {
-            try {
-                return JSON.parse(text);
-            } catch (e) //JSON.parse lanza un error
-            {
-                console.error('Respuesta del servidor:', text);
-                throw new Error('Respuesta del servidor no válida');
-            }
-        });
+        return response.json();
     })
     .then(data => {
         if (data.success) {
@@ -97,14 +87,7 @@ document.getElementById("signupForm").addEventListener("submit", async function 
             throw new Error(`Error HTTP: ${response.status}`);
         }
 
-        const text = await response.text();
-        let result;
-        try {
-            result = JSON.parse(text);
-        } catch (e) {
-            console.error('Respuesta del servidor:', text);
-            throw new Error('Respuesta del servidor no válida');
-        }
+        const result = await response.json();
 
         signupMessage.style.color = result.success ? "green" : "red";
         signupMessage.textContent = result.message;
@@ -122,5 +105,3 @@ document.getElementById("signupForm").addEventListener("submit", async function 
         signupMessage.textContent = "Error de conexión. Por favor, intenta más tarde.";
     }
 });
-
-// ... código existente ...
