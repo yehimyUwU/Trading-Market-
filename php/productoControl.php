@@ -19,8 +19,29 @@ class ProductoControl {
     public $nuevoPrecio;
 
     public function ctrRegistrarProducto() {
-        $objRespuesta = ProductoModelo::mdlRegistrarProducto($this->nombre, $this->categoria, $this->precio, $this->descripcion, $this->subcategoria, $this->stock);
-        echo json_encode($objRespuesta);
+        // Manejo de la imagen
+        if (isset($_FILES['imagen']) && $_FILES['imagen']['error'] === UPLOAD_ERR_OK) {
+            $imagenTmpPath = $_FILES['imagen']['tmp_name'];
+            $imagenName = $_FILES['imagen']['name'];
+            $imagenExtension = pathinfo($imagenName, PATHINFO_EXTENSION);
+            $imagenNewName = uniqid('img_', true) . '.' . $imagenExtension;
+            $imagenUploadPath = '../img/' . $imagenNewName;
+
+            if (move_uploaded_file($imagenTmpPath, $imagenUploadPath)) {
+                // Guardar la ruta de la imagen en la base de datos
+                $imagenRuta = 'img/' . $imagenNewName;
+                $objRespuesta = ProductoModelo::mdlRegistrarProducto($this->nombre, $this->categoria, $this->precio, $this->descripcion, $this->subcategoria, $this->stock, $imagenRuta);
+                echo json_encode($objRespuesta);
+            } else {
+                $response = ['codigo' => '500', 'mensaje' => 'Error al subir la imagen'];
+                echo json_encode($response);
+                exit;
+            }
+        } else {
+            $response = ['codigo' => '400', 'mensaje' => 'Imagen no válida'];
+            echo json_encode($response);
+            exit;
+        }
     }
 
     public function ctrListarProductos() {
@@ -50,22 +71,20 @@ class ProductoControl {
 
     public function ctrreturnUsuarios() {
         $objRespuesta = ProductoModelo::mdlreturnUsuarios();
-        echo json_encode($objRespuesta);   
+        echo json_encode($objRespuesta);
     }
-
-
 }
-
 if (isset($_POST["nombre"], $_POST["categoria"], $_POST["precio"], $_POST["descripcion"], $_POST["subcategoria"], $_POST["stock"])) {
     $objProducto = new ProductoControl();
     $objProducto->nombre = $_POST["nombre"];
-    $objProducto->categoria = 1;
+    $objProducto->categoria = $_POST["categoria"];
     $objProducto->precio = $_POST["precio"];
     $objProducto->descripcion = $_POST["descripcion"];
     $objProducto->subcategoria = $_POST["subcategoria"];
     $objProducto->stock = $_POST["stock"];
     $objProducto->ctrRegistrarProducto();
 }
+
 
 if (isset($_POST["listarProductos"]) && $_POST["listarProductos"] == "ok") {
     $objProducto = new ProductoControl();
@@ -112,4 +131,5 @@ if (isset($_POST["subirProductos"]) && $_POST["subirProductos"] == "ok") {
     $objProducto = new ProductoControl();
     $objProducto->ctrSubirExcel();
 }
+
 ?>

@@ -17,6 +17,7 @@ if(!filter_var($email, FILTER_VALIDATE_EMAIL)){
     exit;
 }
 
+
 $destinatario = "cristianmolano415@gmail.com";
 
 $asunto = "Hola mundo $nombre";

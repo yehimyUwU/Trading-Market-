@@ -6,6 +6,7 @@ if(isset($_GET['categoria_id'])) {
     $stmt->execute([$_GET['categoria_id']]);
     $subcategorias = $stmt->fetchAll(PDO::FETCH_ASSOC);
     
+    
     header('Content-Type: application/json');
     echo json_encode($subcategorias);
 }

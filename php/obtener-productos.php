@@ -1,6 +1,7 @@
 <?php
 require_once 'conexion.php';
-header('Content-Type: application/json');
+heade
+
 
 try {
     $busqueda = isset($_GET['busqueda']) ? $_GET['busqueda'] : '';

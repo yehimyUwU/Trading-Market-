@@ -6,6 +6,7 @@ header('Content-Type: application/json');
 header('Access-Control-Allow-Origin: *');
 header('Access-Control-Allow-Methods: GET');
 
+
 // Log del estado de la sesión
 error_log('Estado de sesión: ' . print_r($_SESSION, true));
 
