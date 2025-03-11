@@ -34,8 +34,8 @@ body {
 
 
 .modal-dialog {
-    max-width: 500px; /* Ajusta el ancho máximo del modal */
-    margin: 1.75rem auto; /* Centra horizontalmente */
+    max-width: 100px; /* Ancho máximo del modal */
+    margin: auto; /* Centra horizontalmente */
     position: relative; /* Asegúrate de que el modal esté en posición relativa */
     top: 50%; /* Mueve el modal hacia abajo */
     transform: translateY(-50%); /* Centra verticalmente */
