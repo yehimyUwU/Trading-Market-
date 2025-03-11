@@ -24,7 +24,7 @@ class ProductoModelo {
             $mensaje = array("codigo" => "500", "mensaje" => "Error: " . $e->getMessage());
         }
 
-        
+
         return $mensaje;
     }
 
@@ -85,6 +85,7 @@ class ProductoModelo {
         return $mensaje;
     }
 
+    
     public static function mdlListarCategorias() {
         $mensaje = array();
 
