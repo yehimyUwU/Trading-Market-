@@ -11,7 +11,7 @@ function verificarLogin() {
         mensaje.textContent = "Por favor, completa todos los campos.";
         return;
     }
-
+    
     fetch("../php/login.php", { // Asegúrate de que este archivo maneje la lógica de inicio de sesión
         method: "POST",
         headers: {
@@ -22,6 +22,7 @@ function verificarLogin() {
             password: password // Envía la contraseña
         })
     })
+    
     .then(response => {
         if (!response.ok) {
             throw new Error(`Error HTTP: ${response.status}`);
