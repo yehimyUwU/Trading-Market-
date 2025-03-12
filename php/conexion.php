@@ -26,5 +26,6 @@ class Conexion {
         return $objConexion;
     }
 }
+?>
 
 

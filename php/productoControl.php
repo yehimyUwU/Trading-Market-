@@ -1,137 +1,115 @@
 <?php
-include_once "conexion.php";
 
-class ProductoModelo {
+include_once "productoModelo.php";
 
-    public static function mdlRegistrarProducto($nombre, $categoria, $precio, $descripcion, $subcategoria, $stock, $imagenRuta) {
-        $mensaje = array();
+class ProductoControl {
 
-        try {
-            $conexion = Conexion::conectar();
-            $stmt = $conexion->prepare("INSERT INTO producto (nombre, descripcion, precio, stock, id_categoria, imagen) VALUES (:nombre, :descripcion, :precio, :stock, :id_categoria, :imagen)");
-            $stmt->bindParam(":nombre", $nombre);
-            $stmt->bindParam(":descripcion", $descripcion);
-            $stmt->bindParam(":precio", $precio);
-            $stmt->bindParam(":stock", $stock);
-            $stmt->bindParam(":id_categoria", $categoria);
-            $stmt->bindParam(":imagen", $imagenRuta);
-            if ($stmt->execute()) {
-                $mensaje = array("codigo" => "200", "mensaje" => "Producto registrado correctamente.");
-            } else {
-                $mensaje = array("codigo" => "500", "mensaje" => "Error al registrar el producto.");
-            }
-        } catch (PDOException $e) {
-            $mensaje = array("codigo" => "500", "mensaje" => "Error: " . $e->getMessage());
-        }
+    public $idProducto;
+    public $nombre;
+    public $categoria;
+    public $precio;
+    public $descripcion;
+    public $subcategoria;
+    public $stock;
 
-        
-        return $mensaje;
+    public $ids;
+
+    public $nuevoNombre;
+    public $nuevaCategoria;
+    public $nuevoPrecio;
+
+    public function ctrRegistrarProducto() {
+        $objRespuesta = ProductoModelo::mdlRegistrarProducto($this->nombre, $this->categoria, $this->precio, $this->descripcion, $this->subcategoria, $this->stock);
+        echo json_encode($objRespuesta);
     }
 
-    public static function mdlListarProductos() {
-        $mensaje = array();
-
-        try {
-            $objRespuesta = Conexion::conectar()->prepare("SELECT p.*, c.nombre AS nombre_categoria FROM producto p INNER JOIN categoria c ON p.id_categoria = c.id_categoria");
-            $objRespuesta->execute();
-            $listaProductos = $objRespuesta->fetchAll(PDO::FETCH_ASSOC);
-            $mensaje = array("codigo" => "200", "success" => true, "listaProductos" => $listaProductos);
-            $objRespuesta = null;
-        } catch (Exception $e) {
-            $mensaje = array("codigo" => "401", "success" => false, "mensaje" => $e->getMessage());
-        }
-
-        return $mensaje;
+    public function ctrListarProductos() {
+        $objRespuesta = ProductoModelo::mdlListarProductos();
+        echo json_encode($objRespuesta);
     }
 
-    public static function mdlEliminarProducto($idProducto) {
-        $mensaje = array();
-
-        try {
-            $objRespuesta = Conexion::conectar()->prepare("DELETE FROM producto WHERE id_producto = :idProducto");
-            $objRespuesta->bindParam(":idProducto", $idProducto);
-            if ($objRespuesta->execute()) {
-                $mensaje = array("codigo" => "200", "mensaje" => "Producto eliminado correctamente.");
-            } else {
-                $mensaje = array("codigo" => "401", "mensaje" => "Error. No fue posible eliminar el producto.");
-            }
-            $objRespuesta = null;
-        } catch (Exception $e) {
-            $mensaje = array("codigo" => "401", "mensaje" => $e->getMessage());
-        }
-
-        return $mensaje;
+    public function ctrEliminarProducto() {
+        $objRespuesta = ProductoModelo::mdlEliminarProducto($this->idProducto);
+        echo json_encode($objRespuesta);
     }
 
-    public static function mdlEditarProducto($nuevoNombre, $nuevaCategoria, $nuevoPrecio, $idProducto) {
-        $mensaje = array();
-
-        try {
-            $objRespuesta = Conexion::conectar()->prepare("UPDATE producto SET nombre = :nuevoNombre, precio = :nuevoPrecio, id_categoria = :nuevaCategoria WHERE id_producto = :idProducto");
-            $objRespuesta->bindParam(":nuevoNombre", $nuevoNombre);
-            $objRespuesta->bindParam(":nuevoPrecio", $nuevoPrecio);
-            $objRespuesta->bindParam(":nuevaCategoria", $nuevaCategoria);
-            $objRespuesta->bindParam(":idProducto", $idProducto);
-            if ($objRespuesta->execute()) {
-                $mensaje = array("codigo" => "200", "mensaje" => "Producto editado correctamente.");
-            } else {
-                $mensaje = array("codigo" => "401", "mensaje" => "Error. No fue posible editar el producto.");
-            }
-            $objRespuesta = null;
-        } catch (Exception $e) {
-            $mensaje = array("codigo" => "401", "mensaje" => $e->getMessage());
-        }
-
-        return $mensaje;
+    public function ctrEditarProducto() {
+        $objRespuesta = ProductoModelo::mdlEditarProducto($this->nuevoNombre, $this->nuevaCategoria, $this->nuevoPrecio, $this->idProducto);
+        echo json_encode($objRespuesta);
     }
 
-    public static function mdlListarCategorias() {
-        $mensaje = array();
-
-        try {
-            $objRespuesta = Conexion::conectar()->prepare("SELECT * FROM categoria");
-            $objRespuesta->execute();
-            $listaCategorias = $objRespuesta->fetchAll();
-            $mensaje = array("codigo" => "200", "listaCategorias" => $listaCategorias);
-            $objRespuesta = null;
-        } catch (Exception $e) {
-            $mensaje = array("codigo" => "401", "mensaje" => $e->getMessage());
-        }
-
-        return $mensaje;
+    public function ctrListarCategorias() {
+        $objRespuesta = ProductoModelo::mdlListarCategorias();
+        echo json_encode($objRespuesta);
     }
 
-    public static function mdlEliminarProductos($ids) {
-        $mensaje = array();
-
-        try {
-            $objRespuesta = Conexion::conectar()->prepare("DELETE FROM producto WHERE id_producto IN ($ids)");
-            if ($objRespuesta->execute()) {
-                $mensaje = array("codigo" => "200", "mensaje" => "Productos eliminados correctamente.");
-            } else {
-                $mensaje = array("codigo" => "401", "mensaje" => "Error. No fue posible eliminar los productos.");
-            }
-            $objRespuesta = null;
-        } catch (Exception $e) {
-            $mensaje = array("codigo" => "401", "mensaje" => $e->getMessage());
-        }
-        return $mensaje;
+    public function ctrEliminarProductos() {
+        $objRespuesta = ProductoModelo::mdlEliminarProductos($this->ids);
+        echo json_encode($objRespuesta);
     }
 
-    public static function mdlreturnUsuarios() {
-        $mensaje = array();
-
-        try {
-            $objRespuesta = Conexion::conectar()->prepare("SELECT * FROM usuario");
-            $objRespuesta->execute();
-            $listaUsuarios = $objRespuesta->fetchAll();
-            $mensaje = array("codigo" => "200", "listaUsuarios" => $listaUsuarios);
-            $objRespuesta = null;
-        } catch (Exception $e) {
-            $mensaje = array("codigo" => "401", "mensaje" => $e->getMessage());
-        }
-
-        return $mensaje;
+    public function ctrreturnUsuarios() {
+        $objRespuesta = ProductoModelo::mdlreturnUsuarios();
+        echo json_encode($objRespuesta);   
     }
+
+
+}
+
+if (isset($_POST["nombre"], $_POST["categoria"], $_POST["precio"], $_POST["descripcion"], $_POST["subcategoria"], $_POST["stock"])) {
+    $objProducto = new ProductoControl();
+    $objProducto->nombre = $_POST["nombre"];
+    $objProducto->categoria = 1;
+    $objProducto->precio = $_POST["precio"];
+    $objProducto->descripcion = $_POST["descripcion"];
+    $objProducto->subcategoria = $_POST["subcategoria"];
+    $objProducto->stock = $_POST["stock"];
+    $objProducto->ctrRegistrarProducto();
+}
+
+if (isset($_POST["listarProductos"]) && $_POST["listarProductos"] == "ok") {
+    $objProducto = new ProductoControl();
+    $objProducto->ctrListarProductos();
+}
+
+if (isset($_POST["eliminarProducto"])) {
+    $objProducto = new ProductoControl();
+    $objProducto->idProducto = $_POST["eliminarProducto"];
+    $objProducto->ctrEliminarProducto();
+}
+
+if (isset($_POST["nuevoNombre"], $_POST["nuevaCategoria"], $_POST["nuevoPrecio"], $_POST["producto"])) {
+    $objEditarProducto = new ProductoControl();
+    $objEditarProducto->nuevoNombre = $_POST["nuevoNombre"];
+    $objEditarProducto->nuevaCategoria = $_POST["nuevaCategoria"];
+    $objEditarProducto->nuevoPrecio = $_POST["nuevoPrecio"];
+    $objEditarProducto->idProducto = $_POST["producto"];
+    $objEditarProducto->ctrEditarProducto();
+}
+
+if (isset($_POST["listarCategorias"]) && $_POST["listarCategorias"] == "ok") {
+    $objCategoria = new ProductoControl();
+    $objCategoria->ctrListarCategorias();
+}
+
+if (isset($_POST["eliminarProductos"])) {
+    $objProducto = new ProductoControl();
+    $objProducto->ids = $_POST["eliminarProductos"];
+    $objProducto->ctrEliminarProductos();
+}
+
+if (isset($_POST["usuarios"]) && $_POST["usuarios"] == "ok") {
+    $objUsuario = new ProductoControl();
+    $objUsuario->ctrreturnUsuarios();
+}
+
+if (isset($_POST["ProductosEliminados"]) && $_POST["ProductosEliminados"] == "ok") {
+    $objProducto = new ProductoControl();
+    $objProducto->ctrPapelera();
+}
+
+if (isset($_POST["subirProductos"]) && $_POST["subirProductos"] == "ok") {
+    $objProducto = new ProductoControl();
+    $objProducto->ctrSubirExcel();
 }
 ?>

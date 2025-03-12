@@ -1,11 +1,10 @@
 <?php
-include_once "conexion.php";
-
 header('Content-Type: application/json');
+require 'conexion.php';
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    $documento = $_POST['documento'];
-    $password = $_POST['password'];
+    $documento = $_POST['documento'] ?? null;
+    $password = $_POST['password'] ?? null;
 
     if (!$documento || !$password) {
         echo json_encode(['success' => false, 'message' => 'Por favor, complete todos los campos']);
@@ -13,13 +12,15 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     }
 
     try {
-        $conexion = Conexion::conectar();
-        $stmt = $conexion->prepare("SELECT * FROM usuario WHERE documento = :documento");
-        $stmt->bindParam(':documento', $documento);
-        $stmt->execute();
-        $usuario = $stmt->fetch();
+        $pdo = Conexion::conectar(); // Conectar a la base de datos
+
+        // Buscar el usuario en la tabla 'usuario'
+        $stmt = $pdo->prepare("SELECT * FROM usuario WHERE documento = ?");
+        $stmt->execute([$documento]);
+        $usuario = $stmt->fetch(PDO::FETCH_ASSOC);
 
         if ($usuario && password_verify($password, $usuario['password'])) {
+            // Inicio de sesión exitoso
             session_start();
             $_SESSION['usuario'] = [
                 'id' => $usuario['id_usuario'],
@@ -30,15 +31,27 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 'fecha_nacimiento' => $usuario['fecha_nacimiento'],
                 'genero' => $usuario['genero']
             ];
-            echo json_encode(['success' => true, 'message' => 'Inicio de sesión exitoso']);
+            
+            // Agregar log para depuración
+            error_log('Usuario logueado: ' . print_r($_SESSION['usuario'], true));
+            
+            echo json_encode([
+                'success' => true,
+                'message' => 'Inicio de sesión exitoso'
+            ]);
         } else {
-            echo json_encode(['success' => false, 'message' => 'Documento o contraseña incorrectos']);
+            // Credenciales incorrectas
+            echo json_encode([
+                'success' => false,
+                'message' => 'Documento o contraseña incorrectos'
+            ]);
         }
     } catch (PDOException $e) {
-        echo json_encode(['success' => false, 'message' => 'Error al iniciar sesión. Por favor, intente más tarde.']);
+        echo json_encode([
+            'success' => false,
+            'message' => 'Error al iniciar sesión. Por favor, intente más tarde.'
+        ]);
     }
 } else {
     echo json_encode(['success' => false, 'message' => 'Método no permitido']);
 }
-?>
-
