@@ -1032,3 +1032,7 @@ body {
   color: #ffcc00;
   transform: scale(1.2);
 }
+
+.modal-backdrop.show {
+    opacity: 0 !important; /* Establece la opacidad a 0 para que no se vea */
+}
