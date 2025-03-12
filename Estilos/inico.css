@@ -5,11 +5,7 @@ body {
     margin: 0;
     padding: 0;
     background: rgb(241, 177, 79);
-<<<<<<< HEAD
     background: linear-gradient(150deg, rgba(255, 125, 18, 0.959) 6%, rgba(255, 202, 142, 0.928) 64%,rgba(255, 175, 110, 0.928) 64%,rgba(240, 128, 0, 0.928) 74%, rgb(219, 137, 112) 95%);
-=======
-    background: linear-gradient(150deg, rgba(255, 171, 102, 0.959) 6%, rgba(255, 202, 142, 0.928) 64%,rgba(255, 255, 255, 0.928) 64%,rgba(255, 255, 255, 0.928) 74%, rgb(219, 137, 112) 95%);
->>>>>>> c39a8f0a1cdd84e70d15df07a5412426e70cea42
     color: rgb(255, 155, 74);
     font-size: 12px; /* Ajusta el tamaño de la letra */
 }
@@ -501,7 +497,7 @@ footer p {
     background-color: #ff4444;
 }
 
-/contenedor de perfil/
+
 .perfil-contenedor {
     display: block; /* Cambia temporalmente a 'block' para pruebas */
     background: white;
@@ -1035,8 +1031,4 @@ body {
 .pie-pagina .red-social a:hover {
   color: #ffcc00;
   transform: scale(1.2);
-<<<<<<< HEAD
 }
-=======
-}
->>>>>>> c39a8f0a1cdd84e70d15df07a5412426e70cea42
