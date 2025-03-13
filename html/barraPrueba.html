@@ -1,0 +1,243 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Barra de Navegación</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+    <style>
+        /* Estilos Generales */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: Arial, sans-serif;
+        }
+
+        body {
+            background-color: #f4f4f4;
+        }
+
+        /* Barra de Navegación */
+        .navbar {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            background: linear-gradient(90deg, #007bff, #00d4ff);
+            padding: 15px 30px;
+            box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.2);
+            position: relative;
+            z-index: 1000;
+        }
+
+        /* Logo */
+        .logo img {
+            width: 120px;
+            height: auto;
+        }
+
+        /* Menú de navegación */
+        .nav-links {
+            list-style: none;
+            display: flex;
+            align-items: center;
+        }
+
+        .nav-links li {
+            margin: 0 15px;
+            position: relative;
+        }
+
+        .nav-links a {
+            color: white;
+            text-decoration: none;
+            font-size: 16px;
+            font-weight: bold;
+            padding: 8px 12px;
+            transition: 0.3s ease-in-out;
+            display: inline-block;
+            cursor: pointer;
+        }
+
+        /* Efecto de elevación en los enlaces del menú */
+        .nav-links a:hover {
+            transform: translateY(-3px);  /* Se levanta un poco */
+            background: rgba(255, 255, 255, 0.2);
+            border-radius: 5px;
+            text-decoration: underline;
+        }
+
+        /* Menú desplegable */
+        .dropdown {
+            position: absolute;
+            top: 40px;
+            left: 0;
+            background: white;
+            display: none;
+            flex-direction: column;
+            min-width: 150px;
+            box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
+            border-radius: 5px;
+            padding: 5px 0;
+        }
+
+        /* Efecto de inversión de colores en el menú desplegable */
+        .dropdown a {
+            color: black;
+            padding: 10px;
+            display: block;
+            transition: 0.3s ease-in-out;
+            text-decoration: none;
+        }
+
+        .dropdown a:hover {
+            background: black;
+            color: white;
+            padding-left: 15px;
+            transform: translateX(5px); /* Se mueve ligeramente a la derecha */
+        }
+
+        /* Barra de Búsqueda */
+        .search-bar {
+            display: flex;
+            align-items: center;
+            background: white;
+            padding: 5px;
+            border-radius: 20px;
+        }
+
+        .search-bar input {
+            border: none;
+            outline: none;
+            padding: 8px;
+            width: 200px;
+            border-radius: 20px;
+        }
+
+        .search-bar button {
+            background: none;
+            border: none;
+            cursor: pointer;
+            padding: 5px;
+        }
+
+        .search-bar i {
+            color: #007bff;
+            font-size: 18px;
+        }
+
+        /* Carrito de compras */
+        .cart {
+            position: relative;
+            color: white;
+            font-size: 20px;
+            cursor: pointer;
+            transition: 0.3s ease-in-out;
+        }
+
+        .cart:hover {
+            transform: scale(1.1);
+            color: black; /* Cambio a negro al pasar el mouse */
+        }
+
+        .cart span {
+            position: absolute;
+            top: -5px;
+            right: -10px;
+            background: red;
+            color: white;
+            font-size: 12px;
+            width: 18px;
+            height: 18px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 50%;
+        }
+
+        /* Perfil */
+        .profile {
+            position: relative;
+            display: flex;
+            align-items: center;
+        }
+
+        .profile i {
+            font-size: 22px;
+            color: white;
+            cursor: pointer;
+            margin-right: 5px;
+            transition: 0.3s ease-in-out;
+        }
+
+        .profile i:hover {
+            transform: scale(1.1);
+            color: black; /* Cambio a negro al pasar el mouse */
+        }
+
+        /* Mostrar menú desplegable con JavaScript */
+        .show {
+            display: flex !important;
+        }
+    </style>
+</head>
+<body>
+
+    <nav class="navbar">
+        <!-- Logo -->
+        <a href="#" class="logo"><img src="../imagenes/tran.png"></a>
+
+        <!-- Menú de navegación -->
+        <ul class="nav-links">
+            <li>
+                <a href="#" id="toggle-categorias">Categorías <i class="fas fa-chevron-down"></i></a>
+                <div class="dropdown" id="menu-categorias">
+                    <a href="#">Electrónica</a>
+                    <a href="#">Ropa</a>
+                    <a href="#">Hogar</a>
+                    <a href="#">Deportes</a>
+                </div>
+            </li>
+            <li><a href="#">Proveedores</a></li>
+            <li><a href="#">Ofertas</a></li>
+        </ul>
+
+        <!-- Barra de búsqueda -->
+        <div class="search-bar">
+            <input type="text" placeholder="Buscar...">
+            <button><i class="fas fa-search"></i></button>
+        </div>
+
+        <!-- Carrito de compras -->
+        <div class="cart">
+            <i class="fas fa-shopping-cart"></i>
+            <span>3</span>
+        </div>
+
+        <!-- Perfil -->
+        <div class="profile">
+            <a href="#"><i class="fas fa-user-circle"></i></a>
+        </div>
+        
+    </nav>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            const toggleCategorias = document.getElementById("toggle-categorias");
+            const menuCategorias = document.getElementById("menu-categorias");
+
+            toggleCategorias.addEventListener("click", function (event) {
+                event.preventDefault();
+                menuCategorias.classList.toggle("show");
+            });
+
+            document.addEventListener("click", function (event) {
+                if (!toggleCategorias.contains(event.target) && !menuCategorias.contains(event.target)) {
+                    menuCategorias.classList.remove("show");
+                }
+            });
+        });
+    </script>
+
+</body>
+</html>

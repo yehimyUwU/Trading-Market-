@@ -3,6 +3,8 @@ fetch('barra.html')
   .then(html => {
     document.getElementById('nav-container').innerHTML = html;
   });
+
+  
 function cerrarSesion() {
     fetch('../php/logout.php')
         .then(response => response.json())
