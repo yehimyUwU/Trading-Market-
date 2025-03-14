@@ -1103,21 +1103,6 @@ body {
   transform: scale(1.2);
 }
 
-<<<<<<< HEAD
 .modal-backdrop.show {
     opacity: 0 !important; /* Establece la opacidad a 0 para que no se vea */
 }
-=======
-.modal-backdrop {
-  z-index: 1 !important; /* Baja la prioridad del fondo */
-}
-
-.modal {
-  z-index: 1051 !important; /* Asegura que el modal esté arriba */
-}
-
-body.modal-open {
-  padding-right: 0 !important; /* Evita cambios en el padding al cerrar el modal */
-  overflow: hidden !important; /* Previene el salto de la página */
-}
->>>>>>> cca01bc9b8e03fdaff82ab507d66485fe0124327
