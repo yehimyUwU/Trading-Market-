@@ -1013,10 +1013,6 @@ body {
   border-radius: 5px;
 }
 
-.modal{
-  z-index: 1000;
-}
-
 body {
   font-family: 'Poppins', sans-serif;
   background-color: #f4f4f4;
@@ -1105,4 +1101,11 @@ body {
 
 .modal-backdrop.show {
     opacity: 0 !important; /* Establece la opacidad a 0 para que no se vea */
-}
+    z-index: 0 !important; /* Ajustar el z-index del backdrop */
+ }
+  
+  .modal {
+      z-index: 1050 !important; /* Asegurar que el modal esté sobre el backdrop */
+  }
+ 
+
