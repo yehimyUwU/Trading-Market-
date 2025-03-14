@@ -1061,19 +1061,27 @@ body {
 }
 
 /* Botón personalizado */
-.btn-custom {
-  background-color: #004aad;
-  color: white;
-  border-radius: 50px;
-  padding: 10px 20px;
-  font-weight: bold;
-  transition: background 0.3s ease, transform 0.3s ease;
-}
+    /* Estilos para hacer que los botones sean visibles */
+    .custom-btn {
+      color: white !important; /* Asegura que el texto sea blanco */
+      background-color: #007bff !important; /* Azul para Ver Perfil */
+      border: none;
+      padding: 10px;
+      font-size: 16px;
+      font-weight: bold;
+  }
 
-.btn-custom:hover {
-  background-color: #3b82f6;
-  transform: scale(1.1);
-}
+  .custom-btn:hover {
+      background-color: #0056b3 !important; /* Azul más oscuro al pasar el mouse */
+  }
+
+  .btn-danger.custom-btn {
+      background-color: #dc3545 !important; /* Rojo para Cerrar Sesión */
+  }
+
+  .btn-danger.custom-btn:hover {
+      background-color: #c82333 !important; /* Rojo más oscuro al pasar el mouse */
+  }
 
 /* Pie de página */
 .pie-pagina {
@@ -1095,21 +1103,6 @@ body {
   transform: scale(1.2);
 }
 
-<<<<<<< HEAD
 .modal-backdrop.show {
     opacity: 0 !important; /* Establece la opacidad a 0 para que no se vea */
 }
-=======
-.modal-backdrop {
-  z-index: 1 !important; /* Baja la prioridad del fondo */
-}
-
-.modal {
-  z-index: 1051 !important; /* Asegura que el modal esté arriba */
-}
-
-body.modal-open {
-  padding-right: 0 !important; /* Evita cambios en el padding al cerrar el modal */
-  overflow: hidden !important; /* Previene el salto de la página */
-}
->>>>>>> cca01bc9b8e03fdaff82ab507d66485fe0124327
