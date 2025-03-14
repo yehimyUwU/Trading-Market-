@@ -20,62 +20,62 @@
 <div id="barra-pro"></div>
 <br><br><br><br><br>
 
+<!-- Contenido Principal -->
+<main class="contenido">
+    <div class="header-container">
+        <div class="header-text">
+            <h1>Productos</h1>
+            <p>prodcuto, <span id="nombreVendedor">Vendedor</span></p>
+        </div>
 
-
-        <!-- Contenido Principal -->
-        <main class="contenido">
-            <div class="header-container">
-                <div class="header-text">
-                    <h1>Productos</h1>
-                    <p>prodcuto, <span id="nombreVendedor">Vendedor</span></p>
-                </div>
-
-                <div class="perfil-vendedor">
-                    <div class="vendedor-info">
-                        <img id="imagenPerfil" src="../imagenes_P/default_profile.jpg" alt="Foto de perfil">
-                        <div class="vendedor-detalles">
-                            <h3 id="nombreCompletoVendedor">Nombre del Vendedor</h3>
-                            <span id="emailVendedor">email@ejemplo.com</span>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="header-stats">
-                    <div class="stat-card">
-                        <span class="stat-number" id="totalProductos">0</span>
-                        <span class="stat-label">Productos Activos</span>
-                    </div>
-                    <div class="stat-card">
-                        <span class="stat-number" id="pedidosPendientes">0</span>
-                        <span class="stat-label">Pedidos Pendientes</span>
-                    </div>
-                    <div class="stat-card">
-                        <span class="stat-number" id="ventasMes">$0</span>
-                        <span class="stat-label">Ventas del Mes</span>
-                    </div>
+        <div class="perfil-vendedor">
+            <div class="vendedor-info">
+                <img id="imagenPerfil" src="../imagenes_P/default_profile.jpg" alt="Foto de perfil">
+                <div class="vendedor-detalles">
+                    <h3 id="nombreCompletoVendedor">Nombre del Vendedor</h3>
+                    <span id="emailVendedor">email@ejemplo.com</span>
                 </div>
             </div>
+        </div>
 
-            <section class="busqueda-productos">
-                <h2 class="section-header">Gestión de Productos</h2>
-                <div class="busqueda-controles">
-                    <input type="text" placeholder="Buscar productos..." id="buscarProducto">
-                    <select id="ordenarPor">
-                        <option value="reciente">Más recientes</option>
-                        <option value="antiguo">Más antiguos</option>
-                        <option value="precio-asc">Precio: Menor a Mayor</option>
-                        <option value="precio-desc">Precio: Mayor a Menor</option>
-                    </select>
-                    <button class="btn-neo">Buscar</button>
-                </div>
-                <div class="publicar-producto">
-                    <button id="btnAbrirModal" class="btn-neo">
-                        <span class="material-symbols-outlined">add</span>
-                        Nuevo Producto
-                    </button>
-                </div>
-            </section>
+        <div class="header-stats">
+            <div class="stat-card">
+                <span class="stat-number" id="totalProductos">0</span>
+                <span class="stat-label">Productos Activos</span>
+            </div>
+            <div class="stat-card">
+                <span class="stat-number" id="pedidosPendientes">0</span>
+                <span class="stat-label">Pedidos Pendientes</span>
+            </div>
+            <div class="stat-card">
+                <span class="stat-number" id="ventasMes">$0</span>
+                <span class="stat-label">Ventas del Mes</span>
+            </div>
+        </div>
+    </div>
 
+    <section class="busqueda-productos">
+        <h2 class="section-header">Gestión de Productos</h2>
+        <div class="busqueda-controles">
+            <input type="text" placeholder="Buscar productos..." id="buscarProducto">
+            <select id="ordenarPor">
+                <option value="reciente">Más recientes</option>
+                <option value="antiguo">Más antiguos</option>
+                <option value="precio-asc">Precio: Menor a Mayor</option>
+                <option value="precio-desc">Precio: Mayor a Menor</option>
+            </select>
+            <button class="btn-neo">Buscar</button>
+        </div>
+        <div class="publicar-producto">
+            <button id="btnAbrirModal" class="btn-neo">
+                <span class="material-symbols-outlined">add</span>
+                Nuevo Producto
+            </button>
+        </div>
+    </section>
+
+    <section class="productos-grid-container">
+        <div class="productos-grid" id="productosGrid">
             <section class="productos-grid-container">
                 <div class="productos-grid" id="productosGrid">
                     <!-- Ejemplo de tarjeta de producto -->
@@ -162,12 +162,27 @@
                   <div class="form-row">
                       <div class="form-group half">
                           <label for="categoriaGeneral">Categoría*</label>
-                          <select id="categoriaGeneral" name="categoriaGeneral" required>
+                          <select id="categoriaGeneral" name="categoriaGeneral" required onchange="actualizarSubcategorias()">
                               <option value="">Seleccione una categoría</option>
-                              <option value="cosmeticos">Cosméticos</option>
-                              <option value="cuidadoPersonal">Cuidado Personal</option>
-                              <option value="productosNaturales">Productos Naturales</option>
-                              <option value="accesorios">Accesorios</option>
+                              <option value="supermercado">Supermercado</option>
+                              <option value="vehiculos">Vehículos</option>
+                              <option value="tecnologia">Tecnología</option>
+                              <option value="electrodomesticos">Electrodomésticos</option>
+                              <option value="deportes_y_fitness">Deportes y Fitness</option>
+                              <option value="herramientas">Herramientas</option>
+                              <option value="belleza_y_cuidado_personal">Belleza y Cuidado Personal</option>
+                              <option value="accesorios_de_vehiculos">Accesorios de Vehículos</option>
+                              <option value="construccion">Construcción</option>
+                              <option value="inmuebles">Inmuebles</option>
+                              <option value="moda">Moda</option>
+                              <option value="juegos_y_juguetes">Juegos y Juguetes</option>
+                              <option value="bebes">Bebés</option>
+                              <option value="productos_sustentables">Productos Sustentables</option>
+                              <option value="industria_y_oficina">Industria y Oficina</option>
+                              <option value="salud_y_equipo_medico">Salud y Equipo Médico</option>
+                              <option value="animales_y_mascotas">Animales y Mascotas</option>
+                              <option value="antiguedades_y_colecciones">Antigüedades y Colecciones</option>
+                              <option value="arte_papeleria_y_merceria">Arte, Papelería y Mercería</option>
                           </select>
                       </div>
           
@@ -213,130 +228,151 @@
     </div>
     <!-- <script src="subir-producto.js" defer></script> -->
     <script>
-    // const categoriasProductos = {
-    //     cosmeticos: [
-    //         "Maquillaje facial",
-    //         "Maquillaje de ojos",
-    //         "Maquillaje de labios",
-    //         "Esmaltes de uñas",
-    //         "Productos para cejas",
-    //         "Bases y correctores",
-    //         "Polvos y rubores"
-    //     ],
-    //     cuidadoPersonal: [
-    //         "Cremas corporales",
-    //         "Productos capilares",
-    //         "Productos faciales",
-    //         "Desodorantes",
-    //         "Jabones",
-    //         "Protección solar",
-    //         "Higiene bucal"
-    //     ],
-    //     productosNaturales: [
-    //         "Aceites esenciales",
-    //         "Cremas naturales",
-    //         "Productos orgánicos",
-    //         "Hierbas medicinales",
-    //         "Suplementos naturales",
-    //         "Productos veganos",
-    //         "Productos biodegradables"
-    //     ],
-    //     accesorios: [
-    //         "Brochas de maquillaje",
-    //         "Esponjas y aplicadores",
-    //         "Neceseres y organizadores",
-    //         "Espejos",
-    //         "Limas y cortaúñas",
-    //         "Pinzas y tijeras",
-    //         "Accesorios para el cabello"
-    //     ]
-    // };
+    const categoriasProductos = {
+        supermercado: [
+            "Alimentos Supermercado",
+            "Bebidas Supermercado",
+            "Limpieza Supermercado"
+        ],
+        vehiculos: [
+            "Autos",
+            "Motos",
+            "Partes y accesorios"
+        ],
+        tecnologia: [
+            "Celulares",
+            "Computadoras",
+            "Televisores"
+        ],
+        electrodomesticos: [
+            "Cocina Electrodomésticos",
+            "Limpieza Electrodomésticos",
+            "Climatización"
+        ],
+        // ...otras categorías...
+    };
 
-    // function actualizarSubcategorias() {
-    //     const categoriaGeneral = document.getElementById('categoriaGeneral').value;
-    //     const subcategoriaSelect = document.getElementById('subcategoria');
-    //     subcategoriaSelect.innerHTML = '';
+    function actualizarSubcategorias() {
+        const categoriaGeneral = document.getElementById('categoriaGeneral').value;
+        const subcategoriaSelect = document.getElementById('subcategoria');
+        subcategoriaSelect.innerHTML = '';
 
-    //     if (!categoriaGeneral) {
-    //         subcategoriaSelect.innerHTML = '<option value="">Primero seleccione una categoría general</option>';
-    //         return;
-    //     }
+        if (!categoriaGeneral) {
+            subcategoriaSelect.innerHTML = '<option value="">Primero seleccione una categoría general</option>';
+            return;
+        }
 
-    //     subcategoriaSelect.innerHTML = '<option value="">Seleccione una subcategoría</option>';
-    //     categoriasProductos[categoriaGeneral].forEach(subcategoria => {
-    //         const option = document.createElement('option');
-    //         option.value = subcategoria.toLowerCase().replace(/ /g, '_');
-    //         option.textContent = subcategoria;
-    //         subcategoriaSelect.appendChild(option);
-    //     });
-    // }
+        subcategoriaSelect.innerHTML = '<option value="">Seleccione una subcategoría</option>';
+        categoriasProductos[categoriaGeneral].forEach(subcategoria => {
+            const option = document.createElement('option');
+            option.value = subcategoria.toLowerCase().replace(/ /g, '_');
+            option.textContent = subcategoria;
+            subcategoriaSelect.appendChild(option);
+        });
+    }
+
     document.getElementById('publicarBtn').addEventListener('click', validarFormulario);
 
-function validarFormulario() {
-    const mensajesError = document.querySelectorAll('.error-mensaje');
-    mensajesError.forEach(mensaje => mensaje.textContent = '');
-    let hayErrores = false;
-    const nombre = document.getElementById('nombreProducto').value.trim();
-    const descripcion = document.getElementById('descripcion').value.trim();
-    const precio = document.getElementById('precio').value;
-    const categoriaGeneral = document.getElementById('categoriaGeneral').value;
-    const subcategoria = document.getElementById('subcategoria').value;
-    const stock = document.getElementById('precio').value;
+    function validarFormulario() {
+        const mensajesError = document.querySelectorAll('.error-mensaje');
+        mensajesError.forEach(mensaje => mensaje.textContent = '');
+        let hayErrores = false;
+        const nombre = document.getElementById('nombreProducto').value.trim();
+        const descripcion = document.getElementById('descripcion').value.trim();
+        const precio = document.getElementById('precio').value;
+        const categoriaGeneral = document.getElementById('categoriaGeneral').value;
+        const subcategoria = document.getElementById('subcategoria').value;
+        const stock = document.getElementById('stock').value;
+        const imagen = document.getElementById('imagenProducto').files[0];
 
-    if (!nombre) {
-        document.getElementById('errorNombre').textContent = 'El nombre del producto es obligatorio';
-        hayErrores = true;
-    }
-    if (!descripcion) {
-        document.getElementById('errorDescripcion').textContent = 'La descripción es obligatoria';
-        hayErrores = true;
-    }
-    if (!precio || precio <= 0) {
-        document.getElementById('errorPrecio').textContent = 'Ingrese un precio válido';
-        hayErrores = true;
-    }
-    if (!categoriaGeneral) {
-        document.getElementById('errorCategoria').textContent = 'Seleccione una categoría';
-        hayErrores = true;
-    }
-    
-    if (!hayErrores) {
-        
-        
-        const formData = new FormData();
-        formData.append('nombre', nombre);
-        formData.append('descripcion', descripcion);
-        formData.append('precio', precio);
-        formData.append('categoria', categoriaGeneral);
-        formData.append('subcategoria', subcategoria);
-        formData.append('stock', stock);
-        // formData.append('imagen', imagen);
-        
-          fetch('../php/productoControl.php', {
-            method: 'POST',
-            body: formData
-        })
-        .then(response => response.json())
-        .then(data => {
-            if (data.success) {
-                alert('Producto publicado exitosamente');
-                document.getElementById('formularioProducto').reset();
-                cerrarModal();
-            } else {
+        if (!nombre) {
+            document.getElementById('errorNombre').textContent = 'El nombre del producto es obligatorio';
+            hayErrores = true;
+        }
+        if (!descripcion) {
+            document.getElementById('errorDescripcion').textContent = 'La descripción es obligatoria';
+            hayErrores = true;
+        }
+        if (!precio || precio <= 0) {
+            document.getElementById('errorPrecio').textContent = 'Ingrese un precio válido';
+            hayErrores = true;
+        }
+        if (!categoriaGeneral) {
+            document.getElementById('errorCategoria').textContent = 'Seleccione una categoría';
+            hayErrores = true;
+        }
+        if (!subcategoria) {
+            document.getElementById('errorCategoria').textContent = 'Seleccione una subcategoría';
+            hayErrores = true;
+        }
+        if (!imagen) {
+            document.getElementById('errorImagen').textContent = 'Seleccione una imagen';
+            hayErrores = true;
+        }
+
+        if (!hayErrores) {
+            const formData = new FormData();
+            formData.append('nombre', nombre);
+            formData.append('descripcion', descripcion);
+            formData.append('precio', precio);
+            formData.append('categoria', categoriaGeneral);
+            formData.append('subcategoria', subcategoria);
+            formData.append('stock', stock);
+            formData.append('imagen', imagen);
+
+            fetch('../php/productoControl.php', {
+                method: 'POST',
+                body: formData
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    alert('Producto publicado exitosamente');
+                    document.getElementById('formularioProducto').reset();
+                    cerrarModal();
+                    agregarProductoAlGrid(data.producto);
+                } else {
+                    alert('Ocurrió un error al publicar el producto');
+                }
+            })
+            .catch(error => {
+                console.error('Error al publicar el producto:', error);
                 alert('Ocurrió un error al publicar el producto');
-            }
-        })
-        .catch(error => {
-            console.error('Error al publicar el producto:', error);
-            alert('Ocurrió un error al publicar el producto');
-        });
-        document.getElementById('formularioProducto').reset();
-        // subirproductos();
-        cerrarModal();
-    } else {
-        alert('Por favor, corrija los errores en el formulario');
+            });
+        } else {
+            alert('Por favor, corrija los errores en el formulario');
+        }
     }
-}
+
+    function agregarProductoAlGrid(producto) {
+        const productosGrid = document.getElementById('productosGrid');
+        const productoCard = document.createElement('div');
+        productoCard.classList.add('producto-card');
+        productoCard.innerHTML = `
+            <div class="producto-imagen">
+                <img src="../imagenes_P/${producto.imagen || 'default.jpeg'}" alt="${producto.nombre}" onerror="this.onerror=null;this.src='../imagenes_P/default.jpeg';">
+                <div class="producto-acciones">
+                    <button class="btn-editar">
+                        <span class="material-symbols-outlined">edit</span>
+                    </button>
+                    <button class="btn-eliminar">
+                        <span class="material-symbols-outlined">delete</span>
+                    </button>
+                </div>
+            </div>
+            <div class="producto-info">
+                <h4>${producto.nombre}</h4>
+                <div class="producto-detalles">
+                    <span class="precio">$${producto.precio}</span>
+                    <span class="stock">Stock: ${producto.stock}</span>
+                </div>
+                <div class="producto-estado">
+                    <span class="badge activo">Activo</span>
+                </div>
+            </div>
+        `;
+        productosGrid.appendChild(productoCard);
+    }
 
     function abrirModal() {
         document.getElementById('modalProducto').style.display = 'block';
@@ -348,10 +384,7 @@ function validarFormulario() {
         document.getElementById('previewProducto').style.display = 'none';
     }
 
-    // Event Listeners
     document.getElementById('btnAbrirModal').addEventListener('click', abrirModal);
-    // document.getElementById('nombreProducto').addEventListener('input', actualizarVistaPrevia);
-    // document.getElementById('precio').addEventListener('input', actualizarVistaPrevia);
 
     window.onclick = function(event) {
         const modal = document.getElementById('modalProducto');
@@ -360,14 +393,13 @@ function validarFormulario() {
         }
     }
 
-  
     document.addEventListener('DOMContentLoaded', function() {
         fetch('../php/listar_productos.php')
             .then(response => response.json())
             .then(data => {
                 if (data.success) {
                     const productosGrid = document.getElementById('productosGrid');
-                    productosGrid.innerHTML = ''; // Clear existing content
+                    productosGrid.innerHTML = '';
                     data.listaProductos.forEach(producto => {
                         const productoCard = document.createElement('div');
                         productoCard.classList.add('producto-card');
