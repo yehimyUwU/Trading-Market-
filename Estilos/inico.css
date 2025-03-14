@@ -1061,19 +1061,27 @@ body {
 }
 
 /* Botón personalizado */
-.btn-custom {
-  background-color: #004aad;
-  color: white;
-  border-radius: 50px;
-  padding: 10px 20px;
-  font-weight: bold;
-  transition: background 0.3s ease, transform 0.3s ease;
-}
+    /* Estilos para hacer que los botones sean visibles */
+    .custom-btn {
+      color: white !important; /* Asegura que el texto sea blanco */
+      background-color: #007bff !important; /* Azul para Ver Perfil */
+      border: none;
+      padding: 10px;
+      font-size: 16px;
+      font-weight: bold;
+  }
 
-.btn-custom:hover {
-  background-color: #3b82f6;
-  transform: scale(1.1);
-}
+  .custom-btn:hover {
+      background-color: #0056b3 !important; /* Azul más oscuro al pasar el mouse */
+  }
+
+  .btn-danger.custom-btn {
+      background-color: #dc3545 !important; /* Rojo para Cerrar Sesión */
+  }
+
+  .btn-danger.custom-btn:hover {
+      background-color: #c82333 !important; /* Rojo más oscuro al pasar el mouse */
+  }
 
 /* Pie de página */
 .pie-pagina {
