@@ -56,7 +56,7 @@ body {
     justify-content: space-between;
     align-items: center;
     padding: 15px 30px;
-    background: linear-gradient(80deg, #000331,#000270, #5b5ac4, #000fe4, #c4c5ff);
+    background: linear-gradient(80deg, #545fff,hsl(239, 93%, 63%), #bcbaff, #0011ff, #ffffff);
     background-size: 400% 400%;
     animation: cambiarFondo 10s ease-in-out infinite;
     box-shadow: 0px 4px 15px rgba(180, 105, 61, 0.863);
@@ -99,63 +99,129 @@ body {
     font-size: 0;  /* Esto ocultará el texto si existe */
 }
 
+.navbar {
+  background-color: transparent;
+  padding: 15px;
+}
 .nav-links {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 1rem;
-    list-style: none;
-    margin-top:2%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
 }
-
-.nav-links li {
-    margin: 0 15px;
-}
-
 .nav-links a {
-    text-decoration: none;
-    color: white;
-    font-size: 1.2em;
-    transition: color 0.3s;
+  text-decoration: none;
+  color: white;
+  font-weight: bold;
+  padding: 10px 15px;
+  transition: all 0.3s ease;
+  background-color: transparent;
 }
-
 .nav-links a:hover {
-    color: #0EAFD1;
+  background-color: #003366; /* Azul oscuro */
+  color: white;
+  border-radius: 5px;
+  transform: translateY(-3px);
+  box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.2);
 }
 
-.nav-links li a {
-    padding: 0.5rem;
+/* Dropdown de Categorías */
+.dropdown-menu {
+  background-color: transparent;
+  border: none;
+}
+.dropdown-item {
+  color: rgb(0, 0, 0) !important;
+  background-color: transparent !important;
+  transition: all 0.3s ease;
+  padding: 10px 20px;
+}
+.dropdown-item:hover {
+  background-color: #003366 !important; /* Azul oscuro */
+  color: rgb(0, 0, 0) !important;
+  transform: translateY(-3px);
+  box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.2);
 }
 
-/* Barra de búsqueda */
+/* Botón de categorías */
+.dropdown-toggle {
+  background-color: transparent;
+  color: rgb(0, 0, 0);
+  border: none;
+  font-weight: bold;
+}
+.dropdown-toggle:hover {
+  background-color: #003366;
+  color: rgb(0, 0, 0);
+  transform: translateY(-3px);
+}
+
+/* Botón de usuario */
+.user-actions {
+  display: flex;
+  align-items: center;
+}
+.profile-btn {
+  background: transparent;
+  border: none;
+  font-size: 18px;
+  padding: 10px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  color: white;
+}
+.profile-btn:hover {
+  background-color: #003366;
+  color: white;
+  border-radius: 5px;
+  transform: translateY(-3px);
+  box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.2);
+}
+
+/* Botones del modal */
+.modal-body .btn {
+  background-color: transparent;
+  color: white;
+  border: 1px solid white;
+  transition: all 0.3s ease;
+}
+.modal-body .btn:hover {
+  background-color: #003366;
+  color: white;
+  transform: translateY(-3px);
+  box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.2);
+}
+
+/* Fondo de la página */
+body {
+  background-color: #121212;
+  color: white;
+}
+
+/* Estilos para la barra de búsqueda */
 .search-box {
-    display: flex;
-    align-items: center;
-    background: rgba(14, 175, 209, 0.2);
-    border-radius: 25px;
-    padding: 8px 15px;
-    box-shadow: inset 0px 0px 10px rgba(140, 232, 235, 0.3);
+  display: flex;
+  align-items: center;
+  background-color: white; /* Fondo blanco */
+  padding: 5px;
+  border-radius: 8px;
+  box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.2);
 }
 
 .search-box input {
-    border: none;
-    padding: 10px;
-    border-radius: 20px;
-    outline: none;
-    width: 200px;
-    background: transparent;
-    color: white;
-}
-
-.search-box input::placeholder {
-    color: rgba(255, 255, 255, 0.6);
+  border: none;
+  outline: none;
+  padding: 8px;
+  width: 250px;
+  font-size: 16px;
+  border-radius: 5px;
 }
 
 .search-box button {
-    background: none;
-    border: none;
-    font-size: 1.2em;
-    cursor: pointer;
-    color: white;
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-size: 18px;
+  margin-left: 5px;
 }
 
 /* Banner con carrusel */
@@ -929,20 +995,20 @@ body {
 }
 
 .dropdown-menu {
-  background-color: #000;
+  background-color: #000000;
   max-height: 300px; /* Ajusta la altura máxima */
   overflow-y: auto;
   border-radius: 5px;
 }
 
 .dropdown-item {
-  color: #fff;
+  color: #000000;
   transition: all 0.3s ease-in-out;
 }
 
 .dropdown-item:hover {
-  background-color: #fff !important; /* Fondo blanco al pasar el mouse */
-  color: #000 !important; /* Letras en negro */
+  background-color: #000000 !important; /* Fondo blanco al pasar el mouse */
+  color: #ffffff !important; /* Letras en negro */
   transform: translateY(-3px); /* Elevación del elemento */
   border-radius: 5px;
 }
@@ -960,10 +1026,10 @@ body {
 /* Estilos para el Hero */
 .hero {
   background: linear-gradient(to right, #ffb58b, #3b82f6);
-  color: rgb(255, 255, 255);
+  color: rgb(0, 0, 0);
   padding: 60px 20px;
   border-radius: 10px;
-  box-shadow: 0px 10px 30px rgba(0, 0, 0, 0.1);
+  box-shadow: 0px 10px 30px rgba(255, 255, 255, 0.1);
 }
 
 /* Estilos para las tarjetas */
@@ -1027,4 +1093,17 @@ body {
 .pie-pagina .red-social a:hover {
   color: #ffcc00;
   transform: scale(1.2);
+}
+
+.modal-backdrop {
+  z-index: 1 !important; /* Baja la prioridad del fondo */
+}
+
+.modal {
+  z-index: 1051 !important; /* Asegura que el modal esté arriba */
+}
+
+body.modal-open {
+  padding-right: 0 !important; /* Evita cambios en el padding al cerrar el modal */
+  overflow: hidden !important; /* Previene el salto de la página */
 }
