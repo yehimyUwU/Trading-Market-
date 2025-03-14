@@ -7,63 +7,70 @@
     <link rel="stylesheet" href="../Estilos/estilos.css" />
     <link rel="stylesheet" href="../Estilos/vehiculo.css" />
     <script src="https://kit.fontawesome.com/1e7ede300e.js" crossorigin="anonymous"></script>
-    <title>Vehiculos </title>
-    <link rel="stylesheet" href="styles.css"> <!-- Archivo CSS separado -->
-    <!-- Agregar Font Awesome -->
+    <title>Vehículos</title>
+    <link rel="stylesheet" href="styles.css"> 
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
-    <!-- Agregar Bootstrap CSS -->
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
 </head>
 <body>
-    <body>
-        <div id="nav-container"></div>
-    <br>
-    <!-- Banner Principal -->
-    <div id="nav-container"></div>
-    <br><br><br><br><br>
 
-    
+    <div id="nav-container"></div>
+<br>
+<!-- Banner Principal -->
+<div id="nav-container"></div>
+<br><br><br><br><br>
+
+    <!-- Sección de Bienvenida -->
     <div class="container text-center hero">
         <h1 class="display-4">Descubre Nuestros Vehículos</h1>
         <p class="lead">Comodidad, velocidad y diseño en un solo lugar.</p>
     </div>
     
+    <!-- Sección de Productos -->
     <div class="container mt-5">
+        <h2 class="text-center mb-4">Nuestros Vehículos</h2>
         <div class="row">
+
+            <!-- Producto 1 -->
             <div class="col-md-4">
-                <div class="card text-dark">
-                    <img src="../imagenes/vehiculo1.jpg" class="card-img-top" alt="Sedán Elegante">
-                    <div class="card-body text-center">
-                        <h5 class="card-title">Sedán Elegante</h5>
-                        <p class="card-text">Un vehículo cómodo y eficiente, ideal para la ciudad.</p>
-                        <a href="#" class="btn btn-custom">Ver más</a>
+                <div class="card">
+                    <img src="../imagenes/carro1.jpg" class="card-img-top" alt="Auto deportivo">
+                    <div class="card-body">
+                        <h5 class="card-title">Auto Deportivo</h5>
+                        <p class="card-text">Velocidad y lujo en un solo vehículo. Disponible en varios colores.</p>
+                        <button class="btn btn-primary">Comprar</button>
                     </div>
                 </div>
             </div>
+
+            <!-- Producto 2 -->
             <div class="col-md-4">
-                <div class="card text-dark">
-                    <img src="../imagenes/vehiculo2.jpg" class="card-img-top" alt="SUV Familiar">
-                    <div class="card-body text-center">
+                <div class="card">
+                    <img src="../imagenes/carro2.jpg" class="card-img-top" alt="SUV familiar">
+                    <div class="card-body">
                         <h5 class="card-title">SUV Familiar</h5>
-                        <p class="card-text">Espacioso y seguro, perfecto para aventuras en familia.</p>
-                        <a href="#" class="btn btn-custom">Ver más</a>
+                        <p class="card-text">Espacio y comodidad para toda la familia, con tecnología de punta.</p>
+                        <button class="btn btn-primary">Comprar</button>
                     </div>
                 </div>
             </div>
+
+            <!-- Producto 3 -->
             <div class="col-md-4">
-                <div class="card text-dark">
-                    <img src="../imagenes/vehiculo3.jpg" class="card-img-top" alt="Deportivo Potente">
-                    <div class="card-body text-center">
-                        <h5 class="card-title">Deportivo Potente</h5>
-                        <p class="card-text">Diseñado para la velocidad y la emoción en la carretera.</p>
-                        <a href="#" class="btn btn-custom">Ver más</a>
+                <div class="card">
+                    <img src="../imagenes/carro3.jpg" class="card-img-top" alt="Motocicleta deportiva">
+                    <div class="card-body">
+                        <h5 class="card-title">Motocicleta Deportiva</h5>
+                        <p class="card-text">Diseño aerodinámico y potencia extrema para los amantes de la velocidad.</p>
+                        <button class="btn btn-primary">Comprar</button>
                     </div>
                 </div>
             </div>
+
         </div>
     </div>
-    
-    <footer class="pie-pagina">
+
+    <footer class="pie-pagina mt-5">
         <div class="grupo-1">
             <div class="box">
                 <figure>
@@ -91,10 +98,11 @@
             <small>&copy; 2021 <b>SLee Dw</b> - Todos los Derechos Reservados.</small>
         </div>
     </footer>
-    
+
     <!-- Scripts -->
     <script src="nav.js"></script>
     <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
 </body>
 </html>
