@@ -3,19 +3,21 @@ fetch('barra.html')
   .then(html => {
     document.getElementById('nav-container').innerHTML = html;
   });
+
+  
 function cerrarSesion() {
     fetch('../php/logout.php')
         .then(response => response.json())
         .then(data => {
             if (data.success) {
                 localStorage.removeItem('usuario'); // Limpiar datos del usuario
-                window.location.href = 'login.html';
+                window.location.href = 'longin.html';
             }
         })
         .catch(error => {
             console.error('Error:', error);
             localStorage.removeItem('usuario'); // Limpiar datos del usuario
-            window.location.href = 'login.html';
+            window.location.href = 'longin.html';
         });
 }
 
