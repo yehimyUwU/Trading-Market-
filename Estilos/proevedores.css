@@ -22,7 +22,7 @@ body {
     display: flex;
     flex-direction: column;
     overflow-x: hidden;
-    background: linear-gradient(45deg, #491e05, #77382dfb, #e7b881, #b16539,#993800); /* Color de fondo actualizado */
+    background: linear-gradient(45deg, #ff5b10, #fbe2a9, #ee843e, #b25618,#da5f01); /* Color de fondo actualizado */
     background-size: 400% 400%; /* Para el movimiento del fondo */
     animation: moverColores 5s ease infinite; /* Animación para el movimiento de colores */
     padding: 25px 20px;
