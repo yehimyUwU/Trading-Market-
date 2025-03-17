@@ -12,7 +12,7 @@
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
     <style>
         .hero-box {
-            background-color: black;
+            background-color: rgba(0, 0, 0, 0.568);
             color: white;
             padding: 50px;
             text-align: center;
@@ -84,7 +84,8 @@
                     </div>
                 </div>
             </div>
-    
+
+
             <!-- Producto 5 -->
             <div class="col-md-4 mt-4">
                 <div class="card">
@@ -141,6 +142,33 @@
     </footer>
 
     <!-- Scripts -->
+
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            // Esperar a que la barra de navegación se cargue antes de buscar el input
+            setTimeout(() => {
+                const searchInput = document.getElementById("search-input");
+                if (!searchInput) return; // Evitar errores si no se encuentra el input
+                
+                const products = document.querySelectorAll(".card"); // Todos los productos
+        
+                searchInput.addEventListener("input", function () {
+                    const searchText = searchInput.value.toLowerCase(); // Convierte a minúsculas
+        
+                    products.forEach(product => {
+                        const title = product.querySelector(".card-title").textContent.toLowerCase();
+                        
+                        if (title.includes(searchText)) {
+                            product.parentElement.style.display = "block"; // Muestra el producto
+                        } else {
+                            product.parentElement.style.display = "none"; // Oculta el producto
+                        }
+                    });
+                });
+            }, 500); // Retraso para asegurarse de que la barra de navegación se cargue
+        });
+        </script>
+        
     <script src="nav.js"></script>
     <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
