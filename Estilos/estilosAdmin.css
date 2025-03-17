@@ -26,14 +26,18 @@ body{
 .container{
     position: relative;
     width: 100%;
+    padding: 0; /* Agrega esto para evitar padding */
+    margin: 0; /* Agrega esto si hay margen no deseado */
 }
 
 /*Cambios barra de navegacion*/
 
-.navigation{
+.navigation {
     position: fixed;
     width: 300px;
     height: 100%;
+    top: 0; /* Asegura que inicie desde la parte superior */
+    left: 0; /* Manténla pegada al lado izquierdo */
     background: var(--blue);
     border-left: 10px solid var(--blue);
     transition: 0.5s;
@@ -41,7 +45,7 @@ body{
 }
 
 .navigation ul{
-    /*posicion: absolute*/
+   position: relative;
     top: 0;
     left: 0;
     width: 100%;
@@ -51,17 +55,21 @@ body{
     position: relative;
     width: 100%;
     list-style: none;
+    border-top-left-radius: 30px;
+    border-bottom-left-radius: 30px;
+    
 }
 
-.navigation ul li:hover{
+.navigation ul li:hover,
+.navigation ul li.hovered {
     background-color: var(--white);
 }
 
 
 .navigation ul li:nth-child(1) {
-    margin-bottom: 40px;
-    pointer-events: block;
+    margin-bottom: 30px;
 }
+
 
 .navigation ul li a {
     position: relative;
@@ -72,7 +80,8 @@ body{
     color: var(--white);
 }
 
-.navigation ul li:hover a {
+.navigation ul li:hover a,
+.navigation ul li.hovered a{
     color: var(--blue);
 }
 
@@ -84,3 +93,99 @@ body{
     line-height: 60px;
     text-align: center;
 }
+
+.navigation ul li a .icon ion-icon {
+    font-size: 1.40rem; 
+}
+
+.navigation ul li a .title{  /*cierto problema */
+    position: relative;
+    display: block;
+    padding: 0 10px;
+    height: 60px;
+    line-height: 60px;
+    text-align: start;
+    white-space: nowrap;
+}
+
+/*Curva de la barra*/
+
+.navigation ul li:hover a::before,
+.navigation ul li.hovered a::before{
+    content: '';
+    position: absolute;
+    right: 0;
+    top: -50px;
+    width: 50px;
+    height: 50px;
+    background-color: transparent;
+    border-radius: 50%;
+    box-shadow: 35px 35px 0 10px var(--white);
+    pointer-events: none;
+}
+
+.navigation ul li:hover a::after,
+.navigation ul li.hovered a::after{
+    content: '';
+    position: absolute;
+    right: 0;
+    bottom: -50px;
+    width: 50px;
+    height: 50px;
+    background-color: transparent;
+    border-radius: 50%;
+    box-shadow: 35px -35px 0 10px var(--white);
+    pointer-events: none;
+}
+
+/*Pagina principal*/
+.main{
+    position: absolute;
+    width: calc(100% - 300px);
+    left: 300px;
+    min-height: 100vh;
+    background: var(--white);
+    transition: 0.5s;
+}
+
+.topbar{
+    width: 100%;
+    height: 60px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0 10px;
+}
+
+.toggle{
+    position: relative;
+    width: 60px;
+    height: 60px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 2.5rem;
+    cursor: pointer;
+}
+
+.search{
+    position: relative;
+    width: 400px;
+    margin: 0 10px ;
+}
+
+.search label{
+    position: relative;
+    width: 100%;
+}
+
+.search label input{
+    width: 100%;
+    height: 40%;
+    border-radius: 40px;
+    padding: 5px 20px;
+    outline: none;
+    border: ;
+}
+
+

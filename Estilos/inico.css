@@ -1109,3 +1109,33 @@ body {
   }
  
 
+  .hero {
+    background: url('../imagenes/banner.jpg') center/cover no-repeat;
+    color: white;
+    padding: 100px 0;
+    position: relative;
+}
+.hero::before {
+    content: "";
+    position: absolute;
+    top: 0; left: 0; width: 100%; height: 100%;
+    background: rgba(0, 0, 0, 0.5);
+}
+
+
+.card:hover {
+  transform: scale(1.05);
+  transition: 0.3s ease-in-out;
+  box-shadow: 0px 4px 15px rgba(0, 0, 0, 0.2);
+}
+
+
+.btn-primary {
+  background: #ff6600;
+  border: none;
+  font-size: 18px;
+}
+.btn-primary:hover {
+  background: #cc5200;
+}
+
