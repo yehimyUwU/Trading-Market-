@@ -34,12 +34,12 @@ body{
 
 .navigation {
     position: fixed;
-    width: 300px;
+    width: 400px;
     height: 100%;
     top: 0; /* Asegura que inicie desde la parte superior */
     left: 0; /* Manténla pegada al lado izquierdo */
     background: var(--blue);
-    border-left: 10px solid var(--blue);
+    /* genera error border-left: 5px solid var(--blue); */
     transition: 0.5s;
     overflow: hidden;
 }
@@ -49,7 +49,7 @@ body{
 }
 
 .navigation ul{
-   position: relative;
+    position: relative;
     top: 0;
     left: 0;
     width: 100%;
@@ -89,14 +89,18 @@ body{
     color: var(--blue);
 }
 
-.navigation ul li a .icon{
+.navigation ul li a .icon {
     position: relative;
     display: block;
-    min-width: 60px;
+    min-width: 28px; /* Ajusta según lo que necesites */
     height: 60px;
     line-height: 60px;
     text-align: center;
+    min-width: 40px; /* Reduce el espacio mínimo */
+    margin-right: 10px;
+    
 }
+
 
 .navigation ul li a .icon ion-icon {
     font-size: 1.40rem; 
@@ -150,6 +154,11 @@ body{
     min-height: 100vh;
     background: var(--white);
     transition: 0.5s;
+}
+
+.main.active{
+    width: calc(100% - 80px);
+    left: 80px;
 }
 
 .topbar{
@@ -219,3 +228,51 @@ body{
     object-fit: cover;
 }
 
+/*Tarjetas*/
+.cardBox{
+    position: relative;
+    width: 100%;
+    padding: 20px;
+    display: grid;
+    grid-template-columns: repeat(4,1fr);
+    grid-gap: 30px;
+}
+
+.cardBox .card{
+    position: relative;
+    background: var(--white);
+    padding: 30px;
+    border-radius: 20px;
+    display: flex;
+    justify-content: space-between;
+    cursor: pointer;
+    box-shadow: 0 7px 25px rgba(0, 0, 0, 0.08);
+}
+
+.cardBox .card .numbers{
+    position: relative;
+    font-weight: 500;
+    font-size: 2.5rem;
+    color: var(--blue);
+}
+
+.cardBox .card .cardName{
+    color: var(--blue);
+    font-size: 1.1rem;
+    margin-top: 5px;
+}
+
+.cardBox .card .iconBx{
+    font-size: 2.5rem;
+    color: var(--black2);
+}
+
+.cardBox .card:hover{
+    background: var(--blue);
+}
+
+.cardBox .card:hover .numbers,
+.cardBox .card:hover .cardName,
+.cardBox .card:hover .iconBx{
+    color: var(--white);
+}
