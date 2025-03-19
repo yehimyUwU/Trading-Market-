@@ -1,0 +1,31 @@
+
+h1 {
+    font-weight: 700;
+    color: #080808;
+}
+
+.table {
+    background: #ffffff;
+    border-radius: 15px; /* Bordes redondeados */
+    overflow: hidden;
+}
+
+.table thead th {
+    background: #333333;
+    color: #fff;
+    font-weight: bold;
+}
+
+.table tfoot td {
+    background: #f1f1f1;
+    font-size: 1.1em;
+}
+
+button {
+    transition: all 0.3s ease;
+    border-radius: 8px; /* Bordes redondeados en botones */
+}
+
+button:hover {
+    transform: scale(1.1);
+}
