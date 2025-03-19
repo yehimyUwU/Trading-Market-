@@ -4,7 +4,30 @@ fetch('barra.html')
     document.getElementById('nav-container').innerHTML = html;
   });
 
-  
+  document.addEventListener("DOMContentLoaded", function () {
+    // Esperar a que la barra de navegación se cargue antes de buscar el input
+    setTimeout(() => {
+        const searchInput = document.getElementById("search-input");
+        if (!searchInput) return; // Evitar errores si no se encuentra el input
+        
+        const products = document.querySelectorAll(".card"); // Todos los productos
+
+        searchInput.addEventListener("input", function () {
+            const searchText = searchInput.value.toLowerCase(); // Convierte a minúsculas
+
+            products.forEach(product => {
+                const title = product.querySelector(".card-title").textContent.toLowerCase();
+                
+                if (title.includes(searchText)) {
+                    product.parentElement.style.display = "block"; // Muestra el producto
+                } else {
+                    product.parentElement.style.display = "none"; // Oculta el producto
+                }
+            });
+        });
+    }, 500); // Retraso para asegurarse de que la barra de navegación se cargue
+});
+
 function cerrarSesion() {
     fetch('../php/logout.php')
         .then(response => response.json())
