@@ -226,8 +226,25 @@ body{
     width: 100%;
     height: 100%;
     object-fit: cover;
-<<<<<<< HEAD
-=======
+}
+
+.user2 {
+    position: relative;
+    width: 150px;
+    height: 150px;
+    border-radius: 50%;
+    overflow: hidden;
+    cursor: pointer;
+}
+
+.user2 img {
+    position: absolute;
+    top: 50%; /* Centra verticalmente */
+    left: 50%; /* Centra horizontalmente */
+    transform: translate(-50%, -50%); /* Ajusta la posición al centro exacto */
+    width: 100%; /* Asegura que la imagen cubra todo el contenedor */
+    height: 100%; /* Asegura que cubra todo el contenedor */
+    object-fit: cover; /* Mantiene las proporciones sin deformar */
 }
 
 /*Tarjetas*/
@@ -395,5 +412,113 @@ body{
     border-radius: 4px;
     font-size: 14px;
     font-weight: 500;
->>>>>>> 4d901564e2507f2ce2826313aa05b15869399920
 }
+
+/*modales*/
+
+/* Estilos para el modal */
+/* Fondo y posicionamiento del modal */
+.modal {
+    display: none; /* Escondido por defecto */
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.6); /* Fondo translúcido */
+    z-index: 1000;
+    display: flex;
+    justify-content: center;
+    align-items: center; /* Centrar vertical y horizontalmente */
+  }
+  
+  /* Estilos de contenido del modal */
+  .modal-content {
+    width: 90%;
+    max-width: 400px;
+    background: linear-gradient(135deg, #ffffff, #f9f9f9); /* Fondo degradado */
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.3);
+    animation: fadeIn 0.3s ease-in-out; /* Animación de aparición */
+  }
+  
+  /* Animación de fadeIn */
+  @keyframes fadeIn {
+    from {
+      opacity: 0;
+      transform: scale(0.9);
+    }
+    to {
+      opacity: 1;
+      transform: scale(1);
+    }
+  }
+  
+  /* Botón de cerrar */
+  .close {
+    position: absolute;
+    top: 10px; /* Ajusta la posición superior */
+    right: 15px; /* Ajusta la posición derecha */
+    font-size: 30px; /* Aumenta el tamaño de la fuente */
+    font-weight: bold; /* Hace el carácter más destacado */
+    color: #333; /* Cambia el color si lo deseas */
+    cursor: pointer; /* Indica que es clicable */
+    transition: transform 0.2s ease, color 0.2s ease; /* Agrega una animación suave */
+  }
+  
+  .close:hover {
+    color: #e74c3c; /* Cambia de color al pasar el mouse */
+    transform: scale(1.2); /* Agranda el botón al pasar el mouse */
+  }
+  
+  
+  /* Etiquetas del formulario */
+  label {
+    margin-top: 10px;
+    font-size: 14px;
+    color: #333;
+    font-weight: bold;
+  }
+  
+  /* Campos de entrada */
+  input {
+    width: 100%;
+    margin-top: 5px;
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    font-size: 14px;
+    outline: none;
+    box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.1);
+  }
+  
+  input:focus {
+    border-color: var(--blue);
+    box-shadow: 0 0 5px rgba(52, 152, 219, 0.5);
+  }
+  
+  /* Botón de guardar */
+/* Contenedor de los botones */
+
+  
+  /* Estilos para los botones */
+  button {
+    padding: 10px 20px; /* Tamaño más equilibrado */
+    font-size: 16px; /* Texto más legible */
+    background-color: var(--blue); /* Color principal */
+    color: white; /* Color del texto */
+    border: none;
+    border-radius: 5px; /* Bordes redondeados */
+    cursor: pointer;
+    transition: background-color 0.3s ease, transform 0.2s ease; /* Animaciones suaves */
+  }
+  
+  button:hover {
+    background-color: #2980b9; /* Cambia el color al pasar el mouse */
+    transform: scale(1.05); /* Ligeramente más grande al pasar el mouse */
+  }
+  
+  
+  
+  
