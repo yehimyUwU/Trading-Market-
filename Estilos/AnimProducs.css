@@ -1,0 +1,112 @@
+body {
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: #222;
+}
+
+.container {
+    perspective: 250px;
+    width: 300px;
+    height: 150px;
+    position: relative;
+}
+
+.tarjeta {
+    width: 50px;
+    line-height: 50px;
+    background-color: #c71f1f;
+    font-size: 20px;
+    position: absolute;
+    top: 35px;
+    left: 125px;
+    border-radius: 8px;
+    text-align: center;
+    cursor: pointer;
+    animation: Carrusel 7s linear infinite;
+}
+
+@keyframes Carrusel {
+from {
+        transform: rotateY(0deg) translateZ(100px);
+        z-index: 10;
+        opacity: 0.9;
+    }
+
+    50% {
+        z-index: -10;
+    }
+
+    to {
+        transform: rotateY(360deg) translateZ(100px);
+    }
+}
+
+#imagen6 {
+    background-image: url(../imagenes/cosmeticos1.png);
+    background-size: cover;
+}
+
+#imagen6:hover {
+    box-shadow: 0px 0px 10px yellow;
+}
+
+#imagen5 {
+    background-image: url(../imagenes/cosmeticos1.png);
+    background-size: cover;
+    animation-delay: -1s;
+}
+
+#imagen5:hover {
+    box-shadow: 0px 0px 10px yellow;
+}
+
+#imagen4 {
+    background-image: url(../imagenes/cosmeticos1.png);
+    background-size: cover;
+    animation-delay: -2s;
+}
+
+#imagen4:hover {
+    box-shadow: 0px 0px 10px rgb(0, 140, 255);
+}
+
+#imagen3 {
+    background-image: url(../imagenes/cosmeticos1.png);
+    background-size: cover;
+    animation-delay: -3s;
+}
+
+#imagen3:hover {
+    box-shadow: 0px 0px 10px rgb(255, 0, 208);
+}
+
+#imagen2 {
+    background-image: url(../imagenes/cosmeticos1.png);
+    background-size: cover;
+    animation-delay: -4s;
+}
+
+#imagen2:hover {
+    box-shadow: 0px 0px 10px rgb(0, 0, 255);
+}
+
+#imagen1 {
+    background-image: url(../imagenes/cosmeticos1.png);
+    background-size: cover;
+    animation-delay: -5s;
+}
+
+#imagen1:hover {
+    box-shadow: 0px 0px 10px rgb(140, 87, 83);
+}
+
+
+.tarjeta h1 {
+    color: white;
+    font-size: 5px;
+    font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+    margin-top: 10px;
+    background-color: #ff0000;
+}

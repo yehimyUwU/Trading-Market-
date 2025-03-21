@@ -1,0 +1,206 @@
+body {
+    display: flex;
+    font-family: sans-serif;
+    margin: 0;
+}
+
+.sidebar {
+    /* ... (tu estilo de barra lateral existente) ... */
+    width: 250px; /* Ajusta el ancho según sea necesario */
+}
+
+.content {
+    flex-grow: 1;
+    padding: 20px;
+}
+
+.welcome-section {
+    max-width: 800px;
+    margin: 0 auto;
+}
+
+.welcome-banner {
+    background-image: url('../imagenes/1727292145Foto\ Real.jpg'); /* Reemplaza con tu imagen */
+    background-size: cover;
+    height: 200px;
+    margin-bottom: 20px;
+}
+
+.welcome-message {
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+.welcome-stats {
+    display: flex;
+    justify-content: space-around;
+    margin-bottom: 20px;
+}
+
+.stat-item {
+    text-align: center;
+}
+
+.stat-icon {
+    font-size: 36px;
+    color: #007bff; /* Color primario de tu marca */
+}
+
+.new-product-button {
+    display: block;
+    width: 200px;
+    margin: 20px auto;
+    padding: 10px;
+    background-color: #007bff;
+    color: white;
+    text-align: center;
+    text-decoration: none;
+    border-radius: 5px;
+}
+
+.welcome-tutorials {
+    margin-top: 30px;
+}
+
+.welcome-tutorials ul {
+    list-style: none;
+    padding: 0;
+}
+
+.welcome-tutorials li {
+    margin-bottom: 10px;
+}body {
+    display: flex;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    margin: 0;
+    background-color: #f4f4f4;
+}
+
+.sidebar {
+    /* ... (tu estilo de barra lateral existente) ... */
+    width: 250px;
+    background-color: #333;
+    color: white;
+}
+
+.content {
+    flex-grow: 1;
+    padding: 30px;
+}
+
+.welcome-section {
+    max-width: 900px;
+    margin: 0 auto;
+    background-color: white;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    overflow: hidden;
+}
+
+.welcome-banner {
+    background-image: url('../imagenes/banner_vendedor.jpg');
+    background-size: cover;
+    height: 300px;
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    color: white;
+}
+
+.banner-overlay {
+    background-color: rgba(0, 0, 0, 0.5);
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.banner-title {
+    font-size: 2.5em;
+    margin-bottom: 10px;
+    animation: fadeIn 1s ease-in-out;
+}
+
+.banner-subtitle {
+    font-size: 1.2em;
+    animation: fadeIn 1s ease-in-out 0.5s both;
+}
+
+.welcome-stats {
+    display: flex;
+    justify-content: space-around;
+    padding: 30px;
+}
+
+.stat-item {
+    text-align: center;
+    transition: transform 0.3s ease;
+}
+
+.stat-item:hover {
+    transform: translateY(-5px);
+}
+
+.stat-icon {
+    font-size: 48px;
+    color: #007bff;
+}
+
+.new-product-button {
+    display: block;
+    width: 250px;
+    margin: 30px auto;
+    padding: 15px;
+    background-color: #007bff;
+    color: white;
+    text-align: center;
+    text-decoration: none;
+    border-radius: 8px;
+    font-size: 1.1em;
+    font-weight: bold;
+    transition: background-color 0.3s ease;
+}
+
+.new-product-button:hover {
+    background-color: #0056b3;
+}
+
+.welcome-tutorials {
+    padding: 20px;
+}
+
+.welcome-tutorials ul {
+    list-style: none;
+    padding: 0;
+}
+
+.welcome-tutorials li {
+    margin-bottom: 15px;
+}
+
+.welcome-tutorials a {
+    text-decoration: none;
+    color: #007bff;
+    transition: color 0.3s ease;
+}
+
+.welcome-tutorials a:hover {
+    color: #0056b3;
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}

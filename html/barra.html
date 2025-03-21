@@ -49,9 +49,9 @@
         <a href="ofertas.html">Ofertas</a>
         <a href="proveedores.html">Proveedores</a>
         <div class="search-box">
-          <input type="text" placeholder="Buscar productos...">
+          <input type="text" id="search-input" placeholder="Buscar productos...">
           <button>🔍</button>
-        </div>
+      </div>
         <div class="user-actions">
           <a href="carrito.html" class="cart-icon">🛒</a>
           <div class="auth-buttons">
@@ -75,8 +75,8 @@
                 </button>
             </div>
             <div class="modal-body text-center">
-                <button class="btn btn-primary btn-block" onclick="mostrarPerfil()">Ver Perfil</button>
-                <button class="btn btn-danger btn-block" onclick="cerrarSesion()">Cerrar Sesión</button>
+                <button class="btn btn-primary btn-block" onclick="mostrarPerfil()" style="background-color: #4677ff;">Ver Perfil</button>
+                <button class="btn btn-danger btn-block" onclick="cerrarSesion()" style="background-color: red;">Cerrar Sesión</button>
             </div>
         </div>
     </div>

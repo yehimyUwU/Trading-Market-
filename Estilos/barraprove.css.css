@@ -1,6 +1,7 @@
 /* Importing Google Fonts - Poppins */
 @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap');
 
+
 * {
   margin: 0;
   padding: 0;
@@ -9,18 +10,86 @@
 }
 
 body {
-  min-height: 100vh;
-  background: linear-gradient(#F1FAFF, #CBE4FF);
+  display: flex;
+  font-family: sans-serif;
+  margin: 0;
 }
+
+
+
+.content {
+  flex-grow: 1;
+  padding: 20px;
+}
+
+.welcome-section {
+  max-width: 800px;
+  margin: 0 auto;
+}
+
+.welcome-banner {
+  background-image: url('../imagenes..'); 
+  background-size: cover;
+  height: 200px;
+  margin-bottom: 20px;
+}
+
+.welcome-message {
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+.welcome-stats {
+  display: flex;
+  justify-content: space-around;
+  margin-bottom: 20px;
+}
+
+.stat-item {
+  text-align: center;
+}
+
+.stat-icon {
+  font-size: 36px;
+  color: #274272; 
+}
+
+.new-product-button {
+  display: block;
+  width: 200px;
+  margin: 20px auto;
+  padding: 10px;
+  background-color: #007bff;
+  color: white;
+  text-align: center;
+  text-decoration: none;
+  border-radius: 5px;
+}
+
+.welcome-tutorials {
+  margin-top: 30px;
+}
+
+.welcome-tutorials ul {
+  list-style: none;
+  padding: 0;
+}
+
+.welcome-tutorials li {
+  margin-bottom: 10px;
+}
+
+
 
 .sidebar {
   position: fixed;
   width: 270px;
   margin: 16px;
   border-radius: 16px;
-  background: #151A2D;
+  background: #274272;
   height: calc(100vh - 32px);
   transition: all 0.4s ease;
+  width: 250px; /* Ajusta el ancho según sea necesario */
 }
 
 .sidebar.collapsed {
@@ -36,8 +105,8 @@ body {
 }
 
 .sidebar-header .header-logo img {
-  width: 46px;
-  height: 46px;
+  width:  60px;
+  height: 60px;
   display: block;
   object-fit: contain;
   border-radius: 50%;
@@ -46,11 +115,11 @@ body {
 .sidebar-header .toggler {
   height: 35px;
   width: 35px;
-  color: #151A2D;
+  color: #274272;
   border: none;
   cursor: pointer;
   display: flex;
-  background: #fff;
+  background:  #6c90c3;
   align-items: center;
   justify-content: center;
   border-radius: 8px;
@@ -98,7 +167,7 @@ body {
 }
 
 .sidebar-nav .nav-link {
-  color: #fff;
+  color:  #6c90c3;
   display: flex;
   gap: 12px;
   white-space: nowrap;
@@ -124,7 +193,7 @@ body {
 
 .sidebar-nav .nav-link:hover {
   color: #151A2D;
-  background: #fff;
+  background:  #6c90c3;
 }
 
 .sidebar-nav .nav-item {
@@ -141,7 +210,7 @@ body {
   padding: 6px 12px;
   border-radius: 8px;
   white-space: nowrap;
-  background: #fff;
+  background:  #6c90c3;
   left: calc(100% + 25px);
   box-shadow: 0 5px 10px rgba(0, 0, 0, 0.1);
   transition: 0s;
