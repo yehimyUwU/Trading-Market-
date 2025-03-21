@@ -4,25 +4,33 @@ include_once "conexion.php";
 class ProductoModelo {
 
     public static function mdlRegistrarProducto($nombre, $categoria, $precio, $descripcion, $subcategoria, $stock) {
-        $mensaje = array();
-
         try {
-            $objRespuesta = Conexion::conectar()->prepare("INSERT INTO producto (nombre, descripcion, precio, stock, id_categoria) VALUES (:nombre, :descripcion, :precio, :stock, :id_categoria)");
-            $objRespuesta->bindParam(":nombre", $nombre);
-            $objRespuesta->bindParam(":descripcion", $descripcion);
-            $objRespuesta->bindParam(":precio", $precio);
-            $objRespuesta->bindParam(":stock", $stock);
-            $objRespuesta->bindParam(":id_categoria", $categoria);
-            if ($objRespuesta->execute()) {
-                $mensaje = array("codigo" => "200", "mensaje" => "Producto registrado correctamente.");
-            } else {
-                $mensaje = array("codigo" => "401", "mensaje" => "Error. No fue posible registrar el producto.");
+            // Verificar si la categoría existe
+            $verificarCategoria = Conexion::conectar()->prepare("SELECT COUNT(*) FROM categoria WHERE id_categoria = :categoria");
+            $verificarCategoria->bindParam(":categoria", $categoria, PDO::PARAM_INT);
+            $verificarCategoria->execute();
+            $categoriaExiste = $verificarCategoria->fetchColumn();
+
+            if ($categoriaExiste == 0) {
+                return ["success" => false, "message" => "La categoría seleccionada no existe."];
             }
-            $objRespuesta = null;
-        } catch (Exception $e) {
-            $mensaje = array("codigo" => "401", "mensaje" => $e->getMessage());
+
+            // Insertar el producto
+            $stmt = Conexion::conectar()->prepare("INSERT INTO producto (nombre, id_categoria, descripcion, precio, stock) VALUES (:nombre, :categoria, :descripcion, :precio, :stock)");
+            $stmt->bindParam(":nombre", $nombre, PDO::PARAM_STR);
+            $stmt->bindParam(":categoria", $categoria, PDO::PARAM_INT);
+            $stmt->bindParam(":descripcion", $descripcion, PDO::PARAM_STR);
+            $stmt->bindParam(":precio", $precio, PDO::PARAM_STR);
+            $stmt->bindParam(":stock", $stock, PDO::PARAM_INT);
+
+            if ($stmt->execute()) {
+                return ["success" => true, "message" => "Producto registrado correctamente."];
+            } else {
+                return ["success" => false, "message" => "Error al registrar el producto."];
+            }
+        } catch (PDOException $e) {
+            return ["success" => false, "message" => $e->getMessage()];
         }
-        return $mensaje;
     }
 
     public static function mdlListarProductos() {
@@ -83,19 +91,14 @@ class ProductoModelo {
     }
 
     public static function mdlListarCategorias() {
-        $mensaje = array();
-
         try {
-            $objRespuesta = Conexion::conectar()->prepare("SELECT * FROM categoria");
-            $objRespuesta->execute();
-            $listaCategorias = $objRespuesta->fetchAll();
-            $mensaje = array("codigo" => "200", "listaCategorias" => $listaCategorias);
-            $objRespuesta = null;
-        } catch (Exception $e) {
-            $mensaje = array("codigo" => "401", "mensaje" => $e->getMessage());
+            $stmt = Conexion::conectar()->prepare("SELECT id_categoria, nombre FROM categoria");
+            $stmt->execute();
+            $categorias = $stmt->fetchAll(PDO::FETCH_ASSOC);
+            return ["success" => true, "listaCategorias" => $categorias];
+        } catch (PDOException $e) {
+            return ["success" => false, "message" => $e->getMessage()];
         }
-
-        return $mensaje;
     }
 
     public static function mdlEliminarProductos($ids) {
