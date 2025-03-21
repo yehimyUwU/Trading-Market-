@@ -10,6 +10,33 @@ body {
     font-family: sans-serif;
     margin: 0;
 }
+.cardBox{
+    position:relative;
+    width:100%;
+    padding: 20px;
+    display: grid;
+    grid-template-columns:repeat(4,1fr);
+    grid-gap: 30px;
+}
+
+.cardBox .card {
+    position: relative;
+    background: var(--white);
+    border-radius: 20px;
+    display: flex;
+    justify-content:space-between;
+    cursor: pointer;
+    box-shadow: 07px 25px rgba(0,0,0,0.08);
+}
+
+.cardBox .cardName{
+    position: relative;
+    background: (blue);
+}
+
+
+
+
 
 .container{
     width: 100%;
@@ -25,7 +52,7 @@ body {
 
 
 h1{
-    font-size: 120px;
+    font-size: 50px;
     color: transparent;
     -webkit-text-stroke:1px white ;
     background: url(../imagenes/metaverse-avatar-collage-concept.jpg);

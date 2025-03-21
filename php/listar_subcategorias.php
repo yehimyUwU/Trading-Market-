@@ -18,3 +18,4 @@ if (isset($_POST['id_categoria'])) {
     echo json_encode(["success" => false, "message" => "No se recibió el ID de la categoría."]);
 }
 ?>
+
