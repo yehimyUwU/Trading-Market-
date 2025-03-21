@@ -3,17 +3,20 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Misprodcutos - Trading Market</title>
+    <title>Mis productos - Trading Market</title>
     <!-- Fuentes -->
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <!-- Iconos -->
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0" />
     <!-- Estilos -->
+    <link rel="stylesheet" href="../Estilos/barraprove.css.css">
+
     <link rel="stylesheet" href="../Estilos/styles_P.css">
     <link rel="stylesheet" href="../Estilos/proevedores.css">
     <!-- JavaScript -->
 </head> 
 <body>
+
     <div id="barra-pro"></div>
 <br>
 <!-- Banner Principal -->
@@ -25,7 +28,7 @@
     <div class="header-container">
         <div class="header-text">
             <h1>Productos</h1>
-            <p>prodcuto, <span id="nombreVendedor">Vendedor</span></p>
+            <p>producto, <span id="nombreVendedor">Vendedor</span></p>
         </div>
 
         <div class="perfil-vendedor">
@@ -164,25 +167,6 @@
                           <label for="categoriaGeneral">Categoría*</label>
                           <select id="categoriaGeneral" name="categoriaGeneral" required onchange="actualizarSubcategorias()">
                               <option value="">Seleccione una categoría</option>
-                              <option value="supermercado">Supermercado</option>
-                              <option value="vehiculos">Vehículos</option>
-                              <option value="tecnologia">Tecnología</option>
-                              <option value="electrodomesticos">Electrodomésticos</option>
-                              <option value="deportes_y_fitness">Deportes y Fitness</option>
-                              <option value="herramientas">Herramientas</option>
-                              <option value="belleza_y_cuidado_personal">Belleza y Cuidado Personal</option>
-                              <option value="accesorios_de_vehiculos">Accesorios de Vehículos</option>
-                              <option value="construccion">Construcción</option>
-                              <option value="inmuebles">Inmuebles</option>
-                              <option value="moda">Moda</option>
-                              <option value="juegos_y_juguetes">Juegos y Juguetes</option>
-                              <option value="bebes">Bebés</option>
-                              <option value="productos_sustentables">Productos Sustentables</option>
-                              <option value="industria_y_oficina">Industria y Oficina</option>
-                              <option value="salud_y_equipo_medico">Salud y Equipo Médico</option>
-                              <option value="animales_y_mascotas">Animales y Mascotas</option>
-                              <option value="antiguedades_y_colecciones">Antigüedades y Colecciones</option>
-                              <option value="arte_papeleria_y_merceria">Arte, Papelería y Mercería</option>
                           </select>
                       </div>
           
@@ -249,64 +233,111 @@
             "Limpieza Electrodomésticos",
             "Climatización"
         ],
-        // ...otras categorías...
+        // Asegúrate de agregar todas las categorías aquí
+        deportes_y_fitness: ["Equipos", "Ropa Deportiva"],
+        herramientas: ["Manuales", "Eléctricas"],
+        belleza_y_cuidado_personal: ["Maquillaje", "Cuidado de la Piel"],
+        accesorios_de_vehiculos: ["Llantas", "Accesorios Exteriores"],
+        construccion: ["Materiales", "Herramientas"],
+        inmuebles: ["Casas", "Departamentos"],
+        moda: ["Ropa", "Zapatos"],
+        juegos_y_juguetes: ["Juguetes", "Juegos de Mesa"],
+        bebes: ["Ropa de Bebé", "Juguetes para Bebés"],
+        productos_sustentables: ["Ecológicos", "Reciclados"],
+        industria_y_oficina: ["Mobiliario", "Papelería"],
+        salud_y_equipo_medico: ["Equipos Médicos", "Medicamentos"],
+        animales_y_mascotas: ["Alimentos", "Accesorios"],
+        antiguedades_y_colecciones: ["Antigüedades", "Coleccionables"],
+        arte_papeleria_y_merceria: ["Arte", "Papelería"]
     };
 
     function actualizarSubcategorias() {
         const categoriaGeneral = document.getElementById('categoriaGeneral').value;
         const subcategoriaSelect = document.getElementById('subcategoria');
-        subcategoriaSelect.innerHTML = '';
+        subcategoriaSelect.innerHTML = '<option value="">Cargando subcategorías...</option>';
 
         if (!categoriaGeneral) {
-            subcategoriaSelect.innerHTML = '<option value="">Primero seleccione una categoría general</option>';
+            subcategoriaSelect.innerHTML = '<option value="">Primero seleccione una categoría válida</option>';
             return;
         }
 
-        subcategoriaSelect.innerHTML = '<option value="">Seleccione una subcategoría</option>';
-        categoriasProductos[categoriaGeneral].forEach(subcategoria => {
-            const option = document.createElement('option');
-            option.value = subcategoria.toLowerCase().replace(/ /g, '_');
-            option.textContent = subcategoria;
-            subcategoriaSelect.appendChild(option);
+        // Depuración: Verificar el ID de la categoría seleccionado
+        console.log("ID de categoría seleccionado:", categoriaGeneral);
+
+        // Fetch para obtener las subcategorías
+        fetch('../php/listar_subcategorias.php', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/x-www-form-urlencoded',
+            },
+            body: `id_categoria=${categoriaGeneral}`
+        })
+        .then(response => response.json())
+        .then(data => {
+            // Depuración: Verificar la respuesta del servidor
+            console.log("Respuesta del servidor para subcategorías:", data);
+
+            if (data.success) {
+                subcategoriaSelect.innerHTML = '<option value="">Seleccione una subcategoría</option>';
+                data.listaSubcategorias.forEach(subcategoria => {
+                    const option = document.createElement('option');
+                    option.value = subcategoria.id_subcategoria; // Usar el ID de la subcategoría
+                    option.textContent = subcategoria.nombre; // Mostrar el nombre de la subcategoría
+                    subcategoriaSelect.appendChild(option);
+                });
+            } else {
+                subcategoriaSelect.innerHTML = '<option value="">No hay subcategorías disponibles</option>';
+                alert('Error al cargar las subcategorías: ' + data.message);
+            }
+        })
+        .catch(error => {
+            console.error('Error al cargar las subcategorías:', error);
+            subcategoriaSelect.innerHTML = '<option value="">Error al cargar las subcategorías</option>';
         });
     }
 
     document.getElementById('publicarBtn').addEventListener('click', validarFormulario);
 
-    function validarFormulario() {
+    function validarFormulario() { 
         const mensajesError = document.querySelectorAll('.error-mensaje');
         mensajesError.forEach(mensaje => mensaje.textContent = '');
         let hayErrores = false;
+
         const nombre = document.getElementById('nombreProducto').value.trim();
         const descripcion = document.getElementById('descripcion').value.trim();
-        const precio = document.getElementById('precio').value;
+        const precio = parseFloat(document.getElementById('precio').value);
         const categoriaGeneral = document.getElementById('categoriaGeneral').value;
         const subcategoria = document.getElementById('subcategoria').value;
-        const stock = document.getElementById('stock').value;
+        const stock = parseInt(document.getElementById('stock').value);
         const imagen = document.getElementById('imagenProducto').files[0];
 
+        // Validaciones
         if (!nombre) {
-            document.getElementById('errorNombre').textContent = 'El nombre del producto es obligatorio';
+            document.getElementById('errorNombre').textContent = 'El nombre del producto es obligatorio.';
             hayErrores = true;
         }
         if (!descripcion) {
-            document.getElementById('errorDescripcion').textContent = 'La descripción es obligatoria';
+            document.getElementById('errorDescripcion').textContent = 'La descripción es obligatoria.';
             hayErrores = true;
         }
-        if (!precio || precio <= 0) {
-            document.getElementById('errorPrecio').textContent = 'Ingrese un precio válido';
+        if (isNaN(precio) || precio <= 0) {
+            document.getElementById('errorPrecio').textContent = 'Ingrese un precio válido.';
             hayErrores = true;
         }
         if (!categoriaGeneral) {
-            document.getElementById('errorCategoria').textContent = 'Seleccione una categoría';
+            document.getElementById('errorCategoria').textContent = 'Seleccione una categoría.';
             hayErrores = true;
         }
         if (!subcategoria) {
-            document.getElementById('errorCategoria').textContent = 'Seleccione una subcategoría';
+            document.getElementById('errorCategoria').textContent = 'Seleccione una subcategoría.';
+            hayErrores = true;
+        }
+        if (isNaN(stock) || stock <= 0) {
+            document.getElementById('errorStock').textContent = 'Ingrese un stock válido.';
             hayErrores = true;
         }
         if (!imagen) {
-            document.getElementById('errorImagen').textContent = 'Seleccione una imagen';
+            document.getElementById('errorImagen').textContent = 'Seleccione una imagen.';
             hayErrores = true;
         }
 
@@ -320,6 +351,15 @@
             formData.append('stock', stock);
             formData.append('imagen', imagen);
 
+            // Mostrar los valores enviados
+            alert(`Datos enviados:
+                Nombre: ${nombre}
+                Descripción: ${descripcion}
+                Precio: ${precio}
+                Categoría: ${categoriaGeneral}
+                Subcategoría: ${subcategoria}
+                Stock: ${stock}`);
+
             fetch('../php/productoControl.php', {
                 method: 'POST',
                 body: formData
@@ -327,20 +367,20 @@
             .then(response => response.json())
             .then(data => {
                 if (data.success) {
-                    alert('Producto publicado exitosamente');
+                    alert('Producto registrado exitosamente.');
                     document.getElementById('formularioProducto').reset();
                     cerrarModal();
                     agregarProductoAlGrid(data.producto);
                 } else {
-                    alert('Ocurrió un error al publicar el producto');
+                    alert('Error al registrar el producto: ' + data.message);
                 }
             })
             .catch(error => {
-                console.error('Error al publicar el producto:', error);
-                alert('Ocurrió un error al publicar el producto');
+                console.error('Error al registrar el producto:', error);
+                alert('Ocurrió un error al registrar el producto.');
             });
         } else {
-            alert('Por favor, corrija los errores en el formulario');
+            alert('Por favor, corrija los errores en el formulario.');
         }
     }
 
@@ -437,6 +477,90 @@
                 alert('Error al cargar los productos');
             });
     });
+
+    function previsualizarImagen(event) {
+        const input = event.target;
+        const previewContainer = document.getElementById('previewImagen');
+        previewContainer.innerHTML = ''; // Limpiar vista previa anterior
+
+        if (input.files && input.files[0]) {
+            const reader = new FileReader();
+            reader.onload = function (e) {
+                const img = document.createElement('img');
+                img.src = e.target.result;
+                img.alt = 'Vista previa de la imagen';
+                img.style.maxWidth = '100%';
+                img.style.borderRadius = '10px';
+                previewContainer.appendChild(img);
+            };
+            reader.readAsDataURL(input.files[0]);
+        }
+    }
+</script>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        // Cargar las categorías desde el backend
+        fetch('../php/listar_categorias.php')
+            .then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    const categoriaSelect = document.getElementById('categoriaGeneral');
+                    categoriaSelect.innerHTML = '<option value="">Seleccione una categoría</option>';
+                    data.listaCategorias.forEach(categoria => {
+                        const option = document.createElement('option');
+                        option.value = categoria.id_categoria; // Usar el ID de la categoría
+                        option.textContent = categoria.nombre; // Mostrar el nombre de la categoría
+                        categoriaSelect.appendChild(option);
+                    });
+                } else {
+                    alert('Error al cargar las categorías: ' + data.message);
+                }
+            })
+            .catch(error => {
+                console.error('Error al cargar las categorías:', error);
+                alert('Ocurrió un error al cargar las categorías.');
+            });
+    });
+
+    function actualizarSubcategorias() {
+        const categoriaGeneral = document.getElementById('categoriaGeneral').value;
+        const subcategoriaSelect = document.getElementById('subcategoria');
+        subcategoriaSelect.innerHTML = '<option value="">Cargando subcategorías...</option>';
+
+        if (!categoriaGeneral) {
+            subcategoriaSelect.innerHTML = '<option value="">Primero seleccione una categoría válida</option>';
+            return;
+        }
+
+        // Fetch para obtener las subcategorías
+        fetch('../php/listar_subcategorias.php', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/x-www-form-urlencoded',
+            },
+            body: `id_categoria=${categoriaGeneral}`
+        })
+            .then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    subcategoriaSelect.innerHTML = '<option value="">Seleccione una subcategoría</option>';
+                    data.listaSubcategorias.forEach(subcategoria => {
+                        const option = document.createElement('option');
+                        option.value = subcategoria.id_subcategoria; // Usar el ID de la subcategoría
+                        option.textContent = subcategoria.nombre; // Mostrar el nombre de la subcategoría
+                        subcategoriaSelect.appendChild(option);
+                    });
+                } else {
+                    subcategoriaSelect.innerHTML = '<option value="">No hay subcategorías disponibles</option>';
+                    alert('Error al cargar las subcategorías: ' + data.message);
+                }
+            })
+            .catch(error => {
+                console.error('Error al cargar las subcategorías:', error);
+                subcategoriaSelect.innerHTML = '<option value="">Error al cargar las subcategorías</option>';
+            });
+    }
 </script>
 <script src="barraprove.js.js"></script>
 </body>

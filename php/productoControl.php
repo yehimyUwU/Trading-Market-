@@ -59,11 +59,21 @@ class ProductoControl {
 if (isset($_POST["nombre"], $_POST["categoria"], $_POST["precio"], $_POST["descripcion"], $_POST["subcategoria"], $_POST["stock"])) {
     $objProducto = new ProductoControl();
     $objProducto->nombre = $_POST["nombre"];
-    $objProducto->categoria = 1;
+    $objProducto->categoria = $_POST["categoria"];
     $objProducto->precio = $_POST["precio"];
     $objProducto->descripcion = $_POST["descripcion"];
     $objProducto->subcategoria = $_POST["subcategoria"];
     $objProducto->stock = $_POST["stock"];
+
+    // Depuración: Verificar los datos recibidos
+    error_log("Datos recibidos en el backend:");
+    error_log("Nombre: " . $objProducto->nombre);
+    error_log("Categoría: " . $objProducto->categoria);
+    error_log("Precio: " . $objProducto->precio);
+    error_log("Descripción: " . $objProducto->descripcion);
+    error_log("Subcategoría: " . $objProducto->subcategoria);
+    error_log("Stock: " . $objProducto->stock);
+
     $objProducto->ctrRegistrarProducto();
 }
 

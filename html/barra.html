@@ -14,12 +14,12 @@
   <!-- Barra de Navegación -->
   <header>
     <nav class="navbar">
+      <div class="logo">
+        <a href="inico.html">
+          <img src="../imagenes/tran.png" alt="Trading Market Logo" class="logo-img">
+        </a>
+      </div>
       <div class="nav-links">
-        <div class="logo">
-          <a href="inico.html">
-            <img src="../imagenes/tran.png" alt="Trading Market Logo" class="logo-img">
-          </a>
-        </div>
         <div class="dropdown">
           <button class="btn dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
             Categorías
@@ -49,16 +49,16 @@
         <a href="ofertas.html">Ofertas</a>
         <a href="proveedores.html">Proveedores</a>
         <div class="search-box">
-          <input type="text" placeholder="Buscar productos...">
+          <input type="text" id="search-input" placeholder="Buscar productos...">
           <button>🔍</button>
-        </div>
-        <div class="user-actions">
-          <a href="carrito.html" class="cart-icon">🛒</a>
-          <div class="auth-buttons">
-            <div class="profile">
-              <a href="#" data-toggle="modal" data-target="#userMenuModal"><i class="fas fa-user-circle"></i></a>
-            </div>  
-          </div>
+      </div>
+      </div>
+      <div class="user-actions">
+        <a href="carrito.html" class="cart-icon">🛒</a>
+        <div class="auth-buttons">
+          <div class="profile">
+            <a href="#" data-toggle="modal" data-target="#userMenuModal"><i class="fas fa-user-circle"></i></a>
+          </div>  
         </div>
       </div>
     </nav>
@@ -75,8 +75,8 @@
                 </button>
             </div>
             <div class="modal-body text-center">
-                <button class="btn btn-primary btn-block" onclick="mostrarPerfil()">Ver Perfil</button>
-                <button class="btn btn-danger btn-block" onclick="cerrarSesion()">Cerrar Sesión</button>
+                <button class="btn btn-primary btn-block" onclick="mostrarPerfil()" style="background-color: #4677ff;">Ver Perfil</button>
+                <button class="btn btn-danger btn-block" onclick="cerrarSesion()" style="background-color: red;">Cerrar Sesión</button>
             </div>
         </div>
     </div>
