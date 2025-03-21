@@ -1,4 +1,4 @@
-fetch('barraprove.css.html')
+fetch('barraprove.html')
   .then(response => response.text())
   .then(html => {
     document.getElementById('barra-pro').innerHTML = html;
