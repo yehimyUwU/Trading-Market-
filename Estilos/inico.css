@@ -1139,3 +1139,15 @@ body {
   background: #cc5200;
 }
 
+.boton-movil {
+  position: sticky;
+  bottom: 20px;
+  right: 20px;
+  background-color: #4CAF50;
+  color: #fff;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
