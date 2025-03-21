@@ -59,13 +59,13 @@ class ProductoControl {
 if (isset($_POST["nombre"], $_POST["categoria"], $_POST["precio"], $_POST["descripcion"], $_POST["subcategoria"], $_POST["stock"])) {
     $objProducto = new ProductoControl();
     $objProducto->nombre = $_POST["nombre"];
-    $objProducto->categoria = $_POST["categoria"]; // Asegúrate de que coincida con la base de datos
+    $objProducto->categoria = $_POST["categoria"];
     $objProducto->precio = $_POST["precio"];
     $objProducto->descripcion = $_POST["descripcion"];
     $objProducto->subcategoria = $_POST["subcategoria"];
     $objProducto->stock = $_POST["stock"];
 
-    // Depuración
+    // Depuración: Verificar los datos recibidos
     error_log("Datos recibidos en el backend:");
     error_log("Nombre: " . $objProducto->nombre);
     error_log("Categoría: " . $objProducto->categoria);
