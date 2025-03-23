@@ -1199,10 +1199,33 @@ body {
     }
 }
 
-/*ChatBot*/
+/* ChatBot */
+
+#openChatbot {
+  width: 60px;
+  height: 60px;
+  background-color: #ff5100; 
+  border: none;
+  border-radius: 50%; 
+  color: white;
+  font-size: 16px;
+  cursor: pointer;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: fixed;
+  bottom: 20px;
+  right: 20px; 
+  box-shadow: 0px 4px 6px rgba(168, 9, 9, 0.3);
+}
+
+#openChatbot:hover {
+  background-color: #b34200; 
+}
+
 /* Estilo del modal */
 .modal {
-  display: none; /* Oculto por defecto */
+  display: none; 
   position: fixed;
   top: 0;
   left: 0;
@@ -1219,7 +1242,7 @@ body {
 .modal-content {
   width: 90%;
   max-width: 400px;
-  background: #fff;
+  background: #ffffff;
   padding: 20px;
   border-radius: 10px;
   text-align: center;
@@ -1245,9 +1268,32 @@ body {
   overflow-y: auto;
   border: 1px solid #ccc;
   padding: 10px;
-  background: #f9f9f9;
+  background: #ccbbf1;
   border-radius: 5px;
   margin-bottom: 10px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px; 
+}
+
+/* Mensajes del usuario */
+.user-message {
+  background-color: #4400ff;
+  color: white;
+  padding: 10px;
+  border-radius: 15px;
+  align-self: flex-end; 
+  max-width: 75%;
+}
+
+/* Mensajes del chatbot */
+.bot-message {
+  background-color: #ccbbf1;
+  color: #333;
+  padding: 10px;
+  border-radius: 15px;
+  align-self: flex-start; 
+  max-width: 75%;
 }
 
 #chatbotInput {
@@ -1262,4 +1308,12 @@ body {
   margin-left: 10px;
 }
 
+ion-icon{
+  width: 50px;
+  height: 50px;
+}
 
+.hbot{
+  font-weight: 600;
+  color: var(--blue);
+}

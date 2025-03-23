@@ -74,22 +74,22 @@
 </div>
 
 <!--ChatBot-->
-<!-- Botón para abrir el modal -->
-<button id="openChatbot" class="btn btn-primary">Abrir Chatbot</button>
+<button id="openChatbot" class="btn btn-primary">
+    <ion-icon name="bug-outline"></ion-icon>
+</button>
 
-<!-- Modal del Chatbot -->
 <div id="chatbotModal" class="modal">
-  <div class="modal-content">
+<div class="modal-content">
     <span class="close">&times;</span>
-    <h2>Chatbot</h2>
+    <h2 class="hbot">TradiBot</h2>
     <div id="chatbotContainer">
-      <div id="chatbotMessages">
-        <!-- Los mensajes aparecerán aquí -->
-      </div>
-      <input type="text" id="chatbotInput" placeholder="Escribe tu mensaje..." />
-      <button id="sendMessage" class="btn btn-primary">Enviar</button>
+    <div id="chatbotMessages">
+        <!-- Los mensajes van aquí -->
     </div>
-  </div>
+    <input type="text" id="chatbotInput" placeholder="Escribe tu mensaje..." />
+    <button id="sendMessage" class="btn btn-primary">Enviar</button>
+    </div>
+</div>
 </div>
 
 
@@ -171,5 +171,7 @@
 <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+<script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
+<script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
 </body>
 </html>
