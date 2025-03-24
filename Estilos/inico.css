@@ -239,6 +239,20 @@ body {
     position: relative;
     width: 100%;
     height: 500px;
+    border-radius: 20px; /* Bordes redondeados para todo el carrusel */
+    overflow: hidden; /* Asegura que los bordes redondeados se apliquen correctamente */
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3); /* Sombra para el carrusel */
+    margin: 20px auto; /* Centrar el carrusel */
+    border: 5px solid rgba(255, 255, 255, 0.5); /* Borde semitransparente */
+    transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out; /* Animación al pasar el mouse */
+    background: linear-gradient(135deg, rgba(255, 255, 255, 0.1), rgba(0, 0, 0, 0.1)); /* Fondo degradado */
+    backdrop-filter: blur(10px); /* Efecto de desenfoque */
+}
+
+.carousel:hover {
+    transform: scale(1.02); /* Efecto de agrandamiento al pasar el mouse */
+    box-shadow: 0 15px 40px rgba(0, 0, 0, 0.5); /* Sombra más intensa */
+    border-color: rgba(255, 255, 255, 0.8); /* Cambiar el color del borde */
 }
 
 .carousel-inner {
@@ -270,6 +284,13 @@ body {
     height: 100;
     object-fit: cover;
     z-index: 1;
+    border-radius: 15px; /* Bordes redondeados para las imágenes */
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3); /* Sombra para las imágenes */
+    transition: transform 0.3s ease-in-out; /* Animación al pasar el mouse */
+}
+
+.carousel-item img:hover {
+    transform: scale(1.05); /* Efecto de zoom al pasar el mouse */
 }
 
 .carousel-content {
@@ -334,6 +355,69 @@ body {
     background: white;
 }
 
+.carousel-caption {
+    background: rgba(0, 0, 0, 0.6); /* Fondo oscuro semitransparente */
+    padding: 20px;
+    border-radius: 10px; /* Bordes redondeados */
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3); /* Sombra para el fondo */
+}
+
+.carousel-caption h1 {
+    font-size: 3rem;
+    font-weight: bold;
+    text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.7); /* Sombra para el texto */
+    color: #ffcc00; /* Color llamativo */
+}
+
+.carousel-caption p {
+    font-size: 1.5rem;
+    text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.5); /* Sombra para el texto */
+    color: #ffffff;
+}
+
+.carousel-caption .btn {
+    background-color: #7396f7; /* Color vibrante */
+    border: none;
+    font-size: 1.2rem;
+    padding: 10px 20px;
+    border-radius: 25px; /* Bordes redondeados */
+    transition: background-color 0.3s ease, transform 0.3s ease;
+}
+
+.carousel-caption .btn:hover {
+    background-color: #cc5200; /* Color más oscuro al pasar el mouse */
+    transform: scale(1.1); /* Efecto de agrandamiento */
+}
+
+/* Indicadores del carrusel */
+.carousel-indicators li {
+    background-color: #ff6600; /* Color vibrante */
+    border-radius: 50%; /* Forma circular */
+    width: 12px;
+    height: 12px;
+    transition: background-color 0.3s ease, transform 0.3s ease; /* Animación */
+}
+
+.carousel-indicators .active {
+    background-color: #028ac9; /* Color más oscuro para el indicador activo */
+    transform: scale(1.3); /* Agrandar el indicador activo */
+}
+
+/* Controles del carrusel */
+.carousel-control-prev-icon,
+.carousel-control-next-icon {
+    background-color: rgba(0, 0, 0, 0.5); /* Fondo oscuro semitransparente */
+    border-radius: 50%; /* Forma circular */
+    padding: 10px; /* Espaciado interno */
+    transition: background-color 0.3s ease, transform 0.3s ease; /* Animación */
+}
+
+.carousel-control-prev-icon:hover,
+.carousel-control-next-icon:hover {
+    background-color: rgba(0, 0, 0, 0.8); /* Fondo más oscuro al pasar el mouse */
+    transform: scale(1.2); /* Agrandar el control al pasar el mouse */
+}
+
 .banner h1 {
     font-size: 3em;
     color: #8CE8EB;
@@ -380,17 +464,18 @@ body {
 }
 
 .producto {
-    background: #ff52024d ;
-    backdrop-filter: blur(5px);
+    background: rgba(255, 82, 2, 0.3); /* Asegurar que el color sea semitransparente */
+    backdrop-filter: blur(5px); /* Efecto de desenfoque */
     padding: 15px;
-    border-radius: 15px;
+    border-radius: 30px !important; /* Bordes redondeados */
+    overflow: hidden; /* Asegurar que el contenido respete los bordes redondeados */
+    border: 2px solid rgba(255, 255, 255, 0.2); /* Agregar un borde visible */
     width: 200px;
     height: 350px;
     text-align: center;
     box-shadow: 0 4px 15px rgba(255, 137, 2, 0.24);
     transition: all 0.3s ease;
     margin: 15px auto;
-    border: 1px solid rgba(255, 255, 255, 0.2);
     display: flex;
     flex-direction: column;
     justify-content: space-between;
@@ -934,21 +1019,26 @@ body {
 /* Tarjetas */
 .card {
     border: none;
-    border-radius: 12px;
-    overflow: hidden;
+    border-radius: 30px; /* Bordes redondeados */
+    overflow: hidden; /* Asegurar que el contenido respete los bordes redondeados */
     transition: transform 0.3s ease, box-shadow 0.3s ease;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    background-color: #ffcc80;
+    box-shadow: 0 6px 12px rgba(255, 255, 255, 0.15); /* Sombra inicial */
+    background-color: #f9f9ff; /* Fondo más claro */
+    padding: 15px;
+    margin: 30px 0; /* Espacio adicional arriba y abajo */
 }
 
 .card:hover {
-    transform: translateY(-10px);
-    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+    transform: scale(1.05); /* Efecto de agrandamiento */
+    box-shadow: 0px 10px 30px rgba(255, 255, 255, 0.3); /* Sombra más intensa */
+    transition: 0.3s ease-in-out; /* Animación suave */
 }
 
 .card-img-top {
     height: 200px;
     object-fit: cover;
+    border-radius: 10px;
+    margin-bottom: 15px;
 }
 
 .card-body {
@@ -957,34 +1047,33 @@ body {
 }
 
 .card-title {
-    font-size: 1.3rem;
+    font-size: 1.4rem;
     font-weight: bold;
     margin-bottom: 10px;
-    color: #e65100;
+    color: #333;
 }
 
 .card-text {
     font-size: 1rem;
-    color: #bf360c;
+    color: #666;
     margin-bottom: 15px;
 }
 
 /* Botones personalizados */
 .card .btn {
-    background-color: #e65100;
+    background-color: #545fff; /* Azul */
     border: none;
     border-radius: 25px;
     padding: 10px 20px;
     font-size: 1rem;
-    transition: background-color 0.3s;
     color: #fff;
     cursor: pointer;
-    display: inline-block;
-    text-decoration: none;
+    transition: background-color 0.3s ease, transform 0.3s ease;
 }
 
 .card .btn:hover {
-    background-color: #5334ff;
+    background-color: rgb(77, 133, 255); /* Azul más claro */
+    transform: scale(1.05);
 }
 
 .carousel-caption {
@@ -1031,7 +1120,7 @@ body {
 /* Estilos para las tarjetas */
 .card {
   border: none;
-  border-radius: 15px;
+  border-radius: 60px; /* Bordes redondeados */
   overflow: hidden;
   box-shadow: 0px 5px 20px rgba(0, 0, 0, 0.2);
   transition: transform 0.3s ease, box-shadow 0.3s ease;
