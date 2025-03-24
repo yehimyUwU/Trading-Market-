@@ -89,9 +89,14 @@ body {
 }
 
 .logo-img {
-    width: 180px;  /* Ajusta este valor según necesites */
-    height: auto;
-    margin-right: 10px;
+    width: 300px; /* Ancho fijo */
+    height: 150px; /* Altura fija */
+    object-fit: contain; /* Ajustar la imagen sin distorsión */
+    transition: transform 0.3s ease; /* Animación al pasar el mouse */
+}
+
+.logo-img:hover {
+    transform: scale(1.1); /* Efecto de agrandamiento al pasar el mouse */
 }
 
 /* Quitar el texto "Trading Market" que estaba antes */
@@ -593,14 +598,13 @@ footer p {
 }
 
 .cart-icon {
-    font-size: 1.5em;
-    text-decoration: none;
-    color: white;
-    transition: color 0.3s;
+    font-size: 30px; /* Aumentar el tamaño del ícono */
+    color: white; /* Asegurar que el color sea visible */
+    transition: transform 0.3s ease; /* Animación al pasar el mouse */
 }
 
 .cart-icon:hover {
-    color: #e2740c;
+    transform: scale(1.2); /* Efecto de agrandamiento al pasar el mouse */
 }
 
 .auth-buttons {
@@ -994,12 +998,7 @@ footer p {
     align-items: center;
   }
   
-  .logo-img {
-    width: 150px;
-    height: 80px;
-    margin-right: 20px;
-  }
-
+  
   /* Estilos generales */
 body {
     font-family: Arial, sans-serif;
@@ -1402,4 +1401,14 @@ ion-icon{
 .hbot{
   font-weight: 600;
   color: var(--blue);
+}
+
+.auth-buttons .profile a i {
+    font-size: 30px; /* Reducir el tamaño del ícono */
+    color: white; /* Asegurar que el color sea visible */
+    transition: transform 0.3s ease; /* Animación al pasar el mouse */
+}
+
+.auth-buttons .profile a i:hover {
+    transform: scale(1.2); /* Efecto de agrandamiento al pasar el mouse */
 }
