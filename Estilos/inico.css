@@ -279,13 +279,10 @@ body {
 }
 
 .carousel-item img {
-    position: absolute;
     width: 100%;
-    height: 100;
-    object-fit: cover;
-    z-index: 1;
-    border-radius: 15px; /* Bordes redondeados para las imágenes */
-    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3); /* Sombra para las imágenes */
+    height: 500px; /* Altura fija para mantener consistencia */
+    object-fit: cover; /* Ajustar la imagen sin distorsión */
+    border-radius: 15px; /* Bordes redondeados */
     transition: transform 0.3s ease-in-out; /* Animación al pasar el mouse */
 }
 
@@ -464,7 +461,7 @@ body {
 }
 
 .producto {
-    background: rgba(255, 82, 2, 0.3); /* Asegurar que el color sea semitransparente */
+    background: rgba(2, 91, 255, 0.3); /* Asegurar que el color sea semitransparente */
     backdrop-filter: blur(5px); /* Efecto de desenfoque */
     padding: 15px;
     border-radius: 30px !important; /* Bordes redondeados */
