@@ -4,6 +4,9 @@ include_once "conexion.php";
 if (isset($_POST['id_categoria'])) {
     $id_categoria = $_POST['id_categoria'];
 
+    // Depuración: Registrar el ID recibido
+    error_log("ID de categoría recibido: " . $id_categoria);
+
     try {
         $stmt = Conexion::conectar()->prepare("SELECT id_subcategoria, nombre FROM subcategoria WHERE id_categoria = :id_categoria");
         $stmt->bindParam(":id_categoria", $id_categoria, PDO::PARAM_INT);
