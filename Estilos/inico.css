@@ -1199,3 +1199,121 @@ body {
     }
 }
 
+/* ChatBot */
+
+#openChatbot {
+  width: 60px;
+  height: 60px;
+  background-color: #ff5100; 
+  border: none;
+  border-radius: 50%; 
+  color: white;
+  font-size: 16px;
+  cursor: pointer;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: fixed;
+  bottom: 20px;
+  right: 20px; 
+  box-shadow: 0px 4px 6px rgba(168, 9, 9, 0.3);
+}
+
+#openChatbot:hover {
+  background-color: #b34200; 
+}
+
+/* Estilo del modal */
+.modal {
+  display: none; 
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+  z-index: 1000;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+/* Contenido del modal */
+.modal-content {
+  width: 90%;
+  max-width: 400px;
+  background: #ffffff;
+  padding: 20px;
+  border-radius: 10px;
+  text-align: center;
+  position: relative;
+}
+
+/* Cerrar botón */
+.close {
+  position: absolute;
+  top: 10px;
+  right: 15px;
+  font-size: 18px;
+  cursor: pointer;
+  color: #333;
+}
+
+#chatbotContainer {
+  margin-top: 20px;
+}
+
+#chatbotMessages {
+  height: 200px;
+  overflow-y: auto;
+  border: 1px solid #ccc;
+  padding: 10px;
+  background: #ccbbf1;
+  border-radius: 5px;
+  margin-bottom: 10px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px; 
+}
+
+/* Mensajes del usuario */
+.user-message {
+  background-color: #4400ff;
+  color: white;
+  padding: 10px;
+  border-radius: 15px;
+  align-self: flex-end; 
+  max-width: 75%;
+}
+
+/* Mensajes del chatbot */
+.bot-message {
+  background-color: #ccbbf1;
+  color: #333;
+  padding: 10px;
+  border-radius: 15px;
+  align-self: flex-start; 
+  max-width: 75%;
+}
+
+#chatbotInput {
+  width: calc(100% - 80px);
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+}
+
+#sendMessage {
+  padding: 10px 15px;
+  margin-left: 10px;
+}
+
+ion-icon{
+  width: 50px;
+  height: 50px;
+}
+
+.hbot{
+  font-weight: 600;
+  color: var(--blue);
+}
