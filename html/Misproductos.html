@@ -170,6 +170,46 @@
                           </select>
                           <span id="errorCategoria" class="error-mensaje"></span>
                       </div>
+                      <script>
+                          function actualizarSubcategorias() {
+                              const categoriaGeneral = document.getElementById('categoriaGeneral').value;
+                              const subcategoriaSelect = document.getElementById('subcategoria');
+                              subcategoriaSelect.innerHTML = '<option value="">Cargando subcategorías...</option>';
+              
+                              if (!categoriaGeneral) {
+                                  subcategoriaSelect.innerHTML = '<option value="">Primero seleccione una categoría válida</option>';
+                                  return;
+                              }
+              
+                              // Fetch para obtener las subcategorías desde el backend
+                              fetch('../php/listar_subcategorias.php', {
+                                  method: 'POST',
+                                  headers: {
+                                      'Content-Type': 'application/x-www-form-urlencoded',
+                                  },
+                                  body: `id_categoria=${categoriaGeneral}`
+                              })
+                              .then(response => response.json())
+                              .then(data => {
+                                  if (data.success) {
+                                      subcategoriaSelect.innerHTML = '<option value="">Seleccione una subcategoría</option>';
+                                      data.listaSubcategorias.forEach(subcategoria => {
+                                          const option = document.createElement('option');
+                                          option.value = subcategoria.id_subcategoria; // ID de la subcategoría
+                                          option.textContent = subcategoria.nombre; // Nombre de la subcategoría
+                                          subcategoriaSelect.appendChild(option);
+                                      });
+                                  } else {
+                                      subcategoriaSelect.innerHTML = '<option value="">No hay subcategorías disponibles</option>';
+                                      alert('Error al cargar las subcategorías: ' + data.message);
+                                  }
+                              })
+                              .catch(error => {
+                                  console.error('Error al cargar las subcategorías:', error);
+                                  subcategoriaSelect.innerHTML = '<option value="">Error al cargar las subcategorías</option>';
+                              });
+                          }
+                      </script>
                   </div>
           
                   <div class="form-group">
