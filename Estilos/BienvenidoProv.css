@@ -34,9 +34,45 @@ body {
     background: (blue);
 }
 
+.card {
+    background-color: #f5f5f5;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    padding: 20px;
+    text-align: center;
+    margin-bottom: 20px;
+}
 
+.welcome-stats {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 20px;
+}
 
+.stat-item .stat-icon {
+    font-size: 36px;
+    color: #274272;
+    margin-bottom: 10px;
+}
 
+.welcome-tutorials ul {
+    list-style: none;
+    padding: 0;
+}
+
+.welcome-tutorials li {
+    margin-bottom: 10px;
+}
+
+.welcome-tutorials a {
+    text-decoration: none;
+    color: #007bff;
+    transition: color 0.3s;
+}
+
+.welcome-tutorials a:hover {
+    color: #0056b3;
+}
 
 .container{
     width: 100%;
