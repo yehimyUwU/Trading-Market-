@@ -103,6 +103,20 @@
         </div>
     </div>
 </section>
+
+<a class="btn d-flex align-items-center justify-content-between bg-primary text-white"
+   style="position: fixed; bottom: 20px; left: 20px; height: 50px; width: 180px; padding: 10px 20px; border-radius: 25px; cursor: pointer; box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.3); z-index: 1000;"
+   onclick="scrollToTop()">
+    <i class="fa fa-arrow-up"></i>
+    <span style="flex: 1; text-align: center;">Volver al inicio</span>
+</a>
+
+<script>
+    function scrollToTop() {
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+</script>
+
 <footer class="pie-pagina">
     <div class="grupo-1">
         <div class="box">
