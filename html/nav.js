@@ -5,28 +5,31 @@ fetch('barra.html')
   });
 
   document.addEventListener("DOMContentLoaded", function () {
-    // Esperar a que la barra de navegación se cargue antes de buscar el input
     setTimeout(() => {
         const searchInput = document.getElementById("search-input");
-        if (!searchInput) return; // Evitar errores si no se encuentra el input
-        
-        const products = document.querySelectorAll(".card"); // Todos los productos
+        if (!searchInput) return;
+
+        const products = document.querySelectorAll(".card"); 
 
         searchInput.addEventListener("input", function () {
-            const searchText = searchInput.value.toLowerCase(); // Convierte a minúsculas
+            const searchText = searchInput.value.toLowerCase();
 
             products.forEach(product => {
-                const title = product.querySelector(".card-title").textContent.toLowerCase();
+                const titleElement = product.querySelector(".card-title");
+                if (!titleElement) return; // Evita errores si no encuentra título
+
+                const title = titleElement.textContent.toLowerCase();
                 
                 if (title.includes(searchText)) {
-                    product.parentElement.style.display = "block"; // Muestra el producto
+                    product.style.display = "block";
                 } else {
-                    product.parentElement.style.display = "none"; // Oculta el producto
+                    product.style.display = "none";
                 }
             });
         });
-    }, 500); // Retraso para asegurarse de que la barra de navegación se cargue
+    }, 500);
 });
+
 
 function cerrarSesion() {
     fetch('../php/logout.php')
