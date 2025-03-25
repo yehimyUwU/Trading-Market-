@@ -16,9 +16,10 @@ class ProductoModelo {
             }
 
             // Insertar el producto
-            $stmt = Conexion::conectar()->prepare("INSERT INTO producto (nombre, id_categoria, descripcion, precio, stock) VALUES (:nombre, :categoria, :descripcion, :precio, :stock)");
+            $stmt = Conexion::conectar()->prepare("INSERT INTO producto (nombre, id_categoria, id_subcategoria, descripcion, precio, stock) VALUES (:nombre, :categoria, :subcategoria, :descripcion, :precio, :stock)");
             $stmt->bindParam(":nombre", $nombre, PDO::PARAM_STR);
             $stmt->bindParam(":categoria", $categoria, PDO::PARAM_INT);
+            $stmt->bindParam(":subcategoria", $subcategoria, PDO::PARAM_INT);
             $stmt->bindParam(":descripcion", $descripcion, PDO::PARAM_STR);
             $stmt->bindParam(":precio", $precio, PDO::PARAM_STR);
             $stmt->bindParam(":stock", $stock, PDO::PARAM_INT);
@@ -26,10 +27,10 @@ class ProductoModelo {
             if ($stmt->execute()) {
                 return ["success" => true, "message" => "Producto registrado correctamente."];
             } else {
-                return ["success" => false, "message" => "Error al registrar el producto."];
+                return ["success" => false, "message" => "Error al registrar el producto. Verifica los datos enviados."];
             }
         } catch (PDOException $e) {
-            return ["success" => false, "message" => $e->getMessage()];
+            return ["success" => false, "message" => "Error de base de datos: " . $e->getMessage()];
         }
     }
 
