@@ -86,24 +86,35 @@ document.addEventListener('DOMContentLoaded', function() {
 });
 
 document.addEventListener("DOMContentLoaded", function () {
-    const contenedorProductos = document.getElementById("productos-container");
-    
-    if (!contenedorProductos) return; // Si no hay contenedor, salir
+    let productosOriginales = [];
 
-    // Obtener la categoría desde un atributo `data-categoria`
-    const categoria = contenedorProductos.getAttribute("data-categoria");
+    function cargarProductos() {
+        const contenedorProductos = document.getElementById("productos-container");
+        if (!contenedorProductos) return;
 
-    fetch(`../php/obtener_productos.php?categoria=${encodeURIComponent(categoria)}`)
-        .then(response => response.json())
-        .then(data => {
-            if (data.error) {
-                contenedorProductos.innerHTML = `<p>${data.error}</p>`;
-                return;
-            }
+        const categoria = contenedorProductos.getAttribute("data-categoria");
 
-            let productosHTML = "";
-            data.forEach(producto => {
-                productosHTML += `
+        fetch(`../php/obtener_productos.php?categoria=${encodeURIComponent(categoria)}`)
+            .then(response => response.json())
+            .then(data => {
+                if (data.error) {
+                    contenedorProductos.innerHTML = `<p>${data.error}</p>`;
+                    return;
+                }
+
+                productosOriginales = data; 
+                mostrarProductos(productosOriginales);
+            })
+            .catch(error => console.error("Error al cargar productos:", error));
+    }
+
+    function mostrarProductos(productos) {
+        const contenedor = document.getElementById("productos-container");
+        contenedor.innerHTML = "";
+
+        productos.forEach(producto => {
+            const productoHTML = `
+                <div class="col-md-4">
                     <div class="card">
                         <img src="${producto.imagen}" class="card-img-top" alt="${producto.nombre}">
                         <div class="card-body">
@@ -111,34 +122,60 @@ document.addEventListener("DOMContentLoaded", function () {
                             <p class="card-text">${producto.descripcion}</p>
                             <p class="card-price">$${producto.precio}</p>
                             <button class="btn btn-primary agregar-carrito" data-id="${producto.id_producto}">Agregar al carrito</button>
+                            <button class="btn btn-info ver-detalles" data-id="${producto.id_producto}">Ver detalles</button>
                         </div>
                     </div>
-                `;
+                </div>
+            `;
+            contenedor.innerHTML += productoHTML;
+        });
+
+        document.querySelectorAll(".agregar-carrito").forEach(btn => {
+            btn.addEventListener("click", function () {
+                let idProducto = this.getAttribute("data-id");
+                agregarAlCarrito(idProducto);
             });
+        });
 
-            contenedorProductos.innerHTML = productosHTML;
-
-            // Agregar funcionalidad al botón "Agregar al carrito"
-            document.querySelectorAll(".agregar-carrito").forEach(btn => {
-                btn.addEventListener("click", function () {
-                    let idProducto = this.getAttribute("data-id");
-                    agregarAlCarrito(idProducto);
-                });
+        document.querySelectorAll(".ver-detalles").forEach(btn => {
+            btn.addEventListener("click", function () {
+                let idProducto = this.getAttribute("data-id");
+                mostrarDetalles(idProducto);
             });
-        })
-        .catch(error => console.error("Error al cargar productos:", error));
-});
-
-function agregarAlCarrito(idProducto) {
-    let carrito = JSON.parse(localStorage.getItem("carrito")) || [];
-    let productoExistente = carrito.find(item => item.id == idProducto);
-
-    if (productoExistente) {
-        productoExistente.cantidad++;
-    } else {
-        carrito.push({ id: idProducto, cantidad: 1 });
+        });
     }
 
-    localStorage.setItem("carrito", JSON.stringify(carrito));
-    alert("Producto agregado al carrito");
-}
+    function mostrarDetalles(idProducto) {
+        let producto = productosOriginales.find(p => p.id_producto == idProducto);
+        if (!producto) return;
+
+        document.getElementById("modalNombre").textContent = producto.nombre;
+        document.getElementById("modalImagen").src = producto.imagen;
+        document.getElementById("modalDescripcion").textContent = producto.descripcion;
+        document.getElementById("modalPrecio").textContent = `$${producto.precio}`;
+
+        $("#productoModal").modal("show");
+    }
+
+    function filtrarProductos() {
+        let productosFiltrados = [...productosOriginales];
+
+        const orden = document.getElementById("ordenar").value;
+        const minPrecio = parseFloat(document.getElementById("precio-min").value) || 0;
+        const maxPrecio = parseFloat(document.getElementById("precio-max").value) || Infinity;
+
+        productosFiltrados = productosFiltrados.filter(p => p.precio >= minPrecio && p.precio <= maxPrecio);
+
+        productosFiltrados.sort((a, b) => {
+            if (orden === "az") return a.nombre.localeCompare(b.nombre);
+            if (orden === "za") return b.nombre.localeCompare(a.nombre);
+        });
+
+        mostrarProductos(productosFiltrados);
+    }
+
+    cargarProductos();
+
+    document.querySelector("button[onclick='filtrarProductos()']").addEventListener("click", filtrarProductos);
+});
+

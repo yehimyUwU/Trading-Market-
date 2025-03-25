@@ -69,9 +69,9 @@ if (isset($_POST["nombre"], $_POST["categoria"], $_POST["precio"], $_POST["descr
     error_log("Datos recibidos en el backend:");
     error_log("Nombre: " . $objProducto->nombre);
     error_log("Categoría: " . $objProducto->categoria);
+    error_log("Subcategoría: " . $objProducto->subcategoria);
     error_log("Precio: " . $objProducto->precio);
     error_log("Descripción: " . $objProducto->descripcion);
-    error_log("Subcategoría: " . $objProducto->subcategoria);
     error_log("Stock: " . $objProducto->stock);
 
     $objProducto->ctrRegistrarProducto();
