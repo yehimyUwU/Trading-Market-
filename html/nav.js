@@ -81,3 +81,61 @@ document.addEventListener('DOMContentLoaded', function() {
         perfilContenedor.addEventListener('click', cerrarPerfil);
     }
 });
+
+document.addEventListener("DOMContentLoaded", function () {
+    const contenedorProductos = document.getElementById("productos-container");
+    
+    if (!contenedorProductos) return; // Si no hay contenedor, salir
+
+    // Obtener la categoría desde un atributo `data-categoria`
+    const categoria = contenedorProductos.getAttribute("data-categoria");
+
+    fetch(`../php/obtener_productos.php?categoria=${encodeURIComponent(categoria)}`)
+        .then(response => response.json())
+        .then(data => {
+            if (data.error) {
+                contenedorProductos.innerHTML = `<p>${data.error}</p>`;
+                return;
+            }
+
+            let productosHTML = "";
+            data.forEach(producto => {
+                productosHTML += `
+                    <div class="card">
+                        <img src="${producto.imagen}" class="card-img-top" alt="${producto.nombre}">
+                        <div class="card-body">
+                            <h5 class="card-title">${producto.nombre}</h5>
+                            <p class="card-text">${producto.descripcion}</p>
+                            <p class="card-price">$${producto.precio}</p>
+                            <button class="btn btn-primary agregar-carrito" data-id="${producto.id_producto}">Agregar al carrito</button>
+                        </div>
+                    </div>
+                `;
+            });
+
+            contenedorProductos.innerHTML = productosHTML;
+
+            // Agregar funcionalidad al botón "Agregar al carrito"
+            document.querySelectorAll(".agregar-carrito").forEach(btn => {
+                btn.addEventListener("click", function () {
+                    let idProducto = this.getAttribute("data-id");
+                    agregarAlCarrito(idProducto);
+                });
+            });
+        })
+        .catch(error => console.error("Error al cargar productos:", error));
+});
+
+function agregarAlCarrito(idProducto) {
+    let carrito = JSON.parse(localStorage.getItem("carrito")) || [];
+    let productoExistente = carrito.find(item => item.id == idProducto);
+
+    if (productoExistente) {
+        productoExistente.cantidad++;
+    } else {
+        carrito.push({ id: idProducto, cantidad: 1 });
+    }
+
+    localStorage.setItem("carrito", JSON.stringify(carrito));
+    alert("Producto agregado al carrito");
+}

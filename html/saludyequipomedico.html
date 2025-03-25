@@ -1,30 +1,79 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="../Estilos/inico.css" />
     <link rel="stylesheet" href="../Estilos/estilos.css" />
+    <link rel="stylesheet" href="../Estilos/salud.css" />
     <script src="https://kit.fontawesome.com/1e7ede300e.js" crossorigin="anonymous"></script>
-    <title>Salud y equipo medico</title>
-    <link rel="stylesheet" href="styles.css"> <!-- Archivo CSS separado -->
-    <!-- Agregar Font Awesome -->
+    <title>Salud y Equipo Médico</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
-    <!-- Agregar Bootstrap CSS -->
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"><title>Document</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <style>
+        .hero-box {
+            background-color: rgba(0, 0, 0, 0.644);
+            color: white;
+            padding: 50px;
+            text-align: center;
+        }
+    </style>
 </head>
 <body>
     <div id="nav-container"></div>
-<br>
-<!-- Banner Principal -->
-<div id="nav-container"></div>
-<br><br><br><br><br>
+    <br>
+    <!-- Banner Principal -->
+    <div id="nav-container"></div>
+    <br><br><br><br><br><br><br>
+    
+    <!-- Sección de Bienvenida -->
+    <div class="hero-box">
+        <h1 class="display-4">Cuidado y Bienestar a tu Alcance</h1>
+        <h2>Productos Médicos de Alta Calidad</h2>
+        <div class="container text-center mt-5">
+            <p>Explora nuestra selección de equipos médicos para el cuidado de tu salud.</p>
+        </div>
+    </div>
+    
+    <!-- Sección de Productos -->
+    <div class="container mt-5">
+        <h2 class="text-center mb-4">Productos de Salud y Equipo Médico</h2>
+        <div id="productos-container" class="row" data-categoria="Salud y equipo médico"></div>
+    </div>
 
+    <footer class="pie-pagina mt-5">
+        <div class="grupo-1">
+            <div class="box">
+                <figure>
+                    <a href="#">
+                        <img src="../imagenes/tran.png" alt="Logo de SLee Dw">
+                    </a>
+                </figure>
+            </div>
+            <div class="box">
+                <h2>SOBRE NOSOTROS</h2>
+                <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Odio, ipsa?</p>
+                <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Odio, ipsa?</p>
+            </div>
+            <div class="box">
+                <h2>SÍGUENOS</h2>
+                <div class="red-social">
+                    <a href="#" class="fa fa-facebook"></a>
+                    <a href="#" class="fa fa-instagram"></a>
+                    <a href="#" class="fa fa-twitter"></a>
+                    <a href="#" class="fa fa-youtube"></a>
+                </div>
+            </div>
+        </div>
+        <div class="grupo-2">
+            <small>&copy; 2024 <b>SLee Dw</b> - Todos los Derechos Reservados.</small>
+        </div>
+    </footer>
 
-<script src="nav.js"></script>
-<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
-<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
-
+    <!-- Scripts -->
+    <script src="nav.js"></script>
+    <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <script src="productos.js"></script> <!-- Archivo JS que carga los productos -->
 </body>
 </html>
