@@ -88,7 +88,6 @@ document.addEventListener('DOMContentLoaded', function() {
 document.addEventListener("DOMContentLoaded", function () {
     let productosOriginales = [];
 
-    // Cargar productos desde la base de datos
     function cargarProductos() {
         const contenedorProductos = document.getElementById("productos-container");
         if (!contenedorProductos) return;
@@ -103,13 +102,12 @@ document.addEventListener("DOMContentLoaded", function () {
                     return;
                 }
 
-                productosOriginales = data; // Guardar la copia original
+                productosOriginales = data; 
                 mostrarProductos(productosOriginales);
             })
             .catch(error => console.error("Error al cargar productos:", error));
     }
 
-    // Mostrar productos en la página
     function mostrarProductos(productos) {
         const contenedor = document.getElementById("productos-container");
         contenedor.innerHTML = "";
@@ -124,6 +122,7 @@ document.addEventListener("DOMContentLoaded", function () {
                             <p class="card-text">${producto.descripcion}</p>
                             <p class="card-price">$${producto.precio}</p>
                             <button class="btn btn-primary agregar-carrito" data-id="${producto.id_producto}">Agregar al carrito</button>
+                            <button class="btn btn-info ver-detalles" data-id="${producto.id_producto}">Ver detalles</button>
                         </div>
                     </div>
                 </div>
@@ -131,16 +130,33 @@ document.addEventListener("DOMContentLoaded", function () {
             contenedor.innerHTML += productoHTML;
         });
 
-        // Agregar funcionalidad al botón "Agregar al carrito"
         document.querySelectorAll(".agregar-carrito").forEach(btn => {
             btn.addEventListener("click", function () {
                 let idProducto = this.getAttribute("data-id");
                 agregarAlCarrito(idProducto);
             });
         });
+
+        document.querySelectorAll(".ver-detalles").forEach(btn => {
+            btn.addEventListener("click", function () {
+                let idProducto = this.getAttribute("data-id");
+                mostrarDetalles(idProducto);
+            });
+        });
     }
 
-    // Filtrar y ordenar productos
+    function mostrarDetalles(idProducto) {
+        let producto = productosOriginales.find(p => p.id_producto == idProducto);
+        if (!producto) return;
+
+        document.getElementById("modalNombre").textContent = producto.nombre;
+        document.getElementById("modalImagen").src = producto.imagen;
+        document.getElementById("modalDescripcion").textContent = producto.descripcion;
+        document.getElementById("modalPrecio").textContent = `$${producto.precio}`;
+
+        $("#productoModal").modal("show");
+    }
+
     function filtrarProductos() {
         let productosFiltrados = [...productosOriginales];
 
@@ -148,10 +164,8 @@ document.addEventListener("DOMContentLoaded", function () {
         const minPrecio = parseFloat(document.getElementById("precio-min").value) || 0;
         const maxPrecio = parseFloat(document.getElementById("precio-max").value) || Infinity;
 
-        // Filtrar por precio
         productosFiltrados = productosFiltrados.filter(p => p.precio >= minPrecio && p.precio <= maxPrecio);
 
-        // Ordenar alfabéticamente
         productosFiltrados.sort((a, b) => {
             if (orden === "az") return a.nombre.localeCompare(b.nombre);
             if (orden === "za") return b.nombre.localeCompare(a.nombre);
@@ -160,10 +174,8 @@ document.addEventListener("DOMContentLoaded", function () {
         mostrarProductos(productosFiltrados);
     }
 
-    // Inicializar la carga de productos
     cargarProductos();
 
-    // Evento para aplicar filtros al hacer clic
     document.querySelector("button[onclick='filtrarProductos()']").addEventListener("click", filtrarProductos);
 });
 
