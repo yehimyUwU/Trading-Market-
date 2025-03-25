@@ -313,3 +313,11 @@ function mostrarCarrito() {
     document.querySelector("button[onclick='filtrarProductos()']").addEventListener("click", filtrarProductos);
 });
 
+$('#productoModal').on('shown.bs.modal', function () {
+    $('.modal-dialog').css({
+        'max-width': '90vw',
+        'height': '90vh'
+    });
+});
+
+
