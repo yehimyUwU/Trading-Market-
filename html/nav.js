@@ -97,12 +97,12 @@ function actualizarCarrito() {
             <tr>
                 <td>${producto.id}</td>
                 <td>${producto.nombre}</td>
-                <td>$${producto.precio.toFixed(2)}</td>
+                <td>$${parseFloat(producto.precio).toFixed(2)}</td>
                 <td>
                     <input type="number" value="${producto.cantidad}" min="1" class="form-control form-control-sm"
                         onchange="cambiarCantidad(${producto.id}, this.value)">
                 </td>
-                <td>$${(producto.precio * producto.cantidad).toFixed(2)}</td>
+                <td>$${(parseFloat(producto.precio) * producto.cantidad).toFixed(2)}</td>
                 <td>
                     <button class="btn btn-danger btn-sm" onclick="eliminarProducto(${producto.id})">Eliminar</button>
                 </td>
