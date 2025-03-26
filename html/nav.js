@@ -276,28 +276,28 @@ document.addEventListener("DOMContentLoaded", function () {
                             <h5 class="card-title">${producto.nombre}</h5>
                             <p class="card-text">${producto.descripcion}</p>
                             <p class="card-price">$${producto.precio}</p>
-                            <button class="btn btn-primary agregar-carrito mb-3" data-id="${producto.id_producto}">Agregar al carrito</button>
-                            <button class="btn btn-info ver-detalles" data-id="${producto.id_producto}">Ver detalles</button>
+                            <button class="btn btn-primary agregar-carrito mb-3" data-id="${producto.id_producto}" data-nombre="${producto.nombre}" data-precio="${producto.precio}">Agregar al carrito</button>
                         </div>
                     </div>
                 </div>
             `;
             contenedor.innerHTML += productoHTML;
         });
-        
-        
-        
-
     
-
-        // Agregar funcionalidad al botón "Agregar al carrito"
-        document.querySelectorAll(".agregar-carrito").forEach(btn => {
-            btn.addEventListener("click", function () {
-                let idProducto = this.getAttribute("data-id");
-                agregarAlCarrito(idProducto);
+        // Reasignar eventos a los botones "Agregar al carrito"
+        document.querySelectorAll(".agregar-carrito").forEach(boton => {
+            boton.addEventListener("click", function () {
+                const id = this.getAttribute("data-id");
+                const nombre = this.getAttribute("data-nombre");
+                const precio = this.getAttribute("data-precio");
+    
+                agregarAlCarrito(id, nombre, precio);
             });
         });
     }
+    
+        
+  
 
     // Filtrar y ordenar productos
     function filtrarProductos() {
