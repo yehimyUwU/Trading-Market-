@@ -121,7 +121,7 @@ document.addEventListener("DOMContentLoaded", function () {
                             <h5 class="card-title">${producto.nombre}</h5>
                             <p class="card-text">${producto.descripcion}</p>
                             <p class="card-price">$${producto.precio}</p>
-                            <button class="btn btn-primary agregar-carrito" data-id="${producto.id_producto}">Agregar al carrito</button>
+                            <button class="btn btn-primary agregar-carrito mb-3" data-id="${producto.id_producto}">Agregar al carrito</button>
                             <button class="btn btn-info ver-detalles" data-id="${producto.id_producto}">Ver detalles</button>
                         </div>
                     </div>
@@ -129,6 +129,9 @@ document.addEventListener("DOMContentLoaded", function () {
             `;
             contenedor.innerHTML += productoHTML;
         });
+        
+        
+        
 
         document.querySelectorAll(".agregar-carrito").forEach(btn => {
             btn.addEventListener("click", function () {
