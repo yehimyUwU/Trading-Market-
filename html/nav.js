@@ -77,6 +77,159 @@ function cerrarPerfil() {
     $('#userProfileModal').modal('hide'); // Cierra el modal
 }
 
+
+
+
+
+
+
+//                         FUNCIONES DE CARRITO                      //
+
+let carrito = JSON.parse(localStorage.getItem("carrito")) || [];
+
+// Función para actualizar y mostrar el carrito en la tabla
+function actualizarCarrito() {
+    const contenidoCarrito = document.getElementById("contenidoCarrito"); // Ubicación del cuerpo de la tabla
+    contenidoCarrito.innerHTML = ""; // Limpiar contenido previo
+
+    carrito.forEach(producto => {
+        const fila = `
+            <tr>
+                <td>${producto.id}</td>
+                <td>${producto.nombre}</td>
+                <td>$${producto.precio.toFixed(2)}</td>
+                <td>
+                    <input type="number" value="${producto.cantidad}" min="1" class="form-control form-control-sm"
+                        onchange="cambiarCantidad(${producto.id}, this.value)">
+                </td>
+                <td>$${(producto.precio * producto.cantidad).toFixed(2)}</td>
+                <td>
+                    <button class="btn btn-danger btn-sm" onclick="eliminarProducto(${producto.id})">Eliminar</button>
+                </td>
+            </tr>
+        `;
+        contenidoCarrito.innerHTML += fila;
+    });
+
+    calcularTotalCarrito(); // Actualizar el total general
+}
+
+function limpiarCarrito() {
+    const carritoCompleto = [];
+
+    carrito.forEach(producto => {
+        const existe = carritoCompleto.find(item => item.id === producto.id);
+        if (existe) {
+            // Actualizar cantidad si el producto ya existe
+            existe.cantidad += producto.cantidad;
+        } else if (producto.nombre && producto.precio) {
+            // Solo agregar productos con información completa
+            carritoCompleto.push(producto);
+        }
+    });
+
+    // Actualiza el carrito y el localStorage con datos limpios
+    carrito = carritoCompleto;
+    localStorage.setItem("carrito", JSON.stringify(carrito));
+}
+
+function limpiarCarrito() {
+    carrito = carrito.filter(producto => producto.nombre && producto.precio && producto.cantidad > 0);
+    localStorage.setItem("carrito", JSON.stringify(carrito));
+    console.log("Carrito limpiado:", carrito);
+}
+document.addEventListener("DOMContentLoaded", function () {
+    carrito = JSON.parse(localStorage.getItem("carrito")) || [];
+    limpiarCarrito(); // Limpia datos duplicados/incompletos solo al cargar
+    actualizarCarrito(); // Muestra los datos del carrito
+});
+
+
+
+
+// Función para calcular el total general del carrito
+function calcularTotalCarrito() {
+    const total = carrito.reduce((sum, producto) => sum + producto.precio * producto.cantidad, 0);
+    document.getElementById("totalCarrito").innerText = `$${total.toFixed(2)}`;
+}
+
+
+// Función para agregar productos al carrito
+function agregarAlCarrito(id, nombre, precio) {
+    const productoExistente = carrito.find(producto => producto.id === id);
+
+    if (productoExistente) {
+        productoExistente.cantidad++; // Incrementar solo si ya existe el producto
+    } else {
+        carrito.push({
+            id: id,
+            nombre: nombre,
+            precio: precio,
+            cantidad: 1
+        });
+    }
+
+    localStorage.setItem("carrito", JSON.stringify(carrito)); // Guardar el carrito actualizado
+    console.log(`Producto agregado: ${nombre}. Carrito:`, carrito);
+    alert(`El producto ha sido agregado al carrito.`);
+    actualizarCarrito(); // Refrescar la tabla del carrito
+}
+
+
+
+
+// Función para cambiar la cantidad de un producto
+function cambiarCantidad(id, nuevaCantidad) {
+    const producto = carrito.find(producto => producto.id === id);
+    if (producto) {
+        producto.cantidad = parseInt(nuevaCantidad);
+    }
+
+    // Actualizar localStorage
+    localStorage.setItem("carrito", JSON.stringify(carrito));
+
+    // Actualizar la tabla
+    actualizarCarrito();
+}
+
+// Función para eliminar un producto del carrito
+function eliminarProducto(id) {
+    carrito = carrito.filter(producto => producto.id !== id);
+
+    // Actualizar localStorage
+    localStorage.setItem("carrito", JSON.stringify(carrito));
+
+    // Actualizar la tabla
+    actualizarCarrito();
+}
+
+// Función para inicializar los botones de "Agregar al carrito"
+function manejarBotones() {
+    document.querySelectorAll(".agregar-carrito").forEach(boton => {
+        boton.addEventListener("click", function () {
+            const id = parseInt(this.getAttribute("data-id"));
+            const nombre = this.parentElement.querySelector(".card-title").innerText;
+            const precio = parseFloat(this.parentElement.querySelector(".card-price").innerText.replace("$", ""));
+
+            // Llama a la función para agregar al carrito
+            agregarAlCarrito(id, nombre, precio);
+        });
+    });
+}
+
+// Mostrar el carrito al cargar la página
+document.addEventListener("DOMContentLoaded", function () {
+    actualizarCarrito();
+    manejarBotones();
+});
+
+//                              FUNCIONES DE CARRITO FINAL                                         //
+
+
+
+
+
+
 // Asegúrate de que el elemento con id 'perfilContenedor' exista antes de agregar el event listener
 document.addEventListener('DOMContentLoaded', function() {
     const perfilContenedor = document.getElementById('perfilContenedor');
@@ -88,6 +241,7 @@ document.addEventListener('DOMContentLoaded', function() {
 document.addEventListener("DOMContentLoaded", function () {
     let productosOriginales = [];
 
+    // Cargar productos desde la base de datos
     function cargarProductos() {
         const contenedorProductos = document.getElementById("productos-container");
         if (!contenedorProductos) return;
@@ -102,16 +256,17 @@ document.addEventListener("DOMContentLoaded", function () {
                     return;
                 }
 
-                productosOriginales = data; 
+                productosOriginales = data; // Guardar la copia original
                 mostrarProductos(productosOriginales);
             })
             .catch(error => console.error("Error al cargar productos:", error));
     }
 
+    // Mostrar productos en la página
     function mostrarProductos(productos) {
         const contenedor = document.getElementById("productos-container");
         contenedor.innerHTML = "";
-
+    
         productos.forEach(producto => {
             const productoHTML = `
                 <div class="col-md-4">
@@ -133,33 +288,18 @@ document.addEventListener("DOMContentLoaded", function () {
         
         
 
+    
+
+        // Agregar funcionalidad al botón "Agregar al carrito"
         document.querySelectorAll(".agregar-carrito").forEach(btn => {
             btn.addEventListener("click", function () {
                 let idProducto = this.getAttribute("data-id");
                 agregarAlCarrito(idProducto);
             });
         });
-
-        document.querySelectorAll(".ver-detalles").forEach(btn => {
-            btn.addEventListener("click", function () {
-                let idProducto = this.getAttribute("data-id");
-                mostrarDetalles(idProducto);
-            });
-        });
     }
 
-    function mostrarDetalles(idProducto) {
-        let producto = productosOriginales.find(p => p.id_producto == idProducto);
-        if (!producto) return;
-
-        document.getElementById("modalNombre").textContent = producto.nombre;
-        document.getElementById("modalImagen").src = producto.imagen;
-        document.getElementById("modalDescripcion").textContent = producto.descripcion;
-        document.getElementById("modalPrecio").textContent = `$${producto.precio}`;
-
-        $("#productoModal").modal("show");
-    }
-
+    // Filtrar y ordenar productos
     function filtrarProductos() {
         let productosFiltrados = [...productosOriginales];
 
@@ -167,8 +307,10 @@ document.addEventListener("DOMContentLoaded", function () {
         const minPrecio = parseFloat(document.getElementById("precio-min").value) || 0;
         const maxPrecio = parseFloat(document.getElementById("precio-max").value) || Infinity;
 
+        // Filtrar por precio
         productosFiltrados = productosFiltrados.filter(p => p.precio >= minPrecio && p.precio <= maxPrecio);
 
+        // Ordenar alfabéticamente
         productosFiltrados.sort((a, b) => {
             if (orden === "az") return a.nombre.localeCompare(b.nombre);
             if (orden === "za") return b.nombre.localeCompare(a.nombre);
@@ -177,8 +319,10 @@ document.addEventListener("DOMContentLoaded", function () {
         mostrarProductos(productosFiltrados);
     }
 
+    // Inicializar la carga de productos
     cargarProductos();
 
+    // Evento para aplicar filtros al hacer clic
     document.querySelector("button[onclick='filtrarProductos()']").addEventListener("click", filtrarProductos);
 });
 
