@@ -63,6 +63,87 @@
     border-color: #1e7e34;
 }
 
+.modal-dialog {
+    max-width: 600px !important; 
+    height: auto !important; 
+}
+
+.modal-content {
+    border-radius: 15px;
+    overflow: hidden;
+    box-shadow: 0px 4px 15px rgba(0, 0, 0, 0.2);
+    border: none;
+}
+
+.modal-header {
+    background: linear-gradient(135deg, #007bff, #0056b3, #003166);
+    color: white;
+    border-bottom: none;
+    padding: 15px 20px;
+}
+
+.modal-header h5 {
+    font-size: 22px;
+    font-weight: bold;
+}
+
+.modal-header .close {
+    font-size: 24px;
+    color: white;
+    opacity: 0.8;
+}
+
+.modal-header .close:hover {
+    opacity: 1;
+}
+
+.modal-body {
+    padding: 20px;
+}
+
+#modalImagen {
+    max-width: 100%;
+    height: auto;
+    display: block;
+    margin: 10px auto;
+    border-radius: 10px;
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+}
+
+.modal-body h4 {
+    font-size: 20px;
+    font-weight: bold;
+    color: #333;
+    margin-top: 15px;
+}
+
+.modal-body p {
+    font-size: 16px;
+    color: #555;
+}
+
+.modal-footer {
+    background: #f8f9fa;
+    border-top: none;
+    padding: 15px;
+    display: flex;
+    justify-content: center;
+}
+
+.btn-cerrar {
+    background: #dc3545;
+    border: none;
+    color: white;
+    padding: 10px 20px;
+    border-radius: 5px;
+    font-size: 16px;
+    transition: 0.3s;
+}
+
+.btn-cerrar:hover {
+    background: #c82333;
+}
+
 
     </style>
 </head>
@@ -119,35 +200,29 @@
 <!-- Modal de Detalles del Producto -->
 <div class="modal fade" id="productoModal" tabindex="-1" role="dialog" aria-labelledby="productoModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-lg" role="document">
-        <div class="modal-content" style="border-radius: 15px; overflow: hidden;">
-            <div class="modal-header bg-primary text-white">
+        <div class="modal-content">
+            <!-- Encabezado del modal -->
+            <div class="modal-header">
                 <h5 class="modal-title" id="modalNombre"></h5>
-                <button type="button" class="close text-white" data-dismiss="modal" aria-label="Close">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
-            <div class="modal-body">
-                <div class="row">
-                    <!-- Imagen del producto -->
-                    <div class="col-md-5 text-center">
-                        <div class="p-3" style="background-color: #f8f9fa; border-radius: 10px;">
-                            <img id="modalImagen" class="img-fluid" src="" alt="Producto" style="border-radius: 10px;">
-                        </div>
-                    </div>
-                    <!-- Información del producto -->
-                    <div class="col-md-7">
-                        <h4 id="modalNombre" class="text-dark"></h4>
-                        <p id="modalDescripcion" class="text-muted"></p>
-                        <h3 class="text-primary font-weight-bold" id="modalPrecio"></h3>
-                    </div>
-                </div>
+            <!-- Cuerpo del modal -->
+            <div class="modal-body text-center">
+                <img id="modalImagen" class="img-fluid" src="" alt="Producto">
+                <h4 id="modalNombre"></h4>
+                <p id="modalDescripcion"></p>
+                <h3 class="text-primary font-weight-bold" id="modalPrecio"></h3>
             </div>
-            <div class="modal-footer bg-light">
-                <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+            <!-- Pie de modal con botón de cerrar -->
+            <div class="modal-footer">
+                <button type="button" class="btn btn-cerrar" data-dismiss="modal">Cerrar</button>
             </div>
         </div>
     </div>
 </div>
+
 
 
 <footer class="pie-pagina">
