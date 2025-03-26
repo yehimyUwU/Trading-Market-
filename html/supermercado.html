@@ -24,46 +24,103 @@
         }
 
         .modal-dialog {
-    max-width: 600px !important; /* 90% del ancho de la ventana */
-    height: 70vh !important; /* 90% de la altura de la ventana */
-}
+            max-width: 600px !important; 
+            height: auto !important; 
+        }
 
-.modal-content {
-    height: 95% !important;
-    display: flex;
-    flex-direction: column;
-}
+        .modal-content {
+            height: 95% !important;
+            display: flex;
+            flex-direction: column;
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0px 4px 15px rgba(0, 0, 0, 0.2);
+            border: none;
+        }
 
-.modal-body {
-    flex-grow: 1;
-    overflow-y: auto;
-}
+        .modal-body {
+            flex-grow: 1;
+            overflow-y: auto;
+            padding: 20px;
+        }
 
-.modal-header {
-    border-bottom: none;
-}
+        .modal-header {
+            background: linear-gradient(135deg, #007bff, #0056b3, #003166, #469fff);
+            color: white;
+            border-bottom: none;
+            padding: 15px 20px;
+        }
 
-.modal-footer {
-    border-top: none;
-}
+        .modal-header h5 {
+            font-size: 22px;
+            font-weight: bold;
+        }
 
-#modalImagen {
-    max-height: 250px;
-    object-fit: cover;
-}
+        .modal-header .close {
+            font-size: 24px;
+            color: white;
+            opacity: 0.8;
+        }
 
-.btn-success {
-    background-color: #28a745;
-    border-color: #28a745;
-    transition: 0.3s;
-}
+        .modal-header .close:hover {
+            opacity: 1;
+        }
 
-.btn-success:hover {
-    background-color: #218838;
-    border-color: #1e7e34;
-}
+        #modalImagen {
+            max-width: 100%;
+            height: auto;
+            display: block;
+            margin: 10px auto;
+            border-radius: 10px;
+            box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+            object-fit: cover;
+            max-height: 250px;
+        }
 
+        .modal-body h4 {
+            font-size: 20px;
+            font-weight: bold;
+            color: #333;
+            margin-top: 15px;
+        }
 
+        .modal-body p {
+            font-size: 16px;
+            color: #555;
+        }
+
+        .modal-footer {
+            background: #f8f9fa;
+            border-top: none;
+            padding: 15px;
+            display: flex;
+            justify-content: center;
+        }
+
+        .btn-success {
+            background-color: #28a745;
+            border-color: #28a745;
+            transition: 0.3s;
+        }
+
+        .btn-success:hover {
+            background-color: #218838;
+            border-color: #1e7e34;
+        }
+
+        .btn-cerrar {
+            background: #dc3545;
+            border: none;
+            color: white;
+            padding: 10px 20px;
+            border-radius: 5px;
+            font-size: 16px;
+            transition: 0.3s;
+        }
+
+        .btn-cerrar:hover {
+            background: #c82333;
+        }
     </style>
 </head>
 <body>
@@ -119,65 +176,28 @@
 <!-- Modal de Detalles del Producto -->
 <div class="modal fade" id="productoModal" tabindex="-1" role="dialog" aria-labelledby="productoModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-lg" role="document">
-        <div class="modal-content" style="border-radius: 15px; overflow: hidden;">
-            <div class="modal-header bg-primary text-white">
+        <div class="modal-content">
+            <!-- Encabezado del modal -->
+            <div class="modal-header">
                 <h5 class="modal-title" id="modalNombre"></h5>
-                <button type="button" class="close text-white" data-dismiss="modal" aria-label="Close">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
-            <div class="modal-body">
-                <div class="row">
-                    <!-- Imagen del producto -->
-                    <div class="col-md-5 text-center">
-                        <div class="p-3" style="background-color: #f8f9fa; border-radius: 10px;">
-                            <img id="modalImagen" class="img-fluid" src="" alt="Producto" style="border-radius: 10px;">
-                        </div>
-                    </div>
-                    <!-- Información del producto -->
-                    <div class="col-md-7">
-                        <h4 id="modalNombre" class="text-dark"></h4>
-                        <p id="modalDescripcion" class="text-muted"></p>
-                        <h3 class="text-primary font-weight-bold" id="modalPrecio"></h3>
-                    </div>
-                </div>
+            <!-- Cuerpo del modal -->
+            <div class="modal-body text-center">
+                <img id="modalImagen" class="img-fluid" src="" alt="Producto">
+                <h4 id="modalNombre"></h4>
+                <p id="modalDescripcion"></p>
+                <h3 class="text-primary font-weight-bold" id="modalPrecio"></h3>
             </div>
-            <div class="modal-footer bg-light">
-                <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+            <!-- Pie de modal con botón de cerrar -->
+            <div class="modal-footer">
+                <button type="button" class="btn btn-cerrar" data-dismiss="modal">Cerrar</button>
             </div>
         </div>
     </div>
 </div>
-
-
-<footer class="pie-pagina">
-    <div class="grupo-1">
-        <div class="box">
-            <figure>
-                <a href="#">
-                    <img src="../imagenes/tran.png" alt="Logo de SLee Dw">
-                </a>
-            </figure>
-        </div>
-        <div class="box">
-            <h2>SOBRE NOSOTROS</h2>
-            <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Odio, ipsa?</p>
-            <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Odio, ipsa?</p>
-        </div>
-        <div class="box">
-            <h2>SIGUENOS</h2>
-            <div class="red-social">
-                <a href="#" class="fa fa-facebook"></a>
-                <a href="#" class="fa fa-instagram"></a>
-                <a href="#" class="fa fa-twitter"></a>
-                <a href="#" class="fa fa-youtube"></a>
-            </div>
-        </div>
-    </div>
-    <div class="grupo-2">
-        <small>&copy; 2025 <b>Trading Market</b> - Todos los Derechos Reservados.</small>
-    </div>
-</footer>
 
 <!-- Scripts -->
 <script src="nav.js"></script>
