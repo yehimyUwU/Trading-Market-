@@ -117,7 +117,7 @@ function actualizarCarrito() {
         contenidoCarrito.innerHTML += fila;
     });
 
-    calcularTotalCarrito(); // Actualizar el total general
+    calcularTotalCarrito(); // Actualizar el total generalSDFG
 }
 
 
@@ -127,15 +127,15 @@ function limpiarCarrito() {
     carrito.forEach(producto => {
         const existe = carritoCompleto.find(item => item.id === producto.id);
         if (existe) {
-            // Actualizar cantidad si el producto ya existe
+            // Actualizar cantidad si el producto ya existeASDFG
             existe.cantidad += producto.cantidad;
         } else if (producto.nombre && producto.precio) {
-            // Solo agregar productos con información completa
+            // Solo agregar productos con información completaASDFG
             carritoCompleto.push(producto);
         }
     });
 
-    // Actualiza el carrito y el localStorage con datos limpios
+    // Actualiza el carrito y el localStorage con datos limpios DSDSSDFG
     carrito = carritoCompleto;
     localStorage.setItem("carrito", JSON.stringify(carrito));
 }
@@ -161,12 +161,12 @@ function calcularTotalCarrito() {
 }
 
 
-// Función para agregar productos al carrito
+// Función para agregar productos al carritoSDFGSDFG
 function agregarAlCarrito(id, nombre, precio) {
     const productoExistente = carrito.find(producto => producto.id === id);
 
     if (productoExistente) {
-        productoExistente.cantidad++; // Incrementar solo si ya existe el producto
+        productoExistente.cantidad++; // Incrementar solo si ya existe el productoASSD
     } else {
         carrito.push({
             id: id,
