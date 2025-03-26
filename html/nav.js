@@ -89,8 +89,14 @@ let carrito = JSON.parse(localStorage.getItem("carrito")) || [];
 
 // Función para actualizar y mostrar el carrito en la tabla
 function actualizarCarrito() {
-    const contenidoCarrito = document.getElementById("contenidoCarrito"); // Ubicación del cuerpo de la tabla
+    const contenidoCarrito = document.getElementById("contenidoCarrito");
     contenidoCarrito.innerHTML = ""; // Limpiar contenido previo
+
+    if (carrito.length === 0) {
+        contenidoCarrito.innerHTML = `<tr><td colspan="6" class="text-center">El carrito está vacío.</td></tr>`;
+        document.getElementById("totalCarrito").innerText = "$0.00";
+        return;
+    }
 
     carrito.forEach(producto => {
         const fila = `
@@ -100,11 +106,11 @@ function actualizarCarrito() {
                 <td>$${parseFloat(producto.precio).toFixed(2)}</td>
                 <td>
                     <input type="number" value="${producto.cantidad}" min="1" class="form-control form-control-sm"
-                        onchange="cambiarCantidad(${producto.id}, this.value)">
+                        onchange="cambiarCantidad('${producto.id}', this.value)">
                 </td>
                 <td>$${(parseFloat(producto.precio) * producto.cantidad).toFixed(2)}</td>
                 <td>
-                    <button class="btn btn-danger btn-sm" onclick="eliminarProducto(${producto.id})">Eliminar</button>
+                    <button class="btn btn-danger btn-sm" onclick="eliminarProducto('${producto.id}')">Eliminar</button>
                 </td>
             </tr>
         `;
@@ -113,6 +119,7 @@ function actualizarCarrito() {
 
     calcularTotalCarrito(); // Actualizar el total general
 }
+
 
 function limpiarCarrito() {
     const carritoCompleto = [];
@@ -183,6 +190,11 @@ function cambiarCantidad(id, nuevaCantidad) {
     const producto = carrito.find(producto => producto.id === id);
     if (producto) {
         producto.cantidad = parseInt(nuevaCantidad);
+
+        if (isNaN(producto.cantidad) || producto.cantidad <= 0) {
+            alert("La cantidad debe ser un número mayor a 0.");
+            producto.cantidad = 1; // Volvemos a 1 si el valor es inválido
+        }
     }
 
     // Actualizar localStorage
@@ -192,8 +204,10 @@ function cambiarCantidad(id, nuevaCantidad) {
     actualizarCarrito();
 }
 
+
 // Función para eliminar un producto del carrito
 function eliminarProducto(id) {
+    // Filtrar el producto a eliminar
     carrito = carrito.filter(producto => producto.id !== id);
 
     // Actualizar localStorage
@@ -202,6 +216,7 @@ function eliminarProducto(id) {
     // Actualizar la tabla
     actualizarCarrito();
 }
+
 
 // Función para inicializar los botones de "Agregar al carrito"
 function manejarBotones() {
