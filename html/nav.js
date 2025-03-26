@@ -230,7 +230,6 @@ document.addEventListener("DOMContentLoaded", function () {
 
 
 
-// Asegúrate de que el elemento con id 'perfilContenedor' exista antes de agregar el event listener
 document.addEventListener("DOMContentLoaded", function () {
     let productosOriginales = [];
 
@@ -266,29 +265,33 @@ document.addEventListener("DOMContentLoaded", function () {
                             <h5 class="card-title">${producto.nombre}</h5>
                             <p class="card-text">${producto.descripcion}</p>
                             <p class="card-price">$${producto.precio}</p>
-                            <button class="btn btn-primary agregar-carrito mb-3" data-id="${producto.id_producto}" data-nombre="${producto.nombre}" data-precio="${producto.precio}">Agregar al carrito</button>
+                            <button class="btn btn-primary ver-detalles mb-2" data-id="${producto.id_producto}">Ver Detalles</button>
+                            <button class="btn btn-success agregar-carrito mb-3" data-id="${producto.id_producto}" data-nombre="${producto.nombre}" data-precio="${producto.precio}">Agregar al carrito</button>
                         </div>
                     </div>
                 </div>
             `;
             contenedor.innerHTML += productoHTML;
         });
-    
-        // Reasignar eventos a los botones "Agregar al carrito"
+
+        asignarEventos();
+    }
+
+    function asignarEventos() {
+        document.querySelectorAll(".ver-detalles").forEach(btn => {
+            btn.addEventListener("click", function () {
+                let idProducto = this.getAttribute("data-id");
+                mostrarDetallesProducto(idProducto);
+            });
+        });
+
         document.querySelectorAll(".agregar-carrito").forEach(boton => {
             boton.addEventListener("click", function () {
                 const id = this.getAttribute("data-id");
                 const nombre = this.getAttribute("data-nombre");
                 const precio = this.getAttribute("data-precio");
-    
-                agregarAlCarrito(id, nombre, precio);
-            });
-        });
 
-        document.querySelectorAll(".ver-detalles").forEach(btn => {
-            btn.addEventListener("click", function () {
-                let idProducto = this.getAttribute("data-id");
-                mostrarDetallesProducto(idProducto);
+                agregarAlCarrito(id, nombre, precio);
             });
         });
     }
@@ -304,9 +307,6 @@ document.addEventListener("DOMContentLoaded", function () {
 
         $("#productoModal").modal("show");
     }
-    
-        
-  
 
     function filtrarProductos() {
         let productosFiltrados = [...productosOriginales];
@@ -324,10 +324,12 @@ document.addEventListener("DOMContentLoaded", function () {
         mostrarProductos(productosFiltrados);
     }
 
-    cargarProductos();
+    document.getElementById("ordenar").addEventListener("change", filtrarProductos);
+    document.getElementById("precio-min").addEventListener("input", filtrarProductos);
+    document.getElementById("precio-max").addEventListener("input", filtrarProductos);
 
-    document.querySelector("button[onclick='filtrarProductos()']").addEventListener("click", filtrarProductos);
-});
+    cargarProductos();
+}); 
 
 $('#productoModal').on('shown.bs.modal', function () {
     $('.modal-dialog').css({
