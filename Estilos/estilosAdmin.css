@@ -10,13 +10,40 @@
     box-sizing: border-box;
 }
 
-:root{
+/* Modo claro (por defecto) */
+:root {
     --blue: #306a91;
     --white: #fff;
     --gray: #f5f5f5;
     --black1: #222;
     --black2: #999;
 }
+
+/* Modo oscuro */
+:root.dark-mode {
+    --blue: #a5a0a0; /* Azul más oscuro */
+    --white: #252323; /* Fondo y letras de la barra oscuro */
+    --gray: #5a5252; /* Gris oscuro */
+    --black1: #fff; /* Texto claro */
+    --black2: #ccc; /* Texto secundario */
+}
+
+/* Botón para cambiar de modo */
+.modo-visual-btn {
+    background-color: var(--blue);
+    color: var(--white);
+    border: none;
+    padding: 10px 15px;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+.modo-visual-btn:hover {
+    background-color: var(--black2);
+    color: var(--blue);
+}
+
 
 body{
     min-height: 100vh;

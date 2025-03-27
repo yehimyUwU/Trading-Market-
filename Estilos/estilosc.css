@@ -10,13 +10,24 @@
     box-sizing: border-box;
 }
 
-:root{
+/* Modo claro (por defecto) */
+:root {
     --blue: #306a91;
     --white: #fff;
     --gray: #f5f5f5;
     --black1: #222;
     --black2: #999;
 }
+
+/* Modo oscuro */
+:root.dark-mode {
+    --blue: #191931; /* Azul más oscuro */
+    --white: #635555; /* Fondo y letras de la barra oscuro */
+    --gray: #5a5252; /* Gris oscuro */
+    --black1: #fff; /* Texto claro */
+    --black2: #ccc; /* Texto secundario */
+}
+
 
 body{
     min-height: 100vh;
@@ -591,7 +602,6 @@ body{
     background-color: #2980b9; /* Cambia el color al pasar el mouse */
     transform: scale(1.05); /* Ligeramente más grande al pasar el mouse */
   }
-  
   
   
   
