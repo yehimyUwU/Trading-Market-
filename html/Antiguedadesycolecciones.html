@@ -60,6 +60,32 @@
         <div id="productos-container" class="row" data-categoria="Antigüedades y Colecciones"></div>
     </div>
 
+    <!-- Modal de Detalles del Producto -->
+<div class="modal fade" id="productoModal" tabindex="-1" role="dialog" aria-labelledby="productoModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+            <!-- Encabezado del modal -->
+            <div class="modal-header">
+                <h5 class="modal-title" id="modalNombre"></h5>
+                <button type="button" class="close btn-cerrar-modal" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <!-- Cuerpo del modal -->
+            <div class="modal-body text-center">
+                <img id="modalImagen" class="img-fluid" src="" alt="Producto">
+                <h4 id="modalNombre"></h4>
+                <p id="modalDescripcion"></p>
+                <h3 class="text-primary font-weight-bold" id="modalPrecio"></h3>
+            </div>
+            <!-- Pie de modal con botón de cerrar -->
+            <div class="modal-footer">
+                <button type="button" class="btn btn-cerrar" data-dismiss="modal" style="color: #ff0000;">Cerrar</button>
+            </div>
+        </div>
+    </div>
+</div>
+
     <footer class="pie-pagina">
         <div class="grupo-1">
             <div class="box">
