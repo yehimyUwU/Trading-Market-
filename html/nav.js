@@ -151,7 +151,6 @@ document.addEventListener("DOMContentLoaded", function () {
     actualizarCarrito(); // Muestra los datos del carrito
 });
 
-
 // Función para calcular el total general del carrito
 function calcularTotalCarrito() {
     const total = carrito.reduce((sum, producto) => sum + producto.precio * producto.cantidad, 0);
