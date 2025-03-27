@@ -246,7 +246,6 @@ document.addEventListener("DOMContentLoaded", function () {
         }
 
         const categoria = contenedorProductos.getAttribute("data-categoria");
-        console.log("Categoría obtenida:", categoria);
 
         if (!categoria) {
             contenedorProductos.innerHTML = `<p>No se especificó una categoría válida.</p>`;
@@ -256,8 +255,6 @@ document.addEventListener("DOMContentLoaded", function () {
         fetch(`../php/obtener_productos.php?categoria=${encodeURIComponent(categoria)}`)
             .then(response => response.json())
             .then(data => {
-                console.log("Respuesta del servidor:", data);
-
                 if (data.error) {
                     contenedorProductos.innerHTML = `<p>${data.error}</p>`;
                     return;
@@ -275,8 +272,6 @@ document.addEventListener("DOMContentLoaded", function () {
     function mostrarProductos(productos) {
         const contenedor = document.getElementById("productos-container");
         contenedor.innerHTML = "";
-
-        console.log("Productos a mostrar:", productos);
 
         if (productos.length === 0) {
             contenedor.innerHTML = `<p>No hay productos disponibles en esta categoría.</p>`;
@@ -338,6 +333,27 @@ document.addEventListener("DOMContentLoaded", function () {
         $("#productoModal").modal("show");
     }
 
+    function filtrarProductos() {
+        let orden = document.getElementById("ordenar").value;
+        let precioMin = parseFloat(document.getElementById("precio-min").value) || 0;
+        let precioMax = parseFloat(document.getElementById("precio-max").value) || Infinity;
+
+        let productosFiltrados = productosOriginales.filter(producto => 
+            producto.precio >= precioMin && producto.precio <= precioMax
+        );
+
+        if (orden === "az") {
+            productosFiltrados.sort((a, b) => a.nombre.localeCompare(b.nombre));
+        } else if (orden === "za") {
+            productosFiltrados.sort((a, b) => b.nombre.localeCompare(a.nombre));
+        }
+
+        mostrarProductos(productosFiltrados);
+    }
+
+    document.querySelector(".btn-primary").addEventListener("click", filtrarProductos);
+
     cargarProductos();
 });
+
 

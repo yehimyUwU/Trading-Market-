@@ -40,7 +40,7 @@
             color: white;
             text-align: center;
             border-bottom: none;
-            box-shadow: 0px 0px 15px rgba(0, 123, 255, 0.8);
+            box-shadow: 0px 0px 15px rgba(0, 48, 99, 0.8);
         }
 
         .modal-header::before {
@@ -105,6 +105,25 @@
             transform: scale(1.1);
         }
 
+        /* Estilos para el botón de cierre */
+.btn-cerrar-modal {
+    position: absolute;
+    top: 10px;  /* Ajusta la posición en la parte superior */
+    right: 15px;  /* Ajusta la posición a la derecha */
+    z-index: 10;  /* Asegura que esté delante del título */
+    font-size: 24px;  /* Aumenta el tamaño */
+    color: white;  /* Hace que el color sea visible */
+    background: none;
+    border: none;
+    cursor: pointer;
+    transition: transform 0.2s ease-in-out;
+}
+
+.btn-cerrar-modal:hover {
+    transform: scale(1.2); /* Efecto al pasar el mouse */
+    color: #ff3939;
+}
+
 
 </style>
 
@@ -166,7 +185,7 @@
             <!-- Encabezado del modal -->
             <div class="modal-header">
                 <h5 class="modal-title" id="modalNombre"></h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <button type="button" class="close btn-cerrar-modal" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
@@ -179,11 +198,41 @@
             </div>
             <!-- Pie de modal con botón de cerrar -->
             <div class="modal-footer">
-                <button type="button" class="btn btn-cerrar" data-dismiss="modal">Cerrar</button>
+                <button type="button" class="btn btn-cerrar" data-dismiss="modal" style="color: #ff0000;">Cerrar</button>
             </div>
         </div>
     </div>
 </div>
+
+
+<footer class="pie-pagina">
+    <div class="grupo-1">
+        <div class="box">
+            <figure>
+                <a href="#">
+                    <img src="../imagenes/tran.png" alt="Logo de SLee Dw">
+                </a>
+            </figure>
+        </div>
+        <div class="box">
+            <h2>SOBRE NOSOTROS</h2>
+            <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Odio, ipsa?</p>
+            <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Odio, ipsa?</p>
+        </div>
+        <div class="box">
+            <h2>SIGUENOS</h2>
+            <div class="red-social">
+                <a href="#" class="fa fa-facebook"></a>
+                <a href="#" class="fa fa-instagram"></a>
+                <a href="#" class="fa fa-twitter"></a>
+                <a href="#" class="fa fa-youtube"></a>
+            </div>
+        </div>
+    </div>
+    <div class="grupo-2">
+        <small>&copy; 2025 <b>Trading Market</b> - Todos los Derechos Reservados.</small>
+    </div>
+</footer>
 
 <!-- Scripts -->
 <script src="nav.js"></script>

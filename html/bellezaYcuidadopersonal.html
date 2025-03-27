@@ -32,10 +32,62 @@
         <p>Explora una selección de productos de belleza y cuidado personal.</p>
     </div>
 
+<!-- Filtros -->
+<div class="container mt-4">
+    <div class="row">
+        <!-- Ordenar alfabéticamente -->
+        <div class="col-md-4">
+            <label for="ordenar">Ordenar:</label>
+            <select id="ordenar" class="form-control">
+                <option value="az">A - Z</option>
+                <option value="za">Z - A</option>
+            </select>
+        </div>
+
+        <!-- Filtrar por precio -->
+        <div class="col-md-4">
+            <label for="precio-min">Precio mínimo:</label>
+            <input type="number" id="precio-min" class="form-control" placeholder="0">
+        </div>
+        <div class="col-md-4">
+            <label for="precio-max">Precio máximo:</label>
+            <input type="number" id="precio-max" class="form-control" placeholder="100">
+        </div>
+    </div>
+
+    <button class="btn btn-primary mt-3" onclick="filtrarProductos()">Aplicar Filtros</button>
+</div>
+
     <div class="container mt-5">
         <h2 class="text-center mb-4">Productos Destacados</h2>
         <div id="productos-container" class="row" data-categoria="Belleza y Cuidado Personal"></div>
     </div>
+
+    <!-- Modal de Detalles del Producto -->
+<div class="modal fade" id="productoModal" tabindex="-1" role="dialog" aria-labelledby="productoModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+            <!-- Encabezado del modal -->
+            <div class="modal-header">
+                <h5 class="modal-title" id="modalNombre"></h5>
+                <button type="button" class="close btn-cerrar-modal" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <!-- Cuerpo del modal -->
+            <div class="modal-body text-center">
+                <img id="modalImagen" class="img-fluid" src="" alt="Producto">
+                <h4 id="modalNombre"></h4>
+                <p id="modalDescripcion"></p>
+                <h3 class="text-primary font-weight-bold" id="modalPrecio"></h3>
+            </div>
+            <!-- Pie de modal con botón de cerrar -->
+            <div class="modal-footer">
+                <button type="button" class="btn btn-cerrar" data-dismiss="modal" style="color: #ff0000;">Cerrar</button>
+            </div>
+        </div>
+    </div>
+</div>
 
     <footer class="pie-pagina">
         <div class="grupo-1">
