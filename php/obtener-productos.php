@@ -1,6 +1,8 @@
 <?php
 require_once 'conexion.php';
-heade
+
+header('Content-Type: application/json');
+
 
 
 try {
