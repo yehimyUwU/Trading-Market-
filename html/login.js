@@ -77,6 +77,30 @@ document.getElementById("signupForm").addEventListener("submit", async function 
     const formData = new FormData(event.target);
     const signupMessage = document.getElementById("signupMessage");
 
+    // Validación de mayor de edad y tipo de documento
+    const fechaNacimiento = new Date(formData.get("fecha_nacimiento"));
+    const tipoDocumento = formData.get("tipo_documento");
+    const hoy = new Date();
+    let edad = hoy.getFullYear() - fechaNacimiento.getFullYear(); // Cambiado de const a let
+    const mes = hoy.getMonth() - fechaNacimiento.getMonth();
+    const dia = hoy.getDate() - fechaNacimiento.getDate();
+
+    if (mes < 0 || (mes === 0 && dia < 0)) {
+        edad--;
+    }
+
+    if (edad >= 18) {
+        if (tipoDocumento === "Tarjeta de Identidad") {
+            alert("Eres mayor de edad. Debes seleccionar 'Cédula' o 'Pasaporte'.");
+            return;
+        }
+    } else {
+        if (tipoDocumento !== "Tarjeta de Identidad") {
+            alert("Eres menor de edad. Debes seleccionar 'Tarjeta de Identidad'.");
+            return;
+        }
+    }
+
     try {
         const response = await fetch("../php/registro.php", {
             method: "POST",
@@ -97,8 +121,9 @@ document.getElementById("signupForm").addEventListener("submit", async function 
             // Limpiar el formulario
             event.target.reset();
             setTimeout(() => {
+                signupMessage.textContent = ""; // Ocultar el mensaje después de 6 segundos
                 container.classList.remove("right-panel-active");
-            }, 2000);
+            }, 6000); // Cambiado a 6 segundos
         }
     } catch (error) {
         console.error('Error:', error);
