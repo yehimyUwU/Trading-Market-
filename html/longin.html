@@ -23,13 +23,8 @@
         <div class="form-container sign-up-container">
             <form id="signupForm" method="POST" action="../php/registro.php"> 
                 <h1>Registro de Nuevo Usuario</h1>
-                <select name="tipo_documento" required>
-                    <option value="" disabled selected>Seleccione el tipo de documento</option>
-                    <option value="Cédula">Cédula</option>
-                    <option value="Tarjeta de Identidad">Tarjeta de Identidad</option>
-                    <option value="Pasaporte">Pasaporte</option>
-                </select>
-                <input type="text" name="documento" placeholder="Número de Documento" required oninput="this.value = this.value.replace(/[^0-9]/g, '')" />
+                <input type="text" name="tipo_documento" placeholder="Tipo de Documento" required />
+                <input type="text" name="documento" placeholder="Número de Documento" required />
                 <input type="text" name="nombre" placeholder="Nombre" required />
                 <input type="text" name="apellido" placeholder="Apellido" required />
                 <input type="date" name="fecha_nacimiento" placeholder="Fecha de Nacimiento" required />
@@ -39,7 +34,7 @@
                     <option value="Otro">Otro</option>
                 </select>
                 <input type="email" name="email" placeholder="Correo Electrónico" required />
-                <input type="password" name="password" placeholder="Contraseña" required minlength="7" oninvalid="this.setCustomValidity('La contraseña debe tener al menos 7 caracteres')" oninput="this.setCustomValidity('')" />
+                <input type="password" name="password" placeholder="Contraseña" required />
                 <button type="submit">Registrarse</button>
                 <p id="signupMessage"></p> <!-- Mensaje de registro -->
             </form>
@@ -48,7 +43,6 @@
         <!-- Formulario Sign In (Inicio de sesión) -->
         <div class="form-container sign-in-container">
             <form id="loginForm" action="javascript:void(0);">
-                <img src="../imagenes/Logooriginal.png" alt="Logo" style="width: 150px; margin-bottom: 20px;">
                 <h1>Iniciar Sesión</h1>
                 <input type="text" id="username" placeholder="Documento" required> <!-- Asegúrate de que el ID sea 'username' -->
                 <input type="password" id="password" placeholder="Contraseña" required>
