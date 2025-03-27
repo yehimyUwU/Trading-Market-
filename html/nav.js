@@ -252,16 +252,18 @@ document.addEventListener("DOMContentLoaded", function () {
         const categoria = contenedorProductos.getAttribute("data-categoria");
 
         fetch(`../php/obtener_productos.php?categoria=${encodeURIComponent(categoria)}`)
-            .then(response => response.json())
-            .then(data => {
-                if (data.error) {
-                    contenedorProductos.innerHTML = `<p>${data.error}</p>`;
-                    return;
-                }
-                productosOriginales = data;
-                mostrarProductos(productosOriginales);
-            })
-            .catch(error => console.error("Error al cargar productos:", error));
+        .then(response => response.json())
+        .then(data => {
+            console.log("Productos recibidos:", data); // <-- Agregar esto
+            if (data.error) {
+                contenedorProductos.innerHTML = `<p>${data.error}</p>`;
+                return;
+            }
+            productosOriginales = data;
+            mostrarProductos(productosOriginales);
+        })
+        .catch(error => console.error("Error al cargar productos:", error));
+    
     }
 
     function mostrarProductos(productos) {
@@ -342,12 +344,4 @@ document.addEventListener("DOMContentLoaded", function () {
 
     cargarProductos();
 }); 
-
-$('#productoModal').on('shown.bs.modal', function () {
-    $('.modal-dialog').css({
-        'max-width': '90vw',
-        'height': '90vh'
-    });
-});
-
 
