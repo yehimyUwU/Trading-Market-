@@ -151,13 +151,6 @@ function calcularTotalCarrito() {
     const total = carrito.reduce((sum, producto) => sum + producto.precio * producto.cantidad, 0);
     document.getElementById("totalCarrito").innerText = `$${total.toFixed(2)}`;
 }
-
-<<<<<<< HEAD
-
-
-=======
->>>>>>> 8a8a0b543455fc281e2a603b028535317af9d36e
-
 // Función para agregar productos al carritoSDFGSDFG
 function agregarAlCarrito(id, nombre, precio) {
     const productoExistente = carrito.find(producto => producto.id === id);
