@@ -240,28 +240,48 @@ document.addEventListener("DOMContentLoaded", function () {
 
     function cargarProductos() {
         const contenedorProductos = document.getElementById("productos-container");
-        if (!contenedorProductos) return;
+        if (!contenedorProductos) {
+            console.error("No se encontró el contenedor de productos.");
+            return;
+        }
 
         const categoria = contenedorProductos.getAttribute("data-categoria");
+        console.log("Categoría obtenida:", categoria);
+
+        if (!categoria) {
+            contenedorProductos.innerHTML = `<p>No se especificó una categoría válida.</p>`;
+            return;
+        }
 
         fetch(`../php/obtener_productos.php?categoria=${encodeURIComponent(categoria)}`)
-        .then(response => response.json())
-        .then(data => {
-            console.log("Productos recibidos:", data); // <-- Agregar esto
-            if (data.error) {
-                contenedorProductos.innerHTML = `<p>${data.error}</p>`;
-                return;
-            }
-            productosOriginales = data;
-            mostrarProductos(productosOriginales);
-        })
-        .catch(error => console.error("Error al cargar productos:", error));
-    
+            .then(response => response.json())
+            .then(data => {
+                console.log("Respuesta del servidor:", data);
+
+                if (data.error) {
+                    contenedorProductos.innerHTML = `<p>${data.error}</p>`;
+                    return;
+                }
+
+                productosOriginales = data;
+                mostrarProductos(productosOriginales);
+            })
+            .catch(error => {
+                console.error("Error al cargar productos:", error);
+                contenedorProductos.innerHTML = `<p>Error al cargar productos.</p>`;
+            });
     }
 
     function mostrarProductos(productos) {
         const contenedor = document.getElementById("productos-container");
         contenedor.innerHTML = "";
+
+        console.log("Productos a mostrar:", productos);
+
+        if (productos.length === 0) {
+            contenedor.innerHTML = `<p>No hay productos disponibles en esta categoría.</p>`;
+            return;
+        }
 
         productos.forEach(producto => {
             const productoHTML = `
@@ -305,7 +325,10 @@ document.addEventListener("DOMContentLoaded", function () {
 
     function mostrarDetallesProducto(id) {
         const producto = productosOriginales.find(p => p.id_producto == id);
-        if (!producto) return;
+        if (!producto) {
+            console.error("No se encontró el producto con ID:", id);
+            return;
+        }
 
         document.getElementById("modalNombre").textContent = producto.nombre;
         document.getElementById("modalDescripcion").textContent = producto.descripcion;
@@ -315,26 +338,6 @@ document.addEventListener("DOMContentLoaded", function () {
         $("#productoModal").modal("show");
     }
 
-    function filtrarProductos() {
-        let productosFiltrados = [...productosOriginales];
-        const orden = document.getElementById("ordenar").value;
-        const minPrecio = parseFloat(document.getElementById("precio-min").value) || 0;
-        const maxPrecio = parseFloat(document.getElementById("precio-max").value) || Infinity;
-
-        productosFiltrados = productosFiltrados.filter(p => p.precio >= minPrecio && p.precio <= maxPrecio);
-
-        productosFiltrados.sort((a, b) => {
-            if (orden === "az") return a.nombre.localeCompare(b.nombre);
-            if (orden === "za") return b.nombre.localeCompare(a.nombre);
-        });
-
-        mostrarProductos(productosFiltrados);
-    }
-
-    document.getElementById("ordenar").addEventListener("change", filtrarProductos);
-    document.getElementById("precio-min").addEventListener("input", filtrarProductos);
-    document.getElementById("precio-max").addEventListener("input", filtrarProductos);
-
     cargarProductos();
-}); 
+});
 
