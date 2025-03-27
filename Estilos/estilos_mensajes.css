@@ -494,6 +494,11 @@ body{
     box-shadow: 0 10px 25px rgba(0, 0, 0, 0.3);
     animation: fadeIn 0.3s ease-in-out; /* Animación de aparición */
   }
+
+
+
+
+  /*MENSAJES */
   
   /* Animación de fadeIn */
   @keyframes fadeIn {
@@ -628,7 +633,7 @@ body{
 
 /* Botón para responder */
 .btn-responder {
-    background-color: #28a745;
+    background-color: #d8b147;
     color: var(--white);
     border: none;
     padding: 8px 12px;
@@ -639,7 +644,7 @@ body{
 }
 
 .btn-responder:hover {
-    background-color: #218838;
+    background-color: #a38532;
 }
 
 /* Formulario para responder */
@@ -705,4 +710,37 @@ body{
 .mensajes-container {
     margin-left: 20px; /* Espacio entre la bandeja y la barra */
     margin-top: 20px;  /* Espacio superior */
+}
+
+
+.botones {
+    display: flex;
+    gap: 10px; /* Espacio entre los botones */
+    margin-top: 10px;
+}
+
+.btn-enviar {
+    background-color: var(--blue);
+    color: white;
+    border: none;
+    padding: 10px 15px;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.btn-enviar:hover {
+    background-color: #064a92;
+}
+
+.btn-limpiar {
+    background-color: #c02c3b;
+    color: white;
+    border: none;
+    padding: 10px 15px;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.btn-limpiar:hover {
+    background-color: #8f1320;
 }

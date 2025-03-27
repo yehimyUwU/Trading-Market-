@@ -90,7 +90,6 @@
     </div>
 
     <div class="main">
-
         <div class="topbar">
             <div class="toggle">
                 <ion-icon name="menu-outline"></ion-icon>
@@ -109,7 +108,8 @@
 
             </div>
         </div>
-        <!-- Título -->
+        <br>
+        
 
         <!-- Tabla de Mensajes -->
         <div class="tabla-mensajes">
@@ -156,15 +156,25 @@
                 <label for="respuesta">Mensaje:</label>
                 <textarea id="respuesta" name="respuesta" rows="5" placeholder="Escribe tu respuesta aquí"></textarea>
                 
-                <button type="submit" class="btn-enviar">Enviar</button>
+                <div class="botones">
+                    <button type="submit" class="btn-enviar">Enviar</button>
+                    <button type="button" id="btn-limpiar" class="btn-limpiar">Limpiar</button>
+                </div>
             </form>
         </div>
+        
     </div>
+
+    <script>
+        
+    </script>
+
 
     
 
     <!--Scripts bien gotys-->
     <script src="js/admin.js"></script>
+    <script src="js/mensajes_admin.js"></script>
     <!--script para poder usar iconos bien bellaquitos // ionicons-->
     <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
     <script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>

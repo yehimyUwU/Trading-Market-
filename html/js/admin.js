@@ -69,16 +69,3 @@ saveButton.addEventListener("click", (event) => {
   });
 });
 
-// Script para mensajes_admin y poder responder mensajes
-
-function responderMensaje(nombre, correo) {
-  document.getElementById('nombre').value = nombre;
-  document.getElementById('correo').value = correo;
-  document.getElementById('respuesta').focus();
-}
-
-document.getElementById('respuesta-form').addEventListener('submit', function(e) {
-  e.preventDefault();
-  alert('Mensaje enviado correctamente.');
-});
-
