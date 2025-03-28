@@ -23,4 +23,7 @@ if ($stmt->execute()) {
 } else {
     echo json_encode(["error" => "Error al actualizar cantidad."]);
 }
+
+
+
 ?>

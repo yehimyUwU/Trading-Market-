@@ -42,4 +42,6 @@ if ($stmt->execute()) {
     echo json_encode(["error" => "Error al añadir producto al carrito."]);
 }
 
+
+
 ?>
