@@ -265,3 +265,48 @@ document.addEventListener("DOMContentLoaded", function () {
 
 
 
+document.addEventListener('DOMContentLoaded', function() {
+    cargarProductos();
+});
+
+function cargarProductos() {
+    fetch('../php/listar_productos.php')
+        .then(response => response.json())
+        .then(data => {
+            if (data.success) {
+                const productosGrid = document.getElementById('productosGrid');
+                productosGrid.innerHTML = '';
+                data.listaProductos.forEach(producto => {
+                    const productoCard = document.createElement('div');
+                    productoCard.classList.add('col-md-4', 'mb-4');
+                    productoCard.innerHTML = `
+                        <div class="card">
+                            <img src="../imagenes_P/${producto.imagen || 'default.jpeg'}" class="card-img-top" alt="${producto.nombre}" onerror="this.onerror=null;this.src='../imagenes_P/default.jpeg';">
+                            <div class="card-body">
+                                <h5 class="card-title">${producto.nombre}</h5>
+                                <p class="card-text">${producto.descripcion}</p>
+                                <p class="card-text font-weight-bold">$${producto.precio}</p>
+                                <button class="btn btn-primary" onclick="verDetalles('${producto.nombre}', '${producto.descripcion}', '${producto.precio}', '../imagenes_P/${producto.imagen}')">Ver Detalles</button>
+                                <button class="btn btn-success" onclick="agregarAlCarrito(${producto.id}, '${producto.nombre}', ${producto.precio})">Agregar al Carrito</button>
+                            </div>
+                        </div>
+                    `;
+                    productosGrid.appendChild(productoCard);
+                });
+            } else {
+                alert('No se pudieron cargar los productos');
+            }
+        })
+        .catch(error => {
+            console.error('Error al cargar los productos:', error);
+            alert('Error al cargar los productos');
+        });
+}
+
+function verDetalles(nombre, descripcion, precio, imagen) {
+    document.getElementById('modalNombre').textContent = nombre;
+    document.getElementById('modalDescripcion').textContent = descripcion;
+    document.getElementById('modalPrecio').textContent = `$${precio}`;
+    document.getElementById('modalImagen').src = imagen;
+    $('#productoModal').modal('show');
+}
