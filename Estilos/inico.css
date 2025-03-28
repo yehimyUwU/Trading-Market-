@@ -5,7 +5,7 @@ body {
     margin: 0;
     padding: 0;
     background: rgb(12, 77, 255);
-    background: linear-gradient(150deg, rgba(214, 233, 255, 0.959) 6%, rgba(0, 134, 243, 0.928) 64%,rgba(0, 47, 177, 0.928) 64%,rgba(17, 120, 255, 0.928) 74%, rgb(216, 225, 255) 95%);
+    background: linear-gradient(150deg, #77ddeb 6%, rgba(54, 73, 184, 0.928) 64%,rgba(57, 11, 221, 0.928) 64%,rgba(120, 15, 241, 0.928) 74%, rgb(81, 132, 228) 95%);
     color: rgb(77, 133, 255);
     font-size: 12px; /* Ajusta el tamaño de la letra */
 }
