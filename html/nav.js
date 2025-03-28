@@ -79,154 +79,60 @@ function cerrarPerfil() {
 
 
 //                         FUNCIONES DE CARRITO                      //
-
-let carrito = JSON.parse(localStorage.getItem("carrito")) || [];
-
-// Función para actualizar y mostrar el carrito en la tabla
-function actualizarCarrito() {
-    const contenidoCarrito = document.getElementById("contenidoCarrito");
-    contenidoCarrito.innerHTML = ""; // Limpiar contenido previo
-
-    if (carrito.length === 0) {
-        contenidoCarrito.innerHTML = `<tr><td colspan="6" class="text-center">El carrito está vacío.</td></tr>`;
-        document.getElementById("totalCarrito").innerText = "$0.00";
-        return;
-    }
-
-    carrito.forEach(producto => {
-        const fila = `
-            <tr>
-                <td>${producto.id}</td>
-                <td>${producto.nombre}</td>
-                <td>$${parseFloat(producto.precio).toFixed(2)}</td>
-                <td>
-                    <input type="number" value="${producto.cantidad}" min="1" class="form-control form-control-sm"
-                        onchange="cambiarCantidad('${producto.id}', this.value)">
-                </td>
-                <td>$${(parseFloat(producto.precio) * producto.cantidad).toFixed(2)}</td>
-                <td>
-                    <button class="btn btn-danger btn-sm" onclick="eliminarProducto('${producto.id}')">Eliminar</button>
-                </td>
-            </tr>
-        `;
-        contenidoCarrito.innerHTML += fila;
-    });
-
-    calcularTotalCarrito(); // Actualizar el total generalSDFG
-}
-
-
-function limpiarCarrito() {
-    const carritoCompleto = [];
-
-    carrito.forEach(producto => {
-        const existe = carritoCompleto.find(item => item.id === producto.id);
-        if (existe) {
-            // Actualizar cantidad si el producto ya existeASDFG
-            existe.cantidad += producto.cantidad;
-        } else if (producto.nombre && producto.precio) {
-            // Solo agregar productos con información completaASDFG
-            carritoCompleto.push(producto);
+function agregarAlCarrito(idProducto, cantidad) {
+    fetch('../php/agregar_carrito.php', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json' // Indicamos que enviamos JSON
+        },
+        body: JSON.stringify({ // Enviar datos como JSON
+            id_producto: idProducto,
+            cantidad: cantidad
+        })
+    })
+    .then(response => response.json())
+    .then(data => {
+        if (data.success) {
+            alert(data.success);
+        } else {
+            console.error(data.error);
         }
-    });
-
-    // Actualiza el carrito y el localStorage con datos limpios DSDSSDFG
-    carrito = carritoCompleto;
-    localStorage.setItem("carrito", JSON.stringify(carrito));
-}
-
-function limpiarCarrito() {
-    carrito = carrito.filter(producto => producto.nombre && producto.precio && producto.cantidad > 0);
-    localStorage.setItem("carrito", JSON.stringify(carrito));
-    console.log("Carrito limpiado:", carrito);
-}
-document.addEventListener("DOMContentLoaded", function () {
-    carrito = JSON.parse(localStorage.getItem("carrito")) || [];
-    limpiarCarrito(); // Limpia datos duplicados/incompletos solo al cargar
-    actualizarCarrito(); // Muestra los datos del carrito
-});
-
-// Función para calcular el total general del carrito
-function calcularTotalCarrito() {
-    const total = carrito.reduce((sum, producto) => sum + producto.precio * producto.cantidad, 0);
-    document.getElementById("totalCarrito").innerText = `$${total.toFixed(2)}`;
-}
-// Función para agregar productos al carritoSDFGSDFG
-function agregarAlCarrito(id, nombre, precio) {
-    const productoExistente = carrito.find(producto => producto.id === id);
-
-    if (productoExistente) {
-        productoExistente.cantidad++; // Incrementar solo si ya existe el productoASSD
-    } else {
-        carrito.push({
-            id: id,
-            nombre: nombre,
-            precio: precio,
-            cantidad: 1
-        });
-    }
-
-    localStorage.setItem("carrito", JSON.stringify(carrito)); // Guardar el carrito actualizado
-    console.log(`Producto agregado: ${nombre}. Carrito:`, carrito);
-    alert(`El producto ha sido agregado al carrito.`);
-    actualizarCarrito(); // Refrescar la tabla del carrito
+    })
+    .catch(error => console.error('Error:', error));
 }
 
 
 
+function cargarCarrito() {
+    fetch('../php/mostrar_carrito.php')
+        .then(response => response.json())
+        .then(data => {
+            const contenidoCarrito = document.getElementById('contenidoCarrito');
+            contenidoCarrito.innerHTML = ''; // Limpiar contenido previo
 
-// Función para cambiar la cantidad de un producto
-function cambiarCantidad(id, nuevaCantidad) {
-    const producto = carrito.find(producto => producto.id === id);
-    if (producto) {
-        producto.cantidad = parseInt(nuevaCantidad);
+            let total = 0;
 
-        if (isNaN(producto.cantidad) || producto.cantidad <= 0) {
-            alert("La cantidad debe ser un número mayor a 0.");
-            producto.cantidad = 1; // Volvemos a 1 si el valor es inválido
-        }
-    }
+            data.forEach(item => {
+                const fila = `
+                    <tr>
+                        <td>${item.id_carrito}</td>
+                        <td>${item.nombre}</td>
+                        <td>${item.precio}</td>
+                        <td>${item.cantidad}</td>
+                        <td>${item.total}</td>
+                        <td><button onclick="eliminarDelCarrito(${item.id_carrito})">Eliminar</button></td>
+                    </tr>
+                `;
+                contenidoCarrito.innerHTML += fila;
+                total += item.total;
+            });
 
-    // Actualizar localStorage
-    localStorage.setItem("carrito", JSON.stringify(carrito));
-
-    // Actualizar la tabla
-    actualizarCarrito();
+            document.getElementById('totalCarrito').textContent = `$${total.toFixed(2)}`;
+        })
+        .catch(error => console.error('Error:', error));
 }
 
 
-// Función para eliminar un producto del carrito
-function eliminarProducto(id) {
-    // Filtrar el producto a eliminar
-    carrito = carrito.filter(producto => producto.id !== id);
-
-    // Actualizar localStorage
-    localStorage.setItem("carrito", JSON.stringify(carrito));
-
-    // Actualizar la tabla
-    actualizarCarrito();
-}
-
-
-// Función para inicializar los botones de "Agregar al carrito"
-function manejarBotones() {
-    document.querySelectorAll(".agregar-carrito").forEach(boton => {
-        boton.addEventListener("click", function () {
-            const id = parseInt(this.getAttribute("data-id"));
-            const nombre = this.parentElement.querySelector(".card-title").innerText;
-            const precio = parseFloat(this.parentElement.querySelector(".card-price").innerText.replace("$", ""));
-
-            // Llama a la función para agregar al carrito
-            agregarAlCarrito(id, nombre, precio);
-        });
-    });
-}
-
-// Mostrar el carrito al cargar la página
-document.addEventListener("DOMContentLoaded", function () {
-    actualizarCarrito();
-    manejarBotones();
-});
 
 //                              FUNCIONES DE CARRITO FINAL                                         //
 
