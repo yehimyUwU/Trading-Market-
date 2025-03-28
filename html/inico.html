@@ -146,6 +146,29 @@
     </div>
 </footer>
 <!-- Agregar Bootstrap JS y jQuery -->
+<!-- Modal -->
+<div class="modal fade" id="productoModal" tabindex="-1" role="dialog" aria-labelledby="productoModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="productoModalLabel">Detalles del Producto</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <img id="modalImagen" src="" class="img-fluid" alt="Imagen del producto">
+                <h5 id="modalNombre"></h5>
+                <p id="modalDescripcion"></p>
+                <p id="modalPrecio" class="font-weight-bold"></p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+            </div>
+        </div>
+    </div>
+</div>
+
 <script>
     document.addEventListener('DOMContentLoaded', function() {
         fetch('../php/listar_productos.php')
@@ -153,7 +176,7 @@
             .then(data => {
                 if (data.success) {
                     const productosGrid = document.getElementById('productosGrid');
-                    productosGrid.innerHTML = ''; // Clear existing content
+                    productosGrid.innerHTML = '';
                     data.listaProductos.forEach(producto => {
                         const productoCard = document.createElement('div');
                         productoCard.classList.add('col-md-4');
@@ -163,8 +186,8 @@
                                 <div class="card-body">
                                     <h5 class="card-title">${producto.nombre}</h5>
                                     <p class="card-text">${producto.descripcion}</p>
-                                    <p class="card-text">$${producto.precio}</p>
-                                    <a href="#" class="btn btn-primary">Ver Producto</a>
+                                    <p class="card-text font-weight-bold">$${producto.precio}</p>
+                                    <button class="btn btn-primary" onclick="verDetalles('${producto.nombre}', '${producto.descripcion}', '${producto.precio}', '../imagenes_P/${producto.imagen}')">Ver Detalles</button>
                                 </div>
                             </div>
                         `;
@@ -179,6 +202,14 @@
                 alert('Error al cargar los productos');
             });
     });
+
+    function verDetalles(nombre, descripcion, precio, imagen) {
+        document.getElementById('modalNombre').textContent = nombre;
+        document.getElementById('modalDescripcion').textContent = descripcion;
+        document.getElementById('modalPrecio').textContent = `$${precio}`;
+        document.getElementById('modalImagen').src = imagen;
+        $('#productoModal').modal('show');
+    }
 </script>
 <script src="nav.js"></script>
 <script src="js/chatBot.js"></script>
