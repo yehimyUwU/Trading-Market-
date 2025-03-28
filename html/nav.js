@@ -297,10 +297,6 @@ function cargarProductos() {
                 alert('No se pudieron cargar los productos');
             }
         })
-        .catch(error => {
-            console.error('Error al cargar los productos:', error);
-            alert('Error al cargar los productos');
-        });
 }
 
 function verDetalles(nombre, descripcion, precio, imagen) {
