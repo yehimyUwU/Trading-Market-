@@ -56,7 +56,7 @@ body {
     justify-content: space-between;
     align-items: center;
     padding: 15px 30px;
-    background: linear-gradient(80deg, #545fff,hsl(239, 93%, 63%), #bcbaff, #0011ff, #ffffff);
+    background: linear-gradient(80deg, #306a91,hsl(234, 32%, 55%), #928fdb, #1f68ac, #71687a);
     background-size: 400% 400%;
     animation: cambiarFondo 10s ease-in-out infinite;
     box-shadow: 0px 4px 15px rgba(55, 118, 255, 0.863);
