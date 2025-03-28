@@ -78,28 +78,38 @@ function cerrarPerfil() {
 }
 
 
+
+
+
 //                         FUNCIONES DE CARRITO                      //
+
+
+
 function agregarAlCarrito(idProducto, cantidad) {
+    console.log("Datos enviados al servidor:", { id_producto: idProducto, cantidad: cantidad });
+
     fetch('../php/agregar_carrito.php', {
         method: 'POST',
         headers: {
-            'Content-Type': 'application/json' // Indicamos que enviamos JSON
+            'Content-Type': 'application/json'
         },
-        body: JSON.stringify({ // Enviar datos como JSON
+        body: JSON.stringify({
             id_producto: idProducto,
             cantidad: cantidad
         })
     })
     .then(response => response.json())
     .then(data => {
+        console.log("Respuesta del servidor:", data);
         if (data.success) {
             alert(data.success);
         } else {
             console.error(data.error);
         }
     })
-    .catch(error => console.error('Error:', error));
+    .catch(error => console.error('Error al enviar datos:', error));
 }
+
 
 
 
@@ -113,24 +123,66 @@ function cargarCarrito() {
             let total = 0;
 
             data.forEach(item => {
+                total += parseFloat(item.total); // Acumular el total
+
                 const fila = `
                     <tr>
                         <td>${item.id_carrito}</td>
                         <td>${item.nombre}</td>
                         <td>${item.precio}</td>
-                        <td>${item.cantidad}</td>
+                        <td>
+                            <button onclick="modificarCantidad(${item.id_carrito}, -1)" class="btn btn-sm btn-danger">-</button>
+                            ${item.cantidad}
+                            <button onclick="modificarCantidad(${item.id_carrito}, 1)" class="btn btn-sm btn-success">+</button>
+                        </td>
                         <td>${item.total}</td>
-                        <td><button onclick="eliminarDelCarrito(${item.id_carrito})">Eliminar</button></td>
+                        <td><button onclick="eliminarDelCarrito(${item.id_carrito})" class="btn btn-sm btn-warning">Eliminar</button></td>
                     </tr>
                 `;
                 contenidoCarrito.innerHTML += fila;
-                total += item.total;
             });
 
             document.getElementById('totalCarrito').textContent = `$${total.toFixed(2)}`;
         })
         .catch(error => console.error('Error:', error));
 }
+
+function modificarCantidad(idCarrito, cambio) {
+    fetch('../php/modificar_carrito.php', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+            id_carrito: idCarrito,
+            cambio: cambio
+        })
+    })
+    .then(response => response.json())
+    .then(data => {
+        if (data.success) {
+            alert(data.success);
+            cargarCarrito(); // Recargar el carrito después de actualizar
+        } else {
+            console.error(data.error);
+        }
+    })
+    .catch(error => console.error('Error:', error));
+}
+
+
+
+
+
+document.querySelectorAll(".agregar-carrito").forEach(boton => {
+    boton.addEventListener("click", function () {
+        const idProducto = this.getAttribute("data-id");
+        agregarAlCarrito(idProducto);
+    });
+});
+
+
+
 
 
 
@@ -195,6 +247,7 @@ document.addEventListener("DOMContentLoaded", function () {
                             <p class="card-price">$${producto.precio}</p>
                             <button class="btn btn-primary ver-detalles mb-2" data-id="${producto.id_producto}">Ver Detalles</button>
                             <button class="btn btn-success agregar-carrito mb-3" data-id="${producto.id_producto}" data-nombre="${producto.nombre}" data-precio="${producto.precio}">Agregar al carrito</button>
+
                         </div>
                     </div>
                 </div>

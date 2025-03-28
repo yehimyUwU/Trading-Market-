@@ -12,37 +12,34 @@ if (!$conn) {
 // Verificar que haya un usuario logueado en la sesión
 if (!isset($_SESSION['usuario']['id'])) {
     die(json_encode(["error" => "No hay usuario logueado."]));
-    
 }
 
+$id_usuario = $_SESSION['usuario']['id']; // Obtener el ID del usuario logueado
 
-// Obtener y decodificar el cuerpo de la solicitud
+// Decodificar el JSON recibido
+// Decodificar el JSON recibido
+// Decodificar el JSON recibido
 $data = json_decode(file_get_contents("php://input"), true);
 
 if (!isset($data['id_producto']) || !isset($data['cantidad'])) {
-    die(json_encode(["error" => "Datos incompletos (id_producto o cantidad no presentes)."]));
+    die(json_encode(["error" => "Datos incompletos. Falta id_producto o cantidad."]));
 }
 
-// Asignar los valores decodificados
-$id_producto = $data['id_producto'];
-$cantidad = $data['cantidad'];
+$id_producto = intval($data['id_producto']);
+$cantidad = intval($data['cantidad']); // Verificar si este valor llega correctamente
 
-
-
-$id_usuario = $_SESSION['usuario']['id']; // Obtener el ID del usuario logueado
-$id_producto = $_POST['id_producto']; // ID del producto que se agrega al carrito
-$cantidad = $_POST['cantidad']; // Cantidad seleccionada
 
 $sql = "INSERT INTO carrito (id_usuario, id_producto, cantidad) VALUES (:id_usuario, :id_producto, :cantidad)";
 $stmt = $conn->prepare($sql);
-
 $stmt->bindParam(':id_usuario', $id_usuario, PDO::PARAM_INT);
 $stmt->bindParam(':id_producto', $id_producto, PDO::PARAM_INT);
 $stmt->bindParam(':cantidad', $cantidad, PDO::PARAM_INT);
+
 
 if ($stmt->execute()) {
     echo json_encode(["success" => "Producto añadido al carrito."]);
 } else {
     echo json_encode(["error" => "Error al añadir producto al carrito."]);
 }
+
 ?>
