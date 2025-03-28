@@ -10,6 +10,7 @@
 }
 
 /* Modo claro (por defecto) */
+/* Modo claro (por defecto) */
 :root {
     --blue: #306a91;
     --white: #fff;
@@ -20,13 +21,12 @@
 
 /* Modo oscuro */
 :root.dark-mode {
-    --blue: #191931; /* Azul más oscuro */
-    --white: #635555; /* Fondo y letras de la barra oscuro */
+    --blue: #a5a0a0; /* Azul más oscuro */
+    --white: #252323; /* Fondo y letras de la barra oscuro */
     --gray: #5a5252; /* Gris oscuro */
     --black1: #fff; /* Texto claro */
     --black2: #ccc; /* Texto secundario */
 }
-
 
 body{
     min-height: 100vh;
