@@ -153,40 +153,28 @@ if (!verificarRol('Cliente')) {
     </div>
 </footer>
 <!-- Agregar Bootstrap JS y jQuery -->
-<script>
-    document.addEventListener('DOMContentLoaded', function() {
-        fetch('../php/listar_productos.php')
-            .then(response => response.json())
-            .then(data => {
-                if (data.success) {
-                    const productosGrid = document.getElementById('productosGrid');
-                    productosGrid.innerHTML = ''; // Clear existing content
-                    data.listaProductos.forEach(producto => {
-                        const productoCard = document.createElement('div');
-                        productoCard.classList.add('col-md-4');
-                        productoCard.innerHTML = `
-                            <div class="card">
-                                <img src="../imagenes_P/${producto.imagen || 'default.jpeg'}" class="card-img-top" alt="${producto.nombre}" onerror="this.onerror=null;this.src='../imagenes_P/default.jpeg';">
-                                <div class="card-body">
-                                    <h5 class="card-title">${producto.nombre}</h5>
-                                    <p class="card-text">${producto.descripcion}</p>
-                                    <p class="card-text">$${producto.precio}</p>
-                                    <a href="#" class="btn btn-primary">Ver Producto</a>
-                                </div>
-                            </div>
-                        `;
-                        productosGrid.appendChild(productoCard);
-                    });
-                } else {
-                    alert('No se pudieron cargar los productos');
-                }
-            })
-            .catch(error => {
-                console.error('Error al cargar los productos:', error);
-                alert('Error al cargar los productos');
-            });
-    });
-</script>
+<!-- Modal -->
+<div class="modal fade" id="productoModal" tabindex="-1" role="dialog" aria-labelledby="productoModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="productoModalLabel">Detalles del Producto</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <img id="modalImagen" src="" class="img-fluid" alt="Imagen del producto">
+                <h5 id="modalNombre"></h5>
+                <p id="modalDescripcion"></p>
+                <p id="modalPrecio" class="font-weight-bold"></p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+            </div>
+        </div>
+    </div>
+</div> 
 <script src="nav.js"></script>
 <script src="js/chatBot.js"></script>
 <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
@@ -197,3 +185,4 @@ if (!verificarRol('Cliente')) {
 
 <!-- Formulario de Registro -->
 <form action="../php/registro.php" method="POST">
+

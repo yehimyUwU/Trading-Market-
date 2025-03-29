@@ -1,4 +1,5 @@
 
+
 /* Modo claro (por defecto) */
 :root {
     --blue: #306a91;
@@ -16,6 +17,23 @@
     --black1: #fff; /* Texto claro */
     --black2: #ccc; /* Texto secundario */
 }
+
+/* Botón para cambiar de modo */
+.modo-visual-btn {
+    background-color: var(--blue);
+    color: var(--white);
+    border: none;
+    padding: 10px 15px;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+.modo-visual-btn:hover {
+    background-color: var(--black2);
+    color: var(--blue);
+}
+
 
 body{
     min-height: 100vh;
@@ -246,26 +264,6 @@ body{
     object-fit: cover; /* Mantiene las proporciones sin deformar */
 }
 
-.user3 {
-    position: relative;
-    width: 40px;
-    height: 40px;
-    border-radius: 50%;
-    overflow: hidden;
-    cursor: pointer;
-}
-
-.user3 img {
-    position: absolute;
-    top: 50%; /* Centra verticalmente */
-    left: 50%; /* Centra horizontalmente */
-    transform: translate(-50%, -50%); /* Ajusta la posición al centro exacto */
-    width: 100%; /* Asegura que la imagen cubra todo el contenedor */
-    height: 100%; /* Asegura que cubra todo el contenedor */
-    object-fit: cover; /* Mantiene las proporciones sin deformar */
-}
-
-
 /*Tarjetas*/
 .cardBox{
     position: relative;
@@ -321,8 +319,8 @@ body{
     width: 100%;
     padding: 20px;
     display: grid;
- 
-    grid-gap: 3px;
+    grid-template-columns: 2fr 1fr;
+    grid-gap: 30px;
     /*margin-top: 10px;*/
 }
 
@@ -487,7 +485,6 @@ body{
 
 
 
-
 /*Ver perfil*/
 
 .modal {
@@ -591,6 +588,79 @@ body{
     transform: scale(1.05); /* Ligeramente más grande al pasar el mouse */
   }
   
-  
-  
-  
+
+
+
+  /* ESTILOS PARA EL HTML DE CONFIGURACION */
+
+  .settings-container {
+    padding: 20px;
+    background-color: var(--gray);
+    border-radius: 15px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.settings-container h2 {
+    color: var(--black1);
+    margin-bottom: 20px;
+    text-align: center;
+}
+
+.card-section {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 20px;
+    width: 100%;
+}
+
+.settings-card {
+    background: var(--white);
+    border-radius: 15px;
+    padding: 20px;
+    text-align: center;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s, box-shadow 0.3s;
+}
+
+.settings-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 6px 15px rgba(0, 0, 0, 0.15);
+}
+
+.settings-card ion-icon {
+    font-size: 3rem;
+    color: var(--blue);
+    margin-bottom: 10px;
+}
+
+.settings-card h3 {
+    margin: 10px 0;
+    color: var(--blue);
+}
+
+.settings-card p {
+    color: var(--black2);
+    font-size: 14px;
+    margin-bottom: 10px;
+}
+
+.btn-action {
+    background-color: var(--blue);
+    color: var(--white);
+    border: none;
+    padding: 10px 20px;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: 0.3s ease-in-out;
+}
+
+.btn-action:hover {
+    background-color: var(--black2);
+    color: var(--blue);
+}
+
+.settings-container h2{
+    color: var(--blue);
+}

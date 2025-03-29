@@ -1,10 +1,3 @@
-<?php
-include_once '../php/verificar_acceso.php';
-if (!verificarRol('Administrador')) {
-    header('Location: ../html/longin.html');
-    exit;
-}
-?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -20,81 +13,9 @@ if (!verificarRol('Administrador')) {
 
 </head>
 <body>
-    
-    <!--Barra de navegacion -->
-    <div class="container">
-        <div class="navigation">
-            <ul>
-                <li>
-                    <a href="admin_panel.html">
-                        <span class="icon">
-                            <ion-icon name="american-football-outline"></ion-icon></span>
-                        <span class="title">Trading Market</span>
-                    </a>
-                </li>
-            </ul>
-
-            <ul>
-                <li>
-                    <a href="admin_panel.html">
-                        <span class="icon">
-                            <ion-icon name="home-outline"></ion-icon></span>
-                        <span class="title">Principal</span>
-                    </a>
-                </li>
-            </ul>
-
-            <ul>
-                <li>
-                    <a href="clientes_admin.html">
-                        <span class="icon">
-                            <ion-icon name="people-outline"></ion-icon></span>
-                        <span class="title">Clientes</span>
-                    </a>
-                </li>
-            </ul>
-
-            <ul>
-                <li>
-                    <a href="mensajes_admin.html">
-                        <span class="icon">
-                            <ion-icon name="chatbubbles-outline"></ion-icon></span>
-                        <span class="title">Mensajes</span>
-                    </a>
-                </li>
-            </ul>
-
-            <ul>
-                <li>
-                    <a href="ayuda_admin.html">
-                        <span class="icon">
-                            <ion-icon name="help-outline"></ion-icon></span>
-                        <span class="title">Ayuda</span>
-                    </a>
-                </li>
-            </ul>
-
-            <ul>
-                <li>
-                    <a href="confi_admin.html">
-                        <span class="icon">
-                            <ion-icon name="settings-outline"></ion-icon></span>
-                        <span class="title">Configuraciones</span>
-                    </a>
-                </li>
-            </ul>
-
-            <ul>
-                <li>
-                    <a href="#">
-                        <span class="icon">
-                            <ion-icon name="log-out-outline"></ion-icon>
-                        <span class="title">Sign out</span>
-                    </a>
-                </li>
-            </ul>
-        </div>
-    </div>
+<?php
+require '../php/barra_admin.php'; 
+?>
 
 
     <!--Contenido principal-->
@@ -255,7 +176,7 @@ if (!verificarRol('Administrador')) {
 
                 <table>
                     <tr>
-                        <td width="60px"></td>
+                        <td width="60px">
                             <div class="imgBx"><img src="../imagenes/ejem.jpg" alt=""></div>
                         </td>
                         <td>

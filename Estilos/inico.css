@@ -5,7 +5,7 @@ body {
     margin: 0;
     padding: 0;
     background: rgb(12, 77, 255);
-    background: linear-gradient(150deg, rgba(214, 233, 255, 0.959) 6%, rgba(0, 134, 243, 0.928) 64%,rgba(0, 47, 177, 0.928) 64%,rgba(17, 120, 255, 0.928) 74%, rgb(216, 225, 255) 95%);
+    background: linear-gradient(150deg, #77ddeb 6%, rgba(54, 73, 184, 0.928) 64%,rgba(57, 11, 221, 0.928) 64%,rgba(120, 15, 241, 0.928) 74%, rgb(81, 132, 228) 95%);
     color: rgb(77, 133, 255);
     font-size: 12px; /* Ajusta el tamaño de la letra */
 }
@@ -56,7 +56,7 @@ body {
     justify-content: space-between;
     align-items: center;
     padding: 15px 30px;
-    background: linear-gradient(80deg, #545fff,hsl(239, 93%, 63%), #bcbaff, #0011ff, #ffffff);
+    background: linear-gradient(80deg, #306a91,hsl(234, 32%, 55%), #928fdb, #1f68ac, #71687a);
     background-size: 400% 400%;
     animation: cambiarFondo 10s ease-in-out infinite;
     box-shadow: 0px 4px 15px rgba(55, 118, 255, 0.863);

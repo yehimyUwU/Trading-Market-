@@ -17,6 +17,23 @@
     --black2: #ccc; /* Texto secundario */
 }
 
+/* Botón para cambiar de modo */
+.modo-visual-btn {
+    background-color: var(--blue);
+    color: var(--white);
+    border: none;
+    padding: 10px 15px;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+.modo-visual-btn:hover {
+    background-color: var(--black2);
+    color: var(--blue);
+}
+
+
 body{
     min-height: 100vh;
     overflow-x: hidden;
@@ -246,26 +263,6 @@ body{
     object-fit: cover; /* Mantiene las proporciones sin deformar */
 }
 
-.user3 {
-    position: relative;
-    width: 40px;
-    height: 40px;
-    border-radius: 50%;
-    overflow: hidden;
-    cursor: pointer;
-}
-
-.user3 img {
-    position: absolute;
-    top: 50%; /* Centra verticalmente */
-    left: 50%; /* Centra horizontalmente */
-    transform: translate(-50%, -50%); /* Ajusta la posición al centro exacto */
-    width: 100%; /* Asegura que la imagen cubra todo el contenedor */
-    height: 100%; /* Asegura que cubra todo el contenedor */
-    object-fit: cover; /* Mantiene las proporciones sin deformar */
-}
-
-
 /*Tarjetas*/
 .cardBox{
     position: relative;
@@ -321,8 +318,8 @@ body{
     width: 100%;
     padding: 20px;
     display: grid;
- 
-    grid-gap: 3px;
+    grid-template-columns: 2fr 1fr;
+    grid-gap: 30px;
     /*margin-top: 10px;*/
 }
 
@@ -487,7 +484,6 @@ body{
 
 
 
-
 /*Ver perfil*/
 
 .modal {
@@ -591,6 +587,116 @@ body{
     transform: scale(1.05); /* Ligeramente más grande al pasar el mouse */
   }
   
+
+
+
+
+/* ESTILOS PARA EL HTML DE AYUDA */
   
-  
-  
+  .help-container {
+    padding: 20px;
+    background-color: var(--gray);
+    border-radius: 15px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.help-container h2 {
+    color: var(--black1);
+    margin-bottom: 10px;
+    text-align: center;
+}
+
+.help-container p {
+    color: var(--black2);
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+.help-cards {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 20px;
+    width: 100%;
+}
+
+.help-card {
+    background: var(--white);
+    border-radius: 15px;
+    padding: 20px;
+    text-align: center;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s, box-shadow 0.3s;
+}
+
+.help-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 6px 15px rgba(0, 0, 0, 0.15);
+}
+
+.help-card .card-header {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-bottom: 10px;
+}
+
+.help-card .card-header ion-icon {
+    font-size: 3rem;
+    color: var(--blue);
+    margin-bottom: 10px;
+}
+
+.help-card h3 {
+    color: var(--blue);
+    margin-bottom: 10px;
+}
+
+.help-card p {
+    color: var(--black2);
+    margin-bottom: 15px;
+}
+
+.search-tags {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 10px;
+}
+
+.search-tags button {
+    background-color: var(--blue);
+    color: var(--white);
+    border: none;
+    padding: 5px 10px;
+    border-radius: 20px;
+    cursor: pointer;
+    font-size: 12px;
+    transition: 0.3s;
+}
+
+.search-tags button:hover {
+    background-color: var(--black2);
+    color: var(--blue);
+}
+
+.btn-action {
+    background-color: var(--blue);
+    color: var(--white);
+    border: none;
+    padding: 10px 20px;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: 0.3s ease-in-out;
+}
+
+.btn-action:hover {
+    background-color: var(--black2);
+    color: var(--blue);
+}
+
+
+.help-container h2{
+    color: var(--blue);
+}
