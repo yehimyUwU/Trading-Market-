@@ -79,57 +79,70 @@ function cerrarPerfil() {
 
 
 //                         FUNCIONES DE CARRITO                      //
-function agregarAlCarrito(idProducto, cantidad) {
+
+
+
+
+function agregarAlCarrito(id, nombre, precio) {
+    const datos = {
+        id_producto: id,
+        nombre: nombre,
+        precio: precio,
+        cantidad: 1 // Por defecto
+    };
+
+    // Enviar los datos al servidor con fetch
     fetch('../php/agregar_carrito.php', {
         method: 'POST',
         headers: {
-            'Content-Type': 'application/json' // Indicamos que enviamos JSON
+            'Content-Type': 'application/json'
         },
-        body: JSON.stringify({ // Enviar datos como JSON
-            id_producto: idProducto,
-            cantidad: cantidad
-        })
+        body: JSON.stringify(datos)
     })
     .then(response => response.json())
     .then(data => {
-        if (data.success) {
-            alert(data.success);
-        } else {
+        if (data.error) {
             console.error(data.error);
+            alert("Error al agregar el producto al carrito.");
+            return;
         }
+        alert("Producto agregado al carrito.");
+        actualizarCarritoUI();
     })
-    .catch(error => console.error('Error:', error));
+    .catch(error => {
+        console.error("Error en la solicitud:", error);
+    });
 }
 
-
-
-function cargarCarrito() {
-    fetch('../php/mostrar_carrito.php')
+function actualizarCarritoUI() {
+    fetch('../php/obtener_carrito.php')
         .then(response => response.json())
         .then(data => {
-            const contenidoCarrito = document.getElementById('contenidoCarrito');
-            contenidoCarrito.innerHTML = ''; // Limpiar contenido previo
-
+            const contenidoCarrito = document.getElementById("contenidoCarrito");
+            const totalCarrito = document.getElementById("totalCarrito");
+            contenidoCarrito.innerHTML = ""; // Limpiar contenido actual
             let total = 0;
 
-            data.forEach(item => {
-                const fila = `
+            data.forEach(producto => {
+                total += producto.precio * producto.cantidad;
+
+                contenidoCarrito.innerHTML += `
                     <tr>
-                        <td>${item.id_carrito}</td>
-                        <td>${item.nombre}</td>
-                        <td>${item.precio}</td>
-                        <td>${item.cantidad}</td>
-                        <td>${item.total}</td>
-                        <td><button onclick="eliminarDelCarrito(${item.id_carrito})">Eliminar</button></td>
+                        <td>${producto.id_producto}</td>
+                        <td>${producto.nombre}</td>
+                        <td>$${producto.precio}</td>
+                        <td>${producto.cantidad}</td>
+                        <td>$${producto.precio * producto.cantidad}</td>
+                        <td><button class="btn btn-danger btn-sm eliminar-carrito" data-id="${producto.id_producto}">Eliminar</button></td>
                     </tr>
                 `;
-                contenidoCarrito.innerHTML += fila;
-                total += item.total;
             });
 
-            document.getElementById('totalCarrito').textContent = `$${total.toFixed(2)}`;
+            totalCarrito.textContent = `$${total}`;
         })
-        .catch(error => console.error('Error:', error));
+        .catch(error => {
+            console.error("Error al cargar el carrito:", error);
+        });
 }
 
 
