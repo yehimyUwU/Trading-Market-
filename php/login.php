@@ -5,8 +5,14 @@ require 'conexion.php';
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $documento = $_POST['documento'] ?? null;
     $password = $_POST['password'] ?? null;
+    $role = $_POST['role'] ?? null; // Captura el rol enviado desde el frontend
 
-    if (!$documento || !$password) {
+    // Depuración: Registrar los datos recibidos
+    error_log("Documento recibido: " . $documento);
+    error_log("Contraseña recibida: " . $password);
+    error_log("Rol recibido: " . $role);
+
+    if (!$documento || !$password || !$role) {
         echo json_encode(['success' => false, 'message' => 'Por favor, complete todos los campos']);
         exit;
     }
@@ -20,33 +26,56 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $usuario = $stmt->fetch(PDO::FETCH_ASSOC);
 
         if ($usuario && password_verify($password, $usuario['password'])) {
-            // Inicio de sesión exitoso
-            session_start();
-            $_SESSION['usuario'] = [
-                'id' => $usuario['id_usuario'],
-                'nombre' => $usuario['nombre'],
-                'apellido' => $usuario['apellido'],
-                'documento' => $usuario['documento'],
-                'email' => $usuario['email'],
-                'fecha_nacimiento' => $usuario['fecha_nacimiento'],
-                'genero' => $usuario['genero']
-            ];
-            
-            // Agregar log para depuración
-            error_log('Usuario logueado: ' . print_r($_SESSION['usuario'], true));
-            
-            echo json_encode([
-                'success' => true,
-                'message' => 'Inicio de sesión exitoso'
-            ]);
+            // Verificar si el usuario tiene el rol seleccionado
+            $stmt_rol = $pdo->prepare("
+                SELECT r.nombre 
+                FROM usuario_rol ur 
+                INNER JOIN rol_usuario r ON ur.id_rol = r.id_rol 
+                WHERE ur.id_usuario = ? AND r.nombre = ?
+            ");
+            $stmt_rol->execute([$usuario['id_usuario'], $role]);
+            $rol_valido = $stmt_rol->fetch(PDO::FETCH_COLUMN);
+
+            if ($rol_valido) {
+                session_start();
+                $_SESSION['usuario'] = [
+                    'id' => $usuario['id_usuario'],
+                    'nombre' => $usuario['nombre'],
+                    'apellido' => $usuario['apellido'],
+                    'documento' => $usuario['documento'],
+                    'email' => $usuario['email'],
+                    'fecha_nacimiento' => $usuario['fecha_nacimiento'],
+                    'genero' => $usuario['genero']
+                ];
+                $_SESSION['roles'] = [$rol_valido]; // Almacenar el rol en la sesión
+
+                // Redirigir según el rol
+                $redirect = match ($rol_valido) {
+                    'Administrador' => '../html/admin_panel.html',
+                    'Cliente' => '../html/inico.html',
+                    'Proveedor' => '../html/BienvProv.html', // Asegúrate de usar "Proveedor"
+                    default => null
+                };
+
+                echo json_encode([
+                    'success' => true,
+                    'message' => 'Inicio de sesión exitoso',
+                    'redirect' => $redirect
+                ]);
+            } else {
+                echo json_encode([
+                    'success' => false,
+                    'message' => 'El rol seleccionado no coincide con el usuario.'
+                ]);
+            }
         } else {
-            // Credenciales incorrectas
             echo json_encode([
                 'success' => false,
                 'message' => 'Documento o contraseña incorrectos'
             ]);
         }
     } catch (PDOException $e) {
+        error_log("Error en login.php: " . $e->getMessage()); // Registrar el error en el log
         echo json_encode([
             'success' => false,
             'message' => 'Error al iniciar sesión. Por favor, intente más tarde.'

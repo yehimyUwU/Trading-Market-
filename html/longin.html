@@ -40,6 +40,12 @@
                 </select>
                 <input type="email" name="email" placeholder="Correo Electrónico" required />
                 <input type="password" name="password" placeholder="Contraseña" required minlength="7" oninvalid="this.setCustomValidity('La contraseña debe tener al menos 7 caracteres')" oninput="this.setCustomValidity('')" />
+                <select name="rol" required>
+                    <option value="" disabled selected>Seleccione su rol</option>
+                    <option value="Cliente">Cliente</option>
+                    <option value="Administrador">Administrador</option>
+                    <option value="Proveedor">Proveedor</option> <!-- Asegúrate de usar "Proveedor" -->
+                </select>
                 <button type="submit">Registrarse</button>
                 <p id="signupMessage"></p> <!-- Mensaje de registro -->
             </form>
@@ -50,8 +56,14 @@
             <form id="loginForm" action="javascript:void(0);">
                 <img src="../imagenes/Logooriginal.png" alt="Logo" style="width: 150px; margin-bottom: 20px;">
                 <h1>Iniciar Sesión</h1>
-                <input type="text" id="username" placeholder="Documento" required> <!-- Asegúrate de que el ID sea 'username' -->
+                <input type="text" id="username" placeholder="Documento" required>
                 <input type="password" id="password" placeholder="Contraseña" required>
+                <select id="role" required>
+                    <option value="" disabled selected>Seleccione su rol</option>
+                    <option value="Administrador">Administrador</option>
+                    <option value="Cliente">Cliente</option>
+                    <option value="Proveedor">Proveedor</option> <!-- Cambiado a "Proveedor" -->
+                </select>
                 <button type="button" onclick="verificarLogin()">Iniciar Sesión</button>
                 <p id="message"></p>
             </form>
