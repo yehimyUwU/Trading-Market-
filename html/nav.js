@@ -105,12 +105,12 @@ function agregarAlCarrito(id, nombre, precio) {
         } else {
             alert("Producto agregado al carrito.");
         }
-        actualizarCarritoUI(); // Refrescar el carrito en la interfaz
     })
     .catch(error => {
         console.error("Error al agregar al carrito:", error);
     });
 }
+
 
 
 function actualizarCarritoUI() {
@@ -390,7 +390,7 @@ function cargarProductos() {
                                 <p class="card-text">${producto.descripcion}</p>
                                 <p class="card-text font-weight-bold">$${producto.precio}</p>
                                 <button class="btn btn-primary" onclick="verDetalles('${producto.nombre}', '${producto.descripcion}', '${producto.precio}', '../imagenes_P/${producto.imagen}')">Ver Detalles</button>
-                                <button class="btn btn-success" onclick="agregarAlCarrito(${producto.id}, '${producto.nombre}', ${producto.precio})">Agregar al Carrito</button>
+                                <button class="btn btn-success" onclick="agregarAlCarrito(${producto.id_producto}, '${producto.nombre}', ${producto.precio})">Agregar al Carritoooo</button>
                             </div>
                         </div>
                     `;
@@ -401,6 +401,8 @@ function cargarProductos() {
             }
         })
 }
+
+
 
 function verDetalles(nombre, descripcion, precio, imagen) {
     document.getElementById('modalNombre').textContent = nombre;

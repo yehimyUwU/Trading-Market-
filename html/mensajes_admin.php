@@ -18,6 +18,8 @@
 require '../php/barra_admin.php'; 
 ?>
 
+
+
     <div class="main">
         <div class="topbar">
             <div class="toggle">
