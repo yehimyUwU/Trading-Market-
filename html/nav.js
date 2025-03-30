@@ -411,3 +411,58 @@ function verDetalles(nombre, descripcion, precio, imagen) {
     document.getElementById('modalImagen').src = imagen;
     $('#productoModal').modal('show');
 }
+
+document.addEventListener("DOMContentLoaded", function () {
+    fetch("../php/obtener_proveedores.php")
+        .then(response => response.json())
+        .then(proveedores => {
+            const container = document.getElementById("proveedores-container");
+            container.classList.add("row", "justify-content-center"); // Centrar y organizar
+
+            if (proveedores.error) {
+                container.innerHTML = "<p>Error al cargar los proveedores.</p>";
+                return;
+            }
+
+            proveedores.forEach(proveedor => {
+                const card = document.createElement("div");
+                card.classList.add("col-lg-4", "col-md-6", "col-sm-12", "mb-3"); // 3 por fila en grande, 2 en medianas, 1 en móviles
+
+                card.innerHTML = `
+                    <div class="card">
+                        <div class="card-body text-center">
+                            <h3 class="card-title">${proveedor.nombre} ${proveedor.apellido}</h3>
+                            <button class="btn btn-primary mb-3" onclick="mostrarInfo(${proveedor.id_usuario})">Mostrar Información</button>
+                            <button class="btn btn-success mb-3">Productos Relacionados</button>
+                        </div>
+                    </div>
+                `;
+
+                container.appendChild(card);
+            });
+        })
+        .catch(error => console.error("Error al obtener proveedores:", error));
+});
+
+function mostrarInfo(idProveedor) {
+    fetch(`../php/obtener_proveedores.php?id=${idProveedor}`)
+        .then(response => response.json())
+        .then(data => {
+            if (data.error) {
+                alert("Error: " + data.error);
+                return;
+            }
+            // Llenar los datos en el modal
+            document.getElementById("modalNombre").textContent = data.nombre;
+            document.getElementById("modalApellido").textContent = data.apellido;
+            document.getElementById("modalEmail").textContent = data.email;
+            document.getElementById("modalGenero").textContent = data.genero;
+            document.getElementById("modalFechaNacimiento").textContent = data.fecha_nacimiento;
+            document.getElementById("modalDocumento").textContent = data.documento;
+
+            // Mostrar el modal
+            $("#infoProveedorModal").modal("show");
+        })
+        .catch(error => console.error("Error al obtener los datos del proveedor:", error));
+}
+
