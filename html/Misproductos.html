@@ -10,73 +10,80 @@
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0" />
     <!-- Estilos -->
     <link rel="stylesheet" href="../Estilos/barraprove.css.css">
-
-    <link rel="stylesheet" href="../Estilos/styles_P.css">
-    <link rel="stylesheet" href="../Estilos/proevedores.css">
-    <!-- JavaScript -->
-</head> 
+    <link rel="stylesheet" href="../Estilos/estilos-productos.css">
+</head>
 <body>
-
     <div id="barra-pro"></div>
-<br>
-<!-- Banner Principal -->
-<div id="barra-pro"></div>
-<br><br><br><br><br>
-<!-- Contenido Principal -->
-<section id="content"></section>
-<!-- Contenido Principal -->
-<main class="contenido">
-    <div class="header-container">
-        <div class="header-text">
-            <h1>Productos</h1>
-            <p>producto, <span id="nombreVendedor">Vendedor</span></p>
-        </div>
+    
+    <div id="content">
+        <nav>
+            
+            <a href="#" class="nav-link">Mis productos</a>
+            <form action="#">
+                <div class="form-input">
+                    <input type="search" placeholder="Buscar contacto...">
+                    <button type="submit" class="search-btn"><i class='bx bx-search'></i></button>
+                </div>
+            </form>
+            <a href="#" class="notification">
+                <i class='bx bxs-bell'></i>
+                <span class="num">3</span>
+            </a>
+          
+        </nav>
 
-        <div class="perfil-vendedor">
-            <div class="vendedor-info">
-                <img id="imagenPerfil" src="../imagenes_P/default_profile.jpg" alt="Foto de perfil">
-                <div class="vendedor-detalles">
-                    <h3 id="nombreCompletoVendedor">Nombre del Vendedor</h3>
-                    <span id="emailVendedor">email@ejemplo.com</span>
+        <main class="contenido">
+            <div class="header-container">
+                <div class="header-text">
+                    <h1>Productos</h1>
+                    <p>producto, <span id="nombreVendedor">Vendedor</span></p>
+                </div>
+
+                <div class="perfil-vendedor">
+                    <div class="vendedor-info">
+                        <img id="imagenPerfil" src="../imagenes_P/default_profile.jpg" alt="Foto de perfil">
+                        <div class="vendedor-detalles">
+                            <h3 id="nombreCompletoVendedor">Nombre del Vendedor</h3>
+                            <span id="emailVendedor">email@ejemplo.com</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="header-stats">
+                    <div class="stat-card">
+                        <span class="stat-number" id="totalProductos">0</span>
+                        <span class="stat-label">Productos Activos</span>
+                    </div>
+                    <div class="stat-card">
+                        <span class="stat-number" id="pedidosPendientes">0</span>
+                        <span class="stat-label">Pedidos Pendientes</span>
+                    </div>
+                    <div class="stat-card">
+                        <span class="stat-number" id="ventasMes">$0</span>
+                        <span class="stat-label">Ventas del Mes</span>
+                    </div>
                 </div>
             </div>
-        </div>
 
-        <div class="header-stats">
-            <div class="stat-card">
-                <span class="stat-number" id="totalProductos">0</span>
-                <span class="stat-label">Productos Activos</span>
-            </div>
-            <div class="stat-card">
-                <span class="stat-number" id="pedidosPendientes">0</span>
-                <span class="stat-label">Pedidos Pendientes</span>
-            </div>
-            <div class="stat-card">
-                <span class="stat-number" id="ventasMes">$0</span>
-                <span class="stat-label">Ventas del Mes</span>
-            </div>
-        </div>
-    </div>
-
-    <section class="busqueda-productos">
-        <h2 class="section-header">Gestión de Productos</h2>
-        <div class="busqueda-controles">
-            <input type="text" placeholder="Buscar productos..." id="buscarProducto">
-            <select id="ordenarPor">
-                <option value="reciente">Más recientes</option>
-                <option value="antiguo">Más antiguos</option>
-                <option value="precio-asc">Precio: Menor a Mayor</option>
-                <option value="precio-desc">Precio: Mayor a Menor</option>
-            </select>
-            <button class="btn-neo">Buscar</button>
-        </div>
-        <div class="publicar-producto">
-            <button id="btnAbrirModal" class="btn-neo">
-                <span class="material-symbols-outlined">add</span>
-                Nuevo Producto
-            </button>
-        </div>
-    </section>
+            <section class="busqueda-productos">
+                <h2 class="section-header">Gestión de Productos</h2>
+                <div class="busqueda-controles">
+                    <input type="text" placeholder="Buscar productos..." id="buscarProducto">
+                    <select id="ordenarPor">
+                        <option value="reciente">Más recientes</option>
+                        <option value="antiguo">Más antiguos</option>
+                        <option value="precio-asc">Precio: Menor a Mayor</option>
+                        <option value="precio-desc">Precio: Mayor a Menor</option>
+                    </select>
+                    <button class="btn-neo">Buscar</button>
+                </div>
+                <div class="publicar-producto">
+                    <button id="btnAbrirModal" class="btn-neo">
+                        <span class="material-symbols-outlined">add</span>
+                        Nuevo Producto
+                    </button>
+                </div>
+            </section>
 
     <section class="productos-grid-container">
         <div class="productos-grid" id="productosGrid">
