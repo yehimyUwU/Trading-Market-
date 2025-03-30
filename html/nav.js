@@ -86,12 +86,9 @@ function cerrarPerfil() {
 function agregarAlCarrito(id, nombre, precio) {
     const datos = {
         id_producto: id,
-        nombre: nombre,
-        precio: precio,
-        cantidad: 1 // Por defecto
+        cantidad: 1 // Por defecto, se agrega 1 unidad
     };
 
-    // Enviar los datos al servidor con fetch
     fetch('../php/agregar_carrito.php', {
         method: 'POST',
         headers: {
@@ -102,17 +99,19 @@ function agregarAlCarrito(id, nombre, precio) {
     .then(response => response.json())
     .then(data => {
         if (data.error) {
-            console.error(data.error);
-            alert("Error al agregar el producto al carrito.");
-            return;
+            alert(data.error);
+        } else if (data.success.includes("Cantidad actualizada")) {
+            alert("Este producto ya estaba en el carrito. Se ha actualizado su cantidad.");
+        } else {
+            alert("Producto agregado al carrito.");
         }
-        alert("Producto agregado al carrito.");
-        actualizarCarritoUI();
+        actualizarCarritoUI(); // Refrescar el carrito en la interfaz
     })
     .catch(error => {
-        console.error("Error en la solicitud:", error);
+        console.error("Error al agregar al carrito:", error);
     });
 }
+
 
 function actualizarCarritoUI() {
     fetch('../php/obtener_carrito.php')
@@ -124,26 +123,117 @@ function actualizarCarritoUI() {
             let total = 0;
 
             data.forEach(producto => {
-                total += producto.precio * producto.cantidad;
+                // Asegúrate de que los valores sean válidos y redondeados
+                const precio = parseFloat(producto.precio);
+                const cantidad = parseInt(producto.cantidad);
+
+                if (isNaN(precio) || isNaN(cantidad)) {
+                    console.error("Producto inválido:", producto);
+                    return;
+                }
+
+                total += precio * cantidad;
 
                 contenidoCarrito.innerHTML += `
                     <tr>
                         <td>${producto.id_producto}</td>
                         <td>${producto.nombre}</td>
-                        <td>$${producto.precio}</td>
-                        <td>${producto.cantidad}</td>
-                        <td>$${producto.precio * producto.cantidad}</td>
+                        <td>$${precio.toFixed(2)}</td>
+                        <td>
+                            <button class="btn btn-sm btn-outline-secondary disminuir-cantidad" data-id="${producto.id_producto}">-</button>
+                            ${cantidad}
+                            <button class="btn btn-sm btn-outline-secondary aumentar-cantidad" data-id="${producto.id_producto}">+</button>
+                        </td>
+                        <td>$${(precio * cantidad).toFixed(2)}</td>
                         <td><button class="btn btn-danger btn-sm eliminar-carrito" data-id="${producto.id_producto}">Eliminar</button></td>
+                        
                     </tr>
                 `;
             });
 
-            totalCarrito.textContent = `$${total}`;
+            totalCarrito.textContent = `$${total.toFixed(2)}`;
+            asignarEventosCarrito();
         })
         .catch(error => {
             console.error("Error al cargar el carrito:", error);
         });
 }
+
+
+function asignarEventosCarrito() {
+    document.querySelectorAll(".aumentar-cantidad").forEach(boton => {
+        boton.addEventListener("click", function () {
+            const idProducto = this.getAttribute("data-id");
+            actualizarCantidadProducto(idProducto, 1); // Incrementar cantidad
+        });
+    });
+
+    document.querySelectorAll(".disminuir-cantidad").forEach(boton => {
+        boton.addEventListener("click", function () {
+            const idProducto = this.getAttribute("data-id");
+            actualizarCantidadProducto(idProducto, -1); // Decrementar cantidad
+        });
+    });
+
+    // Capturar clic en el botón "Eliminar"
+    document.querySelectorAll(".eliminar-carrito").forEach(boton => {
+        boton.addEventListener("click", function () {
+            const idProducto = this.getAttribute("data-id");
+            eliminarProductoCarrito(idProducto);
+        });
+    });
+}
+
+function eliminarProductoCarrito(idProducto) {
+    const confirmarEliminacion = confirm("¿Estás seguro de eliminar este producto?");
+    if (!confirmarEliminacion) {
+        return; // Si el usuario cancela, no hace nada
+    }
+
+    fetch('../php/eliminar_carrito.php', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({ id_producto: idProducto })
+    })
+    .then(response => response.json())
+    .then(data => {
+        if (data.error) {
+            alert(data.error);
+            return;
+        }
+        alert("Producto eliminado del carrito.");
+        actualizarCarritoUI(); // Refrescar la interfaz del carrito
+    })
+    .catch(error => {
+        console.error("Error al eliminar el producto:", error);
+    });
+}
+
+
+
+function actualizarCantidadProducto(idProducto, cambio) {
+    fetch('../php/actualizar_cantidad_carrito.php', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({ id_producto: idProducto, cambio: cambio })
+    })
+    .then(response => response.json())
+    .then(data => {
+        if (data.error) {
+            alert(data.error);
+            return;
+        }
+        actualizarCarritoUI(); // Refrescar el carrito en la interfaz
+    })
+    .catch(error => {
+        console.error("Error al actualizar la cantidad:", error);
+    });
+}
+
 
 
 

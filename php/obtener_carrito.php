@@ -1,7 +1,7 @@
 <?php
 require_once __DIR__ . '/conexion.php';
 
-session_start(); // Siempre al inicio
+session_start();
 
 if (!isset($_SESSION['usuario']['id'])) {
     echo json_encode(["error" => "Usuario no identificado."]);
@@ -11,11 +11,9 @@ if (!isset($_SESSION['usuario']['id'])) {
 header("Content-Type: application/json");
 
 $conn = Conexion::conectar();
+$idUsuario = $_SESSION['usuario']['id'];
 
-$idUsuario = $_SESSION['usuario']['id']; // Usar el ID almacenado al iniciar sesión
-
-
-$sql = "SELECT c.id_producto, p.nombre, p.precio, c.cantidad 
+$sql = "SELECT c.id_producto, p.nombre, ROUND(p.precio, 2) AS precio, c.cantidad 
         FROM carrito c
         JOIN producto p ON c.id_producto = p.id_producto
         WHERE c.id_usuario = :id_usuario";
