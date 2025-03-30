@@ -2,6 +2,8 @@
 header('Content-Type: application/json');
 require 'conexion.php';
 
+
+
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $documento = $_POST['documento'] ?? null;
     $password = $_POST['password'] ?? null;

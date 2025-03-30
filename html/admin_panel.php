@@ -268,6 +268,8 @@ require '../php/barra_admin.php';
         </div>
       </div>
 
+      
+
 
     <!--Scripts bien gotys-->
     <script src="js/config.js"></script>

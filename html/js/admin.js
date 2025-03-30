@@ -64,8 +64,39 @@ editButton.addEventListener("click", (event) => {
 // Deshabilitar los inputs al hacer clic en el botón Guardar
 saveButton.addEventListener("click", (event) => {
   event.preventDefault(); // Evita la recarga del formulario
-  inputs.forEach(input => {
-    input.disabled = true; // Bloquea nuevamente los inputs
-  });
+
+  const formData = new FormData(document.getElementById("profileForm")); // Captura los datos del formulario
+
+  fetch('../php/actualizar_perfil_admin.php', {
+    method: 'POST',
+    body: formData
+  })
+    .then(response => response.json())
+    .then(data => {
+      if (data.success) {
+        alert('Datos actualizados exitosamente');
+        inputs.forEach(input => {
+          input.disabled = true; // Bloquea nuevamente los inputs
+        });
+      } else {
+        alert('Error al actualizar: ' + data.message);
+      }
+    })
+    .catch(error => console.error('Error en la actualización:', error));
 });
+
+
+function logout() {
+  fetch('../php/logout.php', { method: 'POST' })
+      .then(response => response.json())
+      .then(data => {
+          if (data.success) {
+              window.location.href = '../html/longin.html'; // Redirige al HTML de login
+          } else {
+              alert('Error al cerrar sesión: ' + data.message);
+          }
+      })
+      .catch(error => console.error('Error en el logout:', error));
+}
+
 

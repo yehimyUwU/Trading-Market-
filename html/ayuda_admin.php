@@ -96,7 +96,7 @@ require '../php/barra_admin.php';
 
 <!--Modal para ver perfil-->
 
-    <div id="profileModal" class="modal">
+<div id="profileModal" class="modal">
         <div class="modal-content">
           <span class="close">&times;</span>
           <h2>Perfil de usuario</h2>
@@ -107,22 +107,22 @@ require '../php/barra_admin.php';
           <!-- Formularios de entrada -->
           <form id="profileForm">
               <label for="name">Nombre:</label>
-              <input type="text" id="name" name="name" value="Cucurrella" disabled>
+              <input type="text" id="name" name="name" value="<?php echo $admin['nombre'] ?? ''; ?>" disabled>
 
-              <label for="name">Apellido:</label>
-              <input type="text" id="name" name="name" value="Skibidi" disabled>
+              <label for="lastname">Apellido:</label>
+              <input type="text" id="lastname" name="lastname" value="<?php echo $admin['apellido'] ?? ''; ?>" disabled>
 
-              <label for="name">Documento:</label>
-              <input type="text" id="name" name="name" value="105678382" disabled>
+              <label for="document">Documento:</label>
+              <input type="text" id="document" name="document" value="<?php echo $admin['documento'] ?? ''; ?>" disabled>
             
               <label for="email">Email:</label>
-              <input type="email" id="email" name="email" value="Paella@gmail.com" disabled>
+              <input type="email" id="email" name="email" value="<?php echo $admin['email'] ?? ''; ?>" disabled>
             
-              <label for="phone">Fecha de nacimiento:</label>
-              <input type="tel" id="phone" name="phone" value="21/09/1900" disabled>
+              <label for="birthdate">Fecha de nacimiento:</label>
+              <input type="text" id="birthdate" name="birthdate" value="<?php echo $admin['fecha_nacimiento'] ?? ''; ?>" disabled>
             
-              <label for="role">Genero:</label>
-              <input type="text" id="role" name="role" value="Masculino" disabled>
+              <label for="gender">Género:</label>
+              <input type="text" id="gender" name="gender" value="<?php echo $admin['genero'] ?? ''; ?>" disabled>
               <br>
               <br>
             
@@ -132,7 +132,6 @@ require '../php/barra_admin.php';
           </form>
         </div>
       </div>
-    
     
 
         <!--Scripts bien gotys-->
