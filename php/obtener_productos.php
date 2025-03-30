@@ -34,9 +34,9 @@ $productos = [];
 while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
     // Convertir imagen BLOB a base64 o asignar imagen por defecto
     if ($row['imagen']) {
-        $row['imagen'] = "data:image/jpeg;base64," . base64_encode($row['imagen']);
+        $row['imagen'] = "../imag/" . $row['imagen']; // Ruta relativa a la carpeta de imágenes
     } else {
-        $row['imagen'] = "ruta/a/imagen/default.jpg";
+        $row['imagen'] = "../imagenes_P/default.jpeg"; // Imagen por defecto
     }
 
     $productos[] = $row;
