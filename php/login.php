@@ -51,7 +51,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
                 // Redirigir según el rol
                 $redirect = match ($rol_valido) {
-                    'Administrador' => '../html/admin_panel.html',
+                    'Administrador' => '../html/admin_panel.php',
                     'Cliente' => '../html/inico.html',
                     'Proveedor' => '../html/BienvProv.html', // Asegúrate de usar "Proveedor"
                     default => null
