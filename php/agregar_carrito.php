@@ -26,7 +26,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
     // Verificar si el producto ya está en el carrito
     $sqlVerificar = "SELECT cantidad FROM carrito 
-                     WHERE id_usuario = :id_usuario AND id_producto = :id_producto";
+                    WHERE id_usuario = :id_usuario AND id_producto = :id_producto";
     $stmtVerificar = $conn->prepare($sqlVerificar);
     $stmtVerificar->bindParam(':id_usuario', $idUsuario);
     $stmtVerificar->bindParam(':id_producto', $idProducto);
