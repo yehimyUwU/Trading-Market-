@@ -188,7 +188,7 @@ document.addEventListener("DOMContentLoaded", function () {
             const productoHTML = `
                 <div class="col-md-4">
                     <div class="card">
-                        <img src="${producto.imagen}" class="card-img-top" alt="${producto.nombre}">
+                        <img src="../imagenes/${producto.imagen}" class="card-img-top" alt="${producto.nombre}">
                         <div class="card-body">
                             <h5 class="card-title">${producto.nombre}</h5>
                             <p class="card-text">${producto.descripcion}</p>

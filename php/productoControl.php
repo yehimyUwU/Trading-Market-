@@ -19,7 +19,16 @@ class ProductoControl {
     public $nuevoPrecio;
 
     public function ctrRegistrarProducto() {
-        $objRespuesta = ProductoModelo::mdlRegistrarProducto($this->nombre, $this->categoria, $this->precio, $this->descripcion, $this->subcategoria, $this->stock);
+        $imagen = $_FILES['imagen'];
+        $objRespuesta = ProductoModelo::mdlRegistrarProducto(
+            $this->nombre,
+            $this->categoria,
+            $this->precio,
+            $this->descripcion,
+            $this->subcategoria,
+            $this->stock,
+            $imagen
+        );
         echo json_encode($objRespuesta);
     }
 
@@ -56,7 +65,7 @@ class ProductoControl {
 
 }
 
-if (isset($_POST["nombre"], $_POST["categoria"], $_POST["precio"], $_POST["descripcion"], $_POST["subcategoria"], $_POST["stock"])) {
+if (isset($_POST["nombre"], $_POST["categoria"], $_POST["precio"], $_POST["descripcion"], $_POST["subcategoria"], $_POST["stock"], $_FILES["imagen"])) {
     $objProducto = new ProductoControl();
     $objProducto->nombre = $_POST["nombre"];
     $objProducto->categoria = $_POST["categoria"];
@@ -74,6 +83,7 @@ if (isset($_POST["nombre"], $_POST["categoria"], $_POST["precio"], $_POST["descr
     error_log("Descripción: " . $objProducto->descripcion);
     error_log("Stock: " . $objProducto->stock);
 
+    // Agregar manejo de imagen
     $objProducto->ctrRegistrarProducto();
 }
 

@@ -3,7 +3,7 @@ include_once "conexion.php";
 
 class ProductoModelo {
 
-    public static function mdlRegistrarProducto($nombre, $categoria, $precio, $descripcion, $subcategoria, $stock) {
+    public static function mdlRegistrarProducto($nombre, $categoria, $precio, $descripcion, $subcategoria, $stock, $imagen) {
         try {
             // Verificar si la categoría existe
             $verificarCategoria = Conexion::conectar()->prepare("SELECT COUNT(*) FROM categoria WHERE id_categoria = :categoria");
@@ -15,14 +15,22 @@ class ProductoModelo {
                 return ["success" => false, "message" => "La categoría seleccionada no existe."];
             }
 
-            // Insertar el producto
-            $stmt = Conexion::conectar()->prepare("INSERT INTO producto (nombre, id_categoria, id_subcategoria, descripcion, precio, stock) VALUES (:nombre, :categoria, :subcategoria, :descripcion, :precio, :stock)");
+            // Guardar la imagen en la carpeta 'imag'
+            $nombreImagen = uniqid() . "_" . basename($imagen['name']);
+            $rutaDestino = "../imag/" . $nombreImagen;
+            if (!move_uploaded_file($imagen['tmp_name'], $rutaDestino)) {
+                return ["success" => false, "message" => "Error al subir la imagen."];
+            }
+
+            // Insertar el producto con la imagen
+            $stmt = Conexion::conectar()->prepare("INSERT INTO producto (nombre, id_categoria, id_subcategoria, descripcion, precio, stock, imagen) VALUES (:nombre, :categoria, :subcategoria, :descripcion, :precio, :stock, :imagen)");
             $stmt->bindParam(":nombre", $nombre, PDO::PARAM_STR);
             $stmt->bindParam(":categoria", $categoria, PDO::PARAM_INT);
             $stmt->bindParam(":subcategoria", $subcategoria, PDO::PARAM_INT);
             $stmt->bindParam(":descripcion", $descripcion, PDO::PARAM_STR);
             $stmt->bindParam(":precio", $precio, PDO::PARAM_STR);
             $stmt->bindParam(":stock", $stock, PDO::PARAM_INT);
+            $stmt->bindParam(":imagen", $nombreImagen, PDO::PARAM_STR);
 
             if ($stmt->execute()) {
                 return ["success" => true, "message" => "Producto registrado correctamente."];
@@ -38,9 +46,19 @@ class ProductoModelo {
         $mensaje = array();
 
         try {
-            $objRespuesta = Conexion::conectar()->prepare("SELECT p.*, c.nombre AS nombre_categoria FROM producto p INNER JOIN categoria c ON p.id_categoria = c.id_categoria");
+            $objRespuesta = Conexion::conectar()->prepare("
+                SELECT p.*, c.nombre AS nombre_categoria 
+                FROM producto p 
+                INNER JOIN categoria c ON p.id_categoria = c.id_categoria
+            ");
             $objRespuesta->execute();
             $listaProductos = $objRespuesta->fetchAll(PDO::FETCH_ASSOC);
+
+            // Asegurarse de incluir la ruta de la imagen
+            foreach ($listaProductos as &$producto) {
+                $producto['imagen'] = $producto['imagen'] ? "../imag/" . $producto['imagen'] : "../imagenes_P/default.jpeg";
+            }
+
             $mensaje = array("codigo" => "200", "success" => true, "listaProductos" => $listaProductos);
             $objRespuesta = null;
         } catch (Exception $e) {

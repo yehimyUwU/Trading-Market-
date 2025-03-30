@@ -22,7 +22,8 @@
 <!-- Banner Principal -->
 <div id="barra-pro"></div>
 <br><br><br><br><br>
-
+<!-- Contenido Principal -->
+<section id="content"></section>
 <!-- Contenido Principal -->
 <main class="contenido">
     <div class="header-container">
@@ -84,7 +85,7 @@
                     <!-- Ejemplo de tarjeta de producto -->
                     <div class="producto-card">
                         <div class="producto-imagen">
-                            <img src="../imagenes_P/cosmeticos1.png" alt="Producto">
+                            <img src="../imag/${producto.imagen}" alt="${producto.nombre}" onerror="this.onerror=null;this.src='../imagenes_P/default.jpeg';">
                             <div class="producto-acciones">
                                 <button class="btn-editar">
                                     <span class="material-symbols-outlined">edit</span>
@@ -95,10 +96,10 @@
                             </div>
                         </div>
                         <div class="producto-info">
-                            <h4>Nombre del Producto</h4>
+                            <h4>${producto.nombre}</h4>
                             <div class="producto-detalles">
-                                <span class="precio">$99.99</span>
-                                <span class="stock">Stock: 50</span>
+                                <span class="precio">$${producto.precio}</span>
+                                <span class="stock">Stock: ${producto.stock}</span>
                             </div>
                             <div class="producto-estado">
                                 <span class="badge activo">Activo</span>
@@ -423,7 +424,7 @@
         productoCard.classList.add('producto-card');
         productoCard.innerHTML = `
             <div class="producto-imagen">
-                <img src="../imagenes_P/${producto.imagen || 'default.jpeg'}" alt="${producto.nombre}" onerror="this.onerror=null;this.src='../imagenes_P/default.jpeg';">
+                <img src="../imag/${producto.imagen}" alt="${producto.nombre}" onerror="this.onerror=null;this.src='../imagenes_P/default.jpeg';">
                 <div class="producto-acciones">
                     <button class="btn-editar">
                         <span class="material-symbols-outlined">edit</span>
@@ -478,7 +479,7 @@
                         productoCard.classList.add('producto-card');
                         productoCard.innerHTML = `
                             <div class="producto-imagen">
-                                <img src="../imagenes_P/${producto.imagen || 'default.jpeg'}" alt="${producto.nombre}" onerror="this.onerror=null;this.src='../imagenes_P/default.jpeg';">
+                                <img src="../imag/${producto.imagen}" alt="${producto.nombre}" onerror="this.onerror=null;this.src='../imagenes_P/default.jpeg';">
                                 <div class="producto-acciones">
                                     <button class="btn-editar">
                                         <span class="material-symbols-outlined">edit</span>
