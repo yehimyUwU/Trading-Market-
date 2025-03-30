@@ -8,6 +8,7 @@ if (!isset($_SESSION['usuario']['id'])) {
     exit;
 }
 
+
 header("Content-Type: application/json");
 
 $conn = Conexion::conectar();
