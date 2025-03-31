@@ -15,16 +15,11 @@
 </head>
 <body>
 <?php
-    
-
-    
     require '../php/barra_prove.php'; 
 ?>
   
-    
     <div id="content">
         <nav>
-            
             <a href="#" class="nav-link">Mis productos</a>
             <form action="#">
                 <div class="form-input">
@@ -36,7 +31,6 @@
                 <i class='bx bxs-bell'></i>
                 <span class="num">3</span>
             </a>
-          
         </nav>
 
         <main class="contenido">
@@ -92,53 +86,25 @@
                 </div>
             </section>
 
-    <section class="productos-grid-container">
-        <div class="productos-grid" id="productosGrid">
             <section class="productos-grid-container">
                 <div class="productos-grid" id="productosGrid">
-                    <!-- Ejemplo de tarjeta de producto -->
-                    <div class="producto-card">
-                        <div class="producto-imagen">
-                            <img src="../imag/${producto.imagen}" alt="${producto.nombre}" onerror="this.onerror=null;this.src='../imagenes_P/default.jpeg';">
-                            <div class="producto-acciones">
-                                <button class="btn-editar">
-                                    <span class="material-symbols-outlined">edit</span>
-                                </button>
-                                <button class="btn-eliminar">
-                                    <span class="material-symbols-outlined">delete</span>
-                                </button>
-                            </div>
-                        </div>
-                        <div class="producto-info">
-                            <h4>${producto.nombre}</h4>
-                            <div class="producto-detalles">
-                                <span class="precio">$${producto.precio}</span>
-                                <span class="stock">Stock: ${producto.stock}</span>
-                            </div>
-                            <div class="producto-estado">
-                                <span class="badge activo">Activo</span>
-                            </div>
-                        </div>
-                    </div>
-                    <!-- Fin ejemplo de tarjeta -->
+                    <!-- Los productos se cargarán aquí dinámicamente -->
                 </div>
             </section>
         </main>
     </div>
-    <div class="contenedor">
-        
 
-     
-    <!-- Modal para nuevo producto -->
+    <!-- Modal para nuevo/editar producto -->
     <div id="modalProducto" class="modal">
         <div class="modal-contenido">
             <div class="modal-header">
-                <h2>Subir Nuevo Producto</h2>
+                <h2 id="modalTitulo">Subir Nuevo Producto</h2>
                 <button class="btn-cerrar" onclick="cerrarModal()">&times;</button>
             </div>
             
             <div class="modal-body">
               <form id="formularioProducto">
+                  <input type="hidden" id="productoId" name="productoId" value="">
                   <div class="form-group">
                       <label for="nombreProducto">Nombre del Producto*</label>
                       <input type="text" id="nombreProducto" name="nombreProducto" required minlength="3" maxlength="100"
@@ -185,46 +151,6 @@
                           </select>
                           <span id="errorCategoria" class="error-mensaje"></span>
                       </div>
-                      <script>
-                          function actualizarSubcategorias() {
-                              const categoriaGeneral = document.getElementById('categoriaGeneral').value;
-                              const subcategoriaSelect = document.getElementById('subcategoria');
-                              subcategoriaSelect.innerHTML = '<option value="">Cargando subcategorías...</option>';
-              
-                              if (!categoriaGeneral) {
-                                  subcategoriaSelect.innerHTML = '<option value="">Primero seleccione una categoría válida</option>';
-                                  return;
-                              }
-              
-                              // Fetch para obtener las subcategorías desde el backend
-                              fetch('../php/listar_subcategorias.php', {
-                                  method: 'POST',
-                                  headers: {
-                                      'Content-Type': 'application/x-www-form-urlencoded',
-                                  },
-                                  body: `id_categoria=${categoriaGeneral}`
-                              })
-                              .then(response => response.json())
-                              .then(data => {
-                                  if (data.success) {
-                                      subcategoriaSelect.innerHTML = '<option value="">Seleccione una subcategoría</option>';
-                                      data.listaSubcategorias.forEach(subcategoria => {
-                                          const option = document.createElement('option');
-                                          option.value = subcategoria.id_subcategoria; // ID de la subcategoría
-                                          option.textContent = subcategoria.nombre; // Nombre de la subcategoría
-                                          subcategoriaSelect.appendChild(option);
-                                      });
-                                  } else {
-                                      subcategoriaSelect.innerHTML = '<option value="">No hay subcategorías disponibles</option>';
-                                      alert('Error al cargar las subcategorías: ' + data.message);
-                                  }
-                              })
-                              .catch(error => {
-                                  console.error('Error al cargar las subcategorías:', error);
-                                  subcategoriaSelect.innerHTML = '<option value="">Error al cargar las subcategorías</option>';
-                              });
-                          }
-                      </script>
                   </div>
           
                   <div class="form-group">
@@ -246,7 +172,7 @@
                       <button type="button" class="btn-secundario" onclick="cerrarModal()">Cancelar</button>
                       <button type="button" id="publicarBtn" class="btn-primario">
                           <span class="material-symbols-outlined">publish</span>
-                          Publicar Producto
+                          <span id="btnAccionTexto">Publicar Producto</span>
                       </button>
                   </div>
               </form>
@@ -255,97 +181,97 @@
                   <h3>Vista Previa del Producto</h3>
                   <div id="previewContenido"></div>
               </div>
-          </div>
+            </div>
         </div>
     </div>
-    <!-- <script src="subir-producto.js" defer></script> -->
-    <script>
-    const categoriasProductos = {
-        supermercado: [
-            "Alimentos Supermercado",
-            "Bebidas Supermercado",
-            "Limpieza Supermercado"
-        ],
-        vehiculos: [
-            "Autos",
-            "Motos",
-            "Partes y accesorios"
-        ],
-        tecnologia: [
-            "Celulares",
-            "Computadoras",
-            "Televisores"
-        ],
-        electrodomesticos: [
-            "Cocina Electrodomésticos",
-            "Limpieza Electrodomésticos",
-            "Climatización"
-        ],
-        // Asegúrate de agregar todas las categorías aquí
-        deportes_y_fitness: ["Equipos", "Ropa Deportiva"],
-        herramientas: ["Manuales", "Eléctricas"],
-        belleza_y_cuidado_personal: ["Maquillaje", "Cuidado de la Piel"],
-        accesorios_de_vehiculos: ["Llantas", "Accesorios Exteriores"],
-        construccion: ["Materiales", "Herramientas"],
-        inmuebles: ["Casas", "Departamentos"],
-        moda: ["Ropa", "Zapatos"],
-        juegos_y_juguetes: ["Juguetes", "Juegos de Mesa"],
-        bebes: ["Ropa de Bebé", "Juguetes para Bebés"],
-        productos_sustentables: ["Ecológicos", "Reciclados"],
-        industria_y_oficina: ["Mobiliario", "Papelería"],
-        salud_y_equipo_medico: ["Equipos Médicos", "Medicamentos"],
-        animales_y_mascotas: ["Alimentos", "Accesorios"],
-        antiguedades_y_colecciones: ["Antigüedades", "Coleccionables"],
-        arte_papeleria_y_merceria: ["Arte", "Papelería"]
-    };
 
-    function actualizarSubcategorias() {
-        const categoriaGeneral = document.getElementById('categoriaGeneral').value;
+    <script>
+    // Variables globales
+    let modoEdicion = false;
+    let productoActual = null;
+
+    // Función para abrir el modal en modo edición
+    function abrirModalEdicion(producto) {
+        modoEdicion = true;
+        productoActual = producto;
+        
+        // Configurar el modal para edición
+        document.getElementById('modalTitulo').textContent = 'Editar Producto';
+        document.getElementById('btnAccionTexto').textContent = 'Actualizar Producto';
+        document.getElementById('productoId').value = producto.id_producto;
+        document.getElementById('nombreProducto').value = producto.nombre;
+        document.getElementById('descripcion').value = producto.descripcion;
+        document.getElementById('precio').value = producto.precio;
+        document.getElementById('stock').value = producto.stock;
+        
+        // Cargar categoría y subcategoría
+        cargarCategoriasParaEdicion(producto.id_categoria, producto.id_subcategoria);
+        
+        // Mostrar imagen actual si existe
+        if (producto.imagen) {
+            const previewContainer = document.getElementById('previewImagen');
+            previewContainer.innerHTML = `<img src="../imag/${producto.imagen}" alt="Imagen actual del producto" style="max-width: 100%; border-radius: 10px;">`;
+        }
+        
+        // Mostrar el modal
+        document.getElementById('modalProducto').style.display = 'block';
+    }
+
+    // Función para cargar categorías y seleccionar la correcta en modo edición
+    function cargarCategoriasParaEdicion(idCategoria, idSubcategoria) {
+        fetch('../php/listar_categorias.php')
+            .then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    const categoriaSelect = document.getElementById('categoriaGeneral');
+                    categoriaSelect.innerHTML = '<option value="">Seleccione una categoría</option>';
+                    
+                    data.listaCategorias.forEach(categoria => {
+                        const option = document.createElement('option');
+                        option.value = categoria.id_categoria;
+                        option.textContent = categoria.nombre;
+                        if (categoria.id_categoria == idCategoria) {
+                            option.selected = true;
+                        }
+                        categoriaSelect.appendChild(option);
+                    });
+                    
+                    // Una vez cargada la categoría, cargar las subcategorías
+                    actualizarSubcategoriasParaEdicion(idCategoria, idSubcategoria);
+                }
+            });
+    }
+
+    // Función para cargar subcategorías y seleccionar la correcta en modo edición
+    function actualizarSubcategoriasParaEdicion(idCategoria, idSubcategoria) {
         const subcategoriaSelect = document.getElementById('subcategoria');
         subcategoriaSelect.innerHTML = '<option value="">Cargando subcategorías...</option>';
 
-        if (!categoriaGeneral) {
-            subcategoriaSelect.innerHTML = '<option value="">Primero seleccione una categoría válida</option>';
-            return;
-        }
-
-        // Depuración: Verificar el ID de la categoría seleccionado
-        console.log("ID de categoría seleccionado:", categoriaGeneral);
-
-        // Fetch para obtener las subcategorías
         fetch('../php/listar_subcategorias.php', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/x-www-form-urlencoded',
             },
-            body: `id_categoria=${categoriaGeneral}`
+            body: `id_categoria=${idCategoria}`
         })
         .then(response => response.json())
         .then(data => {
-            // Depuración: Verificar la respuesta del servidor
-            console.log("Respuesta del servidor para subcategorías:", data);
-
             if (data.success) {
                 subcategoriaSelect.innerHTML = '<option value="">Seleccione una subcategoría</option>';
                 data.listaSubcategorias.forEach(subcategoria => {
                     const option = document.createElement('option');
-                    option.value = subcategoria.id_subcategoria; // Usar el ID de la subcategoría
-                    option.textContent = subcategoria.nombre; // Mostrar el nombre de la subcategoría
+                    option.value = subcategoria.id_subcategoria;
+                    option.textContent = subcategoria.nombre;
+                    if (subcategoria.id_subcategoria == idSubcategoria) {
+                        option.selected = true;
+                    }
                     subcategoriaSelect.appendChild(option);
                 });
-            } else {
-                subcategoriaSelect.innerHTML = '<option value="">No hay subcategorías disponibles</option>';
-                alert('Error al cargar las subcategorías: ' + data.message);
             }
-        })
-        .catch(error => {
-            console.error('Error al cargar las subcategorías:', error);
-            subcategoriaSelect.innerHTML = '<option value="">Error al cargar las subcategorías</option>';
         });
     }
 
-    document.getElementById('publicarBtn').addEventListener('click', validarFormulario);
-
+    // Función para manejar el envío del formulario (crear o actualizar)
     function validarFormulario() { 
         const mensajesError = document.querySelectorAll('.error-mensaje');
         mensajesError.forEach(mensaje => mensaje.textContent = '');
@@ -358,6 +284,7 @@
         const subcategoria = document.getElementById('subcategoria').value;
         const stock = parseInt(document.getElementById('stock').value);
         const imagen = document.getElementById('imagenProducto').files[0];
+        const productoId = document.getElementById('productoId').value;
 
         // Validaciones
         if (!nombre) {
@@ -384,7 +311,7 @@
             document.getElementById('errorStock').textContent = 'Ingrese un stock válido.';
             hayErrores = true;
         }
-        if (!imagen) {
+        if (!modoEdicion && !imagen) {
             document.getElementById('errorImagen').textContent = 'Seleccione una imagen.';
             hayErrores = true;
         }
@@ -397,97 +324,49 @@
             formData.append('categoria', categoriaGeneral);
             formData.append('subcategoria', subcategoria);
             formData.append('stock', stock);
-            formData.append('imagen', imagen);
+            if (imagen) formData.append('imagen', imagen);
+            
+            // Agregar el ID del producto si estamos en modo edición
+            if (modoEdicion) {
+                formData.append('id_producto', productoId);
+                formData.append('accion', 'editar');
+            } else {
+                formData.append('accion', 'crear');
+            }
 
-            // Mostrar los valores enviados
-            alert(`Datos enviados:
-                Nombre: ${nombre}
-                Descripción: ${descripcion}
-                Precio: ${precio}
-                Categoría: ${categoriaGeneral}
-                Subcategoría: ${subcategoria}
-                Stock: ${stock}`);
+            const url = modoEdicion ? '../php/editar_producto.php' : '../php/productoControl.php';
 
-            fetch('../php/productoControl.php', {
+            fetch(url, {
                 method: 'POST',
                 body: formData
             })
             .then(response => response.json())
             .then(data => {
                 if (data.success) {
-                    alert('Producto registrado exitosamente.');
+                    alert(modoEdicion ? 'Producto actualizado exitosamente.' : 'Producto registrado exitosamente.');
                     document.getElementById('formularioProducto').reset();
                     cerrarModal();
-                    agregarProductoAlGrid(data.producto);
+                    cargarProductos(); // Recargar la lista de productos
                 } else {
-                    alert('Error al registrar el producto: ' + data.message);
+                    alert('Error: ' + data.message);
                 }
             })
             .catch(error => {
-                console.error('Error al registrar el producto:', error);
-                alert('Ocurrió un error al registrar el producto.');
+                console.error('Error:', error);
+                alert('Ocurrió un error al procesar la solicitud.');
             });
-        } else {
-            alert('Por favor, corrija los errores en el formulario.');
         }
     }
 
-    function agregarProductoAlGrid(producto) {
-        const productosGrid = document.getElementById('productosGrid');
-        const productoCard = document.createElement('div');
-        productoCard.classList.add('producto-card');
-        productoCard.innerHTML = `
-            <div class="producto-imagen">
-                <img src="../imag/${producto.imagen}" alt="${producto.nombre}" onerror="this.onerror=null;this.src='../imagenes_P/default.jpeg';">
-                <div class="producto-acciones">
-                    <button class="btn-editar">
-                        <span class="material-symbols-outlined">edit</span>
-                    </button>
-                    <button class="btn-eliminar">
-                        <span class="material-symbols-outlined">delete</span>
-                    </button>
-                </div>
-            </div>
-            <div class="producto-info">
-                <h4>${producto.nombre}</h4>
-                <div class="producto-detalles">
-                    <span class="precio">$${producto.precio}</span>
-                    <span class="stock">Stock: ${producto.stock}</span>
-                </div>
-                <div class="producto-estado">
-                    <span class="badge activo">Activo</span>
-                </div>
-            </div>
-        `;
-        productosGrid.appendChild(productoCard);
-    }
-
-    function abrirModal() {
-        document.getElementById('modalProducto').style.display = 'block';
-    }
-
-    function cerrarModal() {
-        document.getElementById('modalProducto').style.display = 'none';
-        document.getElementById('formularioProducto').reset();
-        document.getElementById('previewProducto').style.display = 'none';
-    }
-
-    document.getElementById('btnAbrirModal').addEventListener('click', abrirModal);
-
-    window.onclick = function(event) {
-        const modal = document.getElementById('modalProducto');
-        if (event.target === modal) {
-            cerrarModal();
-        }
-    }
-
-    document.addEventListener('DOMContentLoaded', function() {
+    // Función para cargar los productos
+    function cargarProductos() {
         fetch('../php/listar_productos.php')
             .then(response => response.json())
             .then(data => {
                 if (data.success) {
                     const productosGrid = document.getElementById('productosGrid');
                     productosGrid.innerHTML = '';
+                    
                     data.listaProductos.forEach(producto => {
                         const productoCard = document.createElement('div');
                         productoCard.classList.add('producto-card');
@@ -495,10 +374,10 @@
                             <div class="producto-imagen">
                                 <img src="../imag/${producto.imagen}" alt="${producto.nombre}" onerror="this.onerror=null;this.src='../imagenes_P/default.jpeg';">
                                 <div class="producto-acciones">
-                                    <button class="btn-editar">
+                                    <button class="btn-editar" onclick="abrirModalEdicion(${JSON.stringify(producto).replace(/"/g, '&quot;')})">
                                         <span class="material-symbols-outlined">edit</span>
                                     </button>
-                                    <button class="btn-eliminar">
+                                    <button class="btn-eliminar" onclick="eliminarProducto(${producto.id_producto})">
                                         <span class="material-symbols-outlined">delete</span>
                                     </button>
                                 </div>
@@ -524,8 +403,58 @@
                 console.error('Error al cargar los productos:', error);
                 alert('Error al cargar los productos');
             });
-    });
+    }
 
+    // Función para eliminar un producto
+    function eliminarProducto(idProducto) {
+        if (confirm('¿Estás seguro de que deseas eliminar este producto?')) {
+            fetch('../php/eliminar_producto.php', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/x-www-form-urlencoded',
+                },
+                body: `id_producto=${idProducto}`
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    alert('Producto eliminado exitosamente');
+                    cargarProductos();
+                } else {
+                    alert('Error al eliminar el producto: ' + data.message);
+                }
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                alert('Ocurrió un error al eliminar el producto');
+            });
+        }
+    }
+
+    // Función para abrir el modal en modo creación
+    function abrirModalCreacion() {
+        modoEdicion = false;
+        productoActual = null;
+        
+        // Configurar el modal para creación
+        document.getElementById('modalTitulo').textContent = 'Subir Nuevo Producto';
+        document.getElementById('btnAccionTexto').textContent = 'Publicar Producto';
+        document.getElementById('formularioProducto').reset();
+        document.getElementById('previewImagen').innerHTML = '';
+        document.getElementById('productoId').value = '';
+        
+        // Mostrar el modal
+        document.getElementById('modalProducto').style.display = 'block';
+    }
+
+    // Función para cerrar el modal
+    function cerrarModal() {
+        document.getElementById('modalProducto').style.display = 'none';
+        document.getElementById('formularioProducto').reset();
+        document.getElementById('previewProducto').style.display = 'none';
+    }
+
+    // Función para previsualizar la imagen
     function previsualizarImagen(event) {
         const input = event.target;
         const previewContainer = document.getElementById('previewImagen');
@@ -544,11 +473,21 @@
             reader.readAsDataURL(input.files[0]);
         }
     }
-</script>
 
-<script>
-    document.addEventListener('DOMContentLoaded', function () {
-        // Cargar las categorías desde el backend
+    // Event listeners
+    document.getElementById('btnAbrirModal').addEventListener('click', abrirModalCreacion);
+    document.getElementById('publicarBtn').addEventListener('click', validarFormulario);
+
+    window.onclick = function(event) {
+        const modal = document.getElementById('modalProducto');
+        if (event.target === modal) {
+            cerrarModal();
+        }
+    }
+
+    // Cargar categorías al inicio
+    document.addEventListener('DOMContentLoaded', function() {
+        // Cargar categorías para el select
         fetch('../php/listar_categorias.php')
             .then(response => response.json())
             .then(data => {
@@ -557,20 +496,18 @@
                     categoriaSelect.innerHTML = '<option value="">Seleccione una categoría</option>';
                     data.listaCategorias.forEach(categoria => {
                         const option = document.createElement('option');
-                        option.value = categoria.id_categoria; // Usar el ID de la categoría
-                        option.textContent = categoria.nombre; // Mostrar el nombre de la categoría
+                        option.value = categoria.id_categoria;
+                        option.textContent = categoria.nombre;
                         categoriaSelect.appendChild(option);
                     });
-                } else {
-                    alert('Error al cargar las categorías: ' + data.message);
                 }
-            })
-            .catch(error => {
-                console.error('Error al cargar las categorías:', error);
-                alert('Ocurrió un error al cargar las categorías.');
             });
+        
+        // Cargar productos al inicio
+        cargarProductos();
     });
 
+    // Función para actualizar subcategorías (genérica)
     function actualizarSubcategorias() {
         const categoriaGeneral = document.getElementById('categoriaGeneral').value;
         const subcategoriaSelect = document.getElementById('subcategoria');
@@ -581,7 +518,6 @@
             return;
         }
 
-        // Fetch para obtener las subcategorías
         fetch('../php/listar_subcategorias.php', {
             method: 'POST',
             headers: {
@@ -589,30 +525,29 @@
             },
             body: `id_categoria=${categoriaGeneral}`
         })
-            .then(response => response.json())
-            .then(data => {
-                if (data.success) {
-                    subcategoriaSelect.innerHTML = '<option value="">Seleccione una subcategoría</option>';
-                    data.listaSubcategorias.forEach(subcategoria => {
-                        const option = document.createElement('option');
-                        option.value = subcategoria.id_subcategoria; // Usar el ID de la subcategoría
-                        option.textContent = subcategoria.nombre; // Mostrar el nombre de la subcategoría
-                        subcategoriaSelect.appendChild(option);
-                    });
-                } else {
-                    subcategoriaSelect.innerHTML = '<option value="">No hay subcategorías disponibles</option>';
-                    alert('Error al cargar las subcategorías: ' + data.message);
-                }
-            })
-            .catch(error => {
-                console.error('Error al cargar las subcategorías:', error);
-                subcategoriaSelect.innerHTML = '<option value="">Error al cargar las subcategorías</option>';
-            });
+        .then(response => response.json())
+        .then(data => {
+            if (data.success) {
+                subcategoriaSelect.innerHTML = '<option value="">Seleccione una subcategoría</option>';
+                data.listaSubcategorias.forEach(subcategoria => {
+                    const option = document.createElement('option');
+                    option.value = subcategoria.id_subcategoria;
+                    option.textContent = subcategoria.nombre;
+                    subcategoriaSelect.appendChild(option);
+                });
+            } else {
+                subcategoriaSelect.innerHTML = '<option value="">No hay subcategorías disponibles</option>';
+            }
+        })
+        .catch(error => {
+            console.error('Error al cargar las subcategorías:', error);
+            subcategoriaSelect.innerHTML = '<option value="">Error al cargar las subcategorías</option>';
+        });
     }
-</script>
-<script src="barraprove.js.js"></script>
-<script type="module" src="https://cdn.jsdelivr.net/npm/@ionic/core/dist/ionic/ionic.esm.js"></script>
-        <script nomodule src="https://cdn.jsdelivr.net/npm/@ionic/core/dist/ionic/ionic.js"></script>
-        
+    </script>
+
+    <script src="barraprove.js.js"></script>
+    <script type="module" src="https://cdn.jsdelivr.net/npm/@ionic/core/dist/ionic/ionic.esm.js"></script>
+    <script nomodule src="https://cdn.jsdelivr.net/npm/@ionic/core/dist/ionic/ionic.js"></script>
 </body>
 </html>
