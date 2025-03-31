@@ -9,19 +9,18 @@ fetch('barra.html')
         const searchInput = document.getElementById("search-input");
         if (!searchInput) return;
 
-        const products = document.querySelectorAll(".card"); 
-
         searchInput.addEventListener("input", function () {
-            const searchText = searchInput.value.toLowerCase();
+            const searchText = searchInput.value.toLowerCase().trim();
+            const products = document.querySelectorAll(".card"); // Obtener productos actualizados
 
             products.forEach(product => {
                 const titleElement = product.querySelector(".card-title");
-                if (!titleElement) return; // Evita errores si no encuentra título
+                if (!titleElement) return;
 
                 const title = titleElement.textContent.toLowerCase();
                 
-                if (title.includes(searchText)) {
-                    product.style.display = "block";
+                if (title.includes(searchText) || searchText === "") {
+                    product.style.display = "flex";  // Asegurar que la tarjeta mantiene el formato
                 } else {
                     product.style.display = "none";
                 }
@@ -29,6 +28,8 @@ fetch('barra.html')
         });
     }, 500);
 });
+
+
 
 
 function cerrarSesion() {
