@@ -30,22 +30,27 @@ fetch('barra.html')
 });
 
 
-
-
 function cerrarSesion() {
-    fetch('../php/logout.php')
-        .then(response => response.json())
-        .then(data => {
-            if (data.success) {
-                localStorage.removeItem('usuario'); // Limpiar datos del usuario
-                window.location.href = 'longin.html';
-            }
-        })
-        .catch(error => {
-            console.error('Error:', error);
+    fetch('../php/logout.php', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        }
+    })
+    .then(response => response.json())
+    .then(data => {
+        if (data.success) {
             localStorage.removeItem('usuario'); // Limpiar datos del usuario
             window.location.href = 'longin.html';
-        });
+        } else {
+            console.error('Error en el logout:', data.message);
+        }
+    })
+    .catch(error => {
+        console.error('Error:', error);
+        localStorage.removeItem('usuario'); // Limpiar datos del usuario
+        window.location.href = 'longin.html';
+    });
 }
 
 function mostrarPerfil() {
