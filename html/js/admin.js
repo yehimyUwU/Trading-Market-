@@ -8,9 +8,11 @@ function activeLink(){
     this.classList.add("hovered");
 }
 
+
+
 list.forEach(item => item.addEventListener("mouseover", activeLink))
 
-//Menu plegable para el modal
+//Menu plegable para el modal de ver perfil
 let toggle = document.querySelector(".toggle");
 let navigation = document.querySelector(".navigation");
 let main = document.querySelector(".main");
@@ -64,8 +66,66 @@ editButton.addEventListener("click", (event) => {
 // Deshabilitar los inputs al hacer clic en el botón Guardar
 saveButton.addEventListener("click", (event) => {
   event.preventDefault(); // Evita la recarga del formulario
-  inputs.forEach(input => {
-    input.disabled = true; // Bloquea nuevamente los inputs
-  });
+
+  const formData = new FormData(document.getElementById("profileForm")); // Captura los datos del formulario
+
+  fetch('../php/actualizar_perfil_admin.php', {
+    method: 'POST',
+    body: formData
+  })
+    .then(response => response.json())
+    .then(data => {
+      if (data.success) {
+        alert('Datos actualizados exitosamente');
+        inputs.forEach(input => {
+          input.disabled = true; // Bloquea nuevamente los inputs
+        });
+      } else {
+        alert('Error al actualizar: ' + data.message);
+      }
+    })
+    .catch(error => console.error('Error en la actualización:', error));
 });
+
+// Función para obtener datos del usuario y poder mostrarlos en los modales de las otras paginas de admin_panel
+function loadUserData() {
+  fetch('../php/obtener_perfil_admin.php') // Cambia al path correcto
+      .then(response => response.json())
+      .then(data => {
+          if (data.success) {
+              const user = data.data;
+
+              // Rellena los inputs del modal con los datos del usuario
+              document.getElementById('name').value = user.nombre;
+              document.getElementById('lastname').value = user.apellido;
+              document.getElementById('document').value = user.documento;
+              document.getElementById('email').value = user.email;
+              document.getElementById('birthdate').value = user.fecha_nacimiento;
+              document.getElementById('gender').value = user.genero;
+          } else {
+              console.error(data.message);
+          }
+      })
+      .catch(error => console.error('Error al cargar los datos del usuario:', error));
+}
+
+// Llama a la función cuando se cargue la página
+document.addEventListener('DOMContentLoaded', loadUserData);
+
+
+//funcion para cerrar sesion
+
+function logout() {
+  fetch('../php/logout.php', { method: 'POST' })
+      .then(response => response.json())
+      .then(data => {
+          if (data.success) {
+              window.location.href = '../html/longin.html'; // Redirige al HTML de login
+          } else {
+              alert('Error al cerrar sesión: ' + data.message);
+          }
+      })
+      .catch(error => console.error('Error en el logout:', error));
+}
+
 

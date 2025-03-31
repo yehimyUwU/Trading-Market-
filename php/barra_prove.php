@@ -1,11 +1,11 @@
-  <html>
+<html>
     <!--Barra de navegacion -->
 
   <div class="container">
         <div class="navigation">
             <ul>
                 <li>
-                    <a href="admin_panel.php">
+                    <a href="BienvProv.php">
                         <span class="icon">
                             <ion-icon name="american-football-outline"></ion-icon></span>
                         <span class="title">Trading Market</span>
@@ -15,7 +15,7 @@
 
             <ul>
                 <li>
-                    <a href="admin_panel.php">
+                    <a href="BienvProv.php">
                         <span class="icon">
                             <ion-icon name="home-outline"></ion-icon></span>
                         <span class="title">Principal</span>
@@ -25,53 +25,50 @@
 
             <ul>
                 <li>
-                    <a href="clientes_admin.php">
+                    <a href="Misproductos.php">
                         <span class="icon">
                             <ion-icon name="people-outline"></ion-icon></span>
-                        <span class="title">Clientes</span>
+                        <span class="title">Mis productos</span>
                     </a>
                 </li>
             </ul>
 
             <ul>
                 <li>
-                    <a href="mensajes_admin.php">
+                    <a href="Mispedidos.php">
                         <span class="icon">
                             <ion-icon name="chatbubbles-outline"></ion-icon></span>
-                        <span class="title">Mensajes</span>
+                        <span class="title">Mis pedidos</span>
                     </a>
                 </li>
             </ul>
 
             <ul>
                 <li>
-                    <a href="ayuda_admin.php">
+                    <a href="Chat.php">
                         <span class="icon">
                             <ion-icon name="help-outline"></ion-icon></span>
-                        <span class="title">Ayuda</span>
+                        <span class="title">Chat</span>
                     </a>
                 </li>
             </ul>
 
             <ul>
                 <li>
-                    <a href="confi_admin.php">
+                    <a href="PerfilProv.php">
                         <span class="icon">
                             <ion-icon name="settings-outline"></ion-icon></span>
-                        <span class="title">Configuraciones</span>
+                        <span class="title">Perfil</span>
                     </a>
                 </li>
             </ul>
 
-            
-
             <ul>
                 <li>
-                    <a href="#" onclick="logout()">
+                    <a href="../html/index.html">
                         <span class="icon">
-                            <ion-icon name="log-out-outline"></ion-icon>
-                        </span>
-                        <span class="title">Sign out</span>
+                            <ion-icon name="settings-outline"></ion-icon></span>
+                        <span class="title">Salir</span>
                     </a>
                 </li>
             </ul>

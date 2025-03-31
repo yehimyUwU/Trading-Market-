@@ -2,6 +2,8 @@
 header('Content-Type: application/json');
 require 'conexion.php';
 
+
+
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $documento = $_POST['documento'] ?? null;
     $password = $_POST['password'] ?? null;
@@ -53,7 +55,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 $redirect = match ($rol_valido) {
                     'Administrador' => '../html/admin_panel.php',
                     'Cliente' => '../html/inico.html',
-                    'Proveedor' => '../html/BienvProv.html', // Asegúrate de usar "Proveedor"
+                    'Proveedor' => '../html/BienvProv.php', // Asegúrate de usar "Proveedor"
                     default => null
                 };
 

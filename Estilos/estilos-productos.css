@@ -2,7 +2,6 @@
 
 /* Variables y estilos base */
 :root {
-    --poppins: 'Poppins', sans-serif;
     --light: #F9F9F9;
     --blue: #3C91E6;
     --light-blue: #CFE8FF;
@@ -12,11 +11,17 @@
     --red: #DB504A;
 }
 
+* {
+    font-family: 'Arial', sans-serif; /* Esto puede estar sobrescribiendo */
+}
+body {
+    font-family: 'Times New Roman', serif;
+}
+
 /* Reset y estilos generales */
 body {
     margin: 0;
-    padding: 0;
-    font-family: var(--poppins);
+    padding: 50px;
     background: var(--grey);
 }
 

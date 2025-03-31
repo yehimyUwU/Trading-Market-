@@ -405,6 +405,8 @@ function cargarProductos() {
 
 
 
+
+
 function verDetalles(nombre, descripcion, precio, imagen) {
     document.getElementById('modalNombre').textContent = nombre;
     document.getElementById('modalDescripcion').textContent = descripcion;
