@@ -1,3 +1,10 @@
+<?php
+include_once '../php/verificar_acceso.php';
+if (!verificarRol('Cliente')) {
+    header('Location: ../html/longin.html');
+    exit;
+}
+?>
 <!DOCTYPE html>
 <html lang="es">
 <head>

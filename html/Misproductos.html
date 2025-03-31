@@ -603,6 +603,77 @@
             });
     }
 </script>
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        const buscarProductoInput = document.getElementById('buscarProducto');
+        const ordenarPorSelect = document.getElementById('ordenarPor');
+        const buscarButton = document.querySelector('.busqueda-controles .btn-neo');
+        const productosGrid = document.getElementById('productosGrid');
+
+        // Función para cargar productos
+        function cargarProductos(filtros = {}) {
+            fetch('../php/listar_productos.php', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(filtros),
+            })
+                .then(response => response.json())
+                .then(data => {
+                    if (data.success) {
+                        productosGrid.innerHTML = '';
+                        data.listaProductos.forEach(producto => {
+                            const productoCard = document.createElement('div');
+                            productoCard.classList.add('producto-card');
+                            productoCard.innerHTML = `
+                                <div class="producto-imagen">
+                                    <img src="../imag/${producto.imagen}" alt="${producto.nombre}" onerror="this.onerror=null;this.src='../imagenes_P/default.jpeg';">
+                                    <div class="producto-acciones">
+                                        <button class="btn-editar">
+                                            <span class="material-symbols-outlined">edit</span>
+                                        </button>
+                                        <button class="btn-eliminar">
+                                            <span class="material-symbols-outlined">delete</span>
+                                        </button>
+                                    </div>
+                                </div>
+                                <div class="producto-info">
+                                    <h4>${producto.nombre}</h4>
+                                    <div class="producto-detalles">
+                                        <span class="precio">$${producto.precio}</span>
+                                        <span class="stock">Stock: ${producto.stock}</span>
+                                    </div>
+                                    <div class="producto-estado">
+                                        <span class="badge activo">Activo</span>
+                                    </div>
+                                </div>
+                            `;
+                            productosGrid.appendChild(productoCard);
+                        });
+                    } else {
+                        productosGrid.innerHTML = '<p>No se encontraron productos.</p>';
+                    }
+                })
+                .catch(error => {
+                    console.error('Error al cargar los productos:', error);
+                    productosGrid.innerHTML = '<p>Error al cargar los productos.</p>';
+                });
+        }
+
+        // Evento para buscar productos
+        buscarButton.addEventListener('click', function () {
+            const filtros = {
+                busqueda: buscarProductoInput.value.trim(),
+                ordenarPor: ordenarPorSelect.value,
+            };
+            cargarProductos(filtros);
+        });
+
+        // Cargar productos inicialmente
+        cargarProductos();
+    });
+</script>
 <script src="barraprove.js.js"></script>
 </body>
 </html>

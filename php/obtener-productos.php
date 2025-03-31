@@ -3,85 +3,69 @@ require_once 'conexion.php';
 
 header('Content-Type: application/json');
 
-
-
 try {
-    $busqueda = isset($_GET['busqueda']) ? $_GET['busqueda'] : '';
-    $categoria = isset($_GET['categoria']) ? $_GET['categoria'] : '';
-    $orden = isset($_GET['orden']) ? $_GET['orden'] : 'reciente';
-    
-    $sql = "SELECT p.*, c.nombre as categoria_nombre, s.nombre as subcategoria_nombre, 
-            u.nombre as vendedor_nombre
-            FROM productos p
-            INNER JOIN categorias c ON p.id_categoria = c.id_categoria
-            INNER JOIN subcategorias s ON p.id_subcategoria = s.id_subcategoria
-            INNER JOIN usuarios u ON p.id_usuario = u.id_usuario
-            WHERE 1=1";
+    $conn = Conexion::conectar();
+
+    // Depuración: Verificar la base de datos seleccionada
+    $dbName = $conn->query("SELECT DATABASE()")->fetchColumn();
+    if ($dbName !== 'inventarios') {
+        throw new Exception("Base de datos seleccionada incorrecta: $dbName");
+    }
+
+    // Depuración: Verificar si la tabla existe
+    $tableExists = $conn->query("SHOW TABLES LIKE 'productos'")->fetch();
+    if (!$tableExists) {
+        throw new Exception("La tabla 'productos' no existe en la base de datos '$dbName'");
+    }
+
+    $input = json_decode(file_get_contents('php://input'), true);
+    $busqueda = $input['busqueda'] ?? '';
+    $ordenarPor = $input['ordenarPor'] ?? 'reciente';
+
+    $sql = "SELECT * FROM productos WHERE 1=1";
     $params = [];
-    
-    // Aplicar filtros de búsqueda
+
+    // Filtro de búsqueda: Permitir búsqueda por cualquier letra o palabra
     if (!empty($busqueda)) {
-        $sql .= " AND (p.nombre LIKE :busqueda OR p.descripcion LIKE :busqueda)";
+        $sql .= " AND (nombre LIKE :busqueda OR descripcion LIKE :busqueda)";
         $params[':busqueda'] = "%{$busqueda}%";
     }
-    
-    if (!empty($categoria)) {
-        $sql .= " AND c.id_categoria = :categoria";
-        $params[':categoria'] = $categoria;
-    }
-    
-    // Aplicar ordenamiento
-    switch ($orden) {
+
+    // Ordenamiento
+    switch ($ordenarPor) {
         case 'precio-asc':
-            $sql .= " ORDER BY p.precio ASC";
+            $sql .= " ORDER BY precio ASC";
             break;
         case 'precio-desc':
-            $sql .= " ORDER BY p.precio DESC";
+            $sql .= " ORDER BY precio DESC";
             break;
         case 'antiguo':
-            $sql .= " ORDER BY p.fecha_creacion ASC";
+            $sql .= " ORDER BY fecha_creacion ASC";
             break;
         case 'reciente':
         default:
-            $sql .= " ORDER BY p.fecha_creacion DESC";
+            $sql .= " ORDER BY fecha_creacion DESC";
             break;
     }
-    
-    $stmt = $pdo->prepare($sql);
+
+    $stmt = $conn->prepare($sql);
     $stmt->execute($params);
     $productos = $stmt->fetchAll(PDO::FETCH_ASSOC);
-    
-    // Formatear los datos para la respuesta
-    foreach ($productos as &$producto) {
-        $producto['imagen_url'] = '../imagenes/productos/' . $producto['imagen'];
-        $producto['precio_formato'] = number_format($producto['precio'], 2);
-        $producto['stock'] = $producto['cantidad_stock'];
-        
-        // Obtener historial de precios
-        $sqlHistorial = "SELECT * FROM historial_precios 
-                        WHERE id_producto = :id_producto 
-                        ORDER BY fecha_cambio DESC LIMIT 1";
-        $stmtHistorial = $pdo->prepare($sqlHistorial);
-        $stmtHistorial->execute([':id_producto' => $producto['id_producto']]);
-        $ultimoCambio = $stmtHistorial->fetch();
-        
-        if ($ultimoCambio) {
-            $producto['ultimo_cambio_precio'] = [
-                'precio_anterior' => $ultimoCambio['precio_anterior'],
-                'fecha_cambio' => $ultimoCambio['fecha_cambio']
-            ];
-        }
-    }
-    
-    echo json_encode([
-        'success' => true,
-        'productos' => $productos
-    ]);
 
+    // Verificar si se encontraron productos
+    if (empty($productos)) {
+        echo json_encode(['success' => false, 'message' => 'No se encontraron productos con los filtros aplicados.']);
+        exit;
+    }
+
+    // Formatear datos para la respuesta
+    foreach ($productos as &$producto) {
+        $producto['imagen_url'] = '../imag/' . $producto['imagen'];
+        $producto['precio_formato'] = number_format($producto['precio'], 2);
+    }
+
+    echo json_encode(['success' => true, 'productos' => $productos]);
 } catch (Exception $e) {
-    http_response_code(500);
-    echo json_encode([
-        'success' => false,
-        'message' => 'Error al obtener los productos: ' . $e->getMessage()
-    ]);
-} 
+    echo json_encode(['success' => false, 'message' => 'Error al obtener los productos: ' . $e->getMessage()]);
+}
+?>

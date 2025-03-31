@@ -55,7 +55,7 @@ body {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: 15px 30px;
+    padding: 8px 30px; /* Reducir aún más el padding vertical */
     background: linear-gradient(80deg, #306a91,hsl(234, 32%, 55%), #928fdb, #1f68ac, #71687a);
     background-size: 400% 400%;
     animation: cambiarFondo 10s ease-in-out infinite;
@@ -237,13 +237,13 @@ body {
     backdrop-filter: blur(10px);
     border-radius: 10px;
     overflow: hidden;
-    margin: 20px;
+    margin: 0px;
 }
 
 .carousel {
     position: relative;
-    width: 100%;
-    height: 500px;
+    width: 90%;
+    height: 300px;
     border-radius: 20px; /* Bordes redondeados para todo el carrusel */
     overflow: hidden; /* Asegura que los bordes redondeados se apliquen correctamente */
     box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3); /* Sombra para el carrusel */
