@@ -29,6 +29,13 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         ");
 
         if ($stmt->execute([$nombre, $apellido, $documento, $email, $fecha_nacimiento, $genero, $id_usuario])) {
+            // Actualiza los datos en la sesión
+            $_SESSION['usuario']['nombre'] = $nombre;
+            $_SESSION['usuario']['apellido'] = $apellido;
+            $_SESSION['usuario']['documento'] = $documento;
+            $_SESSION['usuario']['email'] = $email;
+            $_SESSION['usuario']['fecha_nacimiento'] = $fecha_nacimiento;
+            $_SESSION['usuario']['genero'] = $genero;
             echo json_encode(['success' => true, 'message' => 'Datos actualizados correctamente']);
         } else {
             echo json_encode(['success' => false, 'message' => 'Error al actualizar los datos']);

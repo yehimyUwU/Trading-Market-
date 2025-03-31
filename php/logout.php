@@ -1,4 +1,6 @@
 <?php
+
+//php para cerrar sesion en admin_panel
 header('Content-Type: application/json');
 session_start();
 
