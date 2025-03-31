@@ -30,27 +30,22 @@ fetch('barra.html')
 });
 
 
+
+
 function cerrarSesion() {
-    fetch('../php/logout.php', {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json'
-        }
-    })
-    .then(response => response.json())
-    .then(data => {
-        if (data.success) {
+    fetch('../php/logout.php')
+        .then(response => response.json())
+        .then(data => {
+            if (data.success) {
+                localStorage.removeItem('usuario'); // Limpiar datos del usuario
+                window.location.href = 'longin.html';
+            }
+        })
+        .catch(error => {
+            console.error('Error:', error);
             localStorage.removeItem('usuario'); // Limpiar datos del usuario
             window.location.href = 'longin.html';
-        } else {
-            console.error('Error en el logout:', data.message);
-        }
-    })
-    .catch(error => {
-        console.error('Error:', error);
-        localStorage.removeItem('usuario'); // Limpiar datos del usuario
-        window.location.href = 'longin.html';
-    });
+        });
 }
 
 function mostrarPerfil() {
@@ -84,9 +79,6 @@ function cerrarPerfil() {
 }
 
 
-
-
-
 //                         FUNCIONES DE CARRITO                      //
 
 
@@ -103,28 +95,27 @@ function agregarAlCarrito(id, nombre, precio) {
         headers: {
             'Content-Type': 'application/json'
         },
-        body: JSON.stringify({
-            id_producto: idProducto,
-            cantidad: cantidad
-        })
+        body: JSON.stringify(datos)
     })
     .then(response => response.json())
     .then(data => {
-        console.log("Respuesta del servidor:", data);
-        if (data.success) {
-            alert(data.success);
+        if (data.error) {
+            alert(data.error);
+        } else if (data.success.includes("Cantidad actualizada")) {
+            alert("Este producto ya estaba en el carrito. Se ha actualizado su cantidad.");
         } else {
             alert("Producto agregado al carrito.");
         }
     })
-    .catch(error => console.error('Error al enviar datos:', error));
+    .catch(error => {
+        console.error("Error al agregar al carrito:", error);
+    });
 }
 
 
 
-
-function cargarCarrito() {
-    fetch('../php/mostrar_carrito.php')
+function actualizarCarritoUI() {
+    fetch('../php/obtener_carrito.php')
         .then(response => response.json())
         .then(data => {
             const contenidoCarrito = document.getElementById("contenidoCarrito");
@@ -132,24 +123,33 @@ function cargarCarrito() {
             contenidoCarrito.innerHTML = ""; // Limpiar contenido actual
             let total = 0;
 
-            data.forEach(item => {
-                total += parseFloat(item.total); // Acumular el total
+            data.forEach(producto => {
+                // Asegúrate de que los valores sean válidos y redondeados
+                const precio = parseFloat(producto.precio);
+                const cantidad = parseInt(producto.cantidad);
 
-                const fila = `
+                if (isNaN(precio) || isNaN(cantidad)) {
+                    console.error("Producto inválido:", producto);
+                    return;
+                }
+
+                total += precio * cantidad;
+
+                contenidoCarrito.innerHTML += `
                     <tr>
-                        <td>${item.id_carrito}</td>
-                        <td>${item.nombre}</td>
-                        <td>${item.precio}</td>
+                        <td>${producto.id_producto}</td>
+                        <td>${producto.nombre}</td>
+                        <td>$${precio.toFixed(2)}</td>
                         <td>
-                            <button onclick="modificarCantidad(${item.id_carrito}, -1)" class="btn btn-sm btn-danger">-</button>
-                            ${item.cantidad}
-                            <button onclick="modificarCantidad(${item.id_carrito}, 1)" class="btn btn-sm btn-success">+</button>
+                            <button class="btn btn-sm btn-outline-secondary disminuir-cantidad" data-id="${producto.id_producto}">-</button>
+                            ${cantidad}
+                            <button class="btn btn-sm btn-outline-secondary aumentar-cantidad" data-id="${producto.id_producto}">+</button>
                         </td>
-                        <td>${item.total}</td>
-                        <td><button onclick="eliminarDelCarrito(${item.id_carrito})" class="btn btn-sm btn-warning">Eliminar</button></td>
+                        <td>$${(precio * cantidad).toFixed(2)}</td>
+                        <td><button class="btn btn-danger btn-sm eliminar-carrito" data-id="${producto.id_producto}">Eliminar</button></td>
+                        
                     </tr>
                 `;
-                contenidoCarrito.innerHTML += fila;
             });
 
             totalCarrito.textContent = `$${total.toFixed(2)}`;
@@ -159,43 +159,6 @@ function cargarCarrito() {
             console.error("Error al cargar el carrito:", error);
         });
 }
-
-function modificarCantidad(idCarrito, cambio) {
-    fetch('../php/modificar_carrito.php', {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json'
-        },
-        body: JSON.stringify({
-            id_carrito: idCarrito,
-            cambio: cambio
-        })
-    })
-    .then(response => response.json())
-    .then(data => {
-        if (data.success) {
-            alert(data.success);
-            cargarCarrito(); // Recargar el carrito después de actualizar
-        } else {
-            console.error(data.error);
-        }
-    })
-    .catch(error => console.error('Error:', error));
-}
-
-
-
-
-
-document.querySelectorAll(".agregar-carrito").forEach(boton => {
-    boton.addEventListener("click", function () {
-        const idProducto = this.getAttribute("data-id");
-        agregarAlCarrito(idProducto);
-    });
-});
-
-
-
 
 
 function asignarEventosCarrito() {
@@ -336,7 +299,6 @@ document.addEventListener("DOMContentLoaded", function () {
                             <p class="card-price">$${producto.precio}</p>
                             <button class="btn btn-primary ver-detalles mb-2" data-id="${producto.id_producto}">Ver Detalles</button>
                             <button class="btn btn-success agregar-carrito mb-3" data-id="${producto.id_producto}" data-nombre="${producto.nombre}" data-precio="${producto.precio}">Agregar al carrito</button>
-
                         </div>
                     </div>
                 </div>
