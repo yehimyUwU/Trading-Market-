@@ -91,24 +91,18 @@ function cerrarPerfil() {
 
 
 
-<<<<<<< HEAD
-function agregarAlCarrito(idProducto, cantidad) {
-    console.log("Datos enviados al servidor:", { id_producto: idProducto, cantidad: cantidad });
-=======
 
 function agregarAlCarrito(id, nombre, precio) {
     const datos = {
         id_producto: id,
         cantidad: 1 // Por defecto, se agrega 1 unidad
     };
->>>>>>> fc8b6405ad01c9099e1fc39de8b1d0e6704a71b9
 
     fetch('../php/agregar_carrito.php', {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json'
         },
-<<<<<<< HEAD
         body: JSON.stringify({
             id_producto: idProducto,
             cantidad: cantidad
@@ -119,39 +113,18 @@ function agregarAlCarrito(id, nombre, precio) {
         console.log("Respuesta del servidor:", data);
         if (data.success) {
             alert(data.success);
-=======
-        body: JSON.stringify(datos)
-    })
-    .then(response => response.json())
-    .then(data => {
-        if (data.error) {
-            alert(data.error);
-        } else if (data.success.includes("Cantidad actualizada")) {
-            alert("Este producto ya estaba en el carrito. Se ha actualizado su cantidad.");
->>>>>>> fc8b6405ad01c9099e1fc39de8b1d0e6704a71b9
         } else {
             alert("Producto agregado al carrito.");
         }
     })
-<<<<<<< HEAD
     .catch(error => console.error('Error al enviar datos:', error));
-=======
-    .catch(error => {
-        console.error("Error al agregar al carrito:", error);
-    });
->>>>>>> fc8b6405ad01c9099e1fc39de8b1d0e6704a71b9
 }
 
 
 
-<<<<<<< HEAD
 
 function cargarCarrito() {
     fetch('../php/mostrar_carrito.php')
-=======
-function actualizarCarritoUI() {
-    fetch('../php/obtener_carrito.php')
->>>>>>> fc8b6405ad01c9099e1fc39de8b1d0e6704a71b9
         .then(response => response.json())
         .then(data => {
             const contenidoCarrito = document.getElementById("contenidoCarrito");
@@ -159,7 +132,6 @@ function actualizarCarritoUI() {
             contenidoCarrito.innerHTML = ""; // Limpiar contenido actual
             let total = 0;
 
-<<<<<<< HEAD
             data.forEach(item => {
                 total += parseFloat(item.total); // Acumular el total
 
@@ -178,35 +150,6 @@ function actualizarCarritoUI() {
                     </tr>
                 `;
                 contenidoCarrito.innerHTML += fila;
-=======
-            data.forEach(producto => {
-                // Asegúrate de que los valores sean válidos y redondeados
-                const precio = parseFloat(producto.precio);
-                const cantidad = parseInt(producto.cantidad);
-
-                if (isNaN(precio) || isNaN(cantidad)) {
-                    console.error("Producto inválido:", producto);
-                    return;
-                }
-
-                total += precio * cantidad;
-
-                contenidoCarrito.innerHTML += `
-                    <tr>
-                        <td>${producto.id_producto}</td>
-                        <td>${producto.nombre}</td>
-                        <td>$${precio.toFixed(2)}</td>
-                        <td>
-                            <button class="btn btn-sm btn-outline-secondary disminuir-cantidad" data-id="${producto.id_producto}">-</button>
-                            ${cantidad}
-                            <button class="btn btn-sm btn-outline-secondary aumentar-cantidad" data-id="${producto.id_producto}">+</button>
-                        </td>
-                        <td>$${(precio * cantidad).toFixed(2)}</td>
-                        <td><button class="btn btn-danger btn-sm eliminar-carrito" data-id="${producto.id_producto}">Eliminar</button></td>
-                        
-                    </tr>
-                `;
->>>>>>> fc8b6405ad01c9099e1fc39de8b1d0e6704a71b9
             });
 
             totalCarrito.textContent = `$${total.toFixed(2)}`;
