@@ -16,19 +16,27 @@ if (!verificarRol('Proveedor')) { // Cambiado a "Proveedor"
   <!-- Linking Google fonts for icons -->
   <link rel="stylesheet" href="../Estilos/Admins-provedor.css">
   <link rel="stylesheet" href="../Estilos/BienvenidoProv.css">
+  <link rel="stylesheet" href="../Estilos/prove_estilos.css" />
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Rounded:opsz,wght,FILL,GRAD@24,400,0,0">
   <link href='https://unpkg.com/boxicons@2.0.9/css/boxicons.min.css' rel='stylesheet'>
 </head>
 
 <body>
   <!-- SIDEBAR -->
-  <div id="barra-pro"></div>
+  <?php
+    
+    require '../php/barra_prove.php'; 
+?>
   
   <!-- CONTENT -->
   <section id="content">
     <!-- NAVBAR -->
+
+    
     <nav>
-        <i class='bx bx-menu'></i>
+    <div class="toggle">
+                <ion-icon name="menu-outline"></ion-icon>
+            </div>
         <a href="#" class="nav-link">Bienvenido</a>
         <form action="#">
             <div class="form-input">

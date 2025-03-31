@@ -8,6 +8,8 @@ function activeLink(){
     this.classList.add("hovered");
 }
 
+
+
 list.forEach(item => item.addEventListener("mouseover", activeLink))
 
 //Menu plegable para el modal de ver perfil
