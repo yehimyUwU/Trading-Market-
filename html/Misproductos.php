@@ -40,15 +40,7 @@
                     <p>producto, <span id="nombreVendedor">Vendedor</span></p>
                 </div>
 
-                <div class="perfil-vendedor">
-                    <div class="vendedor-info">
-                        <img id="imagenPerfil" src="../imagenes_P/default_profile.jpg" alt="Foto de perfil">
-                        <div class="vendedor-detalles">
-                            <h3 id="nombreCompletoVendedor">Nombre del Vendedor</h3>
-                            <span id="emailVendedor">email@ejemplo.com</span>
-                        </div>
-                    </div>
-                </div>
+                
 
                 <div class="header-stats">
                     <div class="stat-card">
@@ -69,7 +61,10 @@
             <section class="busqueda-productos">
                 <h2 class="section-header">Gestión de Productos</h2>
                 <div class="busqueda-controles">
-                    <input type="text" placeholder="Buscar productos..." id="buscarProducto">
+                    <div class="search-box">
+                        <input type="text" id="search-input" placeholder="Buscar productos...">
+                        <button>🔍</button>
+                    </div>
                     <select id="ordenarPor">
                         <option value="reciente">Más recientes</option>
                         <option value="antiguo">Más antiguos</option>
@@ -194,25 +189,27 @@
     function abrirModalEdicion(producto) {
         modoEdicion = true;
         productoActual = producto;
-        
+
         // Configurar el modal para edición
         document.getElementById('modalTitulo').textContent = 'Editar Producto';
         document.getElementById('btnAccionTexto').textContent = 'Actualizar Producto';
         document.getElementById('productoId').value = producto.id_producto;
-        document.getElementById('nombreProducto').value = producto.nombre;
-        document.getElementById('descripcion').value = producto.descripcion;
-        document.getElementById('precio').value = producto.precio;
-        document.getElementById('stock').value = producto.stock;
-        
+        document.getElementById('nombreProducto').value = producto.nombre || '';
+        document.getElementById('descripcion').value = producto.descripcion || '';
+        document.getElementById('precio').value = producto.precio || '';
+        document.getElementById('stock').value = producto.stock || '';
+
         // Cargar categoría y subcategoría
         cargarCategoriasParaEdicion(producto.id_categoria, producto.id_subcategoria);
-        
+
         // Mostrar imagen actual si existe
+        const previewContainer = document.getElementById('previewImagen');
         if (producto.imagen) {
-            const previewContainer = document.getElementById('previewImagen');
             previewContainer.innerHTML = `<img src="../imag/${producto.imagen}" alt="Imagen actual del producto" style="max-width: 100%; border-radius: 10px;">`;
+        } else {
+            previewContainer.innerHTML = ''; // Limpiar vista previa si no hay imagen
         }
-        
+
         // Mostrar el modal
         document.getElementById('modalProducto').style.display = 'block';
     }
@@ -340,22 +337,76 @@
                 method: 'POST',
                 body: formData
             })
-            .then(response => response.json())
+            .then(response => {
+                if (!response.ok) {
+                    return response.text().then(text => {
+                        throw new Error(`HTTP error! status: ${response.status}, response: ${text}`);
+                    });
+                }
+                return response.json();
+            })
             .then(data => {
                 if (data.success) {
                     alert(modoEdicion ? 'Producto actualizado exitosamente.' : 'Producto registrado exitosamente.');
                     document.getElementById('formularioProducto').reset();
                     cerrarModal();
-                    cargarProductos(); // Recargar la lista de productos
+                    actualizarListaProductos(); // Actualizar la lista de productos sin recargar
                 } else {
                     alert('Error: ' + data.message);
+                    console.error('Error del servidor:', data);
                 }
             })
             .catch(error => {
                 console.error('Error:', error);
-                alert('Ocurrió un error al procesar la solicitud.');
+                alert('Ocurrió un error al procesar la solicitud. Verifique la consola para más detalles.');
             });
         }
+    }
+
+    function actualizarListaProductos() {
+        fetch('../php/listar_productos.php')
+            .then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    const productosGrid = document.getElementById('productosGrid');
+                    productosGrid.innerHTML = ''; // Limpiar la lista actual
+
+                    data.listaProductos.forEach(producto => {
+                        const productoCard = document.createElement('div');
+                        productoCard.classList.add('producto-card');
+                        productoCard.innerHTML = `
+                            <div class="producto-imagen">
+                                <img src="../imag/${producto.imagen}" alt="${producto.nombre}" onerror="this.onerror=null;this.src='../imagenes_P/default.jpeg';">
+                                <div class="producto-acciones">
+                                    <button class="btn-editar" onclick="abrirModalEdicion(${JSON.stringify(producto).replace(/"/g, '&quot;')})">
+                                        <span class="material-symbols-outlined">edit</span>
+                                    </button>
+                                    <button class="btn-eliminar" onclick="eliminarProducto(${producto.id_producto})">
+                                        <span class="material-symbols-outlined">delete</span>
+                                    </button>
+                                </div>
+                            </div>
+                            <div class="producto-info">
+                                <h4>${producto.nombre}</h4>
+                                <div class="producto-detalles">
+                                    <span class="precio">$${producto.precio}</span>
+                                    <span class="stock">Stock: ${producto.stock}</span>
+                                </div>
+                                <div class="producto-estado">
+                                    <span class="badge activo">Activo</span>
+                                </div>
+                            </div>
+                        `;
+                        productosGrid.prepend(productoCard); // Agregar al principio de la lista
+                    });
+                } else {
+                    alert('No se pudieron cargar los productos');
+                }
+            })
+            .catch(error => {
+                console.error('Error al cargar los productos:', error);
+                alert('Error al cargar los productos');
+            });
     }
 
     // Función para cargar los productos
@@ -543,6 +594,41 @@
             console.error('Error al cargar las subcategorías:', error);
             subcategoriaSelect.innerHTML = '<option value="">Error al cargar las subcategorías</option>';
         });
+
+        setTimeout(() => {
+            const searchInput = document.getElementById("search-input");
+            const searchButton = document.querySelector(".btn-neo"); // Botón de búsqueda
+
+            if (!searchInput || !searchButton) return;
+
+            // Función para filtrar productos
+            const filtrarProductos = () => {
+                const searchText = searchInput.value.toLowerCase().trim();
+                const products = document.querySelectorAll(".producto-card"); // Obtener productos actualizados
+
+                products.forEach(product => {
+                    const titleElement = product.querySelector("h4"); // Título del producto
+                    if (!titleElement) return;
+
+                    const title = titleElement.textContent.toLowerCase();
+                    
+                    if (title.includes(searchText) || searchText === "") {
+                        product.style.display = "flex";  // Mostrar la tarjeta
+                    } else {
+                        product.style.display = "none"; // Ocultar la tarjeta
+                    }
+                });
+            };
+
+            // Evento para buscar al escribir en el campo de búsqueda
+            searchInput.addEventListener("input", filtrarProductos);
+
+            // Evento para buscar al hacer clic en el botón
+            searchButton.addEventListener("click", (e) => {
+                e.preventDefault(); // Evitar el comportamiento predeterminado del botón
+                filtrarProductos();
+            });
+        }, 500);
     }
     </script>
 
