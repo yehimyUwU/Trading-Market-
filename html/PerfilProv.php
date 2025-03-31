@@ -12,6 +12,9 @@
 </head>
 <body>
 <?php
+
+
+
     
     require '../php/barra_prove.php'; 
 ?>

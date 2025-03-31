@@ -8,6 +8,8 @@
     --black2: #999;
 }
 
+
+
 /* Modo oscuro */
 :root.dark-mode {
     --blue: #a5a0a0; /* Azul más oscuro */

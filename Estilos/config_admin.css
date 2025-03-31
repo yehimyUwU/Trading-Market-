@@ -17,6 +17,8 @@
     --black2: #ccc; /* Texto secundario */
 }
 
+
+
 /* Botón para cambiar de modo */
 .modo-visual-btn {
     background-color: var(--blue);
