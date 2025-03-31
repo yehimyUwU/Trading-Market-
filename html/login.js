@@ -2,27 +2,27 @@
 function verificarLogin() {
     const documento = document.getElementById("username").value; // Captura el documento
     const password = document.getElementById("password").value; // Captura la contraseña
+    const role = document.getElementById("role").value; // Captura el rol seleccionado
     const mensaje = document.getElementById("message");
-    let intentosRestantes = 3; // Inicializa el contador de intentos
 
     // Verifica que los campos no estén vacíos
-    if (!documento || !password) {
+    if (!documento || !password || !role) {
         mensaje.style.color = "red";
-        mensaje.textContent = "Por favor, completa todos los campos.";
+        mensaje.textContent = "Por favor, complete todos los campos.";
         return;
     }
-    
-    fetch("../php/login.php", { // Asegúrate de que este archivo maneje la lógica de inicio de sesión
+
+    fetch("../php/login.php", { // Asegúrate de que esta URL sea correcta
         method: "POST",
         headers: {
             "Content-Type": "application/x-www-form-urlencoded"
         },
         body: new URLSearchParams({
             documento: documento, // Envía el documento
-            password: password // Envía la contraseña
+            password: password, // Envía la contraseña
+            role: role // Envía el rol seleccionado
         })
     })
-    
     .then(response => {
         if (!response.ok) {
             throw new Error(`Error HTTP: ${response.status}`);
@@ -34,18 +34,11 @@ function verificarLogin() {
             mensaje.style.color = "blue";
             mensaje.textContent = data.message;
             setTimeout(() => {
-                window.location.href = "../html/inico.html";
+                window.location.href = data.redirect; // Redirigir según el rol
             }, 1000);
         } else {
-            intentosRestantes--;
             mensaje.style.color = "red";
             mensaje.textContent = data.message;
-            
-            if (intentosRestantes === 0) {
-                mensaje.textContent = "Cuenta bloqueada. Intenta más tarde";
-                document.getElementById("username").disabled = true;
-                document.getElementById("password").disabled = true;
-            }
         }
     })
     .catch(error => {
@@ -123,7 +116,7 @@ document.getElementById("signupForm").addEventListener("submit", async function 
             setTimeout(() => {
                 signupMessage.textContent = ""; // Ocultar el mensaje después de 6 segundos
                 container.classList.remove("right-panel-active");
-            }, 6000); // Cambiado a 6 segundos
+            }, 1000); 
         }
     } catch (error) {
         console.error('Error:', error);

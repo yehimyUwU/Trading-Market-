@@ -1,3 +1,10 @@
+<?php
+include_once '../php/verificar_acceso.php';
+if (!verificarRol('Cliente')) {
+    header('Location: ../html/longin.html');
+    exit;
+}
+?>
 <!DOCTYPE html>
 <html lang="es">
 <head>
@@ -100,9 +107,10 @@
         <h2 class="text-center my-4">Nuestros Productos</h2>
         <div class="row row-cols-1 row-cols-md-5" id="productosGrid">
             <!-- Productos se cargarán aquí -->
-        </div>
+<section class="productos">
     </div>
 </section>
+
 
 <a class="btn d-flex align-items-center justify-content-between bg-primary text-white"
    style="position: fixed; bottom: 20px; left: 20px; height: 50px; width: 180px; padding: 10px 20px; border-radius: 25px; cursor: pointer; box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.3); z-index: 1000;"

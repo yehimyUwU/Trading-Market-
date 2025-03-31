@@ -3,210 +3,95 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Notificaciones - Trading Market</title>
-    <!-- Fuentes -->
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-    <!-- Iconos -->
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0" />
-    <!-- Estilos -->
-    <link rel="stylesheet" href="../Estilos/styles_P.css">
-    <link rel="stylesheet" href="../Estilos/proevedores.css">
-    <!-- JavaScript -->
-</head> 
+    <title>Perfil - Trading Market</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <link href='https://unpkg.com/boxicons@2.0.9/css/boxicons.min.css' rel='stylesheet'>
+    <link rel="stylesheet" href="../Estilos/Admins-provedor.css">
+    <link rel="stylesheet" href="../Estilos/PerfilProv.css">
+</head>
 <body>
-
     <div id="barra-pro"></div>
-<br>
-<!-- Banner Principal -->
-<div id="barra-pro"></div>
-<br><br><br><br><br>
+    
+    <section id="content">
+        <nav>
+            
+            <a href="#" class="nav-link">Mi Perfil</a>
+            <form action="#">
+                <div class="form-input">
+                    <input type="search" placeholder="Buscar...">
+                    <button type="submit" class="search-btn"><i class='bx bx-search'></i></button>
+                </div>
+            </form>
+            <a href="#" class="notification">
+                <i class='bx bxs-bell'></i>
+                <span class="num">3</span>
+            </a>
+        </nav>
 
-    <div class="perfil-vendedor">
-        <div class="vendedor-info">
-            <img id="imagenPerfil" src="../imagenes_P/default_profile.jpg" alt="Foto de perfil">
-            <div class="vendedor-detalles">
-                <h3 id="nombreCompletoVendedor">Nombre del Vendedor</h3>
-                <span id="emailVendedor">email@ejemplo.com</span>
-            </div>
-        </div>
-    </div>       
-    <head>
-        <title>- Diseño Perfil Bootstrap</title>
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1">
-        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
-        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-    </head>
-    
-    <body>
-    
-        <div class="container">
-    
-            <div class="row">
-                <div class="col-sm-4" style="margin-top: 50px;">
-                    <div class="text-center">
-                        <img src="http://ssl.gstatic.com/accounts/ui/avatar_2x.png" class="avatar img-circle img-thumbnail"
-                            alt="avatar">
-                        <h6>Upload a different photo...</h6>
-                        <input type="file" class="text-center center-block file-upload">
-                    </div>
-                    </hr><br>
-    
-                    <div class="panel panel-default">
-                        <div class="panel-heading">Sitio Web <i class="fa fa-link fa-1x"></i></div>
-                        <div class="panel-body"><a
-                                href="https://github.com/sergio-gonzalez11">github.com/sergio-gonzalez11</a></div>
-                    </div>
-    
-                    <ul class="list-group">
-                        <li class="list-group-item text-muted">Actividad <i class="fa fa-dashboard fa-1x"></i></li>
-                        <li class="list-group-item text-right"><span class="pull-left"><strong>Shares</strong></span> 125
-                        </li>
-                        <li class="list-group-item text-right"><span class="pull-left"><strong>Likes</strong></span> 13</li>
-                        <li class="list-group-item text-right"><span class="pull-left"><strong>Posts</strong></span> 37</li>
-                        <li class="list-group-item text-right"><span class="pull-left"><strong>Followers</strong></span> 78
-                        </li>
-                    </ul>
+        <main class="profile-main">
+            <div class="profile-card">
+                <div class="profile-header">
+                    <img id="profile-avatar" src="http://ssl.gstatic.com/accounts/ui/avatar_2x.png" class="profile-avatar" alt="avatar">
+                    <input type="file" class="profile-upload">
+                    <h3>Datos del Proveedor</h3>
                 </div>
-    
-                <div class="col-sm-8" style="margin-top: 50px;">
-                    <ul class="nav nav-tabs">
-                        <li class="active"><a data-toggle="tab" href="#home">Perfil</a></li>
-                    </ul>
-    
-    
-                    <div class="tab-content">
-                        <div class="tab-pane active" id="home">
-                            <hr>
-                            <form class="form" action="##" method="post" id="registrationForm">
-                                <div class="form-group">
-    
-                                    <div class="col-xs-6">
-                                        <label for="nombre">
-                                            <h4>Nombre</h4>
-                                        </label>
-                                        <input type="text" class="form-control" name="nombre" id="nombre"
-                                            placeholder="nombre">
-                                    </div>
-                                </div>
-                                <div class="form-group">
-    
-                                    <div class="col-xs-6">
-                                        <label for="last_name">
-                                            <h4>Apellidos</h4>
-                                        </label>
-                                        <input type="text" class="form-control" name="apellidos" id="apellidos"
-                                            placeholder="apellidos">
-                                    </div>
-                                </div>
-    
-                                <div class="form-group">
-    
-                                    <div class="col-xs-6">
-                                        <label for="teléfono">
-                                            <h4>Teléfono</h4>
-                                        </label>
-                                        <input type="text" class="form-control" name="teléfono" id="teléfono"
-                                            placeholder="teléfono">
-                                    </div>
-                                </div>
-    
-                                <div class="form-group">
-                                    <div class="col-xs-6">
-                                        <label for="mobile">
-                                            <h4>Movil</h4>
-                                        </label>
-                                        <input type="text" class="form-control" name="movil" id="movil"
-                                            placeholder="introduce tu móvil">
-                                    </div>
-                                </div>
-                                <div class="form-group">
-    
-                                    <div class="col-xs-6">
-                                        <label for="email">
-                                            <h4>Email</h4>
-                                        </label>
-                                        <input type="email" class="form-control" name="email" id="email"
-                                            placeholder="you@email.com">
-                                    </div>
-                                </div>
-                                <div class="form-group">
-    
-                                    <div class="col-xs-6">
-                                        <label for="ciudad">
-                                            <h4>Ciudad</h4>
-                                        </label>
-                                        <input type="text" class="form-control" id="ciudad" placeholder="ciudad">
-                                    </div>
-                                </div>
-                                <div class="form-group">
-    
-                                    <div class="col-xs-6">
-                                        <label for="password">
-                                            <h4>Contraseña</h4>
-                                        </label>
-                                        <input type="password" class="form-control" name="password" id="password"
-                                            placeholder="contraseña">
-                                    </div>
-                                </div>
-                                <div class="form-group">
-    
-                                    <div class="col-xs-6">
-                                        <label for="password2">
-                                            <h4>Verifica la contraseña</h4>
-                                        </label>
-                                        <input type="password" class="form-control" name="password2" id="password2"
-                                            placeholder="password2">
-                                    </div>
-                                </div>
-                                <div class="form-group">
-                                    <div class="col-xs-12">
-                                        <br>
-                                        <button class="btn btn-success" type="submit"><i
-                                                class="glyphicon glyphicon-ok-sign"></i> Guardar</button>
-                                        <button class="btn btn-danger" type="reset"><i
-                                                class="glyphicon glyphicon-repeat"></i> Limpiar</button>
-                                    </div>
-                                </div>
-                            </form>
-    
-                            <hr>
-    
-                        </div>
+
+                <div class="profile-stats">
+                    <div class="stat-item">
+                        <i class='bx bx-package'></i>
+                        <span id="pedidos">0 Pedidos</span>
                     </div>
-    
+                    <div class="stat-item">
+                        <i class='bx bx-check-circle'></i>
+                        <span id="entregas">0 Entregas</span>
+                    </div>
                 </div>
+
+                <form class="profile-form">
+                    <div class="form-group">
+                        <label>Nombre</label>
+                        <input type="text" id="nombre" placeholder="Nombre" disabled>
+                    </div>
+                    <div class="form-group">
+                        <label>Apellidos</label>
+                        <input type="text" id="apellidos" placeholder="Apellidos" disabled>
+                    </div>
+                    <div class="form-group">
+                        <label>Email</label>
+                        <input type="email" id="email" placeholder="Email" disabled>
+                    </div>
+                    <div class="form-group">
+                        <label>Número de documento</label>
+                        <input type="text" id="documento" placeholder="Número de documento" disabled>
+                    </div>
+                </form>
             </div>
-    
-            <script type="text/javascript">
-                $(document).ready(function () {
-                    var readURL = function (input) {
-                        if (input.files && input.files[0]) {
-                            var reader = new FileReader();
-    
-                            reader.onload = function (e) {
-                                $('.avatar').attr('src', e.target.result);
-                            }
-    
-                            reader.readAsDataURL(input.files[0]);
-                        }
+        </main>
+    </section>
+
+    <script src="barraprove.js.js"></script>
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            fetch('../php/obtener_perfil.php')
+                .then(response => response.json())
+                .then(data => {
+                    if (data.success) {
+                        document.getElementById('nombre').value = data.usuario.nombre || 'No disponible';
+                        document.getElementById('apellidos').value = data.usuario.apellido || 'No disponible';
+                        document.getElementById('email').value = data.usuario.email || 'No disponible';
+                        document.getElementById('documento').value = data.usuario.documento || 'No disponible';
+                        document.getElementById('profile-avatar').src = data.usuario.imagen || 'http://ssl.gstatic.com/accounts/ui/avatar_2x.png';
+                        document.getElementById('pedidos').textContent = `${data.usuario.pedidos || 0} Pedidos`;
+                        document.getElementById('entregas').textContent = `${data.usuario.entregas || 0} Entregas`;
+                    } else {
+                        alert('No se pudo cargar la información del perfil.');
                     }
-    
-                    $(".file-upload").on('change', function () {
-                        readURL(this);
-                    });
+                })
+                .catch(error => {
+                    console.error('Error al cargar el perfil:', error);
+                    alert('Error al cargar el perfil.');
                 });
-            </script>
-   
-
-
-
-       
-        
-
-  
-
-<script src="barraprove.js.js"></script>
+        });
+    </script>
 </body>
 </html>

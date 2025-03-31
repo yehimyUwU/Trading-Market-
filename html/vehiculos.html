@@ -162,8 +162,60 @@
     <!-- Sección de Productos -->
     <div class="container mt-5">
         <h2 class="text-center mb-4">Nuestros Vehículos</h2>
-        <div id="productos-container" class="row" data-categoria="Vehículos"></div>
+        <div id="productos-container" class="row" data-categoria="Vehículos">
+            <!-- Ejemplo de tarjeta de producto -->
+            <div class="col-md-4">
+                <div class="card">
+                    <img src="" class="card-img-top" alt="" id="imagenProducto">
+                    <div class="card-body">
+                        <h5 class="card-title" id="nombreProducto"></h5>
+                        <p class="card-text" id="descripcionProducto"></p>
+                        <p class="card-price" id="precioProducto"></p>
+                        <button class="btn btn-primary ver-detalles" data-id="">Ver Detalles</button>
+                    </div>
+                </div>
+            </div>
+            <!-- Fin ejemplo de tarjeta -->
+        </div>
     </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            fetch('../php/obtener_productos.php?categoria=Vehículos')
+                .then(response => response.json())
+                .then(data => {
+                    if (data.error) {
+                        alert(data.error);
+                        return;
+                    }
+
+                    const productosContainer = document.getElementById('productos-container');
+                    productosContainer.innerHTML = ''; // Limpiar contenido previo
+
+                    data.forEach(producto => {
+                        const productoHTML = `
+                            <div class="col-md-4">
+                                <div class="card">
+                                    <img src="${producto.imagen}" class="card-img-top" alt="${producto.nombre}" onerror="this.onerror=null;this.src='../imagenes_P/default.jpeg';">
+                                    <div class="card-body">
+                                        <h5 class="card-title">${producto.nombre}</h5>
+                                        <p class="card-text">${producto.descripcion}</p>
+                                        <p class="card-price">$${producto.precio}</p>
+                                        <button class="btn btn-primary ver-detalles" data-id="${producto.id_producto}">Ver Detalles</button>
+                                    </div>
+                                </div>
+                            </div>
+                        `;
+                        productosContainer.innerHTML += productoHTML;
+                    });
+                })
+                .catch(error => {
+                    console.error('Error al cargar los productos:', error);
+                    alert('Error al cargar los productos.');
+                });
+        });
+    </script>
+
 
     <!-- Modal de Detalles del Producto -->
     <div class="modal fade" id="productoModal" tabindex="-1" role="dialog" aria-labelledby="productoModalLabel" aria-hidden="true">

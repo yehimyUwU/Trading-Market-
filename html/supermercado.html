@@ -16,22 +16,61 @@
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
     <style>
-        .hero-box {
-            background-color: rgba(0, 0, 0, 0.644);
-            color: white;
-            padding: 50px;
-            text-align: center;
+        .banner {
+    text-align: center;
+    background-color: rgba(0, 0, 0, 0.658) !important; /* Fondo negro sólido */
+    color: white;
+    padding: 80px 20px; /* Espaciado más amplio */
+    min-height: 300px; /* Aumenta la altura del banner */
+    border-radius: 10px;
+    box-shadow: 0 4px 10px rgba(255, 255, 255, 0.2);
+    opacity: 1; /* Eliminar cualquier transparencia */
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+        .banner h1 {
+            font-size: 3rem;
+            font-weight: bold;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            text-shadow: 2px 2px 10px rgba(255, 255, 255, 0.3);
+            animation: fadeIn 1.5s ease-in-out;
         }
 
-        .modal-dialog {
-            max-width: 600px !important; 
-            height: auto !important; 
+        .banner h2 {
+            font-size: 2rem;
+            margin-top: 10px;
+            font-style: italic;
+            opacity: 0.9;
+            animation: fadeIn 1.8s ease-in-out;
+        }
+
+        .banner p {
+            font-size: 1.5rem;
+            margin-top: 15px;
+            font-style: italic;
+            opacity: 0.9;
+            animation: fadeIn 2s ease-in-out;
         }
 
         @keyframes cambiarFondoTitulo {
             0% { background-position: 0% 50%; }
             50% { background-position: 100% 50%; }
             100% { background-position: 0% 50%; }
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
         }
         
         .modal-header {
@@ -124,6 +163,18 @@
     color: #ff3939;
 }
 
+#productos-container {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center; /* Alinea las tarjetas */
+}
+
+
+.card {
+    width: 100%; /* O puedes usar un tamaño fijo */
+    max-width: 400px; /* Ajusta esto según tu diseño */
+    margin-bottom: 15px; /* Espaciado entre tarjetas */
+}
 
 </style>
 
@@ -138,13 +189,12 @@
 <br><br><br><br><br><br><br>
 
 <!-- Sección de Bienvenida -->
-<div class="hero-box">
-    <h1 class="display-4">Explora el Futuro de la Tecnología</h1>
-    <h2>Innovación a tu Alcance</h2>
-    <div class="container text-center mt-5">
-        <p>Descubre los últimos dispositivos tecnológicos que revolucionarán tu vida.</p>
-    </div>
+<div class="banner">
+    <h1>Bienvenido a tu Supermercado Online</h1>
+    <h2>Frescura y Calidad a un Clic</h2>
+    <p>Encuentra los mejores productos para tu hogar, al mejor precio y con entrega rápida.</p>
 </div>
+
 
 <!-- Filtros -->
 <div class="container mt-4">

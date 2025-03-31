@@ -7,39 +7,37 @@
   <title>Ajustes </title>
   <link rel="stylesheet" href="../Estilos/barraprove.css.css">
   <link rel="stylesheet"href="../Estilos/Admins-provedor.css">
+  <link rel="stylesheet" href="../Estilos/prove_estilos.css" />
+  <link rel="stylesheet" href="../Estilos/estilos_pedidos.css" />
+
   <!-- Linking Google fonts for icons -->
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Rounded:opsz,wght,FILL,GRAD@24,400,0,0">
 </head>
 <body>
-   
-  <div id="barra-pro"></div>
-  <br>
-  <!-- Banner Principal -->
-  <div id="barra-pro"></div>
-  <br><br><br><br><br>
+  
+<?php
+    
+    require '../php/barra_prove.php'; 
+?>
+  
 
 <!-- CONTENT -->
 <section id="content">
   <!-- NAVBAR -->
   <nav>
-    <i class='bx bx-menu' ></i>
-    <a href="#" class="nav-link">Mis Pedidos</a>
+            
+    <a href="#" class="nav-link">Mi Perfil</a>
     <form action="#">
-      <div class="form-input">
-        <input type="search" placeholder="Search...">
-        <button type="submit" class="search-btn"><i class='bx bx-search' ></i></button>
-      </div>
+        <div class="form-input">
+            <input type="search" placeholder="Buscar...">
+            <button type="submit" class="search-btn"><i class='bx bx-search'></i></button>
+        </div>
     </form>
-    
     <a href="#" class="notification">
-      <i class='bx bxs-bell' ></i>
-      <span class="num">8</span>
+        <i class='bx bxs-bell'></i>
+        <span class="num">3</span>
     </a>
-    <a href="#" class="profile">
-      <img src="img/people.png">
-    </a>
-  </nav>
-  <!-- NAVBAR -->
+</nav>
 
   <!-- MAIN -->
   <main>
@@ -154,7 +152,9 @@
   </main>
   <!-- MAIN -->
 </section>
-
+<script type="module" src="https://cdn.jsdelivr.net/npm/@ionic/core/dist/ionic/ionic.esm.js"></script>
+        <script nomodule src="https://cdn.jsdelivr.net/npm/@ionic/core/dist/ionic/ionic.js"></script>
+        
 
 <script src="barraprove.js.js"></script>
 </body>

@@ -3,7 +3,7 @@ header('Content-Type: application/json');
 require 'conexion.php'; // Asegúrate de que este archivo se incluya correctamente
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    // Verifica si las claves existen en el array $_POST
+    // Capturar los datos enviados desde el formulario
     $tipo_documento = $_POST['tipo_documento'] ?? null;
     $documento = $_POST['documento'] ?? null;
     $nombre = $_POST['nombre'] ?? null;
@@ -12,9 +12,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $genero = $_POST['genero'] ?? null;
     $email = $_POST['email'] ?? null;
     $password = $_POST['password'] ?? null;
+    $rol = $_POST['rol'] ?? 'Cliente'; // Por defecto, asignar "Cliente" si no se selecciona un rol
 
     // Verificar si todos los campos requeridos están presentes
-    if (!$tipo_documento || !$documento || !$nombre || !$apellido || !$fecha_nacimiento || !$genero || !$email || !$password) {
+    if (!$tipo_documento || !$documento || !$nombre || !$apellido || !$fecha_nacimiento || !$genero || !$email || !$password || !$rol) {
         echo json_encode(['success' => false, 'message' => 'Todos los campos son obligatorios.']);
         exit;
     }
@@ -25,13 +26,24 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     try {
         $pdo = Conexion::conectar(); // Conectar a la base de datos
 
-        // Los signos de interrogación son marcadores de posición para los valores que se enlazarán a la declaración preparada
+        // Insertar el usuario en la tabla 'usuario'
         $stmt = $pdo->prepare("INSERT INTO usuario (tipo_documento, documento, nombre, apellido, fecha_nacimiento, genero, email, password) 
                               VALUES (?, ?, ?, ?, ?, ?, ?, ?)");
         
-        // Ejecuta la declaración preparada con los valores proporcionados
         if ($stmt->execute([$tipo_documento, $documento, $nombre, $apellido, $fecha_nacimiento, $genero, $email, $hashed_password])) {
-            echo json_encode(['success' => true, 'message' => 'Registro exitoso.']);
+            // Obtener el ID del usuario recién creado
+            $id_usuario = $pdo->lastInsertId();
+
+            // Asignar el rol seleccionado al usuario
+            $stmt_rol = $pdo->prepare("
+                INSERT INTO usuario_rol (id_usuario, id_rol) 
+                VALUES (?, (SELECT id_rol FROM rol_usuario WHERE nombre = ?))
+            ");
+            if ($stmt_rol->execute([$id_usuario, $rol])) {
+                echo json_encode(['success' => true, 'message' => 'Registro exitoso.']);
+            } else {
+                echo json_encode(['success' => false, 'message' => 'Error al asignar el rol al usuario.']);
+            }
         } else {
             echo json_encode(['success' => false, 'message' => 'Error al registrar el usuario.']);
         }

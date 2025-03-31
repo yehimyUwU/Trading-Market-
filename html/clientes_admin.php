@@ -14,6 +14,8 @@
 </head>
 <body>
 
+
+
 <?php
 require '../php/barra_admin.php'; 
 ?>
@@ -167,36 +169,43 @@ require '../php/barra_admin.php';
 
             <!--Modal para ver perfil-->  
 
-<div id="profileModal" class="modal">
-    <div class="modal-content">
-      <span class="close">&times;</span>
-      <h2>Perfil de usuario</h2>
-      <div class="user2">
-          <img src="../imagenes/cucu.jpg" alt="">
-      </div>
-      
-      <!-- Formularios de entrada -->
-      <form id="profileForm">
+
+            <div id="profileModal" class="modal">
+        <div class="modal-content">
+          <span class="close">&times;</span>
+          <h2>Perfil de usuario</h2>
+          <div class="user2">
+              <img src="../imagenes/cucu.jpg" alt="">
+          </div>
+          
+          <!-- Formularios de entrada -->
+          <form id="profileForm">
           <label for="name">Nombre:</label>
-          <input type="text" id="name" name="name" value="Cucurrella" disabled>
-        
-          <label for="email">Correo:</label>
-          <input type="email" id="email" name="email" value="Paella@gmail.com" disabled>
-        
-          <label for="phone">Teléfono:</label>
-          <input type="tel" id="phone" name="phone" value="123456" disabled>
-        
-          <label for="role">Rol:</label>
-          <input type="text" id="role" name="role" value="Cocinero" disabled>
-          <br>
-          <br>
-        
-          <button type="button" id="editButton">Editar</button> <!-- Botón Editar -->
-          <button type="submit" id="saveButton">Guardar</button> <!-- Botón Guardar -->
-        </form>
-      </form>
-    </div>
-  </div>
+          <input type="text" id="name" name="name" value="" disabled>
+
+           <label for="lastname">Apellido:</label>
+           <input type="text" id="lastname" name="lastname" value="" disabled>
+
+           <label for="document">Documento:</label>
+           <input type="text" id="document" name="document" value="" disabled>
+
+           <label for="email">Email:</label>
+           <input type="email" id="email" name="email" value="" disabled>
+
+           <label for="birthdate">Fecha de nacimiento:</label>
+           <input type="text" id="birthdate" name="birthdate" value="" disabled>
+
+           <label for="gender">Género:</label>
+           <input type="text" id="gender" name="gender" value="" disabled>
+              <br>
+              <br>
+            
+              <button type="button" id="editButton">Editar</button> <!-- Botón Editar -->
+              <button type="submit" id="saveButton">Guardar</button> <!-- Botón Guardar -->
+            </form>
+          </form>
+        </div>
+      </div>
   
 
         

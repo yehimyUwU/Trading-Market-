@@ -1,3 +1,10 @@
+<?php
+include_once '../php/verificar_acceso.php';
+if (!verificarRol('Administrador')) {
+    header('Location: ../html/longin.html');
+    exit;
+}
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -248,7 +255,7 @@
 
                 <table>
                     <tr>
-                        <td width="60px">
+                        <td width="60px"></td>
                             <div class="imgBx"><img src="../imagenes/ejem.jpg" alt=""></div>
                         </td>
                         <td>

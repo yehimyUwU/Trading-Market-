@@ -9,19 +9,18 @@ fetch('barra.html')
         const searchInput = document.getElementById("search-input");
         if (!searchInput) return;
 
-        const products = document.querySelectorAll(".card"); 
-
         searchInput.addEventListener("input", function () {
-            const searchText = searchInput.value.toLowerCase();
+            const searchText = searchInput.value.toLowerCase().trim();
+            const products = document.querySelectorAll(".card"); // Obtener productos actualizados
 
             products.forEach(product => {
                 const titleElement = product.querySelector(".card-title");
-                if (!titleElement) return; // Evita errores si no encuentra título
+                if (!titleElement) return;
 
                 const title = titleElement.textContent.toLowerCase();
                 
-                if (title.includes(searchText)) {
-                    product.style.display = "block";
+                if (title.includes(searchText) || searchText === "") {
+                    product.style.display = "flex";  // Asegurar que la tarjeta mantiene el formato
                 } else {
                     product.style.display = "none";
                 }
@@ -29,6 +28,8 @@ fetch('barra.html')
         });
     }, 500);
 });
+
+
 
 
 function cerrarSesion() {
@@ -85,14 +86,24 @@ function cerrarPerfil() {
 
 
 
+<<<<<<< HEAD
 function agregarAlCarrito(idProducto, cantidad) {
     console.log("Datos enviados al servidor:", { id_producto: idProducto, cantidad: cantidad });
+=======
+
+function agregarAlCarrito(id, nombre, precio) {
+    const datos = {
+        id_producto: id,
+        cantidad: 1 // Por defecto, se agrega 1 unidad
+    };
+>>>>>>> fc8b6405ad01c9099e1fc39de8b1d0e6704a71b9
 
     fetch('../php/agregar_carrito.php', {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json'
         },
+<<<<<<< HEAD
         body: JSON.stringify({
             id_producto: idProducto,
             cantidad: cantidad
@@ -103,25 +114,47 @@ function agregarAlCarrito(idProducto, cantidad) {
         console.log("Respuesta del servidor:", data);
         if (data.success) {
             alert(data.success);
+=======
+        body: JSON.stringify(datos)
+    })
+    .then(response => response.json())
+    .then(data => {
+        if (data.error) {
+            alert(data.error);
+        } else if (data.success.includes("Cantidad actualizada")) {
+            alert("Este producto ya estaba en el carrito. Se ha actualizado su cantidad.");
+>>>>>>> fc8b6405ad01c9099e1fc39de8b1d0e6704a71b9
         } else {
-            console.error(data.error);
+            alert("Producto agregado al carrito.");
         }
     })
+<<<<<<< HEAD
     .catch(error => console.error('Error al enviar datos:', error));
+=======
+    .catch(error => {
+        console.error("Error al agregar al carrito:", error);
+    });
+>>>>>>> fc8b6405ad01c9099e1fc39de8b1d0e6704a71b9
 }
 
 
 
+<<<<<<< HEAD
 
 function cargarCarrito() {
     fetch('../php/mostrar_carrito.php')
+=======
+function actualizarCarritoUI() {
+    fetch('../php/obtener_carrito.php')
+>>>>>>> fc8b6405ad01c9099e1fc39de8b1d0e6704a71b9
         .then(response => response.json())
         .then(data => {
-            const contenidoCarrito = document.getElementById('contenidoCarrito');
-            contenidoCarrito.innerHTML = ''; // Limpiar contenido previo
-
+            const contenidoCarrito = document.getElementById("contenidoCarrito");
+            const totalCarrito = document.getElementById("totalCarrito");
+            contenidoCarrito.innerHTML = ""; // Limpiar contenido actual
             let total = 0;
 
+<<<<<<< HEAD
             data.forEach(item => {
                 total += parseFloat(item.total); // Acumular el total
 
@@ -140,11 +173,43 @@ function cargarCarrito() {
                     </tr>
                 `;
                 contenidoCarrito.innerHTML += fila;
+=======
+            data.forEach(producto => {
+                // Asegúrate de que los valores sean válidos y redondeados
+                const precio = parseFloat(producto.precio);
+                const cantidad = parseInt(producto.cantidad);
+
+                if (isNaN(precio) || isNaN(cantidad)) {
+                    console.error("Producto inválido:", producto);
+                    return;
+                }
+
+                total += precio * cantidad;
+
+                contenidoCarrito.innerHTML += `
+                    <tr>
+                        <td>${producto.id_producto}</td>
+                        <td>${producto.nombre}</td>
+                        <td>$${precio.toFixed(2)}</td>
+                        <td>
+                            <button class="btn btn-sm btn-outline-secondary disminuir-cantidad" data-id="${producto.id_producto}">-</button>
+                            ${cantidad}
+                            <button class="btn btn-sm btn-outline-secondary aumentar-cantidad" data-id="${producto.id_producto}">+</button>
+                        </td>
+                        <td>$${(precio * cantidad).toFixed(2)}</td>
+                        <td><button class="btn btn-danger btn-sm eliminar-carrito" data-id="${producto.id_producto}">Eliminar</button></td>
+                        
+                    </tr>
+                `;
+>>>>>>> fc8b6405ad01c9099e1fc39de8b1d0e6704a71b9
             });
 
-            document.getElementById('totalCarrito').textContent = `$${total.toFixed(2)}`;
+            totalCarrito.textContent = `$${total.toFixed(2)}`;
+            asignarEventosCarrito();
         })
-        .catch(error => console.error('Error:', error));
+        .catch(error => {
+            console.error("Error al cargar el carrito:", error);
+        });
 }
 
 function modificarCantidad(idCarrito, cambio) {
@@ -182,6 +247,82 @@ document.querySelectorAll(".agregar-carrito").forEach(boton => {
 });
 
 
+
+
+
+function asignarEventosCarrito() {
+    document.querySelectorAll(".aumentar-cantidad").forEach(boton => {
+        boton.addEventListener("click", function () {
+            const idProducto = this.getAttribute("data-id");
+            actualizarCantidadProducto(idProducto, 1); // Incrementar cantidad
+        });
+    });
+
+    document.querySelectorAll(".disminuir-cantidad").forEach(boton => {
+        boton.addEventListener("click", function () {
+            const idProducto = this.getAttribute("data-id");
+            actualizarCantidadProducto(idProducto, -1); // Decrementar cantidad
+        });
+    });
+
+    // Capturar clic en el botón "Eliminar"
+    document.querySelectorAll(".eliminar-carrito").forEach(boton => {
+        boton.addEventListener("click", function () {
+            const idProducto = this.getAttribute("data-id");
+            eliminarProductoCarrito(idProducto);
+        });
+    });
+}
+
+function eliminarProductoCarrito(idProducto) {
+    const confirmarEliminacion = confirm("¿Estás seguro de eliminar este producto?");
+    if (!confirmarEliminacion) {
+        return; // Si el usuario cancela, no hace nada
+    }
+
+    fetch('../php/eliminar_carrito.php', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({ id_producto: idProducto })
+    })
+    .then(response => response.json())
+    .then(data => {
+        if (data.error) {
+            alert(data.error);
+            return;
+        }
+        alert("Producto eliminado del carrito.");
+        actualizarCarritoUI(); // Refrescar la interfaz del carrito
+    })
+    .catch(error => {
+        console.error("Error al eliminar el producto:", error);
+    });
+}
+
+
+
+function actualizarCantidadProducto(idProducto, cambio) {
+    fetch('../php/actualizar_cantidad_carrito.php', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({ id_producto: idProducto, cambio: cambio })
+    })
+    .then(response => response.json())
+    .then(data => {
+        if (data.error) {
+            alert(data.error);
+            return;
+        }
+        actualizarCarritoUI(); // Refrescar el carrito en la interfaz
+    })
+    .catch(error => {
+        console.error("Error al actualizar la cantidad:", error);
+    });
+}
 
 
 
@@ -240,7 +381,7 @@ document.addEventListener("DOMContentLoaded", function () {
             const productoHTML = `
                 <div class="col-md-4">
                     <div class="card">
-                        <img src="${producto.imagen}" class="card-img-top" alt="${producto.nombre}">
+                        <img src="../imagenes/${producto.imagen}" class="card-img-top" alt="${producto.nombre}">
                         <div class="card-body">
                             <h5 class="card-title">${producto.nombre}</h5>
                             <p class="card-text">${producto.descripcion}</p>
@@ -340,7 +481,7 @@ function cargarProductos() {
                                 <p class="card-text">${producto.descripcion}</p>
                                 <p class="card-text font-weight-bold">$${producto.precio}</p>
                                 <button class="btn btn-primary" onclick="verDetalles('${producto.nombre}', '${producto.descripcion}', '${producto.precio}', '../imagenes_P/${producto.imagen}')">Ver Detalles</button>
-                                <button class="btn btn-success" onclick="agregarAlCarrito(${producto.id}, '${producto.nombre}', ${producto.precio})">Agregar al Carrito</button>
+                                <button class="btn btn-success" onclick="agregarAlCarrito(${producto.id_producto}, '${producto.nombre}', ${producto.precio})">Agregar al Carritoooo</button>
                             </div>
                         </div>
                     `;
@@ -352,6 +493,10 @@ function cargarProductos() {
         })
 }
 
+
+
+
+
 function verDetalles(nombre, descripcion, precio, imagen) {
     document.getElementById('modalNombre').textContent = nombre;
     document.getElementById('modalDescripcion').textContent = descripcion;
@@ -359,3 +504,58 @@ function verDetalles(nombre, descripcion, precio, imagen) {
     document.getElementById('modalImagen').src = imagen;
     $('#productoModal').modal('show');
 }
+
+document.addEventListener("DOMContentLoaded", function () {
+    fetch("../php/obtener_proveedores.php")
+        .then(response => response.json())
+        .then(proveedores => {
+            const container = document.getElementById("proveedores-container");
+            container.classList.add("row", "justify-content-center"); // Centrar y organizar
+
+            if (proveedores.error) {
+                container.innerHTML = "<p>Error al cargar los proveedores.</p>";
+                return;
+            }
+
+            proveedores.forEach(proveedor => {
+                const card = document.createElement("div");
+                card.classList.add("col-lg-4", "col-md-6", "col-sm-12", "mb-3"); // 3 por fila en grande, 2 en medianas, 1 en móviles
+
+                card.innerHTML = `
+                    <div class="card">
+                        <div class="card-body text-center">
+                            <h3 class="card-title">${proveedor.nombre} ${proveedor.apellido}</h3>
+                            <button class="btn btn-primary mb-3" onclick="mostrarInfo(${proveedor.id_usuario})">Mostrar Información</button>
+                            <button class="btn btn-success mb-3">Productos Relacionados</button>
+                        </div>
+                    </div>
+                `;
+
+                container.appendChild(card);
+            });
+        })
+        .catch(error => console.error("Error al obtener proveedores:", error));
+});
+
+function mostrarInfo(idProveedor) {
+    fetch(`../php/obtener_proveedores.php?id=${idProveedor}`)
+        .then(response => response.json())
+        .then(data => {
+            if (data.error) {
+                alert("Error: " + data.error);
+                return;
+            }
+            // Llenar los datos en el modal
+            document.getElementById("modalNombre").textContent = data.nombre;
+            document.getElementById("modalApellido").textContent = data.apellido;
+            document.getElementById("modalEmail").textContent = data.email;
+            document.getElementById("modalGenero").textContent = data.genero;
+            document.getElementById("modalFechaNacimiento").textContent = data.fecha_nacimiento;
+            document.getElementById("modalDocumento").textContent = data.documento;
+
+            // Mostrar el modal
+            $("#infoProveedorModal").modal("show");
+        })
+        .catch(error => console.error("Error al obtener los datos del proveedor:", error));
+}
+
