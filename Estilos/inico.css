@@ -1403,9 +1403,8 @@ ion-icon{
   height: 50px;
 }
 
-material-symbols-outlined{
-  width: 100px;
-  height: 100px;
+#openChatbot i {
+  font-size: 1.5em; /* Cambia el tamaño del icono */
 }
 
 .hbot{

@@ -11,11 +11,8 @@
     <link rel="stylesheet" href="../Estilos/prove_estilos.css" />
 </head>
 <body>
+
 <?php
-
-
-
-    
     require '../php/barra_prove.php'; 
 ?>
     
