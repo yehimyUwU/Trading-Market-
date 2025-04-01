@@ -1,26 +1,30 @@
 <?php
 session_start();
+require_once 'conexion.php';
 header('Content-Type: application/json');
 
-// Agregar headers para debug
-header('Access-Control-Allow-Origin: *');
-header('Access-Control-Allow-Methods: GET');
-
-
-// Log del estado de la sesión
-error_log('Estado de sesión: ' . print_r($_SESSION, true));
-
-if (isset($_SESSION['usuario'])) {
-    error_log('Usuario encontrado en sesión: ' . print_r($_SESSION['usuario'], true));
-    echo json_encode([
-        'success' => true,
-        'usuario' => $_SESSION['usuario']
-    ]);
-} else {
-    error_log('No se encontró usuario en la sesión');
-    echo json_encode([
-        'success' => false,
-        'message' => 'No hay sesión activa'
-    ]);
+if (!isset($_SESSION['usuario']['id'])) {
+    echo json_encode(['success' => false, 'message' => 'Usuario no identificado.']);
+    exit;
 }
-?> 
+
+$idUsuario = $_SESSION['usuario']['id'];
+
+try {
+    $conn = Conexion::conectar();
+    $stmt = $conn->prepare("SELECT nombre, apellido, email, documento, imagen FROM usuario WHERE id_usuario = :id_usuario");
+    $stmt->bindParam(':id_usuario', $idUsuario, PDO::PARAM_INT);
+    $stmt->execute();
+    $usuario = $stmt->fetch(PDO::FETCH_ASSOC);
+
+    if ($usuario) {
+        // Verificar si la imagen existe, si no asignar una imagen por defecto
+        $usuario['imagen'] = $usuario['imagen'] ? "../imag/" . $usuario['imagen'] : "http://ssl.gstatic.com/accounts/ui/avatar_2x.png";
+        echo json_encode(['success' => true, 'usuario' => $usuario]);
+    } else {
+        echo json_encode(['success' => false, 'message' => 'Usuario no encontrado.']);
+    }
+} catch (Exception $e) {
+    echo json_encode(['success' => false, 'message' => 'Error al obtener el perfil: ' . $e->getMessage()]);
+}
+?>

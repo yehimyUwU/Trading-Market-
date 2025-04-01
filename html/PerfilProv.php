@@ -36,8 +36,12 @@
             <div class="profile-card">
                 <div class="profile-header">
                     <img id="profile-avatar" src="http://ssl.gstatic.com/accounts/ui/avatar_2x.png" class="profile-avatar" alt="avatar">
-                    <input type="file" class="profile-upload">
+                    <form id="uploadForm" enctype="multipart/form-data">
+                        <input type="file" class="profile-upload" id="profileImageInput" name="profileImage" accept="image/*" onchange="previewImage(event)">
+                        <button type="button" onclick="uploadImage()">Guardar Imagen</button>
+                    </form>
                     <h3>Datos del Proveedor</h3>
+                    <p id="imagenMensaje" style="color: red; font-size: 14px; display: none;">Agregue una imagen a su perfil.</p>
                 </div>
 
                 <div class="profile-stats">
@@ -84,9 +88,12 @@
                         document.getElementById('apellidos').value = data.usuario.apellido || 'No disponible';
                         document.getElementById('email').value = data.usuario.email || 'No disponible';
                         document.getElementById('documento').value = data.usuario.documento || 'No disponible';
-                        document.getElementById('profile-avatar').src = data.usuario.imagen || 'http://ssl.gstatic.com/accounts/ui/avatar_2x.png';
-                        document.getElementById('pedidos').textContent = `${data.usuario.pedidos || 0} Pedidos`;
-                        document.getElementById('entregas').textContent = `${data.usuario.entregas || 0} Entregas`;
+
+                        const avatar = document.getElementById('profile-avatar');
+                        const mensaje = document.getElementById('imagenMensaje');
+
+                        avatar.src = data.usuario.imagen; // Asignar la imagen desde la respuesta
+                        mensaje.style.display = data.usuario.imagen.includes('avatar_2x.png') ? 'block' : 'none';
                     } else {
                         alert('No se pudo cargar la información del perfil.');
                     }
@@ -96,6 +103,44 @@
                     alert('Error al cargar el perfil.');
                 });
         });
+
+        // Función para previsualizar la imagen seleccionada
+        function previewImage(event) {
+            const input = event.target;
+            const preview = document.getElementById('profile-avatar');
+
+            if (input.files && input.files[0]) {
+                const reader = new FileReader();
+                reader.onload = function (e) {
+                    preview.src = e.target.result;
+                };
+                reader.readAsDataURL(input.files[0]);
+            }
+        }
+
+        // Función para subir la imagen al servidor
+        function uploadImage() {
+            const form = document.getElementById('uploadForm');
+            const formData = new FormData(form);
+
+            fetch('../php/guardar_imagen.php', {
+                method: 'POST',
+                body: formData
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    alert('Imagen guardada exitosamente.');
+                    location.reload(); // Recargar la página para reflejar los cambios
+                } else {
+                    alert('Error al guardar la imagen: ' + data.message);
+                }
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                alert('Ocurrió un error al guardar la imagen.');
+            });
+        }
     </script>
 </body>
 </html>
