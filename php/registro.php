@@ -1,8 +1,21 @@
 <?php
+session_start();
 header('Content-Type: application/json');
 require 'conexion.php'; // Asegúrate de que este archivo se incluya correctamente
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+    // Inicializar intentos fallidos en la sesión si no existen
+    if (!isset($_SESSION['registro_intentos'])) {
+        $_SESSION['registro_intentos'] = 0;
+        $_SESSION['registro_bloqueado_hasta'] = null;
+    }
+
+    // Verificar si el usuario está bloqueado
+    if ($_SESSION['registro_bloqueado_hasta'] && time() < $_SESSION['registro_bloqueado_hasta']) {
+        echo json_encode(['success' => false, 'message' => 'Has sido bloqueado temporalmente. Intenta más tarde.']);
+        exit;
+    }
+
     // Capturar los datos enviados desde el formulario
     $tipo_documento = $_POST['tipo_documento'] ?? null;
     $documento = $_POST['documento'] ?? null;
@@ -16,9 +29,23 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
     // Verificar si todos los campos requeridos están presentes
     if (!$tipo_documento || !$documento || !$nombre || !$apellido || !$fecha_nacimiento || !$genero || !$email || !$password || !$rol) {
-        echo json_encode(['success' => false, 'message' => 'Todos los campos son obligatorios.']);
+        $_SESSION['registro_intentos']++;
+
+        // Bloquear al usuario si supera los 3 intentos fallidos
+        if ($_SESSION['registro_intentos'] >= 3) {
+            $_SESSION['registro_bloqueado_hasta'] = time() + 900; // Bloquear por 15 minutos
+            $_SESSION['registro_intentos'] = 0; // Reiniciar intentos después de bloquear
+            echo json_encode(['success' => false, 'message' => 'Has sido bloqueado temporalmente. Intenta más tarde.']);
+        } else {
+            $intentos_restantes = 3 - $_SESSION['registro_intentos'];
+            echo json_encode(['success' => false, 'message' => 'Todos los campos son obligatorios. Te quedan ' . $intentos_restantes . ' intentos.']);
+        }
         exit;
     }
+
+    // Reiniciar intentos fallidos si el registro es exitoso
+    $_SESSION['registro_intentos'] = 0;
+    $_SESSION['registro_bloqueado_hasta'] = null;
 
     // Hash de la contraseña
     $hashed_password = password_hash($password, PASSWORD_DEFAULT);
