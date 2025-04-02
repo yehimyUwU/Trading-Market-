@@ -1,23 +1,21 @@
-// Agregar clase a los hover//
+// Agregar clase a los hover
 let list = document.querySelectorAll(".navigation li");
 
-function activeLink(){
+function activeLink() {
     list.forEach((item) => {
         item.classList.remove("hovered");
     });
     this.classList.add("hovered");
 }
 
+list.forEach(item => item.addEventListener("mouseover", activeLink));
 
-
-list.forEach(item => item.addEventListener("mouseover", activeLink))
-
-//Menu plegable para el modal de ver perfil
+// Menu plegable para el modal de ver perfil
 let toggle = document.querySelector(".toggle");
 let navigation = document.querySelector(".navigation");
 let main = document.querySelector(".main");
 
-toggle.onclick = function(){
+toggle.onclick = function () {
     navigation.classList.toggle("active");
     main.classList.toggle("active");
 };
@@ -48,7 +46,6 @@ window.addEventListener("click", (event) => {
     profileModal.style.display = "none";
   }
 });
-
 
 // Obtén los elementos con sus nuevos IDs
 const editButton = document.getElementById("editButton"); // Botón Editar
@@ -111,7 +108,6 @@ function loadUserData() {
 
 // Llama a la función cuando se cargue la página
 document.addEventListener('DOMContentLoaded', loadUserData);
-
 
 //funcion para cerrar sesion
 

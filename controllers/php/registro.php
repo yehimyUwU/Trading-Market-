@@ -1,7 +1,7 @@
 <?php
 session_start();
 header('Content-Type: application/json');
-require 'conexion.php'; // Asegúrate de que este archivo se incluya correctamente
+require '../../config/php/conexion.php'; // Ruta actualizada
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     // Inicializar intentos fallidos en la sesión si no existen

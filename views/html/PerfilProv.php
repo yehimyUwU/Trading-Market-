@@ -6,19 +6,18 @@
     <title>Perfil - Trading Market</title>
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
     <link href='https://unpkg.com/boxicons@2.0.9/css/boxicons.min.css' rel='stylesheet'>
-    <link rel="stylesheet" href="../Estilos/Admins-provedor.css">
-    <link rel="stylesheet" href="../Estilos/PerfilProv.css">
-    <link rel="stylesheet" href="../Estilos/prove_estilos.css" />
+    <link rel="stylesheet" href="../../public/estilos/Admins-provedor.css">
+    <link rel="stylesheet" href="../../public/estilos/PerfilProv.css">
+    <link rel="stylesheet" href="../../public/estilos/prove_estilos.css" />
 </head>
 <body>
 
 <?php
-    require '../php/barra_prove.php'; 
+    require '../../controllers/php/barra_prove.php'; 
 ?>
     
     <section id="content">
         <nav>
-            
             <a href="#" class="nav-link">Mi Perfil</a>
             <form action="#">
                 <div class="form-input">
@@ -77,10 +76,10 @@
         </main>
     </section>
 
-    <script src="barraprove.js.js"></script>
+    <script src="../../public/js/barraprove.js"></script>
     <script>
         document.addEventListener("DOMContentLoaded", function () {
-            fetch('../php/obtener_perfil.php')
+            fetch('../../controllers/php/obtener_perfil.php')
                 .then(response => response.json())
                 .then(data => {
                     if (data.success) {
@@ -123,7 +122,7 @@
             const form = document.getElementById('uploadForm');
             const formData = new FormData(form);
 
-            fetch('../php/guardar_imagen.php', {
+            fetch('../../controllers/php/guardar_imagen.php', {
                 method: 'POST',
                 body: formData
             })

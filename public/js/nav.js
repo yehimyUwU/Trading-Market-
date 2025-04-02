@@ -1,10 +1,10 @@
-fetch('barra.html')
+fetch('../../views/html/barra.html') // Cambiar ruta según estructura
   .then(response => response.text())
   .then(html => {
     document.getElementById('nav-container').innerHTML = html;
   });
 
-  document.addEventListener("DOMContentLoaded", function () {
+document.addEventListener("DOMContentLoaded", function () {
     setTimeout(() => {
         const searchInput = document.getElementById("search-input");
         if (!searchInput) return;
@@ -29,11 +29,8 @@ fetch('barra.html')
     }, 500);
 });
 
-
-
-
 function cerrarSesion() {
-    fetch('../php/logout.php', {
+    fetch('../../controllers/php/logout.php', { // Cambiar ruta según estructura
         method: 'POST',
         headers: {
             'Content-Type': 'application/json'
@@ -43,7 +40,7 @@ function cerrarSesion() {
     .then(data => {
         if (data.success) {
             localStorage.removeItem('usuario'); // Limpiar datos del usuario
-            window.location.href = 'longin.html';
+            window.location.href = '../../views/html/longin.html'; // Cambiar ruta según estructura
         } else {
             console.error('Error en el logout:', data.message);
         }
@@ -51,17 +48,16 @@ function cerrarSesion() {
     .catch(error => {
         console.error('Error:', error);
         localStorage.removeItem('usuario'); // Limpiar datos del usuario
-        window.location.href = 'longin.html';
+        window.location.href = '../../views/html/longin.html'; // Cambiar ruta según estructura
     });
 }
-
 
 function mostrarPerfil() {
     // Muestra el modal
     $('#userProfileModal').modal('show');
 
     // Llama al archivo PHP para obtener los datos del usuario
-    fetch('../php/obtener_perfil.php') // Verifica que esta URL sea correcta
+    fetch('../../controllers/php/obtener_perfil.php') // Cambiar ruta según estructura
         .then(response => response.json())
         .then(data => {
             if (data.success) {
@@ -86,11 +82,7 @@ function cerrarPerfil() {
     $('#userProfileModal').modal('hide'); // Cierra el modal
 }
 
-
 //                         FUNCIONES DE CARRITO                      //
-
-
-
 
 function agregarAlCarrito(id, nombre, precio) {
     const datos = {
@@ -98,7 +90,7 @@ function agregarAlCarrito(id, nombre, precio) {
         cantidad: 1 // Por defecto, se agrega 1 unidad
     };
 
-    fetch('../php/agregar_carrito.php', {
+    fetch('../../controllers/php/agregar_carrito.php', {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json'
@@ -120,10 +112,8 @@ function agregarAlCarrito(id, nombre, precio) {
     });
 }
 
-
-
 function actualizarCarritoUI() {
-    fetch('../php/obtener_carrito.php')
+    fetch('../../controllers/php/obtener_carrito.php')
         .then(response => response.json())
         .then(data => {
             const contenidoCarrito = document.getElementById("contenidoCarrito");
@@ -168,7 +158,6 @@ function actualizarCarritoUI() {
         });
 }
 
-
 function asignarEventosCarrito() {
     document.querySelectorAll(".aumentar-cantidad").forEach(boton => {
         boton.addEventListener("click", function () {
@@ -199,7 +188,7 @@ function eliminarProductoCarrito(idProducto) {
         return; // Si el usuario cancela, no hace nada
     }
 
-    fetch('../php/eliminar_carrito.php', {
+    fetch('../../controllers/php/eliminar_carrito.php', {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json'
@@ -220,10 +209,8 @@ function eliminarProductoCarrito(idProducto) {
     });
 }
 
-
-
 function actualizarCantidadProducto(idProducto, cambio) {
-    fetch('../php/actualizar_cantidad_carrito.php', {
+    fetch('../../controllers/php/actualizar_cantidad_carrito.php', {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json'
@@ -243,15 +230,7 @@ function actualizarCantidadProducto(idProducto, cambio) {
     });
 }
 
-
-
-
 //                              FUNCIONES DE CARRITO FINAL                                         //
-
-
-
-
-
 
 document.addEventListener("DOMContentLoaded", function () {
     let productosOriginales = [];
@@ -270,7 +249,7 @@ document.addEventListener("DOMContentLoaded", function () {
             return;
         }
 
-        fetch(`../php/obtener_productos.php?categoria=${encodeURIComponent(categoria)}`)
+        fetch(`../../controllers/php/obtener_productos.php?categoria=${encodeURIComponent(categoria)}`)
             .then(response => response.json())
             .then(data => {
                 if (data.error) {
@@ -374,15 +353,12 @@ document.addEventListener("DOMContentLoaded", function () {
     cargarProductos();
 });
 
-
-
-
 document.addEventListener('DOMContentLoaded', function() {
     cargarProductos();
 });
 
 function cargarProductos() {
-    fetch('../php/listar_productos.php')
+    fetch('../../controllers/php/listar_productos.php')
         .then(response => response.json())
         .then(data => {
             if (data.success) {
@@ -411,10 +387,6 @@ function cargarProductos() {
         })
 }
 
-
-
-
-
 function verDetalles(nombre, descripcion, precio, imagen) {
     document.getElementById('modalNombre').textContent = nombre;
     document.getElementById('modalDescripcion').textContent = descripcion;
@@ -424,7 +396,7 @@ function verDetalles(nombre, descripcion, precio, imagen) {
 }
 
 document.addEventListener("DOMContentLoaded", function () {
-    fetch("../php/obtener_proveedores.php")
+    fetch("../../controllers/php/obtener_proveedores.php")
         .then(response => response.json())
         .then(proveedores => {
             const container = document.getElementById("proveedores-container");
@@ -456,7 +428,7 @@ document.addEventListener("DOMContentLoaded", function () {
 });
 
 function mostrarInfo(idProveedor) {
-    fetch(`../php/obtener_proveedores.php?id=${idProveedor}`)
+    fetch(`../../controllers/php/obtener_proveedores.php?id=${idProveedor}`)
         .then(response => response.json())
         .then(data => {
             if (data.error) {

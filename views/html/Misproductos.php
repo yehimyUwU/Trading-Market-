@@ -9,13 +9,13 @@
     <!-- Iconos -->
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0" />
     <!-- Estilos -->
-    <link rel="stylesheet" href="../Estilos/barraprove.css.css">
-    <link rel="stylesheet" href="../Estilos/estilos-productos.css">
-    <link rel="stylesheet" href="../Estilos/prove_estilos.css" />
+    <link rel="stylesheet" href="../../public/estilos/barraprove.css.css">
+    <link rel="stylesheet" href="../../public/estilos/estilos-productos.css">
+    <link rel="stylesheet" href="../../public/estilos/prove_estilos.css" />
 </head>
 <body>
 <?php
-    require '../php/barra_prove.php'; 
+    require '../../controllers/php/barra_prove.php'; 
 ?>
   
     <div id="content">
