@@ -2,7 +2,7 @@
 <?php
 include_once '../../controllers/php/verificar_acceso.php';
 if (!verificarRol('Proveedor')) { // Cambiado a "Proveedor"
-    header('Location: ../html/longin.html');
+    header('Location: ../../views/html/longin.html');
     exit;
 }
 ?>
@@ -12,11 +12,11 @@ if (!verificarRol('Proveedor')) { // Cambiado a "Proveedor"
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Bienvenido-Trading Market </title>
-  <link rel="stylesheet" href="../Estilos/barraprove.css.css">
+  <link rel="stylesheet" href="../../public/Estilos/barraprove.css.css">
   <!-- Linking Google fonts for icons -->
-  <link rel="stylesheet" href="../Estilos/Admins-provedor.css">
-  <link rel="stylesheet" href="../Estilos/BienvenidoProv.css">
-  <link rel="stylesheet" href="../Estilos/prove_estilos.css" />
+  <link rel="stylesheet" href="../../public/Estilos/Admins-provedor.css">
+  <link rel="stylesheet" href="../../public/Estilos/BienvenidoProv.css">
+  <link rel="stylesheet" href="../../public/Estilos/prove_estilos.css" />
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Rounded:opsz,wght,FILL,GRAD@24,400,0,0">
   <link href='https://unpkg.com/boxicons@2.0.9/css/boxicons.min.css' rel='stylesheet'>
 </head>
@@ -28,7 +28,7 @@ if (!verificarRol('Proveedor')) { // Cambiado a "Proveedor"
   <!-- SIDEBAR -->
   <?php
     
-    require '../php/barra_prove.php'; 
+    require '../../controllers/php/barra_prove.php'; 
 ?>
   
   <!-- CONTENT -->
@@ -119,7 +119,7 @@ if (!verificarRol('Proveedor')) { // Cambiado a "Proveedor"
   </section>
   <!-- CONTENT -->
   
-  <script src="barraprove.js.js"></script>
+  <script src="../../public/js/barraprove.js.js"></script>
 </body>
 </html>
 

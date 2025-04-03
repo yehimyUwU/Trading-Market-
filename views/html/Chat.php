@@ -4,10 +4,10 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Chat - Trading Market</title>
-    <link rel="stylesheet" href="../Estilos/Admins-provedor.css">
-    <link rel="stylesheet" href="../Estilos/Chat.css">
-    <link rel="stylesheet" href="../Estilos/prove_estilos.css" />
-    <link rel="stylesheet" href="../Estilos/estilos_pedidos.css" />
+    <link rel="stylesheet" href="../../public/Estilos/Admins-provedor.css">
+    <link rel="stylesheet" href="../../public/Estilos/Chat.css">
+    <link rel="stylesheet" href="../../public/Estilos/prove_estilos.css" />
+    <link rel="stylesheet" href="../../public/Estilos/estilos_pedidos.css" />
     <link href='https://unpkg.com/boxicons@2.0.9/css/boxicons.min.css' rel='stylesheet'>
 </head>
 <body>
@@ -131,6 +131,6 @@
     <script type="module" src="https://cdn.jsdelivr.net/npm/@ionic/core/dist/ionic/ionic.esm.js"></script>
         <script nomodule src="https://cdn.jsdelivr.net/npm/@ionic/core/dist/ionic/ionic.js"></script>
         
-    <script src="barraprove.js.js"></script>
+    <script src="../../public/js/barraprove.js.js"></script>
 </body>
 </html>

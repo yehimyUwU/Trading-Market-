@@ -1,5 +1,5 @@
 <?php
-require_once __DIR__ . '../../config/php/conexion.php';
+require '../../config/php/conexion.php';
 
 session_start();
 

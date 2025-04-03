@@ -5,11 +5,11 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
-    <link rel="stylesheet" href="css/bootstrap.min.css">
+    <link rel="stylesheet" href="../../public/Estilos/bootstrap.min.css">
     <link rel="stylesheet" href="js/bootstrap.bundle.js">
     <title>Panel de Administrador</title>
     <!--Agregar unos estilos bien belicos-->
-    <link rel="stylesheet" href="../Estilos/estilosc.css" />
+    <link rel="stylesheet" href="../../public/Estilos/estilosc.css" />
 
 </head>
 <body>
@@ -17,7 +17,7 @@
 
 
 <?php
-require '../php/barra_admin.php'; 
+require '../../controllers/php/barra_admin.php'; 
 ?>
 
     <!--Contenido principal-->
@@ -40,7 +40,7 @@ require '../php/barra_admin.php';
 
             <div class="user">
 
-                <img src="../imagenes/cucu.jpg" alt="" id="profileImage">
+                <img src="../../public/imagenes/cucu.jpg" alt="" id="profileImage">
 
             </div>
         </div>
@@ -71,7 +71,7 @@ require '../php/barra_admin.php';
                         <tr>
                             <td width="100px">
                                 <div class="user3">
-                                    <img src="../imagenes/siuu.jpg" alt="">
+                                    <img src="../../public/imagenes/siuu.jpg" alt="">
                                 </div>
                             </td>
                             <td>Juan Esteban Castañeda Ortiz</td>
@@ -83,7 +83,7 @@ require '../php/barra_admin.php';
                         <tr>
                             <td width="100px">
                                 <div class="user3">
-                                    <img src="../imagenes/cucu.jpg" alt="">
+                                    <img src="../../public/imagenes/cucu.jpg" alt="">
                                 </div>
                             </td>
                             <td>Yehimy Daniela Velandia Fagua</td>
@@ -95,7 +95,7 @@ require '../php/barra_admin.php';
                         <tr>
                             <td width="100px">
                                 <div class="user3">
-                                    <img src="../imagenes/perfil.jpg" alt="">
+                                    <img src="../../public/imagenes/perfil.jpg" alt="">
                                 </div>
                             </td>
                             <td>Cristian Daniel Aguilar Molano</td>
@@ -107,7 +107,7 @@ require '../php/barra_admin.php';
                         <tr>
                             <td width="100px">
                                 <div class="user3">
-                                    <img src="../imagenes/perfil.png" alt="">
+                                    <img src="../../public/imagenes/perfil.png" alt="">
                                 </div>
                             </td>
                             <td>Silvia Daniela Gonzales Perez</td>
@@ -119,7 +119,7 @@ require '../php/barra_admin.php';
                         <tr>
                             <td width="60px">
                                 <div class="user3">
-                                    <img src="../imagenes/mm.jpg" alt="">
+                                    <img src="../../public/imagenes/mm.jpg" alt="">
                                 </div>
                             </td>
                             <td>Maria Guadalupe Patiño Alcacerzer</td>
@@ -131,7 +131,7 @@ require '../php/barra_admin.php';
                         <tr>
                             <td width="60px">
                                 <div class="user3">
-                                    <img src="../imagenes/nn.jpg" alt="">
+                                    <img src="../../public/imagenes/nn.jpg" alt="">
                                 </div>
                             </td>
                             <td>Rafael Leopoldo Perez Garcia</td>
@@ -143,7 +143,7 @@ require '../php/barra_admin.php';
                         <tr>
                             <td width="60px">
                                 <div class="user3">
-                                    <img src="../imagenes/ll.jpg" alt="">
+                                    <img src="../../public/imagenes/ll.jpg" alt="">
                                 </div>
                             </td>
                             <td>Samuel Sebastian Villamil Velandia</td>
@@ -155,7 +155,7 @@ require '../php/barra_admin.php';
                         <tr>
                             <td width="60px">
                                 <div class="user3">
-                                    <img src="../imagenes/shopping (7).webp" alt="">
+                                    <img src="../../public/imagenes/shopping (7).webp" alt="">
                                 </div>
                             </td>
                             <td>David Leonardo Pedraza Bello</td>
@@ -175,7 +175,7 @@ require '../php/barra_admin.php';
           <span class="close">&times;</span>
           <h2>Perfil de usuario</h2>
           <div class="user2">
-              <img src="../imagenes/cucu.jpg" alt="">
+              <img src="../../public/imagenes/cucu.jpg" alt="">
           </div>
           
           <!-- Formularios de entrada -->
@@ -211,8 +211,8 @@ require '../php/barra_admin.php';
         
 
     <!--Scripts bien gotys-->
-    <script src="js/admin.js"></script>
-    <script src="js/config.js"></script>
+    <script src="../../public/js/admin.js"></script>
+    <script src="../../public/js/config.js"></script>
     <!--script para poder usar iconos bien bellaquitos // ionicons-->
     <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
     <script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>

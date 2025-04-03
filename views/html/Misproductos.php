@@ -9,9 +9,9 @@
     <!-- Iconos -->
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0" />
     <!-- Estilos -->
-    <link rel="stylesheet" href="../../public/estilos/barraprove.css.css">
-    <link rel="stylesheet" href="../../public/estilos/estilos-productos.css">
-    <link rel="stylesheet" href="../../public/estilos/prove_estilos.css" />
+    <link rel="stylesheet" href="../../public/Estilos/barraprove.css.css">
+    <link rel="stylesheet" href="../../public/Estilos/estilos-productos.css">
+    <link rel="stylesheet" href="../../public/Estilos/prove_estilos.css" />
 </head>
 <body>
 <?php
@@ -216,7 +216,7 @@
 
     // Función para cargar categorías y seleccionar la correcta en modo edición
     function cargarCategoriasParaEdicion(idCategoria, idSubcategoria) {
-        fetch('../php/listar_categorias.php')
+        fetch('../../controllers/php/listar_categorias.php')
             .then(response => response.json())
             .then(data => {
                 if (data.success) {
@@ -244,7 +244,7 @@
         const subcategoriaSelect = document.getElementById('subcategoria');
         subcategoriaSelect.innerHTML = '<option value="">Cargando subcategorías...</option>';
 
-        fetch('../php/listar_subcategorias.php', {
+        fetch('../../controllers/php/listar_subcategorias.php', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/x-www-form-urlencoded',
@@ -331,7 +331,7 @@
                 formData.append('accion', 'crear');
             }
 
-            const url = modoEdicion ? '../php/editar_producto.php' : '../php/productoControl.php';
+            const url = modoEdicion ? '../../controllers/php/editar_producto.php' : '../../controllers/php/productoControl.php';
 
             fetch(url, {
                 method: 'POST',
@@ -364,7 +364,7 @@
     }
 
     function actualizarListaProductos() {
-        fetch('../php/listar_productos.php')
+        fetch('../../controllers/php/listar_productos.php')
             .then(response => response.json())
             .then(data => {
                 if (data.success) {
@@ -411,7 +411,7 @@
 
     // Función para cargar los productos
     function cargarProductos() {
-        fetch('../php/listar_productos.php')
+        fetch('../../controllers/php/listar_productos.php')
             .then(response => response.json())
             .then(data => {
                 if (data.success) {
@@ -459,7 +459,7 @@
     // Función para eliminar un producto
     function eliminarProducto(idProducto) {
         if (confirm('¿Estás seguro de que deseas eliminar este producto?')) {
-            fetch('../php/eliminar_producto.php', {
+            fetch('../../controllers/php/eliminar_producto.php', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/x-www-form-urlencoded',
@@ -539,7 +539,7 @@
     // Cargar categorías al inicio
     document.addEventListener('DOMContentLoaded', function() {
         // Cargar categorías para el select
-        fetch('../php/listar_categorias.php')
+        fetch('../../controllers/php/listar_categorias.php')
             .then(response => response.json())
             .then(data => {
                 if (data.success) {
@@ -569,7 +569,7 @@
             return;
         }
 
-        fetch('../php/listar_subcategorias.php', {
+        fetch('../../controllers/php/listar_subcategorias.php', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/x-www-form-urlencoded',
@@ -632,7 +632,7 @@
     }
     </script>
 
-    <script src="barraprove.js.js"></script>
+    <script src="../../public/js/barraprove.js.js"></script>
     <script type="module" src="https://cdn.jsdelivr.net/npm/@ionic/core/dist/ionic/ionic.esm.js"></script>
     <script nomodule src="https://cdn.jsdelivr.net/npm/@ionic/core/dist/ionic/ionic.js"></script>
 </body>

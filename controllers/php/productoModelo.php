@@ -1,5 +1,5 @@
 <?php
-include_once "../../config/php/conexion.php";
+require '../../config/php/conexion.php';
 
 class ProductoModelo {
 
@@ -56,7 +56,7 @@ class ProductoModelo {
 
             // Asegurarse de incluir la ruta de la imagen
             foreach ($listaProductos as &$producto) {
-                $producto['imagen'] = $producto['imagen'] ? "../imag/" . $producto['imagen'] : "../../public/imagenes_P/default.jpeg";
+                $producto['imagen'] = $producto['imagen'] ? "../../public/imag/" . $producto['imagen'] : "../../public/imagenes_P/default.jpeg";
             }
 
             $mensaje = array("codigo" => "200", "success" => true, "listaProductos" => $listaProductos);

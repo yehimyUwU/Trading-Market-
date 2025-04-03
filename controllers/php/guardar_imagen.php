@@ -1,6 +1,6 @@
 <?php
 session_start();
-require_once '../../config/conexion.php'; // Asegúrate de tener la conexión a la base de datos configurada
+require '../../config/php/conexion.php'; // Asegúrate de tener la conexión a la base de datos configurada
 header('Content-Type: application/json');
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {

@@ -5,11 +5,11 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
-    <link rel="stylesheet" href="css/bootstrap.min.css">
+    <link rel="stylesheet" href="../../public/css/bootstrap.min.css">
     <link rel="stylesheet" href="js/bootstrap.bundle.js">
     <title>Panel de Administrador</title>
     <!--Agregar unos estilos bien belicos-->
-    <link rel="stylesheet" href="../Estilos/config_admin.css" />
+    <link rel="stylesheet" href="../../public/Estilos/config_admin.css" />
 
 </head>
 
@@ -18,7 +18,7 @@
 <body>
     
 <?php
-require '../php/barra_admin.php'; 
+require '../../controllers/php/barra_admin.php'; 
 ?>
 
 
@@ -43,7 +43,7 @@ require '../php/barra_admin.php';
             </div>
     
             <div class="user">
-                <img src="../imagenes/cucu.jpg" alt="" id="profileImage">
+                <img src="../../public/imagenes/cucu.jpg" alt="" id="profileImage">
             </div>
         </div>
         <br>
@@ -94,7 +94,7 @@ require '../php/barra_admin.php';
           <span class="close">&times;</span>
           <h2>Perfil de usuario</h2>
           <div class="user2">
-              <img src="../imagenes/cucu.jpg" alt="">
+              <img src="../../public/imagenes/cucu.jpg" alt="">
           </div>
           
           <!-- Formularios de entrada -->
@@ -131,8 +131,8 @@ require '../php/barra_admin.php';
 
 
         <!--Scripts bien gotys-->
-    <script src="js/admin.js"></script>
-    <script src="js/config.js"></script>
+    <script src="../../public/js/admin.js"></script>
+    <script src="../../public/js/config.js"></script>
     <!--script para poder usar iconos bien bellaquitos // ionicons-->
     <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
     <script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>

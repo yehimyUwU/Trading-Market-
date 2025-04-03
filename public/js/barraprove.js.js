@@ -22,7 +22,7 @@ toggle.onclick = function(){
     navigation.classList.toggle("active");
     main.classList.toggle("active");
 };
-fetch('barraprove.html')
+fetch('../../views/html/barraprove.html')
   .then(response => response.text())
   .then(html => {
     document.getElementById('barra-pro').innerHTML = html;

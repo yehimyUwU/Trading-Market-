@@ -1,5 +1,5 @@
 <?php
-require_once '../../config/php/conexion.php';
+require '../../config/php/conexion.php';
 
 header('Content-Type: application/json');
 
@@ -60,7 +60,7 @@ try {
 
     // Formatear datos para la respuesta
     foreach ($productos as &$producto) {
-        $producto['imagen_url'] = '../imag/' . $producto['imagen'];
+        $producto['imagen_url'] = '../../public/imag/' . $producto['imagen'];
         $producto['precio_formato'] = number_format($producto['precio'], 2);
     }
 

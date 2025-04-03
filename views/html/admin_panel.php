@@ -37,7 +37,7 @@ require '../../controllers/php/barra_admin.php';
 
             <div class="user">
 
-                <img src="../imagenes/cucu.jpg" alt="" id="profileImage">
+                <img src="../../public/imagenes/cucu.jpg" alt="" id="profileImage">
 
             </div>
         </div>
@@ -176,7 +176,7 @@ require '../../controllers/php/barra_admin.php';
                 <table>
                     <tr>
                         <td width="60px">
-                            <div class="imgBx"><img src="../imagenes/ejem.jpg" alt=""></div>
+                            <div class="imgBx"><img src="../../public/imagenes/ejem.jpg" alt=""></div>
                         </td>
                         <td>
                             <h4>David <br> <span>Colombia</span></h4>
@@ -185,7 +185,7 @@ require '../../controllers/php/barra_admin.php';
 
                     <tr>
                         <td width ="60px">
-                            <div class="imgBx"><img src="../imagenes/ejem.jpg" alt=""></div>
+                            <div class="imgBx"><img src="../../public/imagenes/ejem.jpg" alt=""></div>
                         </td>
                         <td>
                             <h4>David <br> <span>Colombia</span></h4>
@@ -194,7 +194,7 @@ require '../../controllers/php/barra_admin.php';
 
                     <tr>
                         <td width ="60px">
-                            <div class="imgBx"><img src="../imagenes/ejem.jpg" alt=""></div>
+                            <div class="imgBx"><img src="../../public/imagenes/ejem.jpg" alt=""></div>
                         </td>
                         <td>
                             <h4>David <br> <span>Colombia</span></h4>
@@ -203,7 +203,7 @@ require '../../controllers/php/barra_admin.php';
 
                     <tr>
                         <td width ="60px">
-                            <div class="imgBx"><img src="../imagenes/ejem.jpg" alt=""></div>
+                            <div class="imgBx"><img src="../../public/imagenes/ejem.jpg" alt=""></div>
                         </td>
                         <td>
                             <h4>David <br> <span>Colombia</span></h4>
@@ -212,7 +212,7 @@ require '../../controllers/php/barra_admin.php';
 
                     <tr>
                         <td width ="60px">
-                            <div class="imgBx"><img src="../imagenes/ejem.jpg" alt=""></div>
+                            <div class="imgBx"><img src="../../public/imagenes/ejem.jpg" alt=""></div>
                         </td>
                         <td>
                             <h4>David <br> <span>Colombia</span></h4>
@@ -233,7 +233,7 @@ require '../../controllers/php/barra_admin.php';
           <span class="close">&times;</span>
           <h2>Perfil de usuario</h2>
           <div class="user2">
-              <img src="../imagenes/cucu.jpg" alt="">
+              <img src="../../public/imagenes/cucu.jpg" alt="">
           </div>
           
           <!-- Formularios de entrada -->
@@ -269,8 +269,8 @@ require '../../controllers/php/barra_admin.php';
 
 
     <!--Scripts bien gotys-->
-    <script src="js/config.js"></script>
-    <script src="js/admin.js"></script>
+    <script src="../../public/js/config.js"></script>
+    <script src="../../public/js/admin.js"></script>
     <!--script para poder usar iconos bien bellaquitos // ionicons-->
     <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
     <script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>

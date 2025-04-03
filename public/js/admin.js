@@ -66,7 +66,7 @@ saveButton.addEventListener("click", (event) => {
 
   const formData = new FormData(document.getElementById("profileForm")); // Captura los datos del formulario
 
-  fetch('../php/actualizar_perfil_admin.php', {
+  fetch('../../controllers/php/actualizar_perfil_admin.php', {
     method: 'POST',
     body: formData
   })
@@ -86,7 +86,7 @@ saveButton.addEventListener("click", (event) => {
 
 // Función para obtener datos del usuario y poder mostrarlos en los modales de las otras paginas de admin_panel
 function loadUserData() {
-  fetch('../php/obtener_perfil_admin.php') // Cambia al path correcto
+  fetch('../../controllers/php/obtener_perfil_admin.php') // Cambia al path correcto
       .then(response => response.json())
       .then(data => {
           if (data.success) {
@@ -112,7 +112,7 @@ document.addEventListener('DOMContentLoaded', loadUserData);
 //funcion para cerrar sesion
 
 function logout() {
-  fetch('../php/logout.php', { method: 'POST' })
+  fetch('../../controllers/php/logout.php', { method: 'POST' })
       .then(response => response.json())
       .then(data => {
           if (data.success) {

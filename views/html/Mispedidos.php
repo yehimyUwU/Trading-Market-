@@ -5,10 +5,10 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Ajustes </title>
-  <link rel="stylesheet" href="../Estilos/barraprove.css.css">
-  <link rel="stylesheet"href="../Estilos/Admins-provedor.css">
-  <link rel="stylesheet" href="../Estilos/prove_estilos.css" />
-  <link rel="stylesheet" href="../Estilos/estilos_pedidos.css" />
+  <link rel="stylesheet" href="../../public/Estilos//barraprove.css.css">
+  <link rel="stylesheet" href="../../public/Estilos//Admins-provedor.css">
+  <link rel="stylesheet" href="../../public/Estilos//prove_estilos.css" />
+  <link rel="stylesheet" href="../../public/Estilos//estilos_pedidos.css" />
 
   <!-- Linking Google fonts for icons -->
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Rounded:opsz,wght,FILL,GRAD@24,400,0,0">
@@ -19,7 +19,7 @@
 
 <?php
     
-    require '../php/barra_prove.php'; 
+    require '../../controllers/php/barra_prove.php'; 
 ?>
   
 
