@@ -1,6 +1,6 @@
 <?php
 
-require "../../controllers/php/productoModelo.php";
+require "../../models/productoModelo.php";
 
 class ProductoControl {
 

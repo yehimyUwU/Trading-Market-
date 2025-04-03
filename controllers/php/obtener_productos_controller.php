@@ -1,11 +1,11 @@
 <?php
-require_once '../../models/modeloInico.php';
+require_once '../../models/productoModelo.php';
 
 class ProductoController {
     private $modelo;
 
     public function __construct() {
-        $this->modelo = new Modelo();
+        $this->modelo = new ProductoCliente();
     }
 
     public function obtenerProductosPorCategoria($categoria) {

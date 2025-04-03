@@ -153,4 +153,48 @@ class ProductoModelo {
         return $mensaje;
     }
 }
+
+class ProductoCliente {
+    protected $conn;
+
+    public function __construct() {
+        $this->conn = Conexion::conectar();
+        if (!$this->conn) {
+            die(json_encode(["error" => "No se pudo conectar a la base de datos."]));
+        }
+    }
+
+    public function ejecutarConsulta($sql, $params = []) {
+        $stmt = $this->conn->prepare($sql);
+        foreach ($params as $key => $value) {
+            $stmt->bindValue($key + 1, $value);
+        }
+        if (!$stmt->execute()) {
+            error_log("Error en consulta SQL: " . implode(" - ", $stmt->errorInfo()));
+            return false;
+        }
+        return $stmt;
+    }
+
+    // 📌 Obtener productos por categoría
+    public function obtenerProductosPorCategoria($categoria) {
+        $sql = "SELECT p.id_producto, p.nombre, p.descripcion, p.precio, p.stock, p.imagen 
+                FROM producto p
+                JOIN categoria c ON p.id_categoria = c.id_categoria
+                WHERE c.nombre = ?";
+        
+        $stmt = $this->ejecutarConsulta($sql, [$categoria]);
+        if (!$stmt) {
+            return json_encode(["error" => "Error en la consulta SQL."]);
+        }
+
+        $productos = [];
+        while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
+            $row['imagen'] = $row['imagen'] ? "../../public/imag/" . $row['imagen'] : "../../public/imagenes_P/default.jpeg";
+            $productos[] = $row;
+        }
+
+        return empty($productos) ? json_encode(["error" => "No se encontraron productos para la categoría: " . $categoria]) : json_encode($productos);
+    }
+}
 ?>
