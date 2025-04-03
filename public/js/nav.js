@@ -265,7 +265,7 @@ document.addEventListener("DOMContentLoaded", function () {
             return;
         }
 
-        fetch(`../../controllers/php/obtener_productos.php?categoria=${encodeURIComponent(categoria)}`)
+        fetch(`../../controllers/php/obtener_productos_controller.php?categoria=${encodeURIComponent(categoria)}`)
             .then(response => response.json())
             .then(data => {
                 if (data.error) {
@@ -412,7 +412,7 @@ function verDetalles(nombre, descripcion, precio, imagen) {
 }
 
 document.addEventListener("DOMContentLoaded", function () {
-    fetch("../../controllers/php/obtener_proveedores.php")
+    fetch("../../controllers/php/obtener_proveedores_controller.php")
         .then(response => response.json())
         .then(proveedores => {
             const container = document.getElementById("proveedores-container");
@@ -444,7 +444,7 @@ document.addEventListener("DOMContentLoaded", function () {
 });
 
 function mostrarInfo(idProveedor) {
-    fetch(`../../controllers/php/obtener_proveedores.php?id=${idProveedor}`)
+    fetch(`../../controllers/php/obtener_proveedores_controller.php?id=${idProveedor}`)
         .then(response => response.json())
         .then(data => {
             if (data.error) {
