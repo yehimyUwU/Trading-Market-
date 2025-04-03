@@ -9,6 +9,7 @@ if (!isset($_SESSION['usuario']['id'])) {
 }
 
 
+
 header("Content-Type: application/json");
 
 $conn = Conexion::conectar();

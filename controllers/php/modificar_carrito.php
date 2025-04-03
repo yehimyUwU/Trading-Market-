@@ -10,6 +10,7 @@ if (!isset($data['id_carrito']) || !isset($data['cambio'])) {
     die(json_encode(["error" => "Datos incompletos."]));
 }
 
+
 $id_carrito = intval($data['id_carrito']);
 $cambio = intval($data['cambio']);
 

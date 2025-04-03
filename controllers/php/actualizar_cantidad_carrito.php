@@ -10,6 +10,7 @@ if (!isset($_SESSION['usuario']['id'])) {
     exit;
 }
 
+
 $conn = Conexion::conectar();
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
