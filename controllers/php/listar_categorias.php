@@ -1,5 +1,5 @@
 <?php
-include_once "conexion.php";
+include_once '../../config/php/conexion.php';
 
 try {
     $stmt = Conexion::conectar()->prepare("SELECT id_categoria, nombre FROM categoria");

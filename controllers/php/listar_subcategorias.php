@@ -1,5 +1,5 @@
 <?php
-include_once "conexion.php";
+include_once '../../config/php/conexion.php';
 
 if (isset($_POST['id_categoria'])) {
     $id_categoria = $_POST['id_categoria'];

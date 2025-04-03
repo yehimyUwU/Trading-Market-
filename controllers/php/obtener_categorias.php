@@ -1,5 +1,5 @@
 <?php
-include 'conexion.php';
+include '../../config/php/conexion.php';
 
 $stmt = $pdo->query("SELECT id_categoria, nombre FROM categorias WHERE estado = 'activo'");
 $categorias = $stmt->fetchAll(PDO::FETCH_ASSOC);

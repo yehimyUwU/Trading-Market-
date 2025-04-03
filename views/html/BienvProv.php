@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <?php
-include_once '../php/verificar_acceso.php';
+include_once '../../controllers/php/verificar_acceso.php';
 if (!verificarRol('Proveedor')) { // Cambiado a "Proveedor"
     header('Location: ../html/longin.html');
     exit;

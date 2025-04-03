@@ -1,5 +1,5 @@
 <?php
-include_once "conexion.php";
+include_once "../../config/php/conexion.php";
 
 class ProductoModelo {
 
@@ -17,7 +17,7 @@ class ProductoModelo {
 
             // Guardar la imagen en la carpeta 'imag'
             $nombreImagen = uniqid() . "_" . basename($imagen['name']);
-            $rutaDestino = "../imag/" . $nombreImagen;
+            $rutaDestino = "../../public/imag/" . $nombreImagen;
             if (!move_uploaded_file($imagen['tmp_name'], $rutaDestino)) {
                 return ["success" => false, "message" => "Error al subir la imagen."];
             }
@@ -56,7 +56,7 @@ class ProductoModelo {
 
             // Asegurarse de incluir la ruta de la imagen
             foreach ($listaProductos as &$producto) {
-                $producto['imagen'] = $producto['imagen'] ? "../imag/" . $producto['imagen'] : "../imagenes_P/default.jpeg";
+                $producto['imagen'] = $producto['imagen'] ? "../imag/" . $producto['imagen'] : "../../public/imagenes_P/default.jpeg";
             }
 
             $mensaje = array("codigo" => "200", "success" => true, "listaProductos" => $listaProductos);

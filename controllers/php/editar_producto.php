@@ -1,5 +1,5 @@
 <?php
-include_once 'conexion.php';
+include_once '../../config/php/conexion.php';
 
 // Mostrar errores para depuración
 error_reporting(E_ALL);

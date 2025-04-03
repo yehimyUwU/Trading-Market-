@@ -1,11 +1,11 @@
 <?php
 session_start();
-require_once 'conexion.php'; // Asegúrate de tener la conexión a la base de datos configurada
+require_once '../../config/conexion.php'; // Asegúrate de tener la conexión a la base de datos configurada
 header('Content-Type: application/json');
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     if (isset($_FILES['profileImage']) && $_FILES['profileImage']['error'] === UPLOAD_ERR_OK) {
-        $uploadDir = '../imag/';
+        $uploadDir = '../../public/imag/';
         $fileName = uniqid() . '_' . basename($_FILES['profileImage']['name']);
         $uploadFile = $uploadDir . $fileName;
 

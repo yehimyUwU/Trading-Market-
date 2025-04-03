@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="../Estilos/inico.css" />
+    <link rel="stylesheet" href="../../public/Estilos/inico.css" />
     
     <link rel="stylesheet" href="styles.css"> <!-- Archivo CSS separado -->
 </head>
@@ -13,7 +13,7 @@
     <header>
         <nav class="navbar">
             <div class="logo">
-                <img src="../imagenes/Logooriginal.png" alt="Trading Market Logo" class="logo-img">
+                <img src="../../public/imagenes/Logooriginal.png" alt="Trading Market Logo" class="logo-img">
             </div>
             <ul class="nav-links">
                 <li><a href="#">Categorias</a></li>
@@ -26,7 +26,7 @@
             <div class="user-actions">
                 <a href="#" class="cart-icon">🛒</a>
                 <div class="auth-buttons">
-                    <a href="longin.html" class="login-btn">Iniciar Sesión</a>
+                    <a href="../../views/html/longin.html" class="login-btn">Iniciar Sesión</a>
                     
                 </div>
             </div>
@@ -38,7 +38,7 @@
         <div class="carousel">
             <div class="carousel-inner">
                 <div class="carousel-item active">
-                    <img src="../imagenes/close-up-frasco-crema-cuidado-piel-que-refuerza-cara-rodeado-varios-productos-tratamiento-tratamiento-piel-concepto-productos-belleza-rutinaria-cuidado-cara-tratamientos-faciales-fotografia-close-up-frasc.avif " alt="Productos destacados">
+                    <img src="../../public/imagenes/close-up-frasco-crema-cuidado-piel-que-refuerza-cara-rodeado-varios-productos-tratamiento-tratamiento-piel-concepto-productos-belleza-rutinaria-cuidado-cara-tratamientos-faciales-fotografia-close-up-frasc.avif " alt="Productos destacados">
                     <div class="carousel-content">
                         <h1>Encuentra los Mejores Productos</h1>
                         <p>Moda, electrónicos, accesorios y más en un solo lugar.</p>
@@ -46,7 +46,7 @@
                     </div>
                 </div>
                 <div class="carousel-item">
-                    <img src="../imagenes/suavite.webp" alt="Ofertas especiales">
+                    <img src="../../public/imagenes/suavite.webp" alt="Ofertas especiales">
                     <div class="carousel-content">
                         <h1>Ofertas Especiales</h1>
                         <p>Descubre nuestras increíbles promociones.</p>
@@ -54,7 +54,7 @@
                     </div>
                 </div>
                 <div class="carousel-item">
-                    <img src="../imagenes/cosmeticos.webp" alt="Nuevos productos">
+                    <img src="../../public/imagenes/cosmeticos.webp" alt="Nuevos productos">
                     <div class="carousel-content">
                         <h1>Nuevos Productos</h1>
                         <p>Conoce las últimas novedades en nuestra tienda.</p>
@@ -126,7 +126,7 @@
     });
 
     document.addEventListener('DOMContentLoaded', function() {
-        fetch('../php/listar_productos.php')
+        fetch('../../controllers/php/listar_productos.php')
             .then(response => response.json())
             .then(data => {
                 if (data.success) {

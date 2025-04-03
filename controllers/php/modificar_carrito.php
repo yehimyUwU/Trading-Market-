@@ -1,7 +1,7 @@
 <?php
 session_start();
 
-require_once __DIR__ . '/conexion.php';
+require_once __DIR__ . '../../config/php/conexion.php';
 $conn = Conexion::conectar();
 
 $data = json_decode(file_get_contents("php://input"), true);

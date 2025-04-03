@@ -12,7 +12,7 @@ function verificarLogin() {
         return;
     }
 
-    fetch("../php/login.php", { // Asegúrate de que esta URL sea correcta
+    fetch("../../controllers/php/login.php", { // Asegúrate de que esta URL sea correcta
         method: "POST",
         headers: {
             "Content-Type": "application/x-www-form-urlencoded"
@@ -95,7 +95,7 @@ document.getElementById("signupForm").addEventListener("submit", async function 
     }
 
     try {
-        const response = await fetch("../php/registro.php", {
+        const response = await fetch("../../controllers/php/registro.php", {
             method: "POST",
             body: formData
         });

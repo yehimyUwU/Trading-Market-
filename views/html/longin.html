@@ -5,7 +5,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link href="https://unpkg.com/ionicons@4.2.2/dist/css/ionicons.min.css" rel="stylesheet"> <!-- Enlace a Ionicons -->
-    <link rel="stylesheet" href="../Estilos/longin.css"> <!-- Asegúrate de que esta ruta sea correcta -->
+    <link rel="stylesheet" href="../../public/Estilos/longin.css"> <!-- Asegúrate de que esta ruta sea correcta -->
     <title>Login</title>
 </head>
 
@@ -13,7 +13,7 @@
     
     <!-- Video de fondo -->
     <video autoplay muted loop id="videoFondo">
-        <source src="../imagenes_P/47713-451772938.mp4" type="video/mp4">
+        <source src="../../public/imagenes_P/47713-451772938.mp4" type="video/mp4">
         Tu navegador no soporta el elemento de video.
     </video>
 
@@ -21,7 +21,7 @@
         <!-- Botón para regresar a la página principal -->
         <!-- Formulario Sign Up (Registro) -->
         <div class="form-container sign-up-container">
-            <form id="signupForm" method="POST" action="../php/registro.php"> 
+            <form id="signupForm" method="POST" action="../../controllers/php/registro.php"> 
                 <h1>Registro de Nuevo Usuario</h1>
                 <select name="tipo_documento" required>
                     <option value="" disabled selected>Seleccione el tipo de documento</option>
@@ -54,7 +54,7 @@
         <!-- Formulario Sign In (Inicio de sesión) -->
         <div class="form-container sign-in-container">
             <form id="loginForm" action="javascript:void(0);">
-                <img src="../imagenes/Logooriginal.png" alt="Logo" style="width: 150px; margin-bottom: 20px;">
+                <img src="../../public/imagenes/Logooriginal.png" alt="Logo" style="width: 150px; margin-bottom: 20px;">
                 <h1>Iniciar Sesión</h1>
                 <input type="text" id="username" placeholder="Documento" required>
                 <input type="password" id="password" placeholder="Contraseña" required>
@@ -86,7 +86,7 @@
         </div>
     </div>
 
-    <script src="login.js"></script> <!-- Asegúrate de que esta ruta sea correcta -->
+    <script src="../../public/js/login.js"></script> <!-- Asegúrate de que esta ruta sea correcta -->
     <script src="https://unpkg.com/ionicons@4.2.2/dist/ionicons.js"></script> <!-- Script de Ionicons -->
 </body>
 </html>

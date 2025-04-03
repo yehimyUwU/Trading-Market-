@@ -1,5 +1,5 @@
 <?php
-include 'conexion.php';
+include '../../config/php/conexion.php';
 
 if(isset($_GET['categoria_id'])) {
     $stmt = $pdo->prepare("SELECT id_subcategoria, nombre FROM subcategorias WHERE id_categoria = ?");

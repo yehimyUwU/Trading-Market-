@@ -1,7 +1,6 @@
 <?php
 header('Content-Type: application/json');
-require 'conexion.php';
-
+require '../../config/php/conexion.php';
 
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
@@ -53,9 +52,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
                 // Redirigir según el rol
                 $redirect = match ($rol_valido) {
-                    'Administrador' => '../html/admin_panel.php',
-                    'Cliente' => '../html/inico.html',
-                    'Proveedor' => '../html/BienvProv.php', // Asegúrate de usar "Proveedor"
+                    'Administrador' => '../../views/html/admin_panel.php',
+                    'Cliente' => '../../views/html/inico.html',
+                    'Proveedor' => '../../views/html/BienvProv.php', // Asegúrate de usar "Proveedor"
                     default => null
                 };
 

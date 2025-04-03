@@ -1,6 +1,6 @@
 <?php
 
-include_once "productoModelo.php";
+include_once "../../controllers/php/productoModelo.php";
 
 class ProductoControl {
 

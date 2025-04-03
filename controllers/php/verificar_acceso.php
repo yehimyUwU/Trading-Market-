@@ -2,7 +2,7 @@
 session_start();
 
 if (!isset($_SESSION['usuario'])) {
-    header('Location: ../html/longin.html');
+    header('Location: ../../views/html/longin.html');
     exit;
 }
 

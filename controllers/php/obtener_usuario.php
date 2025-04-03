@@ -1,7 +1,7 @@
 <?php
 session_start(); // Inicia la sesión
 
-require 'conexion.php'; // Asegúrate de que este archivo se incluya correctamente
+require '../../config/php/conexion.php'; // Asegúrate de que este archivo se incluya correctamente
 
 
 if (isset($_SESSION['documento'])) { // Verifica si el usuario ha iniciado sesión

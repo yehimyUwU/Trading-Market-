@@ -2,7 +2,7 @@
 error_reporting(E_ALL);
 ini_set('display_errors', 1);
 
-require_once __DIR__ . '/conexion.php'; // Incluir la conexión
+require '../../config/php/conexion.php'; // Incluir la conexión
 
 $conn = Conexion::conectar(); // Llamar al método de conexión
 
@@ -34,9 +34,9 @@ $productos = [];
 while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
     // Convertir imagen BLOB a base64 o asignar imagen por defecto
     if ($row['imagen']) {
-        $row['imagen'] = "../imag/" . $row['imagen']; // Ruta relativa a la carpeta de imágenes
+        $row['imagen'] = "../../public/imag/" . $row['imagen']; // Ruta relativa a la carpeta de imágenes
     } else {
-        $row['imagen'] = "../imagenes_P/default.jpeg"; // Imagen por defecto
+        $row['imagen'] = "../../public/imagenes_P/default.jpeg"; // Imagen por defecto
     }
 
     $productos[] = $row;

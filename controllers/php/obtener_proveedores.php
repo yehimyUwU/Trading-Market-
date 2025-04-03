@@ -1,5 +1,5 @@
 <?php
-require 'conexion.php';
+require '../../config/php/conexion.php';
 
 try {
     $pdo = Conexion::conectar();

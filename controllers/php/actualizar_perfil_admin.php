@@ -3,7 +3,7 @@
 //php para poder actualizar los datos del usuario en admin_panel
 
 header('Content-Type: application/json');
-require 'conexion.php'; // Asegúrate de que este archivo exista y tenga la configuración correcta
+require '../../config/php/conexion.php';; // Asegúrate de que este archivo exista y tenga la configuración correcta
 
 session_start();
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {

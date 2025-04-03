@@ -1,5 +1,5 @@
 <?php
-include_once "productoControl.php";
+include_once "../../controllers/php/productoControl.php";
 
 if ($_SERVER['REQUEST_METHOD'] === 'GET') {
     $objProducto = new ProductoControl();
