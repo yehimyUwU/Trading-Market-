@@ -87,24 +87,28 @@ function cerrarPerfil() {
 function agregarAlCarrito(id, nombre, precio) {
     const datos = {
         id_producto: id,
-        cantidad: 1 // Por defecto, se agrega 1 unidad
+        cantidad: 1,
+        accion: 'agregar' // Esto asegura que el controlador sepa qué acción manejar
     };
 
-    fetch('../../controllers/php/agregar_carrito.php', {
+    fetch('../../controllers/php/controlador_carrito.php', {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json'
         },
-        body: JSON.stringify(datos)
+        body: JSON.stringify(datos) // Envía los datos al servidor
     })
-    .then(response => response.json())
+    .then(response => {
+        if (!response.ok) { // Manejo de errores HTTP
+            throw new Error(`Error HTTP: ${response.status}`);
+        }
+        return response.json();
+    })
     .then(data => {
         if (data.error) {
             alert(data.error);
-        } else if (data.success.includes("Cantidad actualizada")) {
-            alert("Este producto ya estaba en el carrito. Se ha actualizado su cantidad.");
-        } else {
-            alert("Producto agregado al carrito.");
+        } else if (data.success) {
+            alert(data.success);
         }
     })
     .catch(error => {
@@ -112,17 +116,24 @@ function agregarAlCarrito(id, nombre, precio) {
     });
 }
 
+
 function actualizarCarritoUI() {
-    fetch('../../controllers/php/obtener_carrito.php')
-        .then(response => response.json())
+    fetch('../../controllers/php/controlador_carrito.php', { method: 'GET' }) // Llamamos al controlador
+        .then(response => {
+            if (!response.ok) {
+                throw new Error(`Error HTTP: ${response.status}`);
+            }
+            return response.json(); // Convertimos la respuesta a JSON
+        })
         .then(data => {
             const contenidoCarrito = document.getElementById("contenidoCarrito");
             const totalCarrito = document.getElementById("totalCarrito");
-            contenidoCarrito.innerHTML = ""; // Limpiar contenido actual
+            contenidoCarrito.innerHTML = ""; // Limpiar el contenido actual
+
             let total = 0;
 
             data.forEach(producto => {
-                // Asegúrate de que los valores sean válidos y redondeados
+                // Validamos los datos
                 const precio = parseFloat(producto.precio);
                 const cantidad = parseInt(producto.cantidad);
 
@@ -133,6 +144,7 @@ function actualizarCarritoUI() {
 
                 total += precio * cantidad;
 
+                // Renderizamos las filas de la tabla
                 contenidoCarrito.innerHTML += `
                     <tr>
                         <td>${producto.id_producto}</td>
@@ -145,18 +157,22 @@ function actualizarCarritoUI() {
                         </td>
                         <td>$${(precio * cantidad).toFixed(2)}</td>
                         <td><button class="btn btn-danger btn-sm eliminar-carrito" data-id="${producto.id_producto}">Eliminar</button></td>
-                        
                     </tr>
                 `;
             });
 
+            // Actualizamos el total del carrito
             totalCarrito.textContent = `$${total.toFixed(2)}`;
+
+            // Asignamos eventos a los botones (aumentar, disminuir, eliminar)
             asignarEventosCarrito();
         })
         .catch(error => {
             console.error("Error al cargar el carrito:", error);
         });
 }
+
+
 
 function asignarEventosCarrito() {
     document.querySelectorAll(".aumentar-cantidad").forEach(boton => {
@@ -188,7 +204,7 @@ function eliminarProductoCarrito(idProducto) {
         return; // Si el usuario cancela, no hace nada
     }
 
-    fetch('../../controllers/php/eliminar_carrito.php', {
+    fetch('../../controllers/php/controlador_carrito.php', {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json'
@@ -210,7 +226,7 @@ function eliminarProductoCarrito(idProducto) {
 }
 
 function actualizarCantidadProducto(idProducto, cambio) {
-    fetch('../../controllers/php/actualizar_cantidad_carrito.php', {
+    fetch('../../controllers/php/controlador_carrito.php', {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json'
