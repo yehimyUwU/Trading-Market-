@@ -43,7 +43,7 @@ sendMessage.addEventListener("click", () => {
     chatbotMessages.appendChild(userBubble);
 
     // Enviar la pregunta al servidor PHP
-    fetch('../../controllers/php/chatBot.php', {
+    fetch('../../controllers/php/controlador_chatbot.php', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/x-www-form-urlencoded',
