@@ -14,7 +14,7 @@ openChatbot.addEventListener("click", () => {
   if (!document.querySelector(".welcome-message")) {
     const welcomeMessage = document.createElement("div");
     welcomeMessage.className = "welcome-message";
-    welcomeMessage.textContent = "TradiBot: ¡Bienvenido! Estoy aquí para ayudarte. Puedes preguntarme cosas como '¿Cómo funciona esta página?'.";
+    welcomeMessage.textContent = "TradiBot: ¡Bienvenido! Para saber que preguntar escribe: preguntas'.";
     chatbotMessages.appendChild(welcomeMessage);
   }
 });
