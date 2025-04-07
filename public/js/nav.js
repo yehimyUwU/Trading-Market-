@@ -260,7 +260,7 @@ function actualizarCantidadProducto(idProducto, cambio) {
 
     console.log("Enviando datos al servidor:", { id_producto: idProducto, cambio });
 
-    fetch('../../controllers/php/controlador_carrito.php', {
+    fetch('../../controllers/php/actualizar_cantidad_carrito.php', {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json'
