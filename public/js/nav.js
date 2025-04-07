@@ -333,18 +333,84 @@ document.addEventListener("DOMContentLoaded", function () {
 
     function mostrarDetallesProducto(id) {
         const producto = productosOriginales.find(p => p.id_producto == id);
-        if (!producto) {
-            console.error("No se encontró el producto con ID:", id);
-            return;
-        }
-
+        if (!producto) return;
+    
         document.getElementById("modalNombre").textContent = producto.nombre;
         document.getElementById("modalDescripcion").textContent = producto.descripcion;
         document.getElementById("modalPrecio").textContent = `$${producto.precio}`;
         document.getElementById("modalImagen").src = producto.imagen;
-
+    
+        const estrellasContainer = document.getElementById("estrellas");
+        estrellasContainer.setAttribute("data-id-producto", producto.id_producto);
+        document.getElementById("mensaje-calificacion").style.display = "none";
+        document.querySelectorAll(".estrella").forEach(e => e.classList.remove("seleccionada"));
+    
         $("#productoModal").modal("show");
+    
+        asignarEventosEstrellas();
+        cargarCalificacionGuardada(producto.id_producto);
     }
+    
+    function asignarEventosEstrellas() {
+        document.querySelectorAll(".estrella").forEach(estrella => {
+            estrella.onclick = function () {
+                const valor = this.getAttribute("data-valor");
+                const idProducto = document.getElementById("estrellas").getAttribute("data-id-producto");
+    
+                fetch('../../controllers/php/guardar_calificacion.php', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ id_producto: idProducto, calificacion: valor })
+                })
+                .then(res => res.json())
+                .then(data => {
+                    if (data.success) {
+                        marcarEstrellas(valor);
+                        document.getElementById("mensaje-calificacion").style.display = "block";
+                        document.getElementById("btnEditarCalificacion").style.display = "inline-block";
+                    }
+                });
+            };
+        });
+    }
+    
+    function marcarEstrellas(valor) {
+        document.querySelectorAll(".estrella").forEach(estrella => {
+            estrella.classList.remove("seleccionada");
+            if (estrella.getAttribute("data-valor") <= valor) {
+                estrella.classList.add("seleccionada");
+            }
+        });
+    }
+    
+    function cargarCalificacionGuardada(idProducto) {
+        fetch(`../../controllers/php/obtener_calificacion.php?id_producto=${idProducto}`)
+            .then(res => res.json())
+            .then(data => {
+                if (data.success && data.calificacion > 0) {
+                    marcarEstrellas(data.calificacion);
+                    document.getElementById("btnEditarCalificacion").style.display = "inline-block";
+                } else {
+                    document.getElementById("btnEditarCalificacion").style.display = "none";
+                }
+            });
+    }
+    
+    function editarCalificacion() {
+        const idProducto = document.getElementById("estrellas").getAttribute("data-id-producto");
+        
+        fetch('../../controllers/php/guardar_calificacion.php', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ id_producto: idProducto, calificacion: 0 }) // Eliminar para volver a calificar
+        }).then(() => {
+            document.querySelectorAll(".estrella").forEach(e => e.classList.remove("seleccionada"));
+            document.getElementById("btnEditarCalificacion").style.display = "none";
+            document.getElementById("mensaje-calificacion").style.display = "none";
+        });
+    }
+    
+    
 
     function filtrarProductos() {
         let orden = document.getElementById("ordenar").value;

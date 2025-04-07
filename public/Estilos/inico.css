@@ -1581,3 +1581,14 @@ ion-icon{
   max-width: 400px; /* Ajusta esto según tu diseño */
   margin-bottom: 15px; /* Espaciado entre tarjetas */
 }
+
+.estrella {
+  font-size: 2rem;
+  color: #ccc;
+  cursor: pointer;
+  transition: color 0.2s ease;
+}
+
+.estrella.seleccionada {
+  color: gold;
+}
