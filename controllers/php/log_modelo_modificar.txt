@@ -1,0 +1,114 @@
+Array
+(
+    [id_usuario] => 1
+    [id_producto] => 79
+    [cambio] => 1
+)
+Array
+(
+    [id_usuario] => 1
+    [id_producto] => 79
+    [cambio] => 1
+)
+Array
+(
+    [id_usuario] => 1
+    [id_producto] => 79
+    [cambio] => 1
+)
+Array
+(
+    [id_usuario] => 1
+    [id_producto] => 79
+    [cambio] => 1
+)
+Array
+(
+    [id_usuario] => 1
+    [id_producto] => 80
+    [cambio] => 1
+)
+Array
+(
+    [id_usuario] => 1
+    [id_producto] => 79
+    [cambio] => 1
+)
+Array
+(
+    [id_usuario] => 1
+    [id_producto] => 88
+    [cambio] => 1
+)
+Array
+(
+    [id_usuario] => 1
+    [id_producto] => 79
+    [cambio] => 1
+)
+Array
+(
+    [id_usuario] => 1
+    [id_producto] => 79
+    [cambio] => 1
+)
+Array
+(
+    [id_usuario] => 1
+    [id_producto] => 79
+    [cambio] => 1
+)
+Array
+(
+    [sql] => UPDATE carrito 
+                SET cantidad = cantidad + :cambio 
+                WHERE id_usuario = :id_usuario AND id_producto = :id_producto AND (cantidad + :cambio) >= 0
+    [id_usuario] => 1
+    [id_producto] => 79
+    [cambio] => 1
+)
+Array
+(
+    [id_usuario] => 1
+    [id_producto] => 79
+    [cambio] => 1
+)
+Array
+(
+    [sql] => UPDATE carrito 
+                SET cantidad = cantidad + :cambio 
+                WHERE id_usuario = :id_usuario AND id_producto = :id_producto AND (cantidad + :cambio) >= 0
+    [id_usuario] => 1
+    [id_producto] => 79
+    [cambio] => 1
+)
+Array
+(
+    [id_usuario] => 1
+    [id_producto] => 88
+    [cambio] => 1
+)
+Array
+(
+    [sql] => UPDATE carrito 
+                SET cantidad = cantidad + :cambio 
+                WHERE id_usuario = :id_usuario AND id_producto = :id_producto AND (cantidad + :cambio) >= 0
+    [id_usuario] => 1
+    [id_producto] => 88
+    [cambio] => 1
+)
+Array
+(
+    [id_usuario] => 1
+    [id_producto] => 88
+    [cambio] => -1
+)
+Array
+(
+    [sql] => UPDATE carrito 
+                SET cantidad = cantidad + :cambio 
+                WHERE id_usuario = :id_usuario AND id_producto = :id_producto AND (cantidad + :cambio) >= 0
+    [id_usuario] => 1
+    [id_producto] => 88
+    [cambio] => -1
+)

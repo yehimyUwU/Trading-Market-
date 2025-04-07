@@ -14,7 +14,7 @@ openChatbot.addEventListener("click", () => {
   if (!document.querySelector(".welcome-message")) {
     const welcomeMessage = document.createElement("div");
     welcomeMessage.className = "welcome-message";
-    welcomeMessage.textContent = "TradiBot: ¡Bienvenido! Estoy aquí para ayudarte. Puedes preguntarme cosas como '¿Cómo funciona esta página?'.";
+    welcomeMessage.textContent = "TradiBot: ¡Bienvenido! Para saber que preguntar escribe: preguntas'.";
     chatbotMessages.appendChild(welcomeMessage);
   }
 });
@@ -43,7 +43,7 @@ sendMessage.addEventListener("click", () => {
     chatbotMessages.appendChild(userBubble);
 
     // Enviar la pregunta al servidor PHP
-    fetch('../../controllers/php/chatBot.php', {
+    fetch('../../controllers/php/controlador_chatbot.php', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/x-www-form-urlencoded',

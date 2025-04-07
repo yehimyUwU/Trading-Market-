@@ -116,15 +116,9 @@ function agregarAlCarrito(id, nombre, precio) {
     });
 }
 
-
 function actualizarCarritoUI() {
-    fetch('../../controllers/php/controlador_carrito.php', { method: 'GET' }) // Llamamos al controlador
-        .then(response => {
-            if (!response.ok) {
-                throw new Error(`Error HTTP: ${response.status}`);
-            }
-            return response.json(); // Convertimos la respuesta a JSON
-        })
+    fetch('../../controllers/php/controlador_carrito.php', { method: 'GET' })
+        .then(response => response.json())
         .then(data => {
             const contenidoCarrito = document.getElementById("contenidoCarrito");
             const totalCarrito = document.getElementById("totalCarrito");
@@ -133,7 +127,6 @@ function actualizarCarritoUI() {
             let total = 0;
 
             data.forEach(producto => {
-                // Validamos los datos
                 const precio = parseFloat(producto.precio);
                 const cantidad = parseInt(producto.cantidad);
 
@@ -144,7 +137,6 @@ function actualizarCarritoUI() {
 
                 total += precio * cantidad;
 
-                // Renderizamos las filas de la tabla
                 contenidoCarrito.innerHTML += `
                     <tr>
                         <td>${producto.id_producto}</td>
@@ -161,10 +153,8 @@ function actualizarCarritoUI() {
                 `;
             });
 
-            // Actualizamos el total del carrito
             totalCarrito.textContent = `$${total.toFixed(2)}`;
 
-            // Asignamos eventos a los botones (aumentar, disminuir, eliminar)
             asignarEventosCarrito();
         })
         .catch(error => {
@@ -172,22 +162,51 @@ function actualizarCarritoUI() {
         });
 }
 
+// Llamada para agregar un producto (ejemplo)
+function agregarProducto(idProducto, cantidad) {
+    fetch('../../controllers/php/controlador_carrito.php', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+            accion: 'agregar',
+            id_producto: idProducto,
+            cantidad: cantidad
+        })
+    })
+    .then(response => response.json())
+    .then(data => {
+        if (data.error) {
+            alert(data.error);
+        } else {
+            alert(data.success); // Mostrar el mensaje de éxito
+            actualizarCarritoUI(); // Refrescar el carrito
+        }
+    })
+    .catch(error => {
+        console.error("Error al agregar producto:", error);
+        alert("Ocurrió un error al agregar el producto.");
+    });
+}
+
+
 
 
 function asignarEventosCarrito() {
-    document.querySelectorAll(".aumentar-cantidad").forEach(boton => {
-        boton.addEventListener("click", function () {
-            const idProducto = this.getAttribute("data-id");
-            actualizarCantidadProducto(idProducto, 1); // Incrementar cantidad
-        });
-    });
+    document.querySelectorAll(".aumentar-cantidad").forEach(boton => 
+        boton.addEventListener("click", () => 
+            actualizarCantidadProducto(boton.getAttribute("data-id"), 1)
+        )
+    );
 
-    document.querySelectorAll(".disminuir-cantidad").forEach(boton => {
-        boton.addEventListener("click", function () {
-            const idProducto = this.getAttribute("data-id");
-            actualizarCantidadProducto(idProducto, -1); // Decrementar cantidad
-        });
-    });
+    document.querySelectorAll(".disminuir-cantidad").forEach(boton => 
+        boton.addEventListener("click", () => 
+            actualizarCantidadProducto(boton.getAttribute("data-id"), -1)
+        )
+    );
+
+
 
     // Capturar clic en el botón "Eliminar"
     document.querySelectorAll(".eliminar-carrito").forEach(boton => {
@@ -209,7 +228,10 @@ function eliminarProductoCarrito(idProducto) {
         headers: {
             'Content-Type': 'application/json'
         },
-        body: JSON.stringify({ id_producto: idProducto })
+        body: JSON.stringify({
+            accion: 'eliminar', // Acción específica
+            id_producto: idProducto
+        })
     })
     .then(response => response.json())
     .then(data => {
@@ -217,34 +239,54 @@ function eliminarProductoCarrito(idProducto) {
             alert(data.error);
             return;
         }
-        alert("Producto eliminado del carrito.");
+        alert("Producto eliminado del carrito correctamente."); // Mensaje de éxito
         actualizarCarritoUI(); // Refrescar la interfaz del carrito
     })
     .catch(error => {
         console.error("Error al eliminar el producto:", error);
+        alert("Ocurrió un error al eliminar el producto.");
     });
 }
 
+
 function actualizarCantidadProducto(idProducto, cambio) {
-    fetch('../../controllers/php/controlador_carrito.php', {
+    idProducto = parseInt(idProducto, 10); // Asegurar que idProducto sea un número entero
+
+    if (!idProducto || cambio === 0) {
+        alert("Datos inválidos para actualizar la cantidad.");
+        console.error("Datos inválidos:", { idProducto, cambio });
+        return;
+    }
+
+    console.log("Enviando datos al servidor:", { id_producto: idProducto, cambio });
+
+    fetch('../../controllers/php/actualizar_cantidad_carrito.php', {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json'
         },
-        body: JSON.stringify({ id_producto: idProducto, cambio: cambio })
+        body: JSON.stringify({
+            accion: 'modificar',
+            id_producto: idProducto,
+            cambio: cambio
+        })
     })
     .then(response => response.json())
     .then(data => {
         if (data.error) {
-            alert(data.error);
-            return;
+            alert(data.error); // Mostrar mensaje de error del servidor
+            console.error("Error del servidor:", data.error);
+        } else {
+            alert(data.success); // Mensaje de éxito
+            actualizarCarritoUI(); // Refrescar carrito
         }
-        actualizarCarritoUI(); // Refrescar el carrito en la interfaz
     })
     .catch(error => {
         console.error("Error al actualizar la cantidad:", error);
+        alert("Ocurrió un error al actualizar la cantidad.");
     });
 }
+
 
 //                              FUNCIONES DE CARRITO FINAL                                         //
 
@@ -457,7 +499,7 @@ function cargarProductos() {
                                 <p class="card-text">${producto.descripcion}</p>
                                 <p class="card-text font-weight-bold">$${producto.precio}</p>
                                 <button class="btn btn-primary" onclick="verDetalles('${producto.nombre}', '${producto.descripcion}', '${producto.precio}', '../imagenes_P/${producto.imagen}')">Ver Detalles</button>
-                                <button class="btn btn-success" onclick="agregarAlCarrito(${producto.id_producto}, '${producto.nombre}', ${producto.precio})">Agregar al Carritoooo</button>
+                                <button class="btn btn-success" onclick="agregarAlCarrito(${producto.id_producto}, '${producto.nombre}', ${producto.precio})">Agregar al Carrito</button>
                             </div>
                         </div>
                     `;
