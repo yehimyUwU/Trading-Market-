@@ -44,30 +44,71 @@ require '../../controllers/php/barra_admin.php';
             </div>
         </div>
         <br>
+        
 
         <!-- Tabla de Mensajes -->
-        <table id="tablaSolicitudes">
-    <thead>
-        <tr>
-            <th>Nombre</th>
-            <th>Correo</th>
-            <th>Mensaje</th>
-            <th>Acción</th>
-        </tr>
-    </thead>
-    <tbody>
-        <!-- Los datos se cargarán dinámicamente aquí -->
-    </tbody>
-</table>
+        <div class="tabla-mensajes">
+            <table>
+                <thead>
+                    <tr>
+                        <th>Nombre</th>
+                        <th>Correo</th>
+                        <th>Mensaje</th>
+                        <th>Acción</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>Juan Esteban</td>
+                        <td>juan.esteban@gmail.com</td>
+                        <td>Usted es un sapo hermano</td>
+                        <td>
+                            <button class="btn-responder" onclick="responderMensaje('Juan Esteban', 'juan.esteban@gmail.com')">Responder</button>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>Daniela Fagua</td>
+                        <td>daniela.fagua@yahoo.com</td>
+                        <td>Necesito ayuda con el pago.</td>
+                        <td>
+                            <button class="btn-responder" onclick="responderMensaje('Daniela Fagua', 'daniela.fagua@yahoo.com')">Responder</button>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <!-- Formulario para Responder -->
+        <div class="formulario-respuesta">
+            <h2>Responder Mensaje</h2>
+            <form id="respuesta-form">
+                <label for="nombre">Para:</label>
+                <input type="text" id="nombre" name="nombre" readonly>
+                
+                <label for="correo">Correo:</label>
+                <input type="email" id="correo" name="correo" readonly>
+                
+                <label for="respuesta">Mensaje:</label>
+                <textarea id="respuesta" name="respuesta" rows="5" placeholder="Escribe tu respuesta aquí"></textarea>
+                
+                <div class="botones">
+                    <button type="submit" class="btn-enviar">Enviar</button>
+                    <button type="button" id="btn-limpiar" class="btn-limpiar">Limpiar</button>
+                </div>
+            </form>
+        </div>
+        
+    </div>
 
 <!--Modal para ver perfil-->  
+
 
 <div id="profileModal" class="modal">
         <div class="modal-content">
           <span class="close">&times;</span>
           <h2>Perfil de usuario</h2>
           <div class="user2">
-              <img src="../../public/imagenes/cucu.jpg" alt="">
+              <img src="../imagenes/cucu.jpg" alt="">
           </div>
           
           <!-- Formularios de entrada -->
@@ -104,7 +145,6 @@ require '../../controllers/php/barra_admin.php';
     <!--Scripts bien gotys-->
     <script src="../../public/js/admin.js"></script>
     <script src="../../public/js/mensajes_admin.js"></script>
-    <script src="../../public/js/chatBot.js"></script>
     <script src="../../public/js/config.js"></script>
     <!--script para poder usar iconos bien bellaquitos // ionicons-->
     <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
