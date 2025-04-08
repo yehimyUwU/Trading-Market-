@@ -69,6 +69,38 @@ try {
             } else {
                 echo json_encode(["error" => "Error al eliminar producto."]);
             }
+        } elseif ($accion === 'pagar') {
+            // Procesar el pago
+            $correo = $input['correo'];
+            $direccion = $input['direccion'];
+            $metodoPago = $input['metodoPago'];
+
+            $carrito = $carritoModel->obtenerCarrito($idUsuario);
+
+            if (empty($carrito)) {
+                echo json_encode(["error" => "El carrito está vacío."]);
+                exit;
+            }
+
+            // Crear el mensaje del correo
+            $asunto = "Confirmación de Compra";
+            $mensaje = "Gracias por su compra.\n\n";
+            $mensaje .= "Dirección de Envío: $direccion\n";
+            $mensaje .= "Método de Pago: $metodoPago\n";
+            $mensaje .= "Detalle del Pedido:\n";
+
+            foreach ($carrito as $producto) {
+                $mensaje .= "- {$producto['nombre']} x {$producto['cantidad']} = $ {$producto['precio']} \n";
+            }
+
+            // Enviar correo (reemplaza 'mail()' con un sistema SMTP si es necesario)
+            if (mail($correo, $asunto, $mensaje)) {
+                // Limpia el carrito después de completar el pago
+                $carritoModel->limpiarCarrito($idUsuario);
+                echo json_encode(['success' => 'Pago procesado y correo enviado correctamente.']);
+            } else {
+                echo json_encode(['error' => 'Error al enviar el correo.']);
+            }
         } else {
             echo json_encode(["error" => "Acción no válida."]);
         }
@@ -81,5 +113,6 @@ try {
     echo json_encode(["error" => "Error del servidor: " . $e->getMessage()]);
     exit;
 }
+
 
 ?>

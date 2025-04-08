@@ -155,12 +155,122 @@ function actualizarCarritoUI() {
 
             totalCarrito.textContent = `$${total.toFixed(2)}`;
 
+            // Verificar si ya existe el botón "Pagar" y el modal
+            if (!document.getElementById("modalPago")) {
+                // Generar el botón y el modal solo si no existen
+                insertarBotonYModal();
+            }
+
             asignarEventosCarrito();
         })
         .catch(error => {
             console.error("Error al cargar el carrito:", error);
         });
 }
+
+function insertarBotonYModal() {
+    // Crear el botón "Pagar"
+    const container = document.createElement("div");
+    container.classList.add("text-end", "mt-3");
+    const botonPagar = document.createElement("button");
+    botonPagar.classList.add("btn", "btn-primary");
+    botonPagar.textContent = "Pagar";
+    container.appendChild(botonPagar);
+
+    // Insertar el botón en el contenedor de la tabla del carrito
+    const productosContainer = document.getElementById("productos-container");
+    productosContainer.appendChild(container);
+
+    // Crear el modal
+    const modalHTML = `
+    <div class="modal fade" id="modalPago" tabindex="-1" role="dialog" aria-labelledby="modalPagoLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="modalPagoLabel">Detalles de Pago</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <form id="formPago">
+                        <div class="form-group">
+                            <label for="correo">Correo Electrónico:</label>
+                            <input type="email" class="form-control" id="correo" placeholder="nombre@ejemplo.com" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="direccion">Dirección de Envío:</label>
+                            <input type="text" class="form-control" id="direccion" placeholder="Dirección completa" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="metodoPago">Método de Pago:</label>
+                            <select class="form-control" id="metodoPago" required>
+                                <option value="tarjeta">Tarjeta de Crédito/Débito</option>
+                                <option value="paypal">PayPal</option>
+                                <option value="efectivo">Efectivo</option>
+                            </select>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+                    <button type="button" class="btn btn-success" id="btnConfirmarPago">Pagar</button>
+                </div>
+            </div>
+        </div>
+    </div>`;
+    const modalContainer = document.createElement("div");
+    modalContainer.innerHTML = modalHTML;
+    document.body.appendChild(modalContainer);
+
+    // Configurar el evento del botón "Confirmar Pago"
+    document.getElementById("btnConfirmarPago").addEventListener("click", procesarPago);
+
+    // Configurar el botón "Pagar" para abrir el modal
+    botonPagar.setAttribute("data-toggle", "modal");
+    botonPagar.setAttribute("data-target", "#modalPago");
+}
+
+function procesarPago() {
+    const correo = document.getElementById("correo").value;
+    const direccion = document.getElementById("direccion").value;
+    const metodoPago = document.getElementById("metodoPago").value;
+
+    if (!correo || !direccion || !metodoPago) {
+        alert("Por favor, complete todos los campos del formulario.");
+        return;
+    }
+
+    const datosPedido = {
+        correo,
+        direccion,
+        metodoPago,
+        carrito: [] // Aquí puedes agregar lógica para pasar el contenido del carrito
+    };
+
+    fetch('../../controllers/php/procesar_pago.php', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(datosPedido),
+    })
+    .then(response => response.json())
+    .then(data => {
+        if (data.success) {
+            alert("¡Pago realizado con éxito! El producto ha sido enviado.");
+            $('#modalPago').modal('hide');
+            actualizarCarritoUI(); // Refrescar el carrito después del pago
+        } else {
+            alert(data.error || "Ocurrió un error al procesar el pago.");
+        }
+    })
+    .catch(error => {
+        console.error("Error al procesar el pago:", error);
+        alert("Ocurrió un error inesperado.");
+    });
+}
+
 
 // Llamada para agregar un producto (ejemplo)
 function agregarProducto(idProducto, cantidad) {
@@ -286,6 +396,12 @@ function actualizarCantidadProducto(idProducto, cambio) {
         alert("Ocurrió un error al actualizar la cantidad.");
     });
 }
+
+
+
+//metodos de pago
+
+
 
 
 //                              FUNCIONES DE CARRITO FINAL                                         //
