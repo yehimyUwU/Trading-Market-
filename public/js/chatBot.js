@@ -69,6 +69,34 @@ sendMessage.addEventListener("click", () => {
         chatbotMessages.appendChild(errorBubble);
       });
 
+
+      document.getElementById("sendMessage").addEventListener("click", function() {
+        const userInput = document.getElementById("chatbotInput").value;
+        const chatMessages = document.getElementById("chatbotMessages");
+    
+        fetch('../../controllers/php/controlador_chatbot.php', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/x-www-form-urlencoded',
+            },
+            body: 'pregunta=' + encodeURIComponent(userInput)
+        })
+        .then(response => response.text())
+        .then(responseText => {
+            // Mostrar respuesta en el chatbot
+            const userMessage = document.createElement("div");
+            userMessage.textContent = "Tú: " + userInput;
+            chatMessages.appendChild(userMessage);
+    
+            const botMessage = document.createElement("div");
+            botMessage.textContent = "Bot: " + responseText;
+            chatMessages.appendChild(botMessage);
+    
+            // Limpiar el input
+            document.getElementById("chatbotInput").value = "";
+        })
+        .catch(error => console.error("Error:", error));
+    });
     // Limpiar entrada
     chatbotInput.value = "";
   }

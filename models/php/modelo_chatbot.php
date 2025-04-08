@@ -3,7 +3,7 @@ class Chatbot {
     private $conn;
 
 
-    
+
     public function __construct($servername, $username, $password, $dbname) {
         $this->conn = new mysqli($servername, $username, $password, $dbname);
 
@@ -25,6 +25,19 @@ class Chatbot {
             return "Lo siento, no entiendo esa pregunta. Intenta con otra de las preguntas disponibles.";
         }
     }
+
+    public function notifyAdmin($message) {
+        // Inserta la solicitud en una tabla específica o genera una acción
+        $stmt = $this->conn->prepare("INSERT INTO solicitudes (mensaje) VALUES (?)");
+        $stmt->bind_param("s", $message);
+    
+        if ($stmt->execute()) {
+            return "Solicitud enviada al administrador.";
+        } else {
+            return "Error al enviar la solicitud.";
+        }
+    }
+    
 
     public function closeConnection() {
         $this->conn->close();

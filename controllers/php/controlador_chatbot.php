@@ -19,5 +19,19 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['pregunta'])) {
     echo "No se recibió ninguna pregunta válida.";
 }
 
+if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['pregunta'])) {
+    $userQuestion = trim($_POST['pregunta']);
+
+    // Verificar si la pregunta es "solicitud"
+    if (strtolower($userQuestion) === 'solicitud') {
+        echo $chatbotModel->notifyAdmin("Un cliente solicita convertirse en proveedor.");
+    } else {
+        echo $chatbotModel->getResponse($userQuestion);
+    }
+} else {
+    echo "No se recibió ninguna pregunta válida.";
+}
+
+
 $chatbotModel->closeConnection();
 ?>
