@@ -498,7 +498,7 @@ function cargarProductos() {
                                 <h5 class="card-title">${producto.nombre}</h5>
                                 <p class="card-text">${producto.descripcion}</p>
                                 <p class="card-text font-weight-bold">$${producto.precio}</p>
-                                <button class="btn btn-primary" onclick="verDetalles('${producto.nombre}', '${producto.descripcion}', '${producto.precio}', '../imagenes_P/${producto.imagen}')">Ver Detalles</button>
+                                <button class="btn btn-primary" onclick="verDetalles('${producto.nombre}', '${producto.descripcion}', '${producto.precio}', '../imagenes_P/${producto.imagen}', ${producto.id_producto})">Ver Detalles</button>
                                 <button class="btn btn-success" onclick="agregarAlCarrito(${producto.id_producto}, '${producto.nombre}', ${producto.precio})">Agregar al Carrito</button>
                             </div>
                         </div>
@@ -511,13 +511,94 @@ function cargarProductos() {
         })
 }
 
-function verDetalles(nombre, descripcion, precio, imagen) {
+function verDetalles(nombre, descripcion, precio, imagen, idProducto) {
     document.getElementById('modalNombre').textContent = nombre;
     document.getElementById('modalDescripcion').textContent = descripcion;
     document.getElementById('modalPrecio').textContent = `$${precio}`;
     document.getElementById('modalImagen').src = imagen;
+
+    // Guardamos el ID en el div para saber qué producto estamos calificando
+    const estrellasDiv = document.getElementById('estrellas');
+    estrellasDiv.setAttribute('data-id-producto', idProducto);
+
+    // Limpiar mensaje y estrellas previas
+    document.querySelectorAll('.estrella').forEach(e => {
+        e.classList.remove('fa-solid');
+        e.classList.add('fa-regular');
+    });
+    document.getElementById('mensaje-calificacion').style.display = 'none';
+    document.getElementById('btnEditarCalificacion').style.display = 'none';
+
+    // Consultar si ya hay calificación previa
+    fetch(`../../controllers/php/obtener_calificacion.php?id_producto=${idProducto}`)
+        .then(res => res.json())
+        .then(data => {
+            if (data.success && data.calificacion > 0) {
+                marcarEstrellas(data.calificacion);
+                document.getElementById('btnEditarCalificacion').style.display = 'inline-block';
+            }
+        });
+
     $('#productoModal').modal('show');
 }
+
+document.querySelectorAll('.estrella').forEach(estrella => {
+    estrella.addEventListener('click', () => {
+        const valor = parseInt(estrella.getAttribute('data-valor'));
+        const idProducto = document.getElementById('estrellas').getAttribute('data-id-producto');
+
+        fetch('../../controllers/php/guardar_calificacion.php', {
+            method: 'POST',
+            body: JSON.stringify({ id_producto: idProducto, calificacion: valor }),
+            headers: { 'Content-Type': 'application/json' }
+        })
+        .then(res => res.json())
+        .then(data => {
+            if (data.success) {
+                marcarEstrellas(valor);
+                document.getElementById('mensaje-calificacion').style.display = 'block';
+                document.getElementById('btnEditarCalificacion').style.display = 'inline-block';
+            } else {
+                alert('Error al guardar calificación');
+            }
+        });
+    });
+});
+
+function marcarEstrellas(valor) {
+    document.querySelectorAll('.estrella').forEach(e => {
+        e.classList.remove('fa-solid');
+        e.classList.add('fa-regular');
+    });
+
+    for (let i = 0; i < valor; i++) {
+        document.querySelectorAll('.estrella')[i].classList.remove('fa-regular');
+        document.querySelectorAll('.estrella')[i].classList.add('fa-solid');
+    }
+}
+
+function editarCalificacion() {
+    const idProducto = document.getElementById('estrellas').getAttribute('data-id-producto');
+
+    fetch('../../controllers/php/eliminar_calificacion.php', {
+        method: 'POST',
+        body: JSON.stringify({ id_producto: idProducto }),
+        headers: { 'Content-Type': 'application/json' }
+    })
+    .then(res => res.json())
+    .then(data => {
+        if (data.success) {
+            document.querySelectorAll('.estrella').forEach(e => {
+                e.classList.remove('fa-solid');
+                e.classList.add('fa-regular');
+            });
+            document.getElementById('btnEditarCalificacion').style.display = 'none';
+            document.getElementById('mensaje-calificacion').style.display = 'none';
+        }
+    });
+}
+
+
 
 document.addEventListener("DOMContentLoaded", function () {
     fetch("../../controllers/php/obtener_proveedores_controller.php")
