@@ -1,6 +1,8 @@
 <?php
 require_once '../../models/php/modelo_chatbot.php';
 
+
+
 // Configuración de conexión
 $servername = "localhost";
 $username = "root";

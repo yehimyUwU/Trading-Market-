@@ -2,6 +2,8 @@
 class Chatbot {
     private $conn;
 
+
+    
     public function __construct($servername, $username, $password, $dbname) {
         $this->conn = new mysqli($servername, $username, $password, $dbname);
 

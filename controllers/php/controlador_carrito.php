@@ -1,4 +1,5 @@
 <?php
+
 require '../../config/php/conexion.php';
 require '../../models/php/modelo_carrito.php';
 
@@ -20,8 +21,6 @@ try {
         // Obtener carrito
         echo json_encode($carritoModel->obtenerCarrito($idUsuario));
         exit;
-
-        
     } elseif ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $input = json_decode(file_get_contents("php://input"), true);
 
@@ -115,6 +114,5 @@ try {
     echo json_encode(["error" => "Error del servidor: " . $e->getMessage()]);
     exit;
 }
-
 
 ?>
