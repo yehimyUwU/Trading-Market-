@@ -22,4 +22,5 @@ class Usuario {
         return $stmt->execute([$nombre, $apellido, $documento, $email, $fecha_nacimiento, $genero, $id_usuario]);
     }
 }
+
 ?>
