@@ -47,58 +47,20 @@ require '../../controllers/php/barra_admin.php';
         
 
         <!-- Tabla de Mensajes -->
-        <div class="tabla-mensajes">
-            <table>
-                <thead>
-                    <tr>
-                        <th>Nombre</th>
-                        <th>Correo</th>
-                        <th>Mensaje</th>
-                        <th>Acción</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr>
-                        <td>Juan Esteban</td>
-                        <td>juan.esteban@gmail.com</td>
-                        <td>Usted es un sapo hermano</td>
-                        <td>
-                            <button class="btn-responder" onclick="responderMensaje('Juan Esteban', 'juan.esteban@gmail.com')">Responder</button>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>Daniela Fagua</td>
-                        <td>daniela.fagua@yahoo.com</td>
-                        <td>Necesito ayuda con el pago.</td>
-                        <td>
-                            <button class="btn-responder" onclick="responderMensaje('Daniela Fagua', 'daniela.fagua@yahoo.com')">Responder</button>
-                        </td>
-                    </tr>
-                </tbody>
-            </table>
-        </div>
+        <table id="tablaSolicitudes">
+    <thead>
+        <tr>
+            <th>Nombre</th>
+            <th>Correo</th>
+            <th>Mensaje</th>
+            <th>Acción</th>
+        </tr>
+    </thead>
+    <tbody>
+        <!-- Los datos se cargarán dinámicamente aquí -->
+    </tbody>
+</table>
 
-        <!-- Formulario para Responder -->
-        <div class="formulario-respuesta">
-            <h2>Responder Mensaje</h2>
-            <form id="respuesta-form">
-                <label for="nombre">Para:</label>
-                <input type="text" id="nombre" name="nombre" readonly>
-                
-                <label for="correo">Correo:</label>
-                <input type="email" id="correo" name="correo" readonly>
-                
-                <label for="respuesta">Mensaje:</label>
-                <textarea id="respuesta" name="respuesta" rows="5" placeholder="Escribe tu respuesta aquí"></textarea>
-                
-                <div class="botones">
-                    <button type="submit" class="btn-enviar">Enviar</button>
-                    <button type="button" id="btn-limpiar" class="btn-limpiar">Limpiar</button>
-                </div>
-            </form>
-        </div>
-        
-    </div>
 
 <!--Modal para ver perfil-->  
 

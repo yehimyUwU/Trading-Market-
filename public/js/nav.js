@@ -241,9 +241,6 @@ function procesarPago() {
         return;
     }
 
-
-
-    
     const datosPedido = {
         correo,
         direccion,
@@ -251,7 +248,7 @@ function procesarPago() {
         carrito: [] // Aquí puedes agregar lógica para pasar el contenido del carrito
     };
 
-    fetch('../../controllers/php/procesar_pago.php', {
+    fetch('../../controllers/php/controlador_carrito.php', {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json',
@@ -273,7 +270,6 @@ function procesarPago() {
         alert("Ocurrió un error inesperado.");
     });
 }
-
 
 // Llamada para agregar un producto (ejemplo)
 function agregarProducto(idProducto, cantidad) {
@@ -399,6 +395,12 @@ function actualizarCantidadProducto(idProducto, cambio) {
         alert("Ocurrió un error al actualizar la cantidad.");
     });
 }
+
+
+
+
+
+
 
 
 
