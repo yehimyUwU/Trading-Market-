@@ -44,7 +44,6 @@ require '../../controllers/php/barra_admin.php';
             </div>
         </div>
         <br>
-        
 
         <!-- Tabla de Mensajes -->
         <table id="tablaSolicitudes">
@@ -61,16 +60,14 @@ require '../../controllers/php/barra_admin.php';
     </tbody>
 </table>
 
-
 <!--Modal para ver perfil-->  
-
 
 <div id="profileModal" class="modal">
         <div class="modal-content">
           <span class="close">&times;</span>
           <h2>Perfil de usuario</h2>
           <div class="user2">
-              <img src="../imagenes/cucu.jpg" alt="">
+              <img src="../../public/imagenes/cucu.jpg" alt="">
           </div>
           
           <!-- Formularios de entrada -->
@@ -107,6 +104,7 @@ require '../../controllers/php/barra_admin.php';
     <!--Scripts bien gotys-->
     <script src="../../public/js/admin.js"></script>
     <script src="../../public/js/mensajes_admin.js"></script>
+    <script src="../../public/js/chatBot.js"></script>
     <script src="../../public/js/config.js"></script>
     <!--script para poder usar iconos bien bellaquitos // ionicons-->
     <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>

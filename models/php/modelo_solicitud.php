@@ -10,13 +10,13 @@ class SolicitudesModel {
         }
     }
 
-    public function obtenerSolicitudes() {
+    public function obtenerTodasLasSolicitudes() {
         $query = "
             SELECT 
                 u.nombre, 
                 u.email, 
                 s.mensaje, 
-                s.fecha
+                s.fecha 
             FROM 
                 solicitudes s
             JOIN 

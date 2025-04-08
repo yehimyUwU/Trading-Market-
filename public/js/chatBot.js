@@ -101,3 +101,32 @@ sendMessage.addEventListener("click", () => {
     chatbotInput.value = "";
   }
 });
+
+document.addEventListener("DOMContentLoaded", function() {
+  const tablaSolicitudes = document.getElementById("tablaSolicitudes").querySelector("tbody");
+
+  // Hacer una solicitud al servidor para obtener las solicitudes
+  fetch('../../controllers/php/controlador_solicitud.php') // Cambia esta ruta según tu estructura
+      .then(response => response.json())
+      .then(data => {
+          tablaSolicitudes.innerHTML = ""; // Limpiar la tabla antes de agregar datos
+
+          // Iterar sobre cada solicitud y agregarla a la tabla
+          data.forEach(solicitud => {
+              const fila = document.createElement("tr");
+              fila.innerHTML = `
+                  <td>${solicitud.nombre}</td>
+                  <td>${solicitud.email}</td>
+                  <td>${solicitud.mensaje}</td>
+                  <td>
+                      <button class="btn-responder" onclick="responderMensaje('${solicitud.nombre}', '${solicitud.email}')">
+                          Responder
+                      </button>
+                  </td>
+              `;
+              tablaSolicitudes.appendChild(fila);
+          });
+      })
+      .catch(error => console.error("Error al cargar solicitudes:", error));
+});
+

@@ -11,14 +11,14 @@ $dbname = "inventarios";
 $solicitudesModel = new SolicitudesModel($servername, $username, $password, $dbname);
 
 try {
-    // Obtener las solicitudes desde el modelo
-    $solicitudes = $solicitudesModel->obtenerSolicitudes();
+    // Obtener todas las solicitudes desde el modelo
+    $solicitudes = $solicitudesModel->obtenerTodasLasSolicitudes();
 
     // Devolver las solicitudes en formato JSON
     header('Content-Type: application/json');
     echo json_encode($solicitudes);
 } catch (Exception $e) {
-    error_log("Error en controlador de solicitudes: " . $e->getMessage());
+    error_log("Error en el controlador de solicitudes: " . $e->getMessage());
     echo json_encode(['success' => false, 'message' => 'Error en el servidor']);
 } finally {
     $solicitudesModel->closeConnection();
