@@ -20,6 +20,8 @@ try {
         // Obtener carrito
         echo json_encode($carritoModel->obtenerCarrito($idUsuario));
         exit;
+
+        
     } elseif ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $input = json_decode(file_get_contents("php://input"), true);
 

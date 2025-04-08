@@ -241,6 +241,9 @@ function procesarPago() {
         return;
     }
 
+
+
+    
     const datosPedido = {
         correo,
         direccion,
