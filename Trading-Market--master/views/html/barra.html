@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="../../public/estilos/inico.css" />
+    <link rel="stylesheet" href="../../public/estilos/styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <link rel="stylesheet" href="../../public/css/bootstrap.min.css">
+</head>
+<body>
+    
+  <!-- Barra de Navegación -->
+  <header>
+    <nav class="navbar">
+      <div class="logo">
+        <a href="inico.html">
+          <img src="../../public/imagenes/Logooriginal.png" alt="Trading Market Logo" class="logo-img">
+        </a>
+      </div>
+      <div class="nav-links">
+        <div class="dropdown">
+          <button class="btn dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            Categorías
+          </button>
+          <div class="dropdown-menu" aria-labelledby="dropdownMenuButton" style="background-color: #ffffff;">
+            <a class="dropdown-item" href="vehiculos.html" style="color: #000000;">Vehiculos</a>
+            <a class="dropdown-item" href="supermercado.html" style="color: #000000;">Supermercado</a>
+            <a class="dropdown-item" href="Tecnologia.html" style="color: #000000;">Tecnologia</a>
+            <a class="dropdown-item" href="Electrodomesticos.html" style="color: #000000;">Electrodomesticos</a>
+            <a class="dropdown-item" href="DesportesYFitness.html" style="color: #000000;">Desportes y Fitness</a>
+            <a class="dropdown-item" href="Herramientas.html" style="color: #000000;">Herramientas</a>
+            <a class="dropdown-item" href="bellezaYcuidadopersonal.html" style="color: #000000;">Belleza y cuidado personal</a>
+            <a class="dropdown-item" href="accesoriosdevehiculo.html" style="color: #000000;">Accesorios de Vehiculos</a>
+            <a class="dropdown-item" href="construccion.html" style="color: #000000;">Construcción</a>
+            <a class="dropdown-item" href="Inmuebles.html" style="color: #000000;">Inmuebles</a>
+            <a class="dropdown-item" href="moda.html" style="color: #000000;">Moda</a>
+            <a class="dropdown-item" href="juegosyjuguetes.html" style="color: #000000;">Juegos y juguetes</a>
+            <a class="dropdown-item" href="bebes.html" style="color: #000000;">Bebes</a>
+            <a class="dropdown-item" href="Productossustentables.html" style="color: #000000;">Productos Sustentable</a>
+            <a class="dropdown-item" href="Industriayoficina.html" style="color: #000000;">Industria y Oficina</a>
+            <a class="dropdown-item" href="saludyequipomedico.html" style="color: #000000;">Salud y equipo Medico</a>
+            <a class="dropdown-item" href="animalesymascotas.html" style="color: #000000;">Animales y Mascotas</a>
+            <a class="dropdown-item" href="Antiguedadesycolecciones.html" style="color: #000000;">Antigüedades y Colecciones</a>
+            <a class="dropdown-item" href="Artepapeleriamerceria.html" style="color: #000000;">Arte, Papelería y Mercería</a>
+          </div>
+        </div>
+        <a href="ofertas.html">Ofertas</a>
+        <a href="proveedores.html">Proveedores</a>
+        <div class="search-box">
+          <input type="text" id="search-input" placeholder="Buscar productos...">
+          <button>🔍</button>
+      </div>
+      </div>
+      <div class="user-actions">
+        <a href="carrito.html" class="cart-icon"><i class="fas fa-shopping-cart"></i></a>
+
+        <div class="auth-buttons">
+          <div class="profile">
+            <a href="#" data-toggle="modal" data-target="#userMenuModal"><i class="fas fa-user-circle"></i></a>
+          </div>  
+        </div>
+      </div>
+    </nav>
+  </header>
+
+  <!-- Modal con opciones de usuario -->
+  <div class="modal fade" id="userMenuModal" tabindex="-1" role="dialog" aria-labelledby="userMenuModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Menú de Usuario</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body text-center">
+                <button class="btn btn-primary btn-block" onclick="mostrarPerfil()" style="background-color: #4677ff;">Ver Perfil</button>
+                <button class="btn btn-danger btn-block" onclick="cerrarSesion()" style="background-color: red;">Cerrar Sesión</button>
+            </div>
+        </div>
+    </div>
+  </div>
+
+  <!-- Modal de Perfil de Usuario -->
+  <div class="modal fade" id="userProfileModal" tabindex="-1" role="dialog" aria-labelledby="userProfileModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Perfil de Usuario</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <p><strong>Nombre:</strong> <span id="nombreUsuario"></span></p>
+                <p><strong>Apellido:</strong> <span id="apellidoUsuario"></span></p>
+                <p><strong>Documento:</strong> <span id="documentoUsuario"></span></p>
+                <p><strong>Email:</strong> <span id="emailUsuario"></span></p>
+                <p><strong>Fecha de Nacimiento:</strong> <span id="fechaNacimientoUsuario"></span></p>
+                <p><strong>Género:</strong> <span id="generoUsuario"></span></p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-primary">Editar Datos</button>
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+            </div>
+        </div>
+    </div>
+  </div>
+  <script src="../../public/js/nav.js"></script>
+<script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+<script src="../../public/js/bootstrap.min.js"></script>
+
+</body>
+</html>

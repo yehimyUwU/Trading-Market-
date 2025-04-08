@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://unpkg.com/ionicons@4.2.2/dist/css/ionicons.min.css" rel="stylesheet"> <!-- Enlace a Ionicons -->
+    <link rel="stylesheet" href="../../public/Estilos/longin.css"> <!-- Asegúrate de que esta ruta sea correcta -->
+    <title>Login</title>
+</head>
+
+<body>
+    
+    <!-- Video de fondo -->
+    <video autoplay muted loop id="videoFondo">
+        <source src="../../public/imagenes_P/47713-451772938.mp4" type="video/mp4">
+        Tu navegador no soporta el elemento de video.
+    </video>
+
+    <div class="container" id="container">
+        <!-- Botón para regresar a la página principal -->
+        <!-- Formulario Sign Up (Registro) -->
+        <div class="form-container sign-up-container">
+            <form id="signupForm" method="POST" action="../../controllers/php/registro.php"> 
+                <h1>Registro de Nuevo Usuario</h1>
+                <select name="tipo_documento" required>
+                    <option value="" disabled selected>Seleccione el tipo de documento</option>
+                    <option value="Cédula">Cédula</option>
+                    <option value="Tarjeta de Identidad">Tarjeta de Identidad</option>
+                    <option value="Pasaporte">Pasaporte</option>
+                </select>
+                <input type="text" name="documento" placeholder="Número de Documento" required oninput="this.value = this.value.replace(/[^0-9]/g, '')" />
+                <input type="text" name="nombre" placeholder="Nombre" required />
+                <input type="text" name="apellido" placeholder="Apellido" required />
+                <input type="date" name="fecha_nacimiento" placeholder="Fecha de Nacimiento" required />
+                <select name="genero" required>
+                    <option value="Masculino">Masculino</option>
+                    <option value="Femenino">Femenino</option>
+                    <option value="Otro">Otro</option>
+                </select>
+                <input type="email" name="email" placeholder="Correo Electrónico" required />
+                <input type="password" name="password" placeholder="Contraseña" required minlength="7" oninvalid="this.setCustomValidity('La contraseña debe tener al menos 7 caracteres')" oninput="this.setCustomValidity('')" />
+                <select name="rol" required>
+                    <option value="" disabled selected>Seleccione su rol</option>
+                    <option value="Cliente">Cliente</option>
+                    <option value="Administrador">Administrador</option>
+                    <option value="Proveedor">Proveedor</option> <!-- Asegúrate de usar "Proveedor" -->
+                </select>
+                <button type="submit">Registrarse</button>
+                <p id="signupMessage"></p> <!-- Mensaje de registro -->
+            </form>
+        </div>
+        
+        <!-- Formulario Sign In (Inicio de sesión) -->
+        <div class="form-container sign-in-container">
+            <form id="loginForm" action="javascript:void(0);">
+                <img src="../../public/imagenes/Logooriginal.png" alt="Logo" style="width: 150px; margin-bottom: 20px;">
+                <h1>Iniciar Sesión</h1>
+                <input type="text" id="username" placeholder="Documento" required>
+                <input type="password" id="password" placeholder="Contraseña" required>
+                <select id="role" required>
+                    <option value="" disabled selected>Seleccione su rol</option>
+                    <option value="Administrador">Administrador</option>
+                    <option value="Cliente">Cliente</option>
+                    <option value="Proveedor">Proveedor</option> <!-- Cambiado a "Proveedor" -->
+                </select>
+                <button type="button" onclick="verificarLogin()">Iniciar Sesión</button>
+                <p id="message"></p>
+            </form>
+        </div>
+        
+        <!-- Panel de bienvenida -->
+        <div class="overlay-container">
+            <div class="overlay">
+                <div class="overlay-panel overlay-left">
+                    <h1>Bienvenido de nuevo</h1>
+                    <p>Para mantenerte conectado con nosotros, inicia sesión con tu información personal</p>
+                    <button class="ghost" id="signIn">Iniciar Sesión</button>
+                </div>
+                <div class="overlay-panel overlay-right">
+                    <h1>Hola, Amigo</h1>
+                    <p>Ingresa tus datos personales y comienza tu viaje con nosotros</p>
+                    <button class="ghost" id="signUp">Registrarse</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="../../public/js/login.js"></script> <!-- Asegúrate de que esta ruta sea correcta -->
+    <script src="https://unpkg.com/ionicons@4.2.2/dist/ionicons.js"></script> <!-- Script de Ionicons -->
+</body>
+</html>

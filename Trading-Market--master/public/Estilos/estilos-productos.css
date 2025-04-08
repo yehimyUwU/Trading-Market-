@@ -1,0 +1,497 @@
+/* misproductos.css - Estilos mejorados para Misproductos.html */
+
+/* Variables y estilos base */
+:root {
+    --light: #F9F9F9;
+    --blue: #3C91E6;
+    --light-blue: #CFE8FF;
+    --grey: #eee;
+    --dark-grey: #AAAAAA;
+    --dark: #342E37;
+    --red: #DB504A;
+}
+
+
+
+* {
+    font-family: 'Arial', sans-serif; /* Esto puede estar sobrescribiendo */
+}
+body {
+    font-family: 'Times New Roman', serif;
+}
+
+/* Reset y estilos generales */
+body {
+    margin: 0;
+    padding: 50px;
+    background: var(--grey);
+}
+
+/* Estructura principal */
+#content {
+    position: relative;
+    width: calc(100% - 280px);
+    left: 280px;
+    min-height: 100vh;
+    transition: .3s ease;
+}
+
+/* Barra de navegación */
+#content nav {
+    height: 56px;
+    background: var(--light);
+    padding: 0 24px;
+    display: flex;
+    align-items: center;
+    gap: 24px;
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+}
+
+/* Contenido principal */
+.contenido {
+    padding: 20px;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+/* Header */
+.header-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+    flex-wrap: wrap;
+    gap: 20px;
+    background: var(--light);
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+}
+
+.header-text h1 {
+    margin: 0;
+    color: var(--dark);
+}
+
+/* Perfil vendedor */
+.perfil-vendedor {
+    display: flex;
+    align-items: center;
+}
+
+.vendedor-info {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+}
+
+.vendedor-info img {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    object-fit: cover;
+}
+
+.vendedor-detalles h3 {
+    margin: 0;
+    font-size: 16px;
+    color: var(--dark);
+}
+
+.vendedor-detalles span {
+    font-size: 14px;
+    color: var(--dark-grey);
+}
+
+/* Estadísticas */
+.header-stats {
+    display: flex;
+    gap: 20px;
+    width: 100%;
+    margin-top: 20px;
+}
+
+.stat-card {
+    flex: 1;
+    background: var(--light);
+    padding: 15px;
+    border-radius: 8px;
+    text-align: center;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+}
+
+.stat-number {
+    font-size: 24px;
+    font-weight: 600;
+    color: var(--blue);
+    display: block;
+}
+
+.stat-label {
+    font-size: 14px;
+    color: var(--dark-grey);
+}
+
+/* Búsqueda y filtros */
+.busqueda-productos {
+    margin-bottom: 24px;
+}
+
+.section-header {
+    margin-bottom: 15px;
+    color: var(--dark);
+}
+
+.busqueda-controles {
+    display: flex;
+    gap: 10px;
+    align-items: center;
+    flex-wrap: wrap;
+}
+
+.busqueda-controles input {
+    flex: 1;
+    min-width: 200px;
+    padding: 10px 15px;
+    border: 1px solid var(--grey);
+    border-radius: 8px;
+    font-family: var(--poppins);
+}
+
+.busqueda-controles select {
+    padding: 10px 15px;
+    border: 1px solid var(--grey);
+    border-radius: 8px;
+    font-family: var(--poppins);
+    min-width: 180px;
+}
+
+.publicar-producto {
+    margin-top: 16px;
+}
+
+.btn-neo {
+    height: 40px;
+    padding: 0 20px;
+    border-radius: 8px;
+    background: var(--blue);
+    color: white;
+    border: none;
+    font-family: var(--poppins);
+    font-weight: 500;
+    cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    transition: background 0.3s ease;
+}
+
+.btn-neo:hover {
+    background: #2a7bc8;
+}
+
+/* Grid de productos */
+.productos-grid-container {
+    width: 100%;
+    margin-top: 20px;
+}
+
+.productos-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 20px;
+    width: 100%;
+}
+
+.producto-card {
+    background: var(--light);
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+    transition: transform 0.3s ease;
+}
+
+.producto-card:hover {
+    transform: translateY(-5px);
+}
+
+.producto-imagen {
+    position: relative;
+    height: 180px;
+    overflow: hidden;
+}
+
+.producto-imagen img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.3s ease;
+}
+
+.producto-acciones {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    display: flex;
+    gap: 8px;
+}
+
+.btn-editar, .btn-eliminar {
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    background: rgba(255,255,255,0.9);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: none;
+    cursor: pointer;
+    color: var(--dark);
+    transition: all 0.3s ease;
+}
+
+.btn-editar:hover {
+    background: var(--blue);
+    color: white;
+}
+
+.btn-eliminar:hover {
+    background: var(--red);
+    color: white;
+}
+
+.producto-info {
+    padding: 16px;
+}
+
+.producto-info h4 {
+    margin: 0;
+    font-size: 16px;
+    color: var(--dark);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.producto-detalles {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin: 10px 0;
+}
+
+.precio {
+    font-weight: 600;
+    color: var(--blue);
+    font-size: 18px;
+}
+
+.stock {
+    font-size: 14px;
+    color: var(--dark-grey);
+}
+
+.badge {
+    display: inline-block;
+    padding: 4px 12px;
+    border-radius: 20px;
+    font-size: 12px;
+    font-weight: 500;
+}
+
+.badge.activo {
+    background: var(--light-blue);
+    color: var(--blue);
+}
+
+/* Modal */
+.modal {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0,0,0,0.5);
+    z-index: 2000;
+}
+
+.modal-contenido {
+    background-color: var(--light);
+    margin: 5% auto;
+    padding: 20px;
+    border-radius: 12px;
+    width: 90%;
+    max-width: 600px;
+    max-height: 80vh;
+    overflow-y: auto;
+}
+
+.modal-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+    padding-bottom: 10px;
+    border-bottom: 1px solid var(--grey);
+}
+
+.modal-header h2 {
+    margin: 0;
+    font-size: 22px;
+    color: var(--dark);
+}
+
+.btn-cerrar {
+    font-size: 24px;
+    font-weight: bold;
+    color: var(--dark-grey);
+    background: none;
+    border: none;
+    cursor: pointer;
+}
+
+/* Formulario */
+.form-group {
+    margin-bottom: 16px;
+}
+
+.form-group label {
+    display: block;
+    margin-bottom: 8px;
+    font-weight: 500;
+    color: var(--dark);
+}
+
+.form-group input,
+.form-group textarea,
+.form-group select {
+    width: 100%;
+    padding: 10px 15px;
+    border: 1px solid var(--grey);
+    border-radius: 8px;
+    font-family: var(--poppins);
+}
+
+.form-row {
+    display: flex;
+    gap: 16px;
+}
+
+.half {
+    flex: 1;
+}
+
+.upload-container {
+    border: 2px dashed var(--grey);
+    border-radius: 8px;
+    padding: 20px;
+    text-align: center;
+    cursor: pointer;
+    transition: border-color 0.3s ease;
+}
+
+.upload-container:hover {
+    border-color: var(--blue);
+}
+
+.upload-button {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    color: var(--blue);
+    font-weight: 500;
+    margin-bottom: 8px;
+}
+
+.file-info {
+    font-size: 12px;
+    color: var(--dark-grey);
+}
+
+.image-preview {
+    margin-top: 16px;
+    text-align: center;
+}
+
+.image-preview img {
+    max-width: 100%;
+    max-height: 200px;
+    border-radius: 8px;
+}
+
+.form-actions {
+    display: flex;
+    justify-content: flex-end;
+    gap: 12px;
+    margin-top: 24px;
+}
+
+.btn-primario {
+    background: var(--blue);
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 8px;
+    cursor: pointer;
+    font-weight: 500;
+}
+
+.btn-secundario {
+    background: var(--grey);
+    color: var(--dark);
+    border: none;
+    padding: 10px 20px;
+    border-radius: 8px;
+    cursor: pointer;
+    font-weight: 500;
+}
+
+.error-mensaje {
+    color: var(--red);
+    font-size: 12px;
+    margin-top: 5px;
+    display: block;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+    #content {
+        width: 100%;
+        left: 0;
+        padding-top: 56px;
+    }
+    
+    .header-container {
+        flex-direction: column;
+    }
+    
+    .header-stats {
+        flex-direction: column;
+        gap: 10px;
+    }
+    
+    .stat-card {
+        width: 100%;
+    }
+    
+    .busqueda-controles {
+        flex-direction: column;
+    }
+    
+    .busqueda-controles input,
+    .busqueda-controles select {
+        width: 100%;
+    }
+    
+    .form-row {
+        flex-direction: column;
+    }
+    
+    .half {
+        width: 100%;
+    }
+}

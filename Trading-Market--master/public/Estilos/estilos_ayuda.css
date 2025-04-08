@@ -1,0 +1,704 @@
+
+/* Modo claro (por defecto) */
+:root {
+    --blue: #306a91;
+    --white: #fff;
+    --gray: #f5f5f5;
+    --black1: #222;
+    --black2: #999;
+}
+
+/* Modo oscuro */
+:root.dark-mode {
+    --blue: #a5a0a0; /* Azul más oscuro */
+    --white: #252323; /* Fondo y letras de la barra oscuro */
+    --gray: #5a5252; /* Gris oscuro */
+    --black1: #fff; /* Texto claro */
+    --black2: #ccc; /* Texto secundario */
+}
+
+
+
+/* Botón para cambiar de modo */
+.modo-visual-btn {
+    background-color: var(--blue);
+    color: var(--white);
+    border: none;
+    padding: 10px 15px;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+.modo-visual-btn:hover {
+    background-color: var(--black2);
+    color: var(--blue);
+}
+
+
+body{
+    min-height: 100vh;
+    overflow-x: hidden;
+}
+
+.container{
+    position: relative;
+    width: 100%;
+    padding: 0; /* Agrega esto para evitar padding */
+    margin: 0; /* Agrega esto si hay margen no deseado */
+}
+
+/*Cambios barra de navegacion*/
+
+.navigation {
+    position: fixed;
+    width: 300px;
+    height: 100%;
+    top: 0; /* Asegura que inicie desde la parte superior */
+    left: 0; /* Manténla pegada al lado izquierdo */
+    background: var(--blue);
+    /* genera error border-left: 5px solid var(--blue); */
+    transition: 0.5s;
+    overflow: hidden;
+}
+
+.navigation.active{
+    width: 80px;
+}
+
+.navigation ul{
+    position: relative;
+    top: 0;
+    left: 0;
+    width: 100%;
+}
+
+.navigation ul li{
+    position: relative;
+    width: 100%;
+    list-style: none;
+    border-top-left-radius: 30px;
+    border-bottom-left-radius: 30px;
+    
+}
+
+.navigation:hover ul li:hover {
+    background-color: var(--white); /* Solo se activa si el mouse está dentro de .navigation */
+}
+
+
+
+
+.navigation ul li:nth-child(1) {
+    margin-bottom: 30px;
+}
+
+
+.navigation ul li a {
+    position: relative;
+    display: block;
+    width: 100%;
+    display: flex;
+    text-decoration: none;
+    color: var(--white);
+}
+
+.navigation:hover ul li:hover a,
+.navigation:hover ul li.hovered a {
+    color: var(--blue); /* Aplica el cambio solo si el mouse está sobre la barra */
+}
+
+.navigation ul li a .icon {
+    position: relative;
+    display: block;
+    min-width: 28px; /* Ajusta según lo que necesites */
+    height: 60px;
+    line-height: 60px;
+    text-align: center;
+    min-width: 40px; /* Reduce el espacio mínimo */
+    margin-right: 10px;
+    
+}
+
+
+.navigation ul li a .icon ion-icon {
+    font-size: 1.40rem; 
+}
+
+.navigation ul li a .title{  /*cierto problema */
+    position: relative;
+    display: block;
+    padding: 0 10px;
+    height: 60px;
+    line-height: 60px;
+    text-align: start;
+    white-space: nowrap;
+}
+
+/*Curva de la barra*/
+
+.navigation:hover ul li:hover a::before {
+    content: '';
+    position: absolute;
+    right: 0;
+    top: -50px;
+    width: 50px;
+    height: 50px;
+    background-color: transparent;
+    border-radius: 50%;
+    box-shadow: 35px 35px 0 10px var(--white);
+    pointer-events: none;
+}
+
+.navigation:hover ul li:hover a::after {
+    content: '';
+    position: absolute;
+    right: 0;
+    bottom: -50px;
+    width: 50px;
+    height: 50px;
+    background-color: transparent;
+    border-radius: 50%;
+    box-shadow: 35px -35px 0 10px var(--white);
+    pointer-events: none;
+}
+
+
+/*Pagina principal*/
+.main{
+    position: absolute;
+    width: calc(100% - 300px);
+    left: 300px;
+    min-height: 100vh;
+    background: var(--white);
+    transition: 0.5s;
+}
+
+.main.active{
+    width: calc(100% - 80px);
+    left: 80px;
+}
+
+.topbar{
+    width: 100%;
+    height: 60px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0 10px;
+}
+
+.toggle{
+    position: relative;
+    width: 60px;
+    height: 60px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 2.5rem;
+    cursor: pointer;
+}
+
+.search{
+    position: relative;
+    width: 400px;
+    margin: 0 10px ;
+}
+
+.search label{
+    position: relative;
+    width: 100%;
+}
+
+.search label input{
+    width: 100%;
+    height: 40%;
+    border-radius: 40px;
+    padding: 5px 20px;
+    padding-left: 35px;
+    font-size: 18px;
+    outline: none;
+    border: 1px solid var(--black2);
+}
+
+.search label ion-icon{
+    position: absolute;
+    top: 0;
+    left: 10px;
+    font-size: 1.2rem;
+}
+
+.user{
+    position: relative;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    overflow: hidden;
+    cursor: pointer;
+}
+
+.user img{
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.user2 {
+    position: relative;
+    width: 150px;
+    height: 150px;
+    border-radius: 50%;
+    overflow: hidden;
+    cursor: pointer;
+}
+
+.user2 img {
+    position: absolute;
+    top: 50%; /* Centra verticalmente */
+    left: 50%; /* Centra horizontalmente */
+    transform: translate(-50%, -50%); /* Ajusta la posición al centro exacto */
+    width: 100%; /* Asegura que la imagen cubra todo el contenedor */
+    height: 100%; /* Asegura que cubra todo el contenedor */
+    object-fit: cover; /* Mantiene las proporciones sin deformar */
+}
+
+/*Tarjetas*/
+.cardBox{
+    position: relative;
+    width: 100%;
+    padding: 20px;
+    display: grid;
+    grid-template-columns: repeat(4,1fr);
+    grid-gap: 30px;
+}
+
+.cardBox .card{
+    position: relative;
+    background: var(--white);
+    padding: 30px;
+    border-radius: 20px;
+    display: flex;
+    justify-content: space-between;
+    cursor: pointer;
+    box-shadow: 0 7px 25px rgba(0, 0, 0, 0.08);
+}
+
+.cardBox .card .numbers{
+    position: relative;
+    font-weight: 500;
+    font-size: 2.5rem;
+    color: var(--blue);
+}
+
+.cardBox .card .cardName{
+    color: var(--blue);
+    font-size: 1.1rem;
+    margin-top: 5px;
+}
+
+.cardBox .card .iconBx{
+    font-size: 2.5rem;
+    color: var(--black2);
+}
+
+.cardBox .card:hover{
+    background: var(--blue);
+}
+
+.cardBox .card:hover .numbers,
+.cardBox .card:hover .cardName,
+.cardBox .card:hover .iconBx{
+    color: var(--white);
+}
+
+/*Lista de pedidos */
+.details{
+    position: relative;
+    width: 100%;
+    padding: 20px;
+    display: grid;
+    grid-template-columns: 2fr 1fr;
+    grid-gap: 30px;
+    /*margin-top: 10px;*/
+}
+
+.details .recentOrders{
+    position: relative;
+    display: grid;
+    min-height: 500px;
+    background: var(--white);
+    padding: 20px;
+    box-shadow: 0 07px 25px rgba(0, 0, 0, 0.08);
+    border-radius: 20px;
+}
+
+.details .cardHeader{
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+}
+
+.cardHeader h2{
+    font-weight: 600;
+    color: var(--blue);
+}
+
+.cardHeader .btn{
+    position: relative;
+    padding: 5px 10px;
+    background: var(--blue);
+    text-decoration: none;
+    color: var(--white);
+    border-radius: 6px;
+}
+
+.details table{
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 10px;
+}
+
+.details table thead td{
+    font-weight: 600;
+    color: var(--blue);
+}
+
+.details .recentOrders table tr{
+    color: var(--black1);
+    border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+}
+
+.details .recentOrders table tr:last-child{
+    border-bottom: none;
+}
+
+.details .recentOrders table tbody tr:hover{
+    background: var(--blue);
+    color: var(--white);
+}
+
+.details .recentOrders table tr td{
+    padding: 10px;
+}
+
+.details .recentOrders table tr td:last-child{
+    text-align: end;
+}
+
+.details .recentOrders table tr td:nth-child(2){
+    text-align: end;
+}
+
+.details .recentOrders table tr td:nth-child(3){
+    text-align: center;
+}
+
+.status.delivered{
+    padding: 2px 4px;
+    background: #65e02c;
+    color: var(--white);
+    border-radius: 4px;
+    font-size: 14px;
+    font-weight: 500;
+}
+
+.status.pending{
+    padding: 2px 4px;
+    background: #aca110;
+    color: var(--white);
+    border-radius: 4px;
+    font-size: 14px;
+    font-weight: 500;
+}
+
+.status.return{
+    padding: 2px 4px;
+    background: #c21515;
+    color: var(--white);
+    border-radius: 4px;
+    font-size: 14px;
+    font-weight: 500;
+}
+
+.status.inProgress{
+    padding: 2px 4px;
+    background: #1560c2;
+    color: var(--white);
+    border-radius: 4px;
+    font-size: 14px;
+    font-weight: 500;
+}
+
+.recentCustomers{
+    position: relative;
+    display: grid;
+    min-height: 500px;
+    padding: 20px;
+    background: var(--white);
+    box-shadow: 0 7px 25px rgba(0, 0, 0, 0.08);
+    border-radius: 20px;
+}
+
+.recentCustomers .imgBx{
+    position: relative;
+    width: 40px;
+    height: 40px;
+    border-radius: 50px;
+    overflow: hidden;
+}
+
+.recentCustomers .imgBx img{
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.recentCustomers table tr td{
+    padding: 12px 10px;
+}
+
+.recentCustomers table tr td h4{
+    font-size: 16px;
+    font-weight: 500;
+    line-height: 1.2rem;
+}
+
+.recentCustomers table tr td h4 span{
+    font-size: 14px;
+    color: var(--black2);
+}
+
+.recentCustomers table tr:hover{
+    background: var(--blue);
+    color: var(--white);
+}
+
+.recentCustomers table tr:hover td h4 span{
+    color: var(--white);
+}
+
+
+
+
+/*Ver perfil*/
+
+.modal {
+    display: none; /* Escondido por defecto */
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.6); /* Fondo translúcido */
+    z-index: 1000;
+    display: flex;
+    justify-content: center;
+    align-items: center; /* Centrar vertical y horizontalmente */
+  }
+  
+  /* Estilos de contenido del modal */
+  .modal-content {
+    width: 90%;
+    max-width: 400px;
+    background: linear-gradient(135deg, #ffffff, #f9f9f9); /* Fondo degradado */
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.3);
+    animation: fadeIn 0.3s ease-in-out; /* Animación de aparición */
+  }
+  
+  /* Animación de fadeIn */
+  @keyframes fadeIn {
+    from {
+      opacity: 0;
+      transform: scale(0.9);
+    }
+    to {
+      opacity: 1;
+      transform: scale(1);
+    }
+  }
+  
+  /* Botón de cerrar */
+  .close {
+    position: absolute;
+    top: 10px; /* Ajusta la posición superior */
+    right: 15px; /* Ajusta la posición derecha */
+    font-size: 30px; /* Aumenta el tamaño de la fuente */
+    font-weight: bold; /* Hace el carácter más destacado */
+    color: #333; /* Cambia el color si lo deseas */
+    cursor: pointer; /* Indica que es clicable */
+    transition: transform 0.2s ease, color 0.2s ease; /* Agrega una animación suave */
+  }
+  
+  .close:hover {
+    color: #e74c3c; /* Cambia de color al pasar el mouse */
+    transform: scale(1.2); /* Agranda el botón al pasar el mouse */
+  }
+  
+  
+  /* Etiquetas del formulario */
+  label {
+    margin-top: 10px;
+    font-size: 14px;
+    color: #333;
+    font-weight: bold;
+  }
+  
+  /* Campos de entrada */
+  input {
+    width: 100%;
+    margin-top: 5px;
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    font-size: 14px;
+    outline: none;
+    box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.1);
+  }
+  
+  input:focus {
+    border-color: var(--blue);
+    box-shadow: 0 0 5px rgba(52, 152, 219, 0.5);
+  }
+  
+  /* Botón de guardar */
+/* Contenedor de los botones */
+
+  
+  /* Estilos para los botones */
+  button {
+    padding: 10px 20px; /* Tamaño más equilibrado */
+    font-size: 16px; /* Texto más legible */
+    background-color: var(--blue); /* Color principal */
+    color: white; /* Color del texto */
+    border: none;
+    border-radius: 5px; /* Bordes redondeados */
+    cursor: pointer;
+    transition: background-color 0.3s ease, transform 0.2s ease; /* Animaciones suaves */
+  }
+  
+  button:hover {
+    background-color: #2980b9; /* Cambia el color al pasar el mouse */
+    transform: scale(1.05); /* Ligeramente más grande al pasar el mouse */
+  }
+  
+
+
+
+
+/* ESTILOS PARA EL HTML DE AYUDA */
+  
+  .help-container {
+    padding: 20px;
+    background-color: var(--gray);
+    border-radius: 15px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.help-container h2 {
+    color: var(--black1);
+    margin-bottom: 10px;
+    text-align: center;
+}
+
+.help-container p {
+    color: var(--black2);
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+.help-cards {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 20px;
+    width: 100%;
+}
+
+.help-card {
+    background: var(--white);
+    border-radius: 15px;
+    padding: 20px;
+    text-align: center;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s, box-shadow 0.3s;
+}
+
+.help-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 6px 15px rgba(0, 0, 0, 0.15);
+}
+
+.help-card .card-header {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-bottom: 10px;
+}
+
+.help-card .card-header ion-icon {
+    font-size: 3rem;
+    color: var(--blue);
+    margin-bottom: 10px;
+}
+
+.help-card h3 {
+    color: var(--blue);
+    margin-bottom: 10px;
+}
+
+.help-card p {
+    color: var(--black2);
+    margin-bottom: 15px;
+}
+
+.search-tags {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 10px;
+}
+
+.search-tags button {
+    background-color: var(--blue);
+    color: var(--white);
+    border: none;
+    padding: 5px 10px;
+    border-radius: 20px;
+    cursor: pointer;
+    font-size: 12px;
+    transition: 0.3s;
+}
+
+.search-tags button:hover {
+    background-color: var(--black2);
+    color: var(--blue);
+}
+
+.btn-action {
+    background-color: var(--blue);
+    color: var(--white);
+    border: none;
+    padding: 10px 20px;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: 0.3s ease-in-out;
+}
+
+.btn-action:hover {
+    background-color: var(--black2);
+    color: var(--blue);
+}
+
+
+.help-container h2{
+    color: var(--blue);
+}

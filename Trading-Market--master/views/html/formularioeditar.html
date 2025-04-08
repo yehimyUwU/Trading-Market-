@@ -1,0 +1,279 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="../../public/Estilos/fomularioeditar.css">
+    <title>Formulario de Producto</title>
+</head>
+<body>
+    <div id="modalProducto" class="modal" style="display: block;">
+        <div class="modal-contenido">
+            <div class="modal-header">
+                <h2>Subir Nuevo Producto</h2>
+                <button class="btn-cerrar" onclick="cerrarModal()">×</button>
+            </div>
+            
+            <div class="modal-body">
+              <form id="formularioProducto">
+                  <div class="form-group">
+                      <label for="nombreProducto">Nombre del Producto*</label>
+                      <input type="text" id="nombreProducto" name="nombreProducto" required minlength="3" maxlength="100" placeholder="Ingrese el nombre del producto">
+                      <span id="errorNombre" class="error-mensaje"></span>
+                  </div>
+          
+                  <div class="form-group">
+                      <label for="descripcion">Descripción*</label>
+                      <textarea id="descripcion" name="descripcion" rows="4" required minlength="10" maxlength="500" placeholder="Describa las características del producto"></textarea>
+                      <span id="errorDescripcion" class="error-mensaje"></span>
+                  </div>
+          
+                  <div class="form-row">
+                      <div class="form-group half">
+                          <label for="precio">Precio*</label>
+                          <div class="input-group">
+                              <span class="currency-symbol">$</span>
+                              <input type="number" id="precio" name="precio" step="0.01" min="0.01" required placeholder="0.00">
+                          </div>
+                          <span id="errorPrecio" class="error-mensaje"></span>
+                      </div>
+          
+                      <div class="form-group half">
+                          <label for="stock">Stock Inicial*</label>
+                          <input type="number" id="stock" name="stock" min="1" required placeholder="Cantidad disponible">
+                          <span id="errorStock" class="error-mensaje"></span>
+                      </div>
+                  </div>
+          
+                  <div class="form-row">
+                      <div class="form-group half">
+                          <label for="categoriaGeneral">Categoría*</label>
+                          <select id="categoriaGeneral" name="categoriaGeneral" required onchange="actualizarSubcategorias()">
+                              <option value="">Seleccione una categoría</option>
+                              <option value="8">Accesorios de Vehículos</option>
+                              <option value="17">Animales y Mascotas</option>
+                              <option value="18">Antigüedades y Colecciones</option>
+                              <option value="19">Arte, Papelería y Mercería</option>
+                              <option value="13">Bebés</option>
+                              <option value="7">Belleza y Cuidado Personal</option>
+                              <option value="9">Construcción</option>
+                              <option value="5">Deportes y Fitness</option>
+                              <option value="4">Electrodomésticos</option>
+                              <option value="6">Herramientas</option>
+                              <option value="15">Industria y Oficina</option>
+                              <option value="10">Inmuebles</option>
+                              <option value="12">Juegos y Juguetes</option>
+                              <option value="11">Moda</option>
+                              <option value="14">Productos Sustentables</option>
+                              <option value="16">Salud y Equipo Médico</option>
+                              <option value="1">Supermercado</option>
+                              <option value="3">Tecnología</option>
+                              <option value="2">Vehículos</option>
+                          </select>
+                      </div>
+          
+                      <div class="form-group half">
+                          <label for="subcategoria">Subcategoría*</label>
+                          <select id="subcategoria" name="subcategoria">
+                              <option value="">Primero seleccione una categoría</option>
+                          </select>
+                          <span id="errorCategoria" class="error-mensaje"></span>
+                      </div>
+                  </div>
+          
+                  <div class="form-group">
+                      <label for="imagenProducto">Imagen del Producto*</label>
+                      <div class="upload-container" onclick="document.getElementById('imagenProducto').click()">
+                          <input type="file" id="imagenProducto" name="imagenProducto" accept="image/*" onchange="previsualizarImagen(event)">
+                          <div class="upload-button">
+                              <span>↑</span>
+                              Seleccionar Imagen
+                          </div>
+                          <span class="file-info">Formatos aceptados: JPG, PNG. Máximo 2MB</span>
+                      </div>
+                      <div id="previewImagen" class="image-preview"></div>
+                      <span id="errorImagen" class="error-mensaje"></span>
+                  </div>
+          
+                  <div class="form-actions">
+                      <button type="button" class="btn-secundario" onclick="cerrarModal()">Cancelar</button>
+                      <button type="button" id="publicarBtn" class="btn-primario">
+                          <span>↑</span>
+                          Publicar Producto
+                      </button>
+                  </div>
+              </form>
+          
+              <div class="preview-producto" id="previewProducto" style="display: none;">
+                  <h3>Vista Previa del Producto</h3>
+                  <div id="previewContenido"></div>
+              </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Función para cerrar el modal
+        function cerrarModal() {
+            document.getElementById('modalProducto').style.display = 'none';
+        }
+
+        // Función para actualizar subcategorías
+        function actualizarSubcategorias() {
+            const categoriaGeneral = document.getElementById('categoriaGeneral').value;
+            const subcategoriaSelect = document.getElementById('subcategoria');
+            subcategoriaSelect.innerHTML = '<option value="">Cargando subcategorías...</option>';
+            
+            if (!categoriaGeneral) {
+                subcategoriaSelect.innerHTML = '<option value="">Primero seleccione una categoría válida</option>';
+                return;
+            }
+
+            // Simulación de datos (en un caso real, harías una petición al servidor)
+            setTimeout(() => {
+                // Esto es solo un ejemplo - en tu implementación real usarías el fetch como en tu código original
+                const subcategorias = {
+                    '1': ['Alimentos', 'Bebidas', 'Limpieza'],
+                    '2': ['Autos', 'Motos', 'Camiones'],
+                    '3': ['Celulares', 'Computadoras', 'Tablets']
+                    // Agrega más categorías y subcategorías según necesites
+                };
+
+                subcategoriaSelect.innerHTML = '<option value="">Seleccione una subcategoría</option>';
+                
+                if (subcategorias[categoriaGeneral]) {
+                    subcategorias[categoriaGeneral].forEach((subcat, index) => {
+                        const option = document.createElement('option');
+                        option.value = index + 1;
+                        option.textContent = subcat;
+                        subcategoriaSelect.appendChild(option);
+                    });
+                } else {
+                    subcategoriaSelect.innerHTML = '<option value="">No hay subcategorías disponibles</option>';
+                }
+            }, 500);
+        }
+
+        // Función para previsualizar la imagen
+        function previsualizarImagen(event) {
+            const input = event.target;
+            const preview = document.getElementById('previewImagen');
+            
+            if (input.files && input.files[0]) {
+                const reader = new FileReader();
+                
+                reader.onload = function(e) {
+                    preview.innerHTML = '<img src="' + e.target.result + '" alt="Vista previa de la imagen">';
+                    preview.style.display = 'block';
+                }
+                
+                reader.readAsDataURL(input.files[0]);
+            }
+        }
+
+        // Validación del formulario
+        document.getElementById('publicarBtn').addEventListener('click', function() {
+            let isValid = true;
+            
+            // Validar nombre
+            const nombre = document.getElementById('nombreProducto');
+            if (nombre.value.length < 3) {
+                document.getElementById('errorNombre').textContent = 'El nombre debe tener al menos 3 caracteres';
+                document.getElementById('errorNombre').style.display = 'block';
+                isValid = false;
+            } else {
+                document.getElementById('errorNombre').style.display = 'none';
+            }
+            
+            // Validar descripción
+            const descripcion = document.getElementById('descripcion');
+            if (descripcion.value.length < 10) {
+                document.getElementById('errorDescripcion').textContent = 'La descripción debe tener al menos 10 caracteres';
+                document.getElementById('errorDescripcion').style.display = 'block';
+                isValid = false;
+            } else {
+                document.getElementById('errorDescripcion').style.display = 'none';
+            }
+            
+            // Validar precio
+            const precio = document.getElementById('precio');
+            if (!precio.value || parseFloat(precio.value) <= 0) {
+                document.getElementById('errorPrecio').textContent = 'Ingrese un precio válido';
+                document.getElementById('errorPrecio').style.display = 'block';
+                isValid = false;
+            } else {
+                document.getElementById('errorPrecio').style.display = 'none';
+            }
+            
+            // Validar stock
+            const stock = document.getElementById('stock');
+            if (!stock.value || parseInt(stock.value) < 1) {
+                document.getElementById('errorStock').textContent = 'El stock debe ser al menos 1';
+                document.getElementById('errorStock').style.display = 'block';
+                isValid = false;
+            } else {
+                document.getElementById('errorStock').style.display = 'none';
+            }
+            
+            // Validar categoría y subcategoría
+            const categoria = document.getElementById('categoriaGeneral');
+            const subcategoria = document.getElementById('subcategoria');
+            if (!categoria.value) {
+                document.getElementById('errorCategoria').textContent = 'Seleccione una categoría';
+                document.getElementById('errorCategoria').style.display = 'block';
+                isValid = false;
+            } else if (!subcategoria.value) {
+                document.getElementById('errorCategoria').textContent = 'Seleccione una subcategoría';
+                document.getElementById('errorCategoria').style.display = 'block';
+                isValid = false;
+            } else {
+                document.getElementById('errorCategoria').style.display = 'none';
+            }
+            
+            // Validar imagen
+            const imagen = document.getElementById('imagenProducto');
+            if (!imagen.files || !imagen.files[0]) {
+                document.getElementById('errorImagen').textContent = 'Seleccione una imagen para el producto';
+                document.getElementById('errorImagen').style.display = 'block';
+                isValid = false;
+            } else {
+                document.getElementById('errorImagen').style.display = 'none';
+            }
+            
+            // Si todo es válido, mostrar vista previa
+            if (isValid) {
+                mostrarVistaPrevia();
+            }
+        });
+
+        // Función para mostrar vista previa
+        function mostrarVistaPrevia() {
+            const preview = document.getElementById('previewProducto');
+            const contenido = document.getElementById('previewContenido');
+            
+            // Limpiar contenido previo
+            contenido.innerHTML = '';
+            
+            // Mostrar datos del producto
+            contenido.innerHTML += `
+                <h4>${document.getElementById('nombreProducto').value}</h4>
+                <p><strong>Descripción:</strong> ${document.getElementById('descripcion').value}</p>
+                <p><strong>Precio:</strong> $${parseFloat(document.getElementById('precio').value).toFixed(2)}</p>
+                <p><strong>Stock:</strong> ${document.getElementById('stock').value}</p>
+                <p><strong>Categoría:</strong> ${document.getElementById('categoriaGeneral').options[document.getElementById('categoriaGeneral').selectedIndex].text}</p>
+                <p><strong>Subcategoría:</strong> ${document.getElementById('subcategoria').options[document.getElementById('subcategoria').selectedIndex].text}</p>
+            `;
+            
+            // Mostrar imagen si existe
+            const imagenPreview = document.getElementById('previewImagen').querySelector('img');
+            if (imagenPreview) {
+                contenido.innerHTML += '<p><strong>Imagen:</strong></p>';
+                contenido.appendChild(imagenPreview.cloneNode());
+            }
+            
+            // Mostrar la vista previa
+            preview.style.display = 'block';
+        }
+    </script>
+</body>
+</html>

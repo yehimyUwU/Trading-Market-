@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="../../public/Estilos/inico.css" />
+    
+    <link rel="stylesheet" href="styles.css"> <!-- Archivo CSS separado -->
+</head>
+<body>
+
+    <!-- Barra de Navegación -->
+    <header>
+        <nav class="navbar">
+            <div class="logo">
+                <img src="../../public/imagenes/Logooriginal.png" alt="Trading Market Logo" class="logo-img">
+            </div>
+            <ul class="nav-links">
+                <li><a href="#">Categorias</a></li>
+                <li><a href="#">Ofertas</a></li>
+                <li><a href="#">Proveedores</a></li>
+            <div class="search-box">
+                <input type="text" placeholder="Buscar productos...">
+                <button>🔍</button>
+            </div>
+            <div class="user-actions">
+                <a href="#" class="cart-icon">🛒</a>
+                <div class="auth-buttons">
+                    <a href="../../views/html/longin.html" class="login-btn">Iniciar Sesión</a>
+                    
+                </div>
+            </div>
+        </nav>
+    </header>
+
+    <!-- Banner Principal -->
+    <section class="banner">
+        <div class="carousel">
+            <div class="carousel-inner">
+                <div class="carousel-item active">
+                    <img src="../../public/imagenes/close-up-frasco-crema-cuidado-piel-que-refuerza-cara-rodeado-varios-productos-tratamiento-tratamiento-piel-concepto-productos-belleza-rutinaria-cuidado-cara-tratamientos-faciales-fotografia-close-up-frasc.avif " alt="Productos destacados">
+                    <div class="carousel-content">
+                        <h1>Encuentra los Mejores Productos</h1>
+                        <p>Moda, electrónicos, accesorios y más en un solo lugar.</p>
+                        <a href="#" class="btn">Explorar</a>
+                    </div>
+                </div>
+                <div class="carousel-item">
+                    <img src="../../public/imagenes/suavite.webp" alt="Ofertas especiales">
+                    <div class="carousel-content">
+                        <h1>Ofertas Especiales</h1>
+                        <p>Descubre nuestras increíbles promociones.</p>
+                        <a href="#" class="btn">Ver Ofertas</a>
+                    </div>
+                </div>
+                <div class="carousel-item">
+                    <img src="../../public/imagenes/cosmeticos.webp" alt="Nuevos productos">
+                    <div class="carousel-content">
+                        <h1>Nuevos Productos</h1>
+                        <p>Conoce las últimas novedades en nuestra tienda.</p>
+                        <a href="#" class="btn">Ver Más</a>
+                    </div>
+                </div>
+            </div>
+            <button class="carousel-control prev">❮</button>
+            <button class="carousel-control next">❯</button>
+            <div class="carousel-indicators">
+                <button class="indicator active"></button>
+                <button class="indicator"></button>
+                <button class="indicator"></button>
+            </div>
+        </div>
+    </section>
+
+    <!-- Sección de Productos -->
+    <section class="productos">
+        <h2>Nuestros Productos Destacados</h2>
+        <div class="productos-container" id="productosGrid">
+            <!-- Productos se cargarán aquí -->
+        </div>
+    </section>
+
+    <!-- Pie de Página -->
+    <footer>
+        <p>&copy; 2025 Trading Market. Todos los derechos reservados.</p>
+    </footer>
+
+    <script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const carousel = document.querySelector('.carousel');
+        const items = carousel.querySelectorAll('.carousel-item');
+        const indicators = carousel.querySelectorAll('.indicator');
+        const prevBtn = carousel.querySelector('.prev');
+        const nextBtn = carousel.querySelector('.next');
+        let currentIndex = 0;
+
+        function showSlide(index) {
+            items.forEach(item => item.classList.remove('active'));
+            indicators.forEach(ind => ind.classList.remove('active'));
+            items[index].classList.add('active');
+            indicators[index].classList.add('active');
+        }
+
+        function nextSlide() {
+            currentIndex = (currentIndex + 1) % items.length;
+            showSlide(currentIndex);
+        }
+
+        function prevSlide() {
+            currentIndex = (currentIndex - 1 + items.length) % items.length;
+            showSlide(currentIndex);
+        }
+
+        // Event listeners
+        nextBtn.addEventListener('click', nextSlide);
+        prevBtn.addEventListener('click', prevSlide);
+        indicators.forEach((indicator, index) => {
+            indicator.addEventListener('click', () => {
+                currentIndex = index;
+                showSlide(currentIndex);
+            });
+        });
+
+        // Auto slide
+        setInterval(nextSlide, 5000);
+    });
+
+    document.addEventListener('DOMContentLoaded', function() {
+        fetch('../../controllers/php/listar_productos.php')
+            .then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    const productosGrid = document.getElementById('productosGrid');
+                    productosGrid.innerHTML = ''; // Clear existing content
+                    data.listaProductos.forEach(producto => {
+                        const productoCard = document.createElement('div');
+                        productoCard.classList.add('producto');
+                        productoCard.innerHTML = `
+                            <div class="img-container">
+                                <img src="../imagenes_P/${producto.imagen || 'default.jpeg'}" alt="${producto.nombre}" onerror="this.onerror=null;this.src='../imagenes_P/default.jpeg';">
+                            </div>
+                            <div class="producto-info">
+                                <h3>${producto.nombre}</h3>
+                                <p>$${producto.precio}</p>
+                                <a href="#" class="btn">Comprar</a>
+                            </div>
+                        `;
+                        productosGrid.appendChild(productoCard);
+                    });
+                } else {
+                    alert('No se pudieron cargar los productos');
+                }
+            })
+            .catch(error => {
+                console.error('Error al cargar los productos:', error);
+                alert('Error al cargar los productos');
+            });
+    });
+    </script>
+
+</body>
+</html>

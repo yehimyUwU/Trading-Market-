@@ -1,0 +1,17 @@
+#content {
+    margin-left: 350px; /* Asegúrate que sea el mismo ancho que la barra */
+    position: relative; /* Mantén el contenido dentro del flujo del documento */
+    transition: 0.5s ease; /* Para que responda al cambio de la barra activa */
+}
+
+.navigation.active ~ #content {
+    margin-left: 100px; /* Ajusta el margen cuando la barra se contraiga */
+}
+
+main {
+    padding: 0px;
+    width: 10%;
+}
+
+
+

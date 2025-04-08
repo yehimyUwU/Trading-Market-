@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="stylesheet" href="../../public/Estilos/inico.css" />
+        <link rel="stylesheet" href="../../public/Estilos/estilos.css" />
+        <script src="https://kit.fontawesome.com/1e7ede300e.js" crossorigin="anonymous"></script>
+        <title>Inicio</title>
+        <link rel="stylesheet" href="../../public/Estilos/styles.css"> <!-- Archivo CSS separado -->
+        <!-- Agregar Font Awesome -->
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+        <!-- Agregar Bootstrap CSS -->
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    </head>
+<body>
+
+
+    <style>
+        /* ---- CONTENEDOR DE TARJETAS ---- */
+        #proveedores-container {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            padding: 20px;
+            max-width: 1200px;
+            margin: auto;
+        }
+
+        .card {
+            background: white;
+            padding: 20px;
+            border-radius: 12px;
+            box-shadow: 0px 5px 15px rgba(0, 0, 0, 0.15);
+            text-align: center;
+            transition: transform 0.3s ease-in-out;
+        }
+
+        .card:hover {
+            transform: translateY(-5px);
+        }
+
+        .card-body {
+            padding: 15px;
+        }
+
+        button {
+            margin: 10px 0;
+            border-radius: 20px;
+            font-size: 0.85rem;
+        }
+
+        .banner {
+    text-align: center;
+    background-color: rgba(0, 0, 0, 0.658) !important; /* Fondo negro sólido */
+    color: white;
+    padding: 80px 20px; /* Espaciado más amplio */
+    min-height: 300px; /* Aumenta la altura del banner */
+    border-radius: 10px;
+    box-shadow: 0 4px 10px rgba(255, 255, 255, 0.2);
+    opacity: 1; /* Eliminar cualquier transparencia */
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.banner h1 {
+    font-size: 3rem; /* Aumentar tamaño */
+    font-weight: bold;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    text-shadow: 2px 2px 10px rgba(255, 255, 255, 0.3);
+    animation: fadeIn 1.5s ease-in-out;
+}
+
+.banner p {
+    font-size: 1.5rem; /* Aumentar tamaño */
+    margin-top: 15px;
+    font-style: italic;
+    opacity: 0.9;
+    animation: fadeIn 2s ease-in-out;
+}
+
+/* ---- ANIMACIÓN MEJORADA ---- */
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(30px); /* Movimiento más pronunciado */
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+    </style>
+    <div id="nav-container"></div>
+    <br>
+    <!-- Banner Principal -->
+    <div id="nav-container"></div>
+    <br><br><br><br><br><br><br>
+
+    <header class="banner">
+        <h1>Bienvenido a Trading Market</h1>
+        <p>Explora y conecta con los mejores proveedores</p>
+    </header>
+    
+
+    <div class="container">
+        <div class="row" id="proveedores-container"></div>
+    </div>
+    
+<!-- Modal para mostrar información del proveedor -->
+<div class="modal fade" id="infoProveedorModal" tabindex="-1" role="dialog" aria-labelledby="infoProveedorLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="infoProveedorLabel">Información del Proveedor</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <p><strong>Nombre:</strong> <span id="modalNombre"></span></p>
+                <p><strong>Apellido:</strong> <span id="modalApellido"></span></p>
+                <p><strong>Email:</strong> <span id="modalEmail"></span></p>
+                <p><strong>Género:</strong> <span id="modalGenero"></span></p>
+                <p><strong>Fecha de Nacimiento:</strong> <span id="modalFechaNacimiento"></span></p>
+                <p><strong>Documento:</strong> <span id="modalDocumento"></span></p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+    
+
+<footer class="pie-pagina">
+    <div class="grupo-1">
+        <div class="box">
+            <figure>
+                <a href="#">
+                    <img src="../../public/imagenes/tran.png" alt="Logo de SLee Dw">
+                </a>
+            </figure>
+        </div>
+        <div class="box">
+            <h2>SOBRE NOSOTROS</h2>
+            <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Odio, ipsa?</p>
+            <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Odio, ipsa?</p>
+        </div>
+        <div class="box">
+            <h2>SIGUENOS</h2>
+            <div class="red-social">
+                <a href="#" class="fa fa-facebook"></a>
+                <a href="#" class="fa fa-instagram"></a>
+                <a href="#" class="fa fa-twitter"></a>
+                <a href="#" class="fa fa-youtube"></a>
+            </div>
+        </div>
+    </div>
+    <div class="grupo-2">
+        <small>&copy; 2025 <b>Trading Market</b> - Todos los Derechos Reservados.</small>
+    </div>
+</footer>
+    
+    <script src="../../public/js/nav.js"></script>
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+</html>

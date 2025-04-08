@@ -1,0 +1,169 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: sans-serif;
+}
+
+body {
+    display: flex;
+    margin: 0;
+}
+
+/* Contenedor de tarjetas */
+.cardBox {
+    position: relative;
+    width: 100%;
+    padding: 20px;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); /* Adaptable */
+    grid-gap: 30px;
+    max-width: 1000px;
+}
+
+
+
+.cardBox .card {
+    position: relative;
+    background: white;
+    padding: 30px;
+    border-radius: 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    cursor: pointer;
+    box-shadow: 0 7px 25px rgba(0, 0, 0, 0.08);
+    transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
+    background: linear-gradient(135deg, #ffffff, #f0f0f0);
+}
+
+.cardBox .card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+}
+ HEAD
+/* Estilos para los textos dentro de la tarjeta */
+.cardBox .card .numbers {
+    font-size: 1.8rem;
+    font-weight: bold;
+    color: #0D1433;
+}
+
+
+.card {
+    background-color: #f5f5f5;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    padding: 20px;
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+.welcome-stats {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 20px;
+}
+
+.stat-item .stat-icon {
+    font-size: 36px;
+    color: #274272;
+    margin-bottom: 10px;
+}
+
+.welcome-tutorials ul {
+    list-style: none;
+    padding: 0;
+}
+
+.welcome-tutorials li {
+    margin-bottom: 10px;
+}
+
+.welcome-tutorials a {
+    text-decoration: none;
+    color: #007bff;
+    transition: color 0.3s;
+}
+
+.welcome-tutorials a:hover {
+    color: #0056b3;
+}
+
+.container{
+    width: 35%;
+    height: 35vh;
+    display: flex;
+    align-items: center; 
+    justify-content: center;
+
+}
+
+.cardBox .card .cardName {
+    color: #171F55;
+    font-size: 1.1rem;
+    margin-top: 5px;
+}
+
+.cardBox .card .iconBx {
+    font-size: 2.5rem;
+    color: #6C90C3;
+}
+
+/* Fondo del contenido principal */
+.content {
+    flex-grow: 1;
+    padding: 20px;
+    width: 100%;
+    height: 1000px;
+    background-image: url("data:image/svg+xml,<svg viewBox='0 0 1440 320' xmlns='http://www.w3.org/2000/svg'><path fill='%23356b82' d='M0,192L80,160C160,128,320,64,480,58.7C640,53,800,107,960,144C1120,181,1280,203,1360,213.3L1440,224L1440,0L0,0Z'></path></svg>");
+    background-size: cover;
+    background: linear-gradient(to bottom, #4b6584, #ffffff);
+    background: url('../imagenes/online-shop.png') no-repeat center center/cover;
+  
+}
+
+/* Estilo para el título con fondo animado */
+h1 {
+    font-size: 50px;
+    color: transparent;
+    -webkit-text-stroke: 1px white;
+    background: url(../imagenes/metaverse-avatar-collage-concept.jpg);
+    -webkit-background-clip: text;
+    background-position: 0 0;
+    animation: fondo 10s linear infinite;
+    text-shadow: 2px 2px 8px rgba(0, 0, 0, 0.2);
+    animation: fadeIn 1s ease-in-out;
+}
+
+@keyframes fondo {
+    0% { background-position: 0 0; }
+    100% { background-position: 1280px 0; }
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(-10px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+
+p {
+    font-family: 'Lobster', cursive;
+    font-size: 20px;
+    font-weight: bold;
+    color: #3e468d;
+}
+
+/* Estilos adicionales */
+.welcome-tutorials {
+    background: rgba(255, 255, 255, 0.8); /* Fondo blanco con transparencia */
+    padding: 10px;
+    border-radius: 8px;
+    display: inline-block;
+}

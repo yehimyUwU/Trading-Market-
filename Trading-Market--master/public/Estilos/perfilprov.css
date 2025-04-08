@@ -1,0 +1,133 @@
+#content {
+    margin-left: 350px; /* Asegúrate que sea el mismo ancho que la barra */
+    position: relative; /* Mantén el contenido dentro del flujo del documento */
+    transition: 0.5s ease; /* Para que responda al cambio de la barra activa */
+}
+
+.navigation.active ~ #content {
+    margin-left: 100px; /* Ajusta el margen cuando la barra se contraiga */
+}
+
+
+
+main {
+    padding: 0px;
+    width: 10px;
+}
+
+nav{
+    width: 1000px;
+}
+
+div{
+    width: 600px;
+}
+
+
+/* Estilos específicos para PerfilProv */
+
+
+
+
+.profile-header {
+    text-align: center;
+    margin-bottom: 25px;
+}
+
+.profile-avatar {
+    width: 120px;
+    height: 120px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 3px solid var(--blue);
+    margin-bottom: 15px;
+}
+
+.profile-upload {
+    display: block;
+    margin: 0 auto 15px;
+    font-size: 0.9rem;
+}
+
+.profile-stats {
+    display: flex;
+    justify-content: space-around;
+    margin: 20px 0;
+    padding: 15px 0;
+    border-top: 1px solid var(--grey);
+    border-bottom: 1px solid var(--grey);
+}
+
+.stat-item {
+    text-align: center;
+    font-size: 0.9rem;
+}
+
+.stat-item i {
+    display: block;
+    font-size: 1.8rem;
+    color: var(--blue);
+    margin-bottom: 5px;
+}
+
+.profile-form {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 15px;
+}
+
+.form-group {
+    margin-bottom: 15px;
+}
+
+.form-group label {
+    display: block;
+    margin-bottom: 5px;
+    font-weight: 500;
+    color: var(--dark);
+    font-size: 0.9rem;
+}
+
+.form-group input {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid var(--grey);
+    border-radius: 8px;
+    font-size: 0.9rem;
+}
+
+.form-buttons {
+    grid-column: span 2;
+    display: flex;
+    justify-content: flex-end;
+    gap: 10px;
+    margin-top: 10px;
+}
+
+.btn-save, .btn-cancel {
+    padding: 8px 20px;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 0.9rem;
+}
+
+.btn-save {
+    background: var(--blue);
+    color: white;
+}
+
+.btn-cancel {
+    background: var(--grey);
+    color: var(--dark);
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+    .profile-form {
+        grid-template-columns: 1fr;
+    }
+    .form-buttons {
+        grid-column: span 1;
+    }
+}
