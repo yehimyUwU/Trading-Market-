@@ -8,7 +8,7 @@
 /*:::::Pie de Pagina*/
 .pie-pagina{
     width: 100%;
-    background-color: #0a141d;
+    background-color: #0088ff;
 }
 
 
@@ -46,27 +46,28 @@
     width: 45px;
     height: 45px;
     line-height: 45px;
-    color: #fff;
+    color: #000000;
     margin-right: 10px;
-    background-color: #0d2033;
+    background-color: #ffffff;
     text-align: center;
     transition: all 300ms ease;
+    border-radius: 100%;
 }
 .pie-pagina .grupo-1 .red-social a:hover{
     color: aqua;
 }
 .pie-pagina .grupo-2{
-    background-color: #0a1a2a;
+    background-color: #ffffff00;
     padding: 15px 10px;
     text-align: center;
     color: #fff;
 }
 .pie-pagina .grupo-2 small{
-    font-size: 15px;
+    font-size: 20px;
 }
 @media screen and (max-width:800px){
     .pie-pagina .grupo-1{
-        width: 90%;
+        width: 100%;
         grid-template-columns: repeat(1, 1fr);
         grid-gap:30px;
         padding: 35px 0px;

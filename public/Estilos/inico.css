@@ -35,13 +35,21 @@ body {
   }
 
 
-.modal-dialog {
-    max-width: 100px; /* Ancho máximo del modal */
-    margin: auto; /* Centra horizontalmente */
-    position: relative; /* Asegúrate de que el modal esté en posición relativa */
-    top: 50%; /* Mueve el modal hacia abajo */
-    transform: translateY(-50%); /* Centra verticalmente */
+  .modal-dialog {
+    margin: auto;
+    position: relative;
+    top: 50%;
+    transform: translateY(-50%);
 }
+
+/* Clase para hacer el modal más ancho */
+.modal-dialog.ancho-completo {
+    width: 95vw !important;      /* Ocupa el 95% del ancho de la ventana */
+    max-width: none !important;  /* Elimina límite de Bootstrap */
+    margin: 30px auto;           /* Centrado y espaciado arriba/abajo */
+}
+
+
 
 /* Fondo con efecto borroso */
 .fondo-blur {
@@ -567,7 +575,7 @@ body {
     }
 }
 
-@media (max-width: 400px) {
+@media (max-width: 600px) {
     .productos-container {
         grid-template-columns: 1fr;
     }
@@ -1270,7 +1278,7 @@ body {
     }
 }
 
-@media (max-width: 480px) {
+@media (max-width: 680px) {
     .navbar {
         flex-direction: column;
         align-items: flex-start;
@@ -1331,7 +1339,7 @@ body {
 /* Contenido del modal */
 .modal-content {
   width: 90%;
-  max-width: 400px;
+  max-width: 1000px;
   background: #ffffff;
   padding: 20px;
   border-radius: 10px;
@@ -1578,7 +1586,7 @@ ion-icon{
 
 .card {
   width: 100%; /* O puedes usar un tamaño fijo */
-  max-width: 400px; /* Ajusta esto según tu diseño */
+  max-width: 600px; /* Ajusta esto según tu diseño */
   margin-bottom: 15px; /* Espaciado entre tarjetas */
 }
 

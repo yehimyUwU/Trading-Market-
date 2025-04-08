@@ -492,25 +492,31 @@ document.addEventListener("DOMContentLoaded", function () {
         });
     }
 
-    function mostrarDetallesProducto(id) {
-        const producto = productosOriginales.find(p => p.id_producto == id);
-        if (!producto) return;
-    
-        document.getElementById("modalNombre").textContent = producto.nombre;
-        document.getElementById("modalDescripcion").textContent = producto.descripcion;
-        document.getElementById("modalPrecio").textContent = `$${producto.precio}`;
-        document.getElementById("modalImagen").src = producto.imagen;
-    
-        const estrellasContainer = document.getElementById("estrellas");
-        estrellasContainer.setAttribute("data-id-producto", producto.id_producto);
-        document.getElementById("mensaje-calificacion").style.display = "none";
-        document.querySelectorAll(".estrella").forEach(e => e.classList.remove("seleccionada"));
-    
-        $("#productoModal").modal("show");
-    
-        asignarEventosEstrellas();
-        cargarCalificacionGuardada(producto.id_producto);
-    }
+function mostrarDetallesProducto(id) {
+    const producto = productosOriginales.find(p => p.id_producto == id);
+    if (!producto) return;
+
+    document.getElementById("modalNombre").textContent = producto.nombre;
+    document.getElementById("modalDescripcion").textContent = producto.descripcion;
+    document.getElementById("modalPrecio").textContent = `$${producto.precio}`;
+    document.getElementById("modalImagen").src = producto.imagen;
+
+    const estrellasContainer = document.getElementById("estrellas");
+    estrellasContainer.setAttribute("data-id-producto", producto.id_producto);
+    document.getElementById("mensaje-calificacion").style.display = "none";
+    document.querySelectorAll(".estrella").forEach(e => e.classList.remove("seleccionada"));
+
+    // ✨ Mostrar modal
+    $("#productoModal").modal("show");
+
+    // ⭐ Lógica para estrellas
+    asignarEventosEstrellas();
+    cargarCalificacionGuardada(producto.id_producto);
+
+    // 💬 Cargar comentarios automáticamente al abrir el modal
+    cargarComentarios(producto.id_producto);
+}
+
     
     function asignarEventosEstrellas() {
         document.querySelectorAll(".estrella").forEach(estrella => {
@@ -691,4 +697,75 @@ function mostrarInfo(idProveedor) {
         })
         .catch(error => console.error("Error al obtener los datos del proveedor:", error));
 }
+
+function guardarComentario() {
+    const idProducto = document.getElementById("estrellas").getAttribute("data-id-producto");
+    const comentario = document.getElementById("comentarioTexto").value;
+
+    if (!comentario.trim()) return;
+
+    fetch('../../controllers/php/guardar_comentario.php', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ id_producto: idProducto, comentario: comentario })
+    })
+    .then(res => res.json())
+    .then(data => {
+        if (data.success) {
+            document.getElementById("comentarioTexto").value = "";
+            cargarComentarios(idProducto);
+        }
+    });
+}
+
+function cargarComentarios(idProducto) {
+    fetch(`../../controllers/php/obtener_comentarios.php?id_producto=${idProducto}`)
+        .then(res => res.json())
+        .then(data => {
+            const contenedor = document.getElementById("listaComentarios");
+            contenedor.innerHTML = "";
+
+            if (data.success && data.comentarios.length > 0) {
+                data.comentarios.forEach(coment => {
+                    const div = document.createElement("div");
+                    div.classList.add("border", "p-2", "mb-2", "position-relative");
+
+                    // Generar estrellas según calificación
+                    let estrellasHTML = '';
+                    for (let i = 1; i <= 5; i++) {
+                        estrellasHTML += `<i class="fa-star ${i <= coment.calificacion ? 'fas text-warning' : 'far text-muted'} small"></i>`;
+                    }
+
+                    div.innerHTML = `
+                        <div class="position-absolute" style="top: 8px; right: 10px;">
+                            ${estrellasHTML}
+                        </div>
+                        <strong>${coment.nombre_usuario || "Anónimo"}:</strong><br>
+                        ${coment.comentario}<br>
+                        <small class="text-muted">${coment.fecha}</small>
+                    `;
+                    contenedor.appendChild(div);
+                });
+            } else {
+                contenedor.innerHTML = "<p>No hay comentarios aún.</p>";
+            }
+        });
+}
+
+
+
+function mostrarModalProducto(producto) {
+    document.getElementById("modalNombre").textContent = producto.nombre;
+    document.getElementById("modalImagen").src = producto.imagen;
+    document.getElementById("modalDescripcion").textContent = producto.descripcion;
+    document.getElementById("modalPrecio").textContent = `$${producto.precio}`;
+    document.getElementById("estrellas").setAttribute("data-id-producto", producto.id_producto);
+
+    // ✅ Cargar comentarios automáticamente
+    cargarComentarios(producto.id_producto);
+
+    // Mostrar el modal
+    $('#productoModal').modal('show');
+}
+
 
