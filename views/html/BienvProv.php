@@ -60,7 +60,10 @@ if (!verificarRol('Proveedor')) { // Cambiado a "Proveedor"
       <section class="welcome-section">
           <div class="welcome-banner"></div>
           <div class="welcome-message">
-              <h1>¡Bienvenido, [Nombre del vendedor]!</h1>
+              <?php
+                  $nombreVendedor = isset($_SESSION['usuario']['nombre']) ? $_SESSION['usuario']['nombre'] : 'Vendedor';
+                  echo "<h1>¡Bienvenido, " . htmlspecialchars($nombreVendedor) . "!</h1>";
+              ?>
               <p>Listo para impulsar tus ventas en Trading Market?</p>
           </div>
 

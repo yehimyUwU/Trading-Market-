@@ -31,22 +31,21 @@ div{
 
 .profile-header {
     text-align: center;
-    margin-bottom: 25px;
+    padding: 20px;
 }
 
 .profile-avatar {
-    width: 120px;
-    height: 120px;
+    width: 150px;
+    height: 150px;
     border-radius: 50%;
     object-fit: cover;
-    border: 3px solid var(--blue);
-    margin-bottom: 15px;
+    margin-bottom: 20px;
+    border: 3px solid #fff;
+    box-shadow: 0 0 10px rgba(0,0,0,0.1);
 }
 
 .profile-upload {
-    display: block;
-    margin: 0 auto 15px;
-    font-size: 0.9rem;
+    margin-bottom: 10px;
 }
 
 .profile-stats {
@@ -130,4 +129,24 @@ div{
     .form-buttons {
         grid-column: span 1;
     }
+}
+
+#uploadForm {
+    margin: 15px 0;
+}
+
+/* Estilo para el botón de guardar imagen */
+#uploadForm button {
+    background-color: #4CAF50;
+    color: white;
+    padding: 8px 16px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 14px;
+    transition: background-color 0.3s;
+}
+
+#uploadForm button:hover {
+    background-color: #45a049;
 }
