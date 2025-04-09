@@ -171,7 +171,7 @@ function actualizarCarritoUI() {
 function insertarBotonYModal() {
     // Crear el botón "Pagar"
     const container = document.createElement("div");
-    container.classList.add("text-end", "mt-3");
+    container.classList.add("text-end", "mt-5");
     const botonPagar = document.createElement("button");
     botonPagar.classList.add("btn", "btn-primary");
     botonPagar.textContent = "Pagar";
