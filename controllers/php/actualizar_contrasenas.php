@@ -13,7 +13,8 @@ try {
         $password = $usuario['password'];
 
         // Generar un nuevo hash para la contraseña
-        $hashed_password = password_hash($password, PASSWORD_DEFAULT);
+        $hashed_password = password_hash($password, PASSWORD_DEFAULT);   
+        
 
         // Actualizar la contraseña en la base de datos
         $update_stmt = $pdo->prepare("UPDATE usuario SET password = ? WHERE id_usuario = ?");

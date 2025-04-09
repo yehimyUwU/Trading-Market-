@@ -3,7 +3,7 @@ require '../../config/php/conexion.php';
 
 class ProductoModelo {
 
-    public static function mdlRegistrarProducto($nombre, $categoria, $precio, $descripcion, $subcategoria, $stock, $imagen) {
+    public static function mdlRegistrarProducto($nombre, $categoria, $precio, $descripcion, $subcategoria, $stock, $id_proveedor, $imagen ) {
         try {
             // Verificar si la categoría existe
             $verificarCategoria = Conexion::conectar()->prepare("SELECT COUNT(*) FROM categoria WHERE id_categoria = :categoria");
@@ -23,7 +23,8 @@ class ProductoModelo {
             }
 
             // Insertar el producto con la imagen
-            $stmt = Conexion::conectar()->prepare("INSERT INTO producto (nombre, id_categoria, id_subcategoria, descripcion, precio, stock, imagen) VALUES (:nombre, :categoria, :subcategoria, :descripcion, :precio, :stock, :imagen)");
+            $stmt = Conexion::conectar()->prepare("INSERT INTO producto (nombre, id_categoria, id_subcategoria, descripcion, precio, stock, imagen, id_empresa) VALUES (:nombre, :categoria, :subcategoria, :descripcion, :precio, :stock, :imagen, :id_empresa)");
+            $stmt->bindParam(":id_empresa", $id_proveedor, PDO::PARAM_INT);
             $stmt->bindParam(":nombre", $nombre, PDO::PARAM_STR);
             $stmt->bindParam(":categoria", $categoria, PDO::PARAM_INT);
             $stmt->bindParam(":subcategoria", $subcategoria, PDO::PARAM_INT);
@@ -42,6 +43,7 @@ class ProductoModelo {
         }
     }
 
+    
     public static function mdlListarProductos() {
         $mensaje = array();
 
@@ -68,6 +70,43 @@ class ProductoModelo {
         return $mensaje;
     }
 
+    public static function mdlListarProductosPorProveedor($id_proveedor) {
+        $mensaje = array();
+    
+        try {
+            $objRespuesta = Conexion::conectar()->prepare("
+                SELECT p.*, c.nombre AS nombre_categoria 
+                FROM producto p 
+                INNER JOIN categoria c ON p.id_categoria = c.id_categoria
+                WHERE p.id_empresa = :id_proveedor
+            ");
+            $objRespuesta->bindParam(":id_proveedor", $id_proveedor, PDO::PARAM_INT);
+            $objRespuesta->execute();
+            $listaProductos = $objRespuesta->fetchAll(PDO::FETCH_ASSOC);
+    
+            // Procesar imágenes
+            foreach ($listaProductos as &$producto) {
+                $rutaDestino = "../../public/imag/";
+                $producto['imagen'] = $producto['imagen'] ? $rutaDestino . $producto['imagen'] : "../../public/imagenes_P/default.jpeg";
+            }
+    
+            $mensaje = array(
+                "codigo" => "200", 
+                "success" => true, 
+                "listaProductos" => $listaProductos
+            );
+            
+        } catch (Exception $e) {
+            $mensaje = array(
+                "codigo" => "401", 
+                "success" => false, 
+                "mensaje" => "Error al listar productos: " . $e->getMessage()
+            );
+        }
+    
+        return $mensaje;
+    }
+
     public static function mdlEliminarProducto($idProducto) {
         $mensaje = array();
 
@@ -87,26 +126,62 @@ class ProductoModelo {
         return $mensaje;
     }
 
-    public static function mdlEditarProducto($nuevoNombre, $nuevaCategoria, $nuevoPrecio, $idProducto) {
-        $mensaje = array();
-
+    public static function mdlEditarProducto($id_producto, $nombre, $categoria, $precio, $descripcion, $subcategoria, $stock, $imagen = null) {
         try {
-            $objRespuesta = Conexion::conectar()->prepare("UPDATE producto SET nombre = :nuevoNombre, precio = :nuevoPrecio, id_categoria = :nuevaCategoria WHERE id_producto = :idProducto");
-            $objRespuesta->bindParam(":nuevoNombre", $nuevoNombre);
-            $objRespuesta->bindParam(":nuevoPrecio", $nuevoPrecio);
-            $objRespuesta->bindParam(":nuevaCategoria", $nuevaCategoria);
-            $objRespuesta->bindParam(":idProducto", $idProducto);
-            if ($objRespuesta->execute()) {
-                $mensaje = array("codigo" => "200", "mensaje" => "Producto editado correctamente.");
-            } else {
-                $mensaje = array("codigo" => "401", "mensaje" => "Error. No fue posible editar el producto.");
+            // Verificar si el producto existe y pertenece al proveedor
+            $verificarProducto = Conexion::conectar()->prepare("SELECT COUNT(*) FROM producto WHERE id_producto = :id_producto");
+            $verificarProducto->bindParam(":id_producto", $id_producto, PDO::PARAM_INT);
+            $verificarProducto->execute();
+            $productoExiste = $verificarProducto->fetchColumn();
+    
+            if ($productoExiste == 0) {
+                return ["success" => false, "message" => "El producto no existe o no pertenece a este proveedor."];
             }
-            $objRespuesta = null;
-        } catch (Exception $e) {
-            $mensaje = array("codigo" => "401", "mensaje" => $e->getMessage());
+    
+            // Verificar si la categoría existe
+            $verificarCategoria = Conexion::conectar()->prepare("SELECT COUNT(*) FROM categoria WHERE id_categoria = :categoria");
+            $verificarCategoria->bindParam(":categoria", $categoria, PDO::PARAM_INT);
+            $verificarCategoria->execute();
+            $categoriaExiste = $verificarCategoria->fetchColumn();
+    
+            if ($categoriaExiste == 0) {
+                return ["success" => false, "message" => "La categoría seleccionada no existe."];
+            }
+    
+            $nombreImagen = null;
+            
+            // Si hay una nueva imagen, procesarla
+            if ($imagen !== null) {
+                $nombreImagen = uniqid() . "_" . basename($imagen['name']);
+                $rutaDestino = "../../public/imag/" . $nombreImagen;
+                if (!move_uploaded_file($imagen['tmp_name'], $rutaDestino)) {
+                    return ["success" => false, "message" => "Error al subir la imagen."];
+                }
+                
+                // Actualizar el producto con la nueva imagen
+                $stmt = Conexion::conectar()->prepare("UPDATE producto SET nombre = :nombre, id_categoria = :categoria, id_subcategoria = :subcategoria, descripcion = :descripcion, precio = :precio, stock = :stock, imagen = :imagen WHERE id_producto = :id_producto AND id_empresa = :id_empresa");
+                $stmt->bindParam(":imagen", $nombreImagen, PDO::PARAM_STR);
+            } else {
+                // Actualizar el producto sin cambiar la imagen
+                $stmt = Conexion::conectar()->prepare("UPDATE producto SET nombre = :nombre, id_categoria = :categoria, id_subcategoria = :subcategoria, descripcion = :descripcion, precio = :precio, stock = :stock WHERE id_producto = :id_producto");
+            }
+    
+            $stmt->bindParam(":id_producto", $id_producto, PDO::PARAM_INT);
+            $stmt->bindParam(":nombre", $nombre, PDO::PARAM_STR);
+            $stmt->bindParam(":categoria", $categoria, PDO::PARAM_INT);
+            $stmt->bindParam(":subcategoria", $subcategoria, PDO::PARAM_INT);
+            $stmt->bindParam(":descripcion", $descripcion, PDO::PARAM_STR);
+            $stmt->bindParam(":precio", $precio, PDO::PARAM_STR);
+            $stmt->bindParam(":stock", $stock, PDO::PARAM_INT);
+    
+            if ($stmt->execute()) {
+                return ["success" => true, "message" => "Producto actualizado correctamente."];
+            } else {
+                return ["success" => false, "message" => "Error al actualizar el producto. Verifica los datos enviados."];
+            }
+        } catch (PDOException $e) {
+            return ["success" => false, "message" => "Error de base de datos: " . $e->getMessage()];
         }
-
-        return $mensaje;
     }
 
     public static function mdlListarCategorias() {
