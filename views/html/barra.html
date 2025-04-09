@@ -83,31 +83,46 @@
     </div>
   </div>
 
-  <!-- Modal de Perfil de Usuario -->
-  <div class="modal fade" id="userProfileModal" tabindex="-1" role="dialog" aria-labelledby="userProfileModalLabel" aria-hidden="true">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title">Perfil de Usuario</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
-            </div>
-            <div class="modal-body">
-                <p><strong>Nombre:</strong> <span id="nombreUsuario"></span></p>
-                <p><strong>Apellido:</strong> <span id="apellidoUsuario"></span></p>
-                <p><strong>Documento:</strong> <span id="documentoUsuario"></span></p>
-                <p><strong>Email:</strong> <span id="emailUsuario"></span></p>
-                <p><strong>Fecha de Nacimiento:</strong> <span id="fechaNacimientoUsuario"></span></p>
-                <p><strong>Género:</strong> <span id="generoUsuario"></span></p>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-primary">Editar Datos</button>
-                <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
-            </div>
-        </div>
+<!-- Modal de Perfil de Usuario -->
+<div class="modal fade" id="userProfileModal" tabindex="-1" role="dialog" aria-labelledby="userProfileModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Perfil de Usuario</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <form>
+          <div class="form-group">
+            <label for="nombreUsuario"><strong>Nombre:</strong></label>
+            <input type="text" class="form-control form-control-sm rounded-pill" id="nombreUsuario" disabled>
+          </div>
+          <div class="form-group">
+            <label for="apellidoUsuario"><strong>Apellido:</strong></label>
+            <input type="text" class="form-control form-control-sm rounded-pill" id="apellidoUsuario" disabled>
+          </div>
+          <div class="form-group">
+            <label for="documentoUsuario"><strong>Documento:</strong></label>
+            <input type="text" class="form-control form-control-sm rounded-pill" id="documentoUsuario" disabled>
+          </div>
+          <div class="form-group">
+            <label for="emailUsuario"><strong>Email:</strong></label>
+            <input type="text" class="form-control form-control-sm rounded-pill" id="emailUsuario" disabled>
+          </div>
+        </form>
+      </div>
+      <div class="modal-footer">
+        <button type="button" id="editarDatos" class="btn btn-primary">Editar Datos</button>
+        <button type="button" id="guardarDatos" class="btn btn-primary">Guardar</button>
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+      </div>
     </div>
   </div>
+</div>
+
+
   <script src="../../public/js/nav.js"></script>
 <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
 <script src="../../public/js/bootstrap.min.js"></script>
