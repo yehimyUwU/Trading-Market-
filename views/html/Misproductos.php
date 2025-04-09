@@ -439,22 +439,22 @@ $id_proveedor = $_SESSION['usuario']['id'];
     }
 
     // Función para eliminar un producto
-    function eliminarProducto() {
+    function eliminarProducto(idProducto) {
         if (confirm('¿Estás seguro de que deseas eliminar este producto?')) {
-            fetch('../../controllers/php/eliminar_producto.php', {
+            const formData = new FormData();
+            formData.append('eliminarProducto', idProducto);
+            
+            fetch('../../controllers/php/productoControl.php', {
                 method: 'POST',
-                headers: {
-                    'Content-Type': 'application/x-www-form-urlencoded',
-                },
-                body: `id_producto=${idProducto}`
+                body: formData
             })
             .then(response => response.json())
             .then(data => {
-                if (data.success) {
+                if (data.codigo === "200") {
                     alert('Producto eliminado exitosamente');
                     cargarProductos();
                 } else {
-                    alert('Error al eliminar el producto: ' + data.message);
+                    alert('Error al eliminar el producto: ' + data.mensaje);
                 }
             })
             .catch(error => {
