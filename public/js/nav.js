@@ -29,6 +29,9 @@ document.addEventListener("DOMContentLoaded", function () {
     }, 500);
 });
 
+
+
+
 function cerrarSesion() {
     fetch('../../controllers/php/logout.php', { // Cambiar ruta según estructura
         method: 'POST',
@@ -55,19 +58,16 @@ function cerrarSesion() {
 function mostrarPerfil() {
     // Muestra el modal
     $('#userProfileModal').modal('show');
-
     // Llama al archivo PHP para obtener los datos del usuario
     fetch('../../controllers/php/obtener_perfil.php') // Cambiar ruta según estructura
         .then(response => response.json())
         .then(data => {
             if (data.success) {
-                // Asigna los datos del usuario a los elementos correspondientes
-                document.getElementById('nombreUsuario').textContent = data.usuario.nombre || 'No disponible';
-                document.getElementById('apellidoUsuario').textContent = data.usuario.apellido || 'No disponible';
-                document.getElementById('documentoUsuario').textContent = data.usuario.documento || 'No disponible';
-                document.getElementById('emailUsuario').textContent = data.usuario.email || 'No disponible';
-                document.getElementById('fechaNacimientoUsuario').textContent = data.usuario.fecha_nacimiento || 'No disponible';
-                document.getElementById('generoUsuario').textContent = data.usuario.genero || 'No disponible';
+                // Asigna los datos del usuario a los inputs correspondientes
+                document.getElementById('nombreUsuario').value = data.usuario.nombre || 'No disponible';
+                document.getElementById('apellidoUsuario').value = data.usuario.apellido || 'No disponible';
+                document.getElementById('documentoUsuario').value = data.usuario.documento || 'No disponible';
+                document.getElementById('emailUsuario').value = data.usuario.email || 'No disponible';
             } else {
                 alert('No se pudo cargar la información del perfil');
             }
@@ -81,6 +81,59 @@ function mostrarPerfil() {
 function cerrarPerfil() {
     $('#userProfileModal').modal('hide'); // Cierra el modal
 }
+
+
+//edicion y guardado de datos en ver perfil
+
+document.addEventListener('DOMContentLoaded', function () {
+    // Función para habilitar edición
+    function habilitarEdicion() {
+        document.querySelectorAll('#nombreUsuario, #apellidoUsuario, #documentoUsuario, #emailUsuario').forEach(input => {
+            input.disabled = false;
+        });
+    }
+
+    // Función para guardar datos
+    function guardarCambios() {
+        const datosActualizados = {
+            nombre: document.getElementById('nombreUsuario').value,
+            apellido: document.getElementById('apellidoUsuario').value,
+            documento: document.getElementById('documentoUsuario').value,
+            email: document.getElementById('emailUsuario').value,
+        };
+
+        fetch('../../controllers/php/actualizar_perfil_cliente.php', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(datosActualizados)
+        })
+        .then(response => response.json())
+        .then(data => {
+            if (data.success) {
+                alert('Datos actualizados correctamente.');
+                document.querySelectorAll('#nombreUsuario, #apellidoUsuario, #documentoUsuario, #emailUsuario').forEach(input => {
+                    input.disabled = true;
+                });
+            } else {
+                alert('Error: ' + data.message);
+            }
+        })
+        .catch(error => {
+            console.error('Error:', error);
+            alert('Error al guardar los cambios.');
+        });
+    }
+
+    // Asignar eventos
+    document.getElementById('editarDatos').addEventListener('click', habilitarEdicion);
+    document.getElementById('guardarDatos').addEventListener('click', guardarCambios);
+});
+
+
+
+
 
 //                         FUNCIONES DE CARRITO                      //
 
