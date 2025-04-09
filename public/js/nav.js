@@ -231,36 +231,49 @@ function insertarBotonYModal() {
     botonPagar.setAttribute("data-target", "#modalPago");
 }
 
-function procesarPago() {
-    const correo = document.getElementById("correo").value;
-    const direccion = document.getElementById("direccion").value;
-    const metodoPago = document.getElementById("metodoPago").value;
 
+
+function procesarPago() {
+    const correo = document.getElementById("correo").value; // Obtener el correo
+    const direccion = document.getElementById("direccion").value; // Obtener la dirección
+    const metodoPago = document.getElementById("metodoPago").value; // Obtener el método de pago
+
+    // Validación de campos
     if (!correo || !direccion || !metodoPago) {
         alert("Por favor, complete todos los campos del formulario.");
         return;
     }
+    if (!correo.match(/^[^\s@]+@[^\s@]+\.[^\s@]+$/)) { // Validar formato de correo electrónico
+        alert("Por favor, ingrese un correo electrónico válido.");
+        return;
+    }
 
+    // Preparar datos para enviar al controlador
     const datosPedido = {
         correo,
         direccion,
-        metodoPago,
-        carrito: [] // Aquí puedes agregar lógica para pasar el contenido del carrito
+        metodoPago
     };
 
-    fetch('../../controllers/php/controlador_carrito.php', {
+    // Enviar datos al controlador PHP
+    fetch('../../controllers/php/controlador_email_carrito.php', {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json',
         },
         body: JSON.stringify(datosPedido),
     })
-    .then(response => response.json())
+    .then(response => {
+        if (!response.ok) {
+            console.error(`Error HTTP: ${response.status} ${response.statusText}`);
+            throw new Error("Error al procesar la solicitud al servidor.");
+        }
+        return response.json();
+    })
     .then(data => {
         if (data.success) {
-            alert("¡Pago realizado con éxito! El producto ha sido enviado.");
-            $('#modalPago').modal('hide');
-            actualizarCarritoUI(); // Refrescar el carrito después del pago
+            alert("¡Pago realizado con éxito! El correo de confirmación ha sido enviado.");
+            $('#modalPago').modal('hide'); // Cerrar el modal de pago
         } else {
             alert(data.error || "Ocurrió un error al procesar el pago.");
         }
@@ -271,9 +284,10 @@ function procesarPago() {
     });
 }
 
+
 // Llamada para agregar un producto (ejemplo)
 function agregarProducto(idProducto, cantidad) {
-    fetch('../../controllers/php/controlador_carrito.php', {
+    fetch('../../controllers/php/controlador_email_carrito.php', {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json'
