@@ -7,7 +7,7 @@ class Carrito {
     }
 
     public function obtenerCarrito($idUsuario) {
-        $sql = "SELECT c.id_producto, p.nombre, ROUND(p.precio, 2) AS precio, c.cantidad 
+        $sql = "SELECT c.id_producto, p.nombre, CAST(p.precio AS DECIMAL(10,2)) AS precio, c.cantidad 
                 FROM carrito c
                 JOIN producto p ON c.id_producto = p.id_producto
                 WHERE c.id_usuario = :id_usuario";

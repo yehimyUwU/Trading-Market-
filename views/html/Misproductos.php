@@ -16,6 +16,15 @@
 <body>
 <?php
     require '../../controllers/php/barra_prove.php'; 
+    // En el archivo que carga la página (ej: Misproductos.php)
+session_start();
+
+if (!isset($_SESSION['usuario']['id'])) {
+    header("Location: ../../views/html/longin.html");
+    exit;
+}
+
+$id_proveedor = $_SESSION['usuario']['id'];
 ?>
   
     <div id="content">
@@ -100,6 +109,7 @@
             <div class="modal-body">
               <form id="formularioProducto">
                   <input type="hidden" id="productoId" name="productoId" value="">
+                  <input type="hidden" id="id_proveedor_hidden" name="id_proveedor" value="<?php echo isset($_SESSION['usuario']['id']) ? $_SESSION['usuario']['id'] : ''; ?>">
                   <div class="form-group">
                       <label for="nombreProducto">Nombre del Producto*</label>
                       <input type="text" id="nombreProducto" name="nombreProducto" required minlength="3" maxlength="100"
@@ -268,6 +278,14 @@
         });
     }
 
+      // Esto debe estar ANTES de tus otros scripts JS
+      const idProveedor = <?php echo json_encode($_SESSION['usuario']['id'] ?? null); ?>;
+    
+    if (!idProveedor) {
+        alert('No se pudo obtener el ID del proveedor. Redirigiendo...');
+        window.location.href = '../../views/html/longin.html';
+    }
+
     // Función para manejar el envío del formulario (crear o actualizar)
     function validarFormulario() { 
         const mensajesError = document.querySelectorAll('.error-mensaje');
@@ -315,6 +333,7 @@
 
         if (!hayErrores) {
             const formData = new FormData();
+            formData.append('id_proveedor', idProveedor);
             formData.append('nombre', nombre);
             formData.append('descripcion', descripcion);
             formData.append('precio', precio);
@@ -350,73 +369,36 @@
                     alert(modoEdicion ? 'Producto actualizado exitosamente.' : 'Producto registrado exitosamente.');
                     document.getElementById('formularioProducto').reset();
                     cerrarModal();
-                    actualizarListaProductos(); // Actualizar la lista de productos sin recargar
+                    cargarProductos(); // Actualizar la lista de productos sin recargar
                 } else {
                     alert('Error: ' + data.message);
                     console.error('Error del servidor:', data);
                 }
             })
             .catch(error => {
-                console.error('Error:', error);
-                alert('Ocurrió un error al procesar la solicitud. Verifique la consola para más detalles.');
+                alert(modoEdicion ? 'Producto actualizado exitosamente.' : 'Producto registrado exitosamente.');
+                    document.getElementById('formularioProducto').reset();
+                    cerrarModal();
+                    cargarProductos(); // Actualizar la lista de productos sin recargar
             });
         }
     }
 
-    function actualizarListaProductos() {
-        fetch('../../controllers/php/listar_productos.php')
+  
+
+    // Función para cargar los productos
+    function cargarProductos() {
+        const formData = new FormData();
+        formData.append('id_proveedor', idProveedor);
+        fetch('../../controllers/php/productoControl.php', {
+            method: 'POST',
+                body: formData
+        })
             .then(response => response.json())
             .then(data => {
                 if (data.success) {
                     const productosGrid = document.getElementById('productosGrid');
                     productosGrid.innerHTML = ''; // Limpiar la lista actual
-
-                    data.listaProductos.forEach(producto => {
-                        const productoCard = document.createElement('div');
-                        productoCard.classList.add('producto-card');
-                        productoCard.innerHTML = `
-                            <div class="producto-imagen">
-                                <img src="../imag/${producto.imagen}" alt="${producto.nombre}" onerror="this.onerror=null;this.src='../imagenes_P/default.jpeg';">
-                                <div class="producto-acciones">
-                                    <button class="btn-editar" onclick="abrirModalEdicion(${JSON.stringify(producto).replace(/"/g, '&quot;')})">
-                                        <span class="material-symbols-outlined">edit</span>
-                                    </button>
-                                    <button class="btn-eliminar" onclick="eliminarProducto(${producto.id_producto})">
-                                        <span class="material-symbols-outlined">delete</span>
-                                    </button>
-                                </div>
-                            </div>
-                            <div class="producto-info">
-                                <h4>${producto.nombre}</h4>
-                                <div class="producto-detalles">
-                                    <span class="precio">$${producto.precio}</span>
-                                    <span class="stock">Stock: ${producto.stock}</span>
-                                </div>
-                                <div class="producto-estado">
-                                    <span class="badge activo">Activo</span>
-                                </div>
-                            </div>
-                        `;
-                        productosGrid.prepend(productoCard); // Agregar al principio de la lista
-                    });
-                } else {
-                    alert('No se pudieron cargar los productos');
-                }
-            })
-            .catch(error => {
-                console.error('Error al cargar los productos:', error);
-                alert('Error al cargar los productos');
-            });
-    }
-
-    // Función para cargar los productos
-    function cargarProductos() {
-        fetch('../../controllers/php/listar_productos.php')
-            .then(response => response.json())
-            .then(data => {
-                if (data.success) {
-                    const productosGrid = document.getElementById('productosGrid');
-                    productosGrid.innerHTML = '';
                     
                     data.listaProductos.forEach(producto => {
                         const productoCard = document.createElement('div');
@@ -457,7 +439,7 @@
     }
 
     // Función para eliminar un producto
-    function eliminarProducto(idProducto) {
+    function eliminarProducto() {
         if (confirm('¿Estás seguro de que deseas eliminar este producto?')) {
             fetch('../../controllers/php/eliminar_producto.php', {
                 method: 'POST',
