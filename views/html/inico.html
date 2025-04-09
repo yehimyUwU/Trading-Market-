@@ -1,158 +1,209 @@
 <!DOCTYPE html>
 <html lang="es">
-<head>
 
-    
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Inicio</title>
+
+    <!-- CSS -->
     <link rel="stylesheet" href="../../public/Estilos/inico.css" />
     <link rel="stylesheet" href="../../public/Estilos/estilos.css" />
+    <link rel="stylesheet" href="../../public/Estilos/styles.css" />
+
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" />
     <script src="https://kit.fontawesome.com/1e7ede300e.js" crossorigin="anonymous"></script>
-    <title>Inicio</title>
-    <link rel="stylesheet" href="../../public/Estilos/styles.css"> <!-- Archivo CSS separado -->
-    <!-- Agregar Font Awesome -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
-    <!-- Agregar Bootstrap CSS -->
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200&icon_names=robot_2" />
+
+    <!-- Bootstrap -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" />
+
+    <!-- Google Icons -->
+    <link rel="stylesheet"
+        href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
 </head>
+
 <body>
+    <div id="nav-container"></div>
+    <br>
+    <!-- Banner Principal -->
+    <div id="nav-container"></div>
+    <br><br><br><br><br><br><br>
 
-<div id="nav-container"></div>
-<br>
-<!-- Banner Principal -->
-<div id="nav-container"></div>
-<br><br><br><br><br><br><br>
+    <!-- Carrusel de Bootstrap -->
+    <div id="carouselExampleIndicators" class="carousel slide" data-ride="carousel">
+        <!-- Indicadores -->
+        <ol class="carousel-indicators">
+            <li data-target="#carouselExampleIndicators" data-slide-to="0" class="active"></li>
+            <li data-target="#carouselExampleIndicators" data-slide-to="1"></li>
+            <li data-target="#carouselExampleIndicators" data-slide-to="2"></li>
+        </ol>
 
-<!-- 🔹 Carrusel de Bootstrap -->
-<div id="carouselExampleIndicators" class="carousel slide" data-ride="carousel">
-    <!-- Indicadores -->
-    <ol class="carousel-indicators">
-        <li data-target="#carouselExampleIndicators" data-slide-to="0" class="active"></li>
-        <li data-target="#carouselExampleIndicators" data-slide-to="1"></li>
-        <li data-target="#carouselExampleIndicators" data-slide-to="2"></li>
-    </ol>
+        <div class="carousel-inner">
+            <!-- Imagen 1 -->
+            <div class="carousel-item active">
+                <img src="../../public/imagenes/suavite.webp" class="d-block w-100" alt="Productos destacados" />
+                <div class="carousel-caption d-none d-md-block">
+                    <h1 style="
+                font-size: 3rem;
+                font-weight: bold;
+                text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.7);
+              ">
+                        Encuentra los Mejores Productos
+                    </h1>
+                    <p style="
+                font-size: 1.5rem;
+                text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.5);
+              ">
+                        Moda, electrónicos, accesorios y más en un solo lugar.
+                    </p>
+                    <a href="#" class="btn btn-primary btn-lg"
+                        style="background-color: #007bff; border: none; font-size: 1.2rem">Explorar</a>
+                </div>
+            </div>
 
-    <div class="carousel-inner">
-        <!-- 🔹 Imagen 1 -->
-        <div class="carousel-item active">
-            <img src="../../public/imagenes/suavite.webp" class="d-block w-100" alt="Productos destacados">
-            <div class="carousel-caption d-none d-md-block">
-                <h1 style="font-size: 3rem; font-weight: bold; text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.7);">Encuentra los Mejores Productos</h1>
-                <p style="font-size: 1.5rem; text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.5);">Moda, electrónicos, accesorios y más en un solo lugar.</p>
-                <a href="#" class="btn btn-primary btn-lg" style="background-color: #007bff; border: none; font-size: 1.2rem;">Explorar</a>
+            <!-- Imagen 2 -->
+            <div class="carousel-item">
+                <img src="../../public/imagenes/diseño.png" class="d-block w-100" alt="Ofertas especiales" />
+                <div class="carousel-caption d-none d-md-block">
+                    <h1 style="
+                font-size: 3rem;
+                font-weight: bold;
+                text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.7);
+              ">
+                        Ofertas Especiales
+                    </h1>
+                    <p style="
+                font-size: 1.5rem;
+                text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.5);
+              ">
+                        Descubre nuestras increíbles promociones.
+                    </p>
+                    <a href="#" class="btn btn-primary btn-lg"
+                        style="background-color: #ff6600; border: none; font-size: 1.2rem">Ver Ofertas</a>
+                </div>
+            </div>
+
+            <!-- Imagen 3 -->
+            <div class="carousel-item">
+                <img src="../../public/imagenes/1in.avif" class="d-block w-100" alt="Nuevos productos" />
+                <div class="carousel-caption d-none d-md-block">
+                    <h1 style="
+                font-size: 3rem;
+                font-weight: bold;
+                text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.7);
+              ">
+                        Nuevos Productos
+                    </h1>
+                    <p style="
+                font-size: 1.5rem;
+                text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.5);
+              ">
+                        Conoce las últimas novedades en nuestra tienda.
+                    </p>
+                    <a href="#" class="btn btn-primary btn-lg"
+                        style="background-color: #ff6600; border: none; font-size: 1.2rem">Ver Más</a>
+                </div>
             </div>
         </div>
 
-        <!-- 🔹 Imagen 2 -->
-        <div class="carousel-item">
-            <img src="../../public/imagenes/diseño.png" class="d-block w-100" alt="Ofertas especiales">
-            <div class="carousel-caption d-none d-md-block">
-                <h1 style="font-size: 3rem; font-weight: bold; text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.7);">Ofertas Especiales</h1>
-                <p style="font-size: 1.5rem; text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.5);">Descubre nuestras increíbles promociones.</p>
-                <a href="#" class="btn btn-primary btn-lg" style="background-color: #ff6600; border: none; font-size: 1.2rem;">Ver Ofertas</a>
-            </div>
-        </div>
-
-        <!-- 🔹 Imagen 3 -->
-        <div class="carousel-item">
-            <img src="../../public/imagenes/1in.avif" class="d-block w-100" alt="Nuevos productos">
-            <div class="carousel-caption d-none d-md-block">
-                <h1 style="font-size: 3rem; font-weight: bold; text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.7);">Nuevos Productos</h1>
-                <p style="font-size: 1.5rem; text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.5);">Conoce las últimas novedades en nuestra tienda.</p>
-                <a href="#" class="btn btn-primary btn-lg" style="background-color: #ff6600; border: none; font-size: 1.2rem;">Ver Más</a>
-            </div>
-        </div>
+        <!-- Controles de navegación -->
+        <a class="carousel-control-prev" href="#carouselExampleIndicators" role="button" data-slide="prev">
+            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+            <span class="sr-only">Anterior</span>
+        </a>
+        <a class="carousel-control-next" href="#carouselExampleIndicators" role="button" data-slide="next">
+            <span class="carousel-control-next-icon" aria-hidden="true"></span>
+            <span class="sr-only">Siguiente</span>
+        </a>
     </div>
 
-    <!-- 🔹 Controles de navegación -->
-    <a class="carousel-control-prev" href="#carouselExampleIndicators" role="button" data-slide="prev">
-        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-        <span class="sr-only">Anterior</span>
+    <!-- Sección de Productos -->
+    <section class="productos">
+        <div class="container">
+            <h2 class="text-center my-4" style="color: black">
+                Nuestros Productos
+            </h2>
+            <div class="row row-cols-1 row-cols-md-5" id="productosGrid">
+                <!-- Productos se cargarán aquí -->
+            </div>
+        </div>
+    </section>
+
+    <!-- Botón de volver arriba -->
+    <a class="btn d-flex align-items-center justify-content-between bg-primary text-white" style="
+        position: fixed;
+        bottom: 20px;
+        left: 20px;
+        height: 50px;
+        width: 180px;
+        padding: 10px 20px;
+        border-radius: 25px;
+        cursor: pointer;
+        box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.3);
+        z-index: 1000;
+      " onclick="scrollToTop()">
+        <i class="fa fa-arrow-up"></i>
+        <span style="flex: 1; text-align: center">Volver al inicio</span>
     </a>
-    <a class="carousel-control-next" href="#carouselExampleIndicators" role="button" data-slide="next">
-        <span class="carousel-control-next-icon" aria-hidden="true"></span>
-        <span class="sr-only">Siguiente</span>
-    </a>
-</div>
 
-<!--ChatBot-->
+    <!-- ChatBot -->
+    <button id="openChatbot" class="btn btn-primary">
+        <i class="fa-solid fa-robot"></i>
+    </button>
 
-<button id="openChatbot" class="btn btn-primary">
-    <i class="fa-solid fa-robot"></i>
-</button>
-
-<div id="chatbotModal" class="modal">
-<div class="modal-content">
-    <span class="close">&times;</span>
-    <h2 class="hbot">TradiBot</h2>
-    <div id="chatbotContainer">
-    <div id="chatbotMessages">
-        <!-- Los mensajes van aquí -->
-    </div>
-    <input type="text" id="chatbotInput" placeholder="Escribe tu mensaje..." />
-    <button id="sendMessage" class="btn btn-primary">Enviar</button>
-    </div>
-</div>
-</div>
-
-
-
-<!-- Sección de Productos -->
-<section class="productos">
-    <div class="container">
-        <h2 class="text-center my-4" style="color: black;">Nuestros Productos</h2>
-        <div class="row row-cols-1 row-cols-md-5" id="productosGrid">
-            <!-- Productos se cargarán aquí -->
-<section class="productos">
-    </div>
-</section>
-
-
-<a class="btn d-flex align-items-center justify-content-between bg-primary text-white"
-   style="position: fixed; bottom: 20px; left: 20px; height: 50px; width: 180px; padding: 10px 20px; border-radius: 25px; cursor: pointer; box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.3); z-index: 1000;"
-   onclick="scrollToTop()">
-    <i class="fa fa-arrow-up"></i>
-    <span style="flex: 1; text-align: center;">Volver al inicio</span>
-</a>
-
-<script>
-    function scrollToTop() {
-        window.scrollTo({ top: 0, behavior: 'smooth' });
-    }
-</script>
-
-<footer class="pie-pagina">
-    <div class="grupo-1">
-        <div class="box">
-            <figure>
-                <a href="#">
-                    <img src="../../public/imagenes/tran.png" alt="Logo de SLee Dw">
-                </a>
-            </figure>
-        </div>
-        <div class="box">
-            <h2>SOBRE NOSOTROS</h2>
-            <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Odio, ipsa?</p>
-            <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Odio, ipsa?</p>
-        </div>
-        <div class="box">
-            <h2>SIGUENOS</h2>
-            <div class="red-social">
-                <a href="#" class="fa fa-facebook"></a>
-                <a href="#" class="fa fa-instagram"></a>
-                <a href="#" class="fa fa-twitter"></a>
-                <a href="#" class="fa fa-youtube"></a>
+    <div id="chatbotModal" class="modal">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <h2 class="hbot">TradiBot</h2>
+            <div id="chatbotContainer">
+                <div id="chatbotMessages">
+                    <!-- Los mensajes van aquí -->
+                </div>
+                <input type="text" id="chatbotInput" placeholder="Escribe tu mensaje..." />
+                <button id="sendMessage" class="btn btn-primary">Enviar</button>
             </div>
         </div>
     </div>
-    <div class="grupo-2">
-        <small>&copy; 2025 <b>Trading Market</b> - Todos los Derechos Reservados.</small>
-    </div>
-</footer>
+
+    <!-- Footer -->
+    <footer class="pie-pagina">
+        <div class="grupo-1">
+            <div class="box">
+                <figure>
+                    <a href="#">
+                        <img src="../../public/imagenes/tran.png" alt="Logo de Trading Market" />
+                    </a>
+                </figure>
+            </div>
+            <div class="box">
+                <h2>SOBRE NOSOTROS</h2>
+                <p>
+                    Lorem ipsum dolor sit amet consectetur adipisicing elit. Odio, ipsa?
+                </p>
+                <p>
+                    Lorem ipsum dolor sit amet consectetur adipisicing elit. Odio, ipsa?
+                </p>
+            </div>
+            <div class="box">
+                <h2>SIGUENOS</h2>
+                <div class="red-social">
+                    <a href="#" class="fa fa-facebook"></a>
+                    <a href="#" class="fa fa-instagram"></a>
+                    <a href="#" class="fa fa-twitter"></a>
+                    <a href="#" class="fa fa-youtube"></a>
+                </div>
+            </div>
+        </div>
+        <div class="grupo-2">
+            <small>&copy; 2025 <b>Trading Market</b> - Todos los Derechos
+                Reservados.</small>
+        </div>
+    </footer>
+
 <!-- Modal de Detalles del Producto -->
 <div class="modal fade" id="productoModal" tabindex="-1" role="dialog" aria-labelledby="productoModalLabel" aria-hidden="true">
-    <div class="modal-dialog modal-lg" role="document">
+    <div class="modal-dialog ancho-completo" role="document">
         <div class="modal-content">
             <!-- Encabezado del modal -->
             <div class="modal-header">
@@ -161,13 +212,16 @@
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
-            <!-- Cuerpo del modal -->
-            <div class="modal-body text-center">
-                <img id="modalImagen" class="img-fluid" src="" alt="Producto">
-                <h4 id="modalNombre"></h4>
-                <p id="modalDescripcion"></p>
-                <h3 class="text-primary font-weight-bold" id="modalPrecio"></h3>
-            </div>
+
+            <!-- Cuerpo del modal con dos columnas -->
+            <div class="modal-body">
+                <div class="row">
+                    <!-- Columna izquierda: detalles del producto -->
+                    <div class="col-md-7 text-center border-right">
+                        <img id="modalImagen" class="img-fluid mb-3" src="" alt="Producto">
+                        <h4 id="modalNombre"></h4>
+                        <p id="modalDescripcion"></p>
+                        <h3 class="text-primary font-weight-bold" id="modalPrecio"></h3>
 
                         <!-- Calificación con estrellas -->
                         <div id="calificacion" class="mt-3">
@@ -180,8 +234,22 @@
                                 <i class="fa-regular fa-star estrella" data-valor="5"></i>
                             </div>
                             <div id="mensaje-calificacion" class="mt-2 text-success" style="display:none;">¡Gracias por calificar!</div>
+                            <button id="btnEditarCalificacion" class="btn btn-warning mt-2" style="display:none; color: rgb(0, 0, 0); background-color: rgb(255, 208, 0);" onclick="editarCalificacion()">Editar Calificación</button>
                         </div>
-                        <button id="btnEditarCalificacion" class="btn btn-warning mt-2" style="display:none;" onclick="editarCalificacion()">Editar Calificación</button>
+                    </div>
+
+                    <!-- Columna derecha: comentarios -->
+                    <div class="col-md-5">
+                        <h5>Deja un comentario:</h5>
+                        <textarea id="comentarioTexto" class="form-control" rows="3" placeholder="Escribe tu opinión..."></textarea>
+                        <button class="btn btn-primary mt-2" onclick="guardarComentario()" style="color: aqua; background-color: rgb(0, 141, 141);">Enviar Comentario</button>
+
+                        <h5 class="mt-4">Comentarios anteriores:</h5>
+                        <div id="listaComentarios" class="text-left" style="max-height: 300px; overflow-y: auto;"></div>
+                    </div>
+                </div>
+            </div>
+
             <!-- Pie de modal con botón de cerrar -->
             <div class="modal-footer">
                 <button type="button" class="btn btn-cerrar" data-dismiss="modal" style="color: #ff0000;">Cerrar</button>
@@ -191,14 +259,247 @@
 </div>
 
 
-<script src="../../public/js/nav.js"></script>
-<script src="../../public/js/chatBot.js"></script>
-<script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
-<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
-<script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
-<script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
+    <!-- Scripts -->
+    <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <script src="../../public/js/nav.js"></script>
+    <script src="../../public/js/chatBot.js"></script>
+    <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
+    <script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
 
-<!-- Formulario de Registro -->
-<form action="../../controllers/php/registro.php" method="POST">
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            // Función para desplazarse al inicio
+            function scrollToTop() {
+                window.scrollTo({ top: 0, behavior: "smooth" });
+            }
 
+            // Cargar productos
+            cargarProductos();
+
+            async function cargarProductos() {
+                try {
+                    const response = await fetch(
+                        "../../controllers/php/productoControl.php"
+                    );
+                    const data = await response.json();
+
+                    if (data.success && data.listaProductos) {
+                        const productosGrid = document.getElementById("productosGrid");
+                        productosGrid.innerHTML = ""; // Limpiar contenido existente
+
+                        data.listaProductos.forEach((producto) => {
+                            const productoCard = document.createElement("div");
+                            productoCard.classList.add("col", "mb-4");
+
+                            // Construir la ruta correcta de la imagen
+                            let imagenUrl = producto.imagen
+                                ? `../../public/imag/${producto.imagen}`
+                                : "../../public/imagenes_P/default.jpeg";
+
+                            productoCard.innerHTML = `
+                            <div class="card h-100">
+                                <div class="img-container">
+                                    <img src="${imagenUrl}" class="card-img-top" alt="${producto.nombre
+                                }" 
+                                         onerror="this.onerror=null;this.src='../../public/imagenes_P/default.jpeg';">
+                                </div>
+                                <div class="card-body">
+                                    <h5 class="card-title">${producto.nombre
+                                }</h5>
+                                    <p class="card-text">$${parseFloat(
+                                    producto.precio
+                                ).toFixed(2)}</p>
+                                <button class="btn btn-primary mb-3" onclick="verDetalles('${producto.nombre}', '${producto.descripcion}', '${producto.precio}', '../imagenes_P/${producto.imagen}', ${producto.id_producto})">Ver Detalles</button>
+                                    <button class="btn btn-primary agregar-carrito" data-id="${producto.id_producto
+                                }">Agregar al carrito</button>
+                                </div>
+                            </div>
+                        `;
+                            productosGrid.appendChild(productoCard);
+                        });
+
+                        // Agregar event listeners para los botones de carrito
+                        document.querySelectorAll(".agregar-carrito").forEach((btn) => {
+                            btn.addEventListener("click", agregarAlCarrito);
+                        });
+                    } else {
+                        console.error(
+                            "Error al cargar productos:",
+                            data.message || "Datos no válidos"
+                        );
+                        mostrarError(
+                            "No se pudieron cargar los productos. Intente más tarde."
+                        );
+                    }
+                } catch (error) {
+                    console.error("Error al cargar productos:", error);
+                    mostrarError("Error al conectar con el servidor.");
+                }
+            }
+
+            function agregarAlCarrito(e) {
+                const idProducto = e.target.getAttribute("data-id");
+                // Aquí puedes implementar la lógica para agregar al carrito
+                console.log("Agregar producto al carrito:", idProducto);
+                // Puedes hacer una llamada fetch al endpoint correspondiente
+
+                // Mostrar feedback al usuario
+                alert("Producto agregado al carrito");
+            }
+
+            function mostrarError(mensaje) {
+                const productosGrid = document.getElementById("productosGrid");
+                productosGrid.innerHTML = `<div class="alert alert-danger col-12">${mensaje}</div>`;
+            }
+        });
+
+        let idProductoSeleccionado = null;
+
+    // Función para mostrar detalles del producto en el modal
+    async function verDetalles(nombre, descripcion, precio, imagen, idProducto) {
+        idProductoSeleccionado = idProducto;
+        document.getElementById("modalNombre").textContent = nombre;
+        document.getElementById("modalDescripcion").textContent = descripcion;
+        document.getElementById("modalPrecio").textContent = "$" + parseFloat(precio).toFixed(2);
+        document.getElementById("modalImagen").src = imagen;
+        document.getElementById("estrellas").setAttribute("data-id-producto", idProducto);
+
+        // Mostrar calificación previa y comentarios
+        await mostrarCalificacion(idProducto);
+        await mostrarComentario(idProducto);
+
+        $("#productoModal").modal("show");
+    }
+
+    // Guardar calificación
+    document.querySelectorAll(".estrella").forEach(estrella => {
+        estrella.addEventListener("click", async function () {
+            const valor = this.getAttribute("data-valor");
+            const idProducto = document.getElementById("estrellas").getAttribute("data-id-producto");
+
+            const respuesta = await fetch("../../controllers/php/guardar_calificacion.php", {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({ id_producto: idProducto, calificacion: valor })
+            });
+
+            const data = await respuesta.json();
+            if (data.success) {
+                document.getElementById("mensaje-calificacion").style.display = "block";
+                document.getElementById("btnEditarCalificacion").style.display = "inline-block";
+                marcarEstrellas(valor);
+            } else {
+                alert(data.message || "Error al guardar calificación");
+            }
+        });
+    });
+
+    // Marcar visualmente las estrellas
+    function marcarEstrellas(valor) {
+        document.querySelectorAll(".estrella").forEach(estrella => {
+            estrella.classList.remove("fa-solid", "text-warning");
+            estrella.classList.add("fa-regular");
+            if (parseInt(estrella.getAttribute("data-valor")) <= valor) {
+                estrella.classList.remove("fa-regular");
+                estrella.classList.add("fa-solid", "text-warning");
+            }
+        });
+    }
+
+    // Mostrar calificación previa
+    async function mostrarCalificacion(idProducto) {
+        const res = await fetch(`../../controllers/php/obtener_calificacion.php?id_producto=${idProducto}`);
+        const data = await res.json();
+
+        if (data.calificacion) {
+            marcarEstrellas(data.calificacion);
+            document.getElementById("mensaje-calificacion").style.display = "block";
+            document.getElementById("btnEditarCalificacion").style.display = "inline-block";
+        } else {
+            marcarEstrellas(0);
+            document.getElementById("mensaje-calificacion").style.display = "none";
+            document.getElementById("btnEditarCalificacion").style.display = "none";
+        }
+    }
+
+    // Eliminar calificación
+    async function editarCalificacion() {
+        const idProducto = idProductoSeleccionado;
+        const res = await fetch(`../../controllers/php/eliminar_calificacion.php?id_producto=${idProducto}`, { method: "DELETE" });
+        const data = await res.json();
+
+        if (data.success) {
+            marcarEstrellas(0);
+            document.getElementById("mensaje-calificacion").style.display = "none";
+            document.getElementById("btnEditarCalificacion").style.display = "none";
+        } else {
+            alert(data.message || "No se pudo eliminar la calificación.");
+        }
+    }
+
+    // Guardar comentario
+    async function guardarComentario() {
+        const comentario = document.getElementById("comentarioTexto").value;
+        if (!comentario.trim()) return alert("Escribe un comentario válido.");
+
+        const respuesta = await fetch("../../controllers/php/guardar_comentario.php", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ id_producto: idProductoSeleccionado, comentario: comentario })
+        });
+
+        const data = await respuesta.json();
+        if (data.success) {
+            mostrarComentario(idProductoSeleccionado);
+        } else {
+            alert(data.message || "Error al guardar comentario");
+        }
+    }
+
+// Mostrar comentarios (versión estilizada con estrellas y nombre del usuario)
+async function mostrarComentario(idProducto) {
+    const res = await fetch(`../../controllers/php/obtener_comentarios.php?id_producto=${idProducto}`);
+    const data = await res.json();
+
+    const lista = document.getElementById("listaComentarios");
+    const textarea = document.getElementById("comentarioTexto");
+
+    lista.innerHTML = "";
+    textarea.value = "";
+
+    if (data.success && data.comentarios.length > 0) {
+        data.comentarios.forEach(c => {
+            const div = document.createElement("div");
+            div.classList.add("border", "p-2", "mb-2", "position-relative");
+
+            // Generar estrellas según calificación
+            let estrellasHTML = '';
+            for (let i = 1; i <= 5; i++) {
+                estrellasHTML += `<i class="fa-star ${i <= c.calificacion ? 'fas text-warning' : 'far text-muted'} small"></i>`;
+            }
+
+            div.innerHTML = `
+                <div class="position-absolute" style="top: 8px; right: 10px;">
+                    ${estrellasHTML}
+                </div>
+                <strong>${c.nombre_usuario || "Anónimo"}:</strong><br>
+                ${c.comentario}<br>
+                <small class="text-muted">${c.fecha}</small>
+            `;
+            lista.appendChild(div);
+
+            // Si el comentario es del usuario actual, llenar el textarea
+            if (c.esPropio) {
+                textarea.value = c.comentario;
+            }
+        });
+    } else {
+        lista.innerHTML = "<p>No hay comentarios aún.</p>";
+    }
+}
+
+    </script>
+</body>
+</html>

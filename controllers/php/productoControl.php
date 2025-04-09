@@ -2,6 +2,7 @@
 
 require "../../models/productoModelo.php";
 
+
 class ProductoControl {
 
     public $idProducto;
@@ -17,6 +18,7 @@ class ProductoControl {
     public $nuevoNombre;
     public $nuevaCategoria;
     public $nuevoPrecio;
+    public $id_proveedor; // Nueva propiedad
 
     public function ctrRegistrarProducto() {
         $imagen = $_FILES['imagen'];
@@ -27,14 +29,20 @@ class ProductoControl {
             $this->descripcion,
             $this->subcategoria,
             $this->stock,
+            $this->id_proveedor, // Pasamos el ID del proveedor
             $imagen
         );
         echo json_encode($objRespuesta);
     }
-
-    public function ctrListarProductos() {
+    
+    public function ctrListarTodosProductos() {
         $objRespuesta = ProductoModelo::mdlListarProductos();
         echo json_encode($objRespuesta);
+    }
+
+    public function ctrListarProductos() {
+        $respuesta = ProductoModelo::mdlListarProductosPorProveedor($this->id_proveedor);
+        echo json_encode($respuesta);
     }
 
     public function ctrEliminarProducto() {
@@ -43,7 +51,18 @@ class ProductoControl {
     }
 
     public function ctrEditarProducto() {
-        $objRespuesta = ProductoModelo::mdlEditarProducto($this->nuevoNombre, $this->nuevaCategoria, $this->nuevoPrecio, $this->idProducto);
+        $imagen = isset($_FILES['imagen']) && $_FILES['imagen']['error'] !== UPLOAD_ERR_NO_FILE ? $_FILES['imagen'] : null;
+
+        $objRespuesta = ProductoModelo::mdlEditarProducto(
+            $this->id_producto,
+            $this->nombre,
+            $this->categoria,
+            $this->precio,
+            $this->descripcion,
+            $this->subcategoria,
+            $this->stock,
+            $imagen
+        );
         echo json_encode($objRespuesta);
     }
 
@@ -64,8 +83,8 @@ class ProductoControl {
 
 
 }
+if (isset($_POST["nombre"], $_POST["categoria"], $_POST["precio"], $_POST["descripcion"], $_POST["subcategoria"], $_POST["stock"], $_POST["id_proveedor"], $_FILES["imagen"])) {
 
-if (isset($_POST["nombre"], $_POST["categoria"], $_POST["precio"], $_POST["descripcion"], $_POST["subcategoria"], $_POST["stock"], $_FILES["imagen"])) {
     $objProducto = new ProductoControl();
     $objProducto->nombre = $_POST["nombre"];
     $objProducto->categoria = $_POST["categoria"];
@@ -73,22 +92,23 @@ if (isset($_POST["nombre"], $_POST["categoria"], $_POST["precio"], $_POST["descr
     $objProducto->descripcion = $_POST["descripcion"];
     $objProducto->subcategoria = $_POST["subcategoria"];
     $objProducto->stock = $_POST["stock"];
+    $objProducto->id_proveedor = $_POST["id_proveedor"]; // Obtenemos el ID del proveedor de la sesión
 
-    // Depuración: Verificar los datos recibidos
-    error_log("Datos recibidos en el backend:");
-    error_log("Nombre: " . $objProducto->nombre);
-    error_log("Categoría: " . $objProducto->categoria);
-    error_log("Subcategoría: " . $objProducto->subcategoria);
-    error_log("Precio: " . $objProducto->precio);
-    error_log("Descripción: " . $objProducto->descripcion);
-    error_log("Stock: " . $objProducto->stock);
-
-    // Agregar manejo de imagen
+    // Depuración
+    error_log("Datos recibidos:");
+    error_log("Proveedor ID: " . $objProducto->id_proveedor);
+    
     $objProducto->ctrRegistrarProducto();
 }
 
-if (isset($_POST["listarProductos"]) && $_POST["listarProductos"] == "ok") {
+if ($_SERVER['REQUEST_METHOD'] === 'GET') {
     $objProducto = new ProductoControl();
+    $objProducto->ctrListarTodosProductos();
+}
+
+if (isset($_POST["id_proveedor"])) {
+    $objProducto = new ProductoControl();
+    $objProducto->id_proveedor = $_POST["id_proveedor"]; // Obtenemos el ID del proveedor de la sesión
     $objProducto->ctrListarProductos();
 }
 
@@ -98,13 +118,24 @@ if (isset($_POST["eliminarProducto"])) {
     $objProducto->ctrEliminarProducto();
 }
 
-if (isset($_POST["nuevoNombre"], $_POST["nuevaCategoria"], $_POST["nuevoPrecio"], $_POST["producto"])) {
-    $objEditarProducto = new ProductoControl();
-    $objEditarProducto->nuevoNombre = $_POST["nuevoNombre"];
-    $objEditarProducto->nuevaCategoria = $_POST["nuevaCategoria"];
-    $objEditarProducto->nuevoPrecio = $_POST["nuevoPrecio"];
-    $objEditarProducto->idProducto = $_POST["producto"];
-    $objEditarProducto->ctrEditarProducto();
+if (isset($_POST["nombre"], $_POST["categoria"], $_POST["precio"], $_POST["descripcion"], $_POST["subcategoria"], $_POST["stock"], $_POST["id_proveedor"], $_POST["id_producto"])) {
+
+    $objProducto = new ProductoControl();
+    $objProducto->nombre = $_POST["nombre"];
+    $objProducto->categoria = $_POST["categoria"];
+    $objProducto->precio = $_POST["precio"];
+    $objProducto->descripcion = $_POST["descripcion"];
+    $objProducto->subcategoria = $_POST["subcategoria"];
+    $objProducto->stock = $_POST["stock"];
+    $objProducto->id_proveedor = $_POST["id_proveedor"]; 
+    $objProducto->id_producto = $_POST["id_producto"];
+    
+    // Depuración
+    error_log("Datos recibidos para edición:");
+    error_log("Producto ID: " . $objProducto->id_producto);
+    error_log("Proveedor ID: " . $objProducto->id_proveedor);
+    
+    $objProducto->ctrEditarProducto();
 }
 
 if (isset($_POST["listarCategorias"]) && $_POST["listarCategorias"] == "ok") {

@@ -1,54 +1,55 @@
 <?php
-require '../../config/php/conexion.php';
 
-// Mostrar errores para depuración
-error_reporting(E_ALL);
-ini_set('display_errors', 1);
+require "../../models/productoModelo.php";
 
-header('Content-Type: application/json'); // Asegurar que la respuesta sea JSON
 
-if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    // Depuración: Verificar datos recibidos
-    $id_producto = $_POST['id_producto'] ?? null;
-    $nombre = $_POST['nombre'] ?? null;
-    $descripcion = $_POST['descripcion'] ?? null;
-    $precio = $_POST['precio'] ?? null;
-    $stock = $_POST['stock'] ?? null;
+class ProductoControl {
 
-    if (!$id_producto || !$nombre || !$descripcion || !$precio || !$stock) {
-        echo json_encode(['success' => false, 'message' => 'Todos los campos son obligatorios.', 'data' => $_POST]);
-        exit;
+    public $idProducto;
+    public $nombre;
+    public $categoria;
+    public $precio;
+    public $descripcion;
+    public $subcategoria;
+    public $stock;
+
+
+
+
+
+    public function ctrEditarProducto() {
+        $imagen = isset($_FILES['imagen']) && $_FILES['imagen']['error'] !== UPLOAD_ERR_NO_FILE ? $_FILES['imagen'] : null;
+
+        $objRespuesta = ProductoModelo::mdlEditarProducto(
+            $this->id_producto,
+            $this->nombre,
+            $this->categoria,
+            $this->precio,
+            $this->descripcion,
+            $this->subcategoria,
+            $this->stock,
+            $imagen
+        );
+        echo json_encode($objRespuesta);
     }
 
-    try {
-        // Depuración: Verificar conexión a la base de datos
-        if (!$conn) {
-            echo json_encode(['success' => false, 'message' => 'Error de conexión a la base de datos.']);
-            exit;
-        }
-
-        // Depuración: Verificar consulta SQL
-        $query = "UPDATE productos SET nombre = ?, descripcion = ?, precio = ?, stock = ? WHERE id_producto = ?";
-        $stmt = $conn->prepare($query);
-        if (!$stmt) {
-            echo json_encode(['success' => false, 'message' => 'Error al preparar la consulta.', 'error' => $conn->error]);
-            exit;
-        }
-
-        $stmt->bind_param('ssdii', $nombre, $descripcion, $precio, $stock, $id_producto);
-
-        if ($stmt->execute()) {
-            echo json_encode(['success' => true, 'message' => 'Producto actualizado correctamente.']);
-        } else {
-            echo json_encode(['success' => false, 'message' => 'Error al ejecutar la consulta.', 'error' => $stmt->error]);
-        }
-
-        $stmt->close();
-        $conn->close();
-    } catch (Exception $e) {
-        echo json_encode(['success' => false, 'message' => 'Error del servidor: ' . $e->getMessage()]);
-    }
-} else {
-    echo json_encode(['success' => false, 'message' => 'Método no permitido.']);
 }
-?>
+
+if (isset($_POST["nombre"], $_POST["categoria"], $_POST["precio"], $_POST["descripcion"], $_POST["subcategoria"], $_POST["stock"], $_POST["id_producto"])) {
+
+    $objProducto = new ProductoControl();
+    $objProducto->nombre = $_POST["nombre"];
+    $objProducto->categoria = $_POST["categoria"];
+    $objProducto->precio = $_POST["precio"];
+    $objProducto->descripcion = $_POST["descripcion"];
+    $objProducto->subcategoria = $_POST["subcategoria"];
+    $objProducto->stock = $_POST["stock"];
+    $objProducto->id_producto = $_POST["id_producto"];
+    
+    // Depuración
+    error_log("Datos recibidos para edición:");
+    error_log("Producto ID: " . $objProducto->id_producto);
+    error_log("Proveedor ID: " . $objProducto->id_proveedor);
+    
+    $objProducto->ctrEditarProducto();
+}

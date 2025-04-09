@@ -31,6 +31,21 @@ class CalificacionModel {
         }
     }
 
+    public function eliminarCalificacion($idUsuario, $idProducto) {
+        try {
+            $stmt = $this->conn->prepare("DELETE FROM calificaciones WHERE id_producto = :id_producto AND id_usuario = :id_usuario");
+            $stmt->execute([
+                ':id_producto' => $idProducto,
+                ':id_usuario' => $idUsuario
+            ]);
+    
+            return ['success' => true, 'message' => 'Calificación eliminada'];
+        } catch (PDOException $e) {
+            return ['success' => false, 'message' => 'Error: ' . $e->getMessage()];
+        }
+    }
+    
+    
     public function obtenerCalificacion($idUsuario, $idProducto) {
         try {
             $stmt = $this->conn->prepare("SELECT calificacion FROM calificaciones WHERE id_usuario = :id_usuario AND id_producto = :id_producto");
@@ -46,3 +61,4 @@ class CalificacionModel {
         }
     }
 }
+

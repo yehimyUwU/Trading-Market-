@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="../../public/Estilos/inico.css" />
     
-    <link rel="stylesheet" href="styles.css"> <!-- Archivo CSS separado -->
+    <link rel="stylesheet" href="../../public/Estilos/styles.css"> <!-- Archivo CSS separado -->
 </head>
 <body>
 
@@ -38,7 +38,7 @@
         <div class="carousel">
             <div class="carousel-inner">
                 <div class="carousel-item active">
-                    <img src="../../public/imagenes/close-up-frasco-crema-cuidado-piel-que-refuerza-cara-rodeado-varios-productos-tratamiento-tratamiento-piel-concepto-productos-belleza-rutinaria-cuidado-cara-tratamientos-faciales-fotografia-close-up-frasc.avif " alt="Productos destacados">
+                    <img src="../../public/imagenes/closeup.avif" alt="Productos destacados">
                     <div class="carousel-content">
                         <h1>Encuentra los Mejores Productos</h1>
                         <p>Moda, electrónicos, accesorios y más en un solo lugar.</p>
@@ -86,77 +86,105 @@
     </footer>
 
     <script>
-    document.addEventListener('DOMContentLoaded', function() {
-        const carousel = document.querySelector('.carousel');
-        const items = carousel.querySelectorAll('.carousel-item');
-        const indicators = carousel.querySelectorAll('.indicator');
-        const prevBtn = carousel.querySelector('.prev');
-        const nextBtn = carousel.querySelector('.next');
-        let currentIndex = 0;
-
-        function showSlide(index) {
-            items.forEach(item => item.classList.remove('active'));
-            indicators.forEach(ind => ind.classList.remove('active'));
-            items[index].classList.add('active');
-            indicators[index].classList.add('active');
-        }
-
-        function nextSlide() {
-            currentIndex = (currentIndex + 1) % items.length;
-            showSlide(currentIndex);
-        }
-
-        function prevSlide() {
-            currentIndex = (currentIndex - 1 + items.length) % items.length;
-            showSlide(currentIndex);
-        }
-
-        // Event listeners
-        nextBtn.addEventListener('click', nextSlide);
-        prevBtn.addEventListener('click', prevSlide);
-        indicators.forEach((indicator, index) => {
-            indicator.addEventListener('click', () => {
-                currentIndex = index;
+        document.addEventListener('DOMContentLoaded', function() {
+            // Código del carrusel (se mantiene igual)
+            const carousel = document.querySelector('.carousel');
+            const items = carousel.querySelectorAll('.carousel-item');
+            const indicators = carousel.querySelectorAll('.indicator');
+            const prevBtn = carousel.querySelector('.prev');
+            const nextBtn = carousel.querySelector('.next');
+            let currentIndex = 0;
+    
+            function showSlide(index) {
+                items.forEach(item => item.classList.remove('active'));
+                indicators.forEach(ind => ind.classList.remove('active'));
+                items[index].classList.add('active');
+                indicators[index].classList.add('active');
+            }
+    
+            function nextSlide() {
+                currentIndex = (currentIndex + 1) % items.length;
                 showSlide(currentIndex);
+            }
+    
+            function prevSlide() {
+                currentIndex = (currentIndex - 1 + items.length) % items.length;
+                showSlide(currentIndex);
+            }
+    
+            nextBtn.addEventListener('click', nextSlide);
+            prevBtn.addEventListener('click', prevSlide);
+            indicators.forEach((indicator, index) => {
+                indicator.addEventListener('click', () => {
+                    currentIndex = index;
+                    showSlide(currentIndex);
+                });
             });
-        });
-
-        // Auto slide
-        setInterval(nextSlide, 5000);
-    });
-
-    document.addEventListener('DOMContentLoaded', function() {
-        fetch('../../controllers/php/listar_productos.php')
-            .then(response => response.json())
-            .then(data => {
-                if (data.success) {
-                    const productosGrid = document.getElementById('productosGrid');
-                    productosGrid.innerHTML = ''; // Clear existing content
-                    data.listaProductos.forEach(producto => {
-                        const productoCard = document.createElement('div');
-                        productoCard.classList.add('producto');
-                        productoCard.innerHTML = `
-                            <div class="img-container">
-                                <img src="../imagenes_P/${producto.imagen || 'default.jpeg'}" alt="${producto.nombre}" onerror="this.onerror=null;this.src='../imagenes_P/default.jpeg';">
-                            </div>
-                            <div class="producto-info">
-                                <h3>${producto.nombre}</h3>
-                                <p>$${producto.precio}</p>
-                                <a href="#" class="btn">Comprar</a>
-                            </div>
-                        `;
-                        productosGrid.appendChild(productoCard);
-                    });
-                } else {
-                    alert('No se pudieron cargar los productos');
+    
+            setInterval(nextSlide, 5000);
+    
+            // Cargar productos
+            cargarProductos();
+    
+            async function cargarProductos() {
+                try {
+                    const response = await fetch('../../controllers/php/productoControl.php');
+                    const data = await response.json();
+                    
+                    if (data.success && data.listaProductos) {
+                        const productosGrid = document.getElementById('productosGrid');
+                        productosGrid.innerHTML = ''; // Limpiar contenido existente
+                        
+                        data.listaProductos.forEach(producto => {
+                            const productoCard = document.createElement('div');
+                            productoCard.classList.add('producto');
+                            
+                            // Construir la ruta correcta de la imagen
+                            let imagenUrl = producto.imagen 
+                                ? `../../public/imag/${producto.imagen}`
+                                : '../../public/imagenes_P/default.jpeg';
+                            
+                            productoCard.innerHTML = `
+                                <div class="img-container">
+                                    <img src="${imagenUrl}" alt="${producto.nombre}" 
+                                         onerror="this.onerror=null;this.src='../../public/imagenes_P/default.jpeg';">
+                                </div>
+                                <div class="producto-info">
+                                    <h3>${producto.nombre}</h3>
+                                    <p>$${parseFloat(producto.precio).toFixed(2)}</p>
+                                    <button class="btn agregar-carrito" data-id="${producto.id_producto}">Agregar al carrito</button>
+                                </div>
+                            `;
+                            productosGrid.appendChild(productoCard);
+                        });
+    
+                        // Agregar event listeners para los botones de carrito
+                        document.querySelectorAll('.agregar-carrito').forEach(btn => {
+                            btn.addEventListener('click', agregarAlCarrito);
+                        });
+                    } else {
+                        console.error('Error al cargar productos:', data.message || 'Datos no válidos');
+                        mostrarError('No se pudieron cargar los productos. Intente más tarde.');
+                    }
+                } catch (error) {
+                    console.error('Error al cargar productos:', error);
+                    mostrarError('Error al conectar con el servidor.');
                 }
-            })
-            .catch(error => {
-                console.error('Error al cargar los productos:', error);
-                alert('Error al cargar los productos');
-            });
-    });
-    </script>
+            }
+    
+            function agregarAlCarrito(e) {
+                const idProducto = e.target.getAttribute('data-id');
+                // Aquí puedes implementar la lógica para agregar al carrito
+                console.log('Agregar producto al carrito:', idProducto);
+                // Puedes hacer una llamada fetch al endpoint correspondiente
+            }
+    
+            function mostrarError(mensaje) {
+                const productosGrid = document.getElementById('productosGrid');
+                productosGrid.innerHTML = `<div class="error-message">${mensaje}</div>`;
+            }
+        });
+        </script>
 
 </body>
 </html>

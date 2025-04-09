@@ -19,13 +19,19 @@ $carritoModel = new Carrito($conn);
 try {
     if ($_SERVER['REQUEST_METHOD'] === 'GET') {
         // Obtener carrito
-        echo json_encode($carritoModel->obtenerCarrito($idUsuario));
+        $resultado = $carritoModel->obtenerCarrito($idUsuario);
+        // Asegurar que todos los valores numéricos sean números y no strings
+        foreach ($resultado as &$item) {
+            $item['precio'] = floatval($item['precio']);
+            $item['cantidad'] = intval($item['cantidad']);
+        }
+        echo json_encode($resultado, JSON_UNESCAPED_UNICODE | JSON_NUMERIC_CHECK);
         exit;
     } elseif ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $input = json_decode(file_get_contents("php://input"), true);
 
         if (!isset($input['accion'])) {
-            echo json_encode(["error" => "Acción no especificada."]);
+            echo json_encode(["error" => "Acción no especificada."], JSON_UNESCAPED_UNICODE);
             exit;
         }
 

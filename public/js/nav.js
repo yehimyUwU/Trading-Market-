@@ -591,28 +591,34 @@ function mostrarDetallesProducto(id) {
 }
 
     
-    function asignarEventosEstrellas() {
-        document.querySelectorAll(".estrella").forEach(estrella => {
-            estrella.onclick = function () {
-                const valor = this.getAttribute("data-valor");
-                const idProducto = document.getElementById("estrellas").getAttribute("data-id-producto");
-    
-                fetch('../../controllers/php/guardar_calificacion.php', {
-                    method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({ id_producto: idProducto, calificacion: valor })
-                })
-                .then(res => res.json())
-                .then(data => {
-                    if (data.success) {
-                        marcarEstrellas(valor);
-                        document.getElementById("mensaje-calificacion").style.display = "block";
-                        document.getElementById("btnEditarCalificacion").style.display = "inline-block";
-                    }
-                });
-            };
-        });
-    }
+function asignarEventosEstrellas() {
+    document.querySelectorAll(".estrella").forEach(estrella => {
+        estrella.onclick = function () {
+            // Si ya están seleccionadas (ya calificó), no hacer nada
+            if (document.getElementById("btnEditarCalificacion").style.display === "inline-block") return;
+
+            const valor = this.getAttribute("data-valor");
+            const idProducto = document.getElementById("estrellas").getAttribute("data-id-producto");
+
+            fetch('../../controllers/php/guardar_calificacion.php', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ id_producto: idProducto, calificacion: valor })
+            })
+            .then(res => res.json())
+            .then(data => {
+                if (data.success) {
+                    marcarEstrellas(valor);
+                    document.getElementById("mensaje-calificacion").style.display = "block";
+                    document.getElementById("btnEditarCalificacion").style.display = "inline-block";
+
+                    // ✅ Desactivar evento de click después de calificar
+                    document.querySelectorAll(".estrella").forEach(estrella => estrella.onclick = null);
+                }
+            });
+        };
+    });
+}
     
     function marcarEstrellas(valor) {
         document.querySelectorAll(".estrella").forEach(estrella => {
@@ -638,7 +644,7 @@ function mostrarDetallesProducto(id) {
     
     function editarCalificacion() {
         const idProducto = document.getElementById("estrellas").getAttribute("data-id-producto");
-        
+    
         fetch('../../controllers/php/guardar_calificacion.php', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
@@ -647,8 +653,14 @@ function mostrarDetallesProducto(id) {
             document.querySelectorAll(".estrella").forEach(e => e.classList.remove("seleccionada"));
             document.getElementById("btnEditarCalificacion").style.display = "none";
             document.getElementById("mensaje-calificacion").style.display = "none";
+    
+            // ✅ Reasignar eventos después de habilitar edición
+            asignarEventosEstrellas();
         });
     }
+
+    // Example usage: Add a button to trigger the function
+    document.getElementById("btnEditarCalificacion").addEventListener("click", editarCalificacion);
     
     
 
@@ -675,7 +687,7 @@ function mostrarDetallesProducto(id) {
     cargarProductos();
 });
 
-document.addEventListener('DOMContentLoaded', function() {
+document.addEventListener('DOMContentLoaded', function () {
     cargarProductos();
 });
 
@@ -694,10 +706,11 @@ function cargarProductos() {
                             <img src="../imagenes_P/${producto.imagen || 'default.jpeg'}" class="card-img-top" alt="${producto.nombre}" onerror="this.onerror=null;this.src='../imagenes_P/default.jpeg';">
                             <div class="card-body">
                                 <h5 class="card-title">${producto.nombre}</h5>
+                                <p class="card-subtitle text-muted">ID: ${producto.id_producto}</p>
                                 <p class="card-text">${producto.descripcion}</p>
                                 <p class="card-text font-weight-bold">$${producto.precio}</p>
-                                <button class="btn btn-primary" onclick="verDetalles('${producto.nombre}', '${producto.descripcion}', '${producto.precio}', '../imagenes_P/${producto.imagen}')">Ver Detalles</button>
-                                <button class="btn btn-success" onclick="agregarAlCarrito(${producto.id_producto}, '${producto.nombre}', ${producto.precio})">Agregar al Carrito</button>
+                                <button class="btn btn-primary mb-3" onclick="verDetalles('${producto.nombre}', '${producto.descripcion}', '${producto.precio}', '../imagenes_P/${producto.imagen}', ${producto.id_producto})">Ver Detalles</button>
+                                <button class="btn btn-success mb-3" onclick="agregarAlCarrito(${producto.id_producto}, '${producto.nombre}', ${producto.precio})">Agregar al Carrito</button>
                             </div>
                         </div>
                     `;
@@ -706,7 +719,7 @@ function cargarProductos() {
             } else {
                 alert('No se pudieron cargar los productos');
             }
-        })
+        });
 }
 
 function verDetalles(nombre, descripcion, precio, imagen) {
@@ -716,6 +729,7 @@ function verDetalles(nombre, descripcion, precio, imagen) {
     document.getElementById('modalImagen').src = imagen;
     $('#productoModal').modal('show');
 }
+
 
 document.addEventListener("DOMContentLoaded", function () {
     fetch("../../controllers/php/obtener_proveedores_controller.php")
