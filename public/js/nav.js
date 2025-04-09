@@ -517,6 +517,10 @@ function mostrarDetallesProducto(id) {
 
     // 💬 Cargar comentarios automáticamente al abrir el modal
     cargarComentarios(producto.id_producto);
+
+    // 💬 Cargar comentario del usuario en el textarea
+    cargarComentarioUsuario(producto.id_producto);
+
 }
 
     
@@ -770,4 +774,15 @@ function mostrarModalProducto(producto) {
     $('#productoModal').modal('show');
 }
 
+function cargarComentarioUsuario(idProducto) {
+    fetch(`../../controllers/php/obtener_comentario_usuario.php?id_producto=${idProducto}`)
+        .then(res => res.json())
+        .then(data => {
+            if (data.success) {
+                document.getElementById("comentarioTexto").value = data.comentario;
+            } else {
+                document.getElementById("comentarioTexto").value = "";
+            }
+        });
+}
 

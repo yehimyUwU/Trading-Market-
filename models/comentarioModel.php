@@ -20,6 +20,42 @@ class ComentarioModel {
         ]);
     }
 
+    public function obtenerComentarioUsuario($id_producto, $id_usuario) {
+        $stmt = $this->conn->prepare("
+            SELECT comentario 
+            FROM comentarios 
+            WHERE id_producto = :id_producto AND id_usuario = :id_usuario
+        ");
+        $stmt->execute([
+            ':id_producto' => $id_producto,
+            ':id_usuario' => $id_usuario
+        ]);
+        return $stmt->fetch(PDO::FETCH_ASSOC);
+    }
+
+    public function guardarOActualizarComentario($id_producto, $id_usuario, $comentario) {
+        $comentarioExistente = $this->obtenerComentarioUsuario($id_producto, $id_usuario);
+
+        if ($comentarioExistente) {
+            $stmt = $this->conn->prepare("
+                UPDATE comentarios 
+                SET comentario = :comentario, fecha = CURRENT_TIMESTAMP 
+                WHERE id_producto = :id_producto AND id_usuario = :id_usuario
+            ");
+        } else {
+            $stmt = $this->conn->prepare("
+                INSERT INTO comentarios (id_producto, id_usuario, comentario) 
+                VALUES (:id_producto, :id_usuario, :comentario)
+            ");
+        }
+
+        return $stmt->execute([
+            ':id_producto' => $id_producto,
+            ':id_usuario' => $id_usuario,
+            ':comentario' => $comentario
+        ]);
+    }
+
     public function obtenerComentarios($id_producto) {
         $stmt = $this->conn->prepare("
             SELECT 
@@ -37,5 +73,5 @@ class ComentarioModel {
         $stmt->execute([':id_producto' => $id_producto]);
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
-    
 }
+?>

@@ -4,9 +4,9 @@ require '../../models/ComentarioModel.php';
 
 $data = json_decode(file_get_contents("php://input"), true);
 
-if (!empty($data['id_producto']) && !empty($data['comentario']) && isset($_SESSION['usuario']['id'])) {
+if (!empty($data['id_producto']) && isset($_SESSION['usuario']['id'])) {
     $comentarioModel = new ComentarioModel();
-    $resultado = $comentarioModel->guardarComentario(
+    $resultado = $comentarioModel->guardarOActualizarComentario(
         $data['id_producto'],
         $_SESSION['usuario']['id'],
         $data['comentario']
@@ -18,3 +18,4 @@ if (!empty($data['id_producto']) && !empty($data['comentario']) && isset($_SESSI
         'message' => 'Datos incompletos o sesión no iniciada',
     ]);
 }
+?>
