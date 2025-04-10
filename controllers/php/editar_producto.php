@@ -1,5 +1,6 @@
-
 <?php
+
+
 /**
  * Archivo: editar_producto.php
  * Descripción: Controlador para la edición de productos en el sistema
