@@ -1299,6 +1299,7 @@ body {
 
 /* ChatBot */
 
+
 #openChatbot {
   width: 60px;
   height: 60px;
@@ -1601,6 +1602,7 @@ ion-icon{
   color: gold;
 }
 
+<<<<<<< HEAD
 /* Estilos generales para la tabla */
 #tablaProveedores {
   width: 100%;
@@ -1664,3 +1666,15 @@ ion-icon{
   }
 }
 
+=======
+
+#content_bot{
+  width: 90%;
+  max-width: 500px;
+  background: #ffffff;
+  padding: 20px;
+  border-radius: 10px;
+  text-align: center;
+  position: relative;
+}
+>>>>>>> b2b20701752db92af851ca862077579be85092f2
