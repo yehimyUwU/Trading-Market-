@@ -1,6 +1,19 @@
 <!DOCTYPE html>
 <?php
+/**
+ * Archivo: BienvProv.php
+ * Descripción: Página de bienvenida para proveedores
+ * Conexiones:
+ * - Se conecta con: controllers/php/verificar_acceso.php (para verificación de rol)
+ * - Se conecta con: controllers/php/barra_prove.php (para la barra de navegación)
+ * Funcionalidades:
+ * - Dashboard de proveedor
+ * - Estadísticas de ventas
+ * - Acceso rápido a funciones principales
+ * - Personalización con nombre del proveedor
+ */
 include_once '../../controllers/php/verificar_acceso.php';
+if (!verificarRol('Proveedor')) {
 if (!verificarRol('Proveedor')) { // Cambiado a "Proveedor"
     header('Location: ../../views/html/longin.html');
     exit;

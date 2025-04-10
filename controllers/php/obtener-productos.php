@@ -1,4 +1,19 @@
 <?php
+/**
+ * Archivo: obtener-productos.php
+ * Descripción: Controlador para obtener la lista de productos con filtros
+ * Conexiones:
+ * - Se conecta con: config/php/conexion.php (para la conexión a la base de datos)
+ * - Se utiliza en: views/html/Misproductos.php (para mostrar la lista de productos)
+ * - Interactúa con la tabla: productos
+ * Flujo general:
+ * 1. Establece conexión con la base de datos
+ * 2. Recibe parámetros de búsqueda y ordenamiento
+ * 3. Construye y ejecuta la consulta SQL con filtros
+ * 4. Procesa y formatea los resultados
+ * 5. Retorna los datos en formato JSON
+ */
+
 require '../../config/php/conexion.php';
 
 header('Content-Type: application/json');

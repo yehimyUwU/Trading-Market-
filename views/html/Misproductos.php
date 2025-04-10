@@ -1,4 +1,20 @@
 <!DOCTYPE html>
+<?php
+/**
+ * Archivo: Misproductos.php
+ * Descripción: Gestión de productos para proveedores
+ * Conexiones:
+ * - Se conecta con: controllers/php/barra_prove.php (para la barra de navegación)
+ * - Se conecta con: controllers/php/listar_categorias.php (para categorías)
+ * - Se conecta con: controllers/php/productoControl.php (para gestión de productos)
+ * Funcionalidades:
+ * - Lista de productos
+ * - Formulario de nuevo producto
+ * - Edición de productos existentes
+ * - Eliminación de productos
+ * - Filtros y búsqueda
+ * - Vista previa de productos
+ */
 <html lang="es">
 <head>
     <meta charset="UTF-8">

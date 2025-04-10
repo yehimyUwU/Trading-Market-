@@ -25,7 +25,15 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $genero = $_POST['genero'] ?? null;
     $email = $_POST['email'] ?? null;
     $password = $_POST['password'] ?? null;
-    $rol = $_POST['rol'] ?? 'Cliente'; // Por defecto, asignar "Cliente" si no se selecciona un rol
+    $rol = $_POST['rol'] ?? 'Cliente';
+    
+    // Validar que el rol no sea Administrador
+    if ($rol === 'Administrador') {
+        echo json_encode(['success' => false, 'message' => 'No se puede registrar como administrador']);
+        exit;
+    }
+    
+    $solicitud_proveedor = ($rol === 'Proveedor') ? 1 : 0;
 
     // Verificar si todos los campos requeridos están presentes
     if (!$tipo_documento || !$documento || !$nombre || !$apellido || !$fecha_nacimiento || !$genero || !$email || !$password || !$rol) {
@@ -54,22 +62,26 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $pdo = Conexion::conectar(); // Conectar a la base de datos
 
         // Insertar el usuario en la tabla 'usuario'
-        $stmt = $pdo->prepare("INSERT INTO usuario (tipo_documento, documento, nombre, apellido, fecha_nacimiento, genero, email, password) 
-                              VALUES (?, ?, ?, ?, ?, ?, ?, ?)");
+        $stmt = $pdo->prepare("INSERT INTO usuario (tipo_documento, documento, nombre, apellido, fecha_nacimiento, genero, email, password, solicitud_proveedor) 
+                              VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)");
         
-        if ($stmt->execute([$tipo_documento, $documento, $nombre, $apellido, $fecha_nacimiento, $genero, $email, $hashed_password])) {
+        if ($stmt->execute([$tipo_documento, $documento, $nombre, $apellido, $fecha_nacimiento, $genero, $email, $hashed_password, $solicitud_proveedor])) {
             // Obtener el ID del usuario recién creado
             $id_usuario = $pdo->lastInsertId();
 
-            // Asignar el rol seleccionado al usuario
-            $stmt_rol = $pdo->prepare("
-                INSERT INTO usuario_rol (id_usuario, id_rol) 
-                VALUES (?, (SELECT id_rol FROM rol_usuario WHERE nombre = ?))
-            ");
-            if ($stmt_rol->execute([$id_usuario, $rol])) {
-                echo json_encode(['success' => true, 'message' => 'Registro exitoso.']);
+            // Si no es proveedor, asignar el rol seleccionado
+            if ($rol !== 'Proveedor') {
+                $stmt_rol = $pdo->prepare("
+                    INSERT INTO usuario_rol (id_usuario, id_rol) 
+                    VALUES (?, (SELECT id_rol FROM rol_usuario WHERE nombre = ?))
+                ");
+                if ($stmt_rol->execute([$id_usuario, $rol])) {
+                    echo json_encode(['success' => true, 'message' => 'Registro exitoso.']);
+                } else {
+                    echo json_encode(['success' => false, 'message' => 'Error al asignar el rol al usuario.']);
+                }
             } else {
-                echo json_encode(['success' => false, 'message' => 'Error al asignar el rol al usuario.']);
+                echo json_encode(['success' => true, 'message' => 'Registro exitoso. Su solicitud de proveedor será revisada por los administradores.']);
             }
         } else {
             echo json_encode(['success' => false, 'message' => 'Error al registrar el usuario.']);

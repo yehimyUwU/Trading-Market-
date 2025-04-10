@@ -1,4 +1,21 @@
 <!DOCTYPE html>
+<?php
+/**
+ * Archivo: PerfilProv.php
+ * Descripción: Perfil y configuración del proveedor
+ * Conexiones:
+ * - Se conecta con: controllers/php/barra_prove.php (para la barra de navegación)
+ * - Se conecta con: controllers/php/obtener_perfil.php (para datos del perfil)
+ * - Se conecta con: controllers/php/guardar_imagen.php (para subir imágenes)
+ * Funcionalidades:
+ * - Visualización de datos del perfil
+ * - Edición de información personal
+ * - Subida de imagen de perfil
+ * - Estadísticas de ventas
+ * - Historial de pedidos
+ */
+require '../../controllers/php/barra_prove.php'; 
+?>
 <html lang="es">
 <head>
     <meta charset="UTF-8">
@@ -12,10 +29,6 @@
 </head>
 <body>
 
-<?php
-    require '../../controllers/php/barra_prove.php'; 
-?>
-    
     <section id="content">
         <nav>
             <a href="#" class="nav-link">Mi Perfil</a>
