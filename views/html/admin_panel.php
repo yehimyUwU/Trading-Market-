@@ -233,7 +233,13 @@ require '../../controllers/php/barra_admin.php';
           <span class="close">&times;</span>
           <h2>Perfil de usuario</h2>
           <div class="user2">
-              <img src="../../public/imagenes/cucu.jpg" alt="">
+              <img id="profile-avatar" src="../../public/imag/default.jpeg" class="profile-avatar" alt="avatar">
+              <form id="uploadForm" enctype="multipart/form-data">
+                  <input type="file" class="profile-upload" id="profileImageInput" name="profileImage" accept="image/*" onchange="previewImage(event)">
+                  <label for="profileImageInput">Seleccionar imagen</label>
+                  <button type="button" onclick="uploadImage()">Guardar Imagen</button>
+              </form>
+              <p id="imagenMensaje" style="display: none;">Agregue una imagen a su perfil.</p>
           </div>
           
           <!-- Formularios de entrada -->
@@ -274,5 +280,95 @@ require '../../controllers/php/barra_admin.php';
     <!--script para poder usar iconos bien bellaquitos // ionicons-->
     <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
     <script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
+    <script>
+        // Función para previsualizar la imagen seleccionada
+        function previewImage(event) {
+            const input = event.target;
+            const preview = document.getElementById('profile-avatar');
+
+            if (input.files && input.files[0]) {
+                const reader = new FileReader();
+                reader.onload = function (e) {
+                    preview.src = e.target.result;
+                };
+                reader.readAsDataURL(input.files[0]);
+            }
+        }
+
+        // Función para subir la imagen al servidor
+        function uploadImage() {
+            const form = document.getElementById('uploadForm');
+            const formData = new FormData(form);
+            const input = document.getElementById('profileImageInput');
+            
+            if (!input.files || !input.files[0]) {
+                alert('Por favor, seleccione una imagen primero.');
+                return;
+            }
+
+            fetch('../../controllers/php/guardar_imagen.php', {
+                method: 'POST',
+                body: formData
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    const avatar = document.getElementById('profile-avatar');
+                    const topbarAvatar = document.getElementById('profileImage');
+                    // Mantener la imagen actual en el preview
+                    const currentPreview = avatar.src;
+                    
+                    // Crear una nueva imagen para verificar la carga
+                    const newImage = new Image();
+                    newImage.onload = function() {
+                        // Una vez que la nueva imagen se carga correctamente, actualizamos ambos avatares
+                        const newImagePath = '../../public/imag/' + data.imagen;
+                        avatar.src = newImagePath;
+                        topbarAvatar.src = newImagePath;
+                        document.getElementById('imagenMensaje').style.display = 'none';
+                        alert('Imagen guardada exitosamente.');
+                    };
+                    newImage.onerror = function() {
+                        // Si hay error al cargar la nueva imagen, mantenemos la previsualización
+                        avatar.src = currentPreview;
+                    };
+                    newImage.src = '../../public/imag/' + data.imagen;
+                } else {
+                    alert('Error al guardar la imagen: ' + data.message);
+                }
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                alert('Ocurrió un error al guardar la imagen.');
+            });
+        }
+
+        // Cargar la imagen del perfil al iniciar
+        document.addEventListener("DOMContentLoaded", function () {
+            fetch('../../controllers/php/obtener_perfil.php')
+                .then(response => response.json())
+                .then(data => {
+                    if (data.success) {
+                        const avatar = document.getElementById('profile-avatar');
+                        const topbarAvatar = document.getElementById('profileImage');
+                        const mensaje = document.getElementById('imagenMensaje');
+
+                        if (data.usuario.imagen) {
+                            const imagePath = '../../public/imag/' + data.usuario.imagen;
+                            avatar.src = imagePath;
+                            topbarAvatar.src = imagePath;
+                            mensaje.style.display = 'none';
+                        } else {
+                            avatar.src = '../../public/imag/default.jpeg';
+                            topbarAvatar.src = '../../public/imag/default.jpeg';
+                            mensaje.style.display = 'block';
+                        }
+                    }
+                })
+                .catch(error => {
+                    console.error('Error al cargar la imagen del perfil:', error);
+                });
+        });
+    </script>
 </body>
 </html>

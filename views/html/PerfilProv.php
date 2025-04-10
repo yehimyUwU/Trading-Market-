@@ -34,7 +34,7 @@
         <main class="profile-main">
             <div class="profile-card">
                 <div class="profile-header">
-                    <img id="profile-avatar" src="http://ssl.gstatic.com/accounts/ui/avatar_2x.png" class="profile-avatar" alt="avatar">
+                    <img id="profile-avatar" src="../../public/imag/default.jpeg" class="profile-avatar" alt="avatar">
                     <form id="uploadForm" enctype="multipart/form-data">
                         <input type="file" class="profile-upload" id="profileImageInput" name="profileImage" accept="image/*" onchange="previewImage(event)">
                         <button type="button" onclick="uploadImage()">Guardar Imagen</button>
@@ -93,8 +93,14 @@
                         const avatar = document.getElementById('profile-avatar');
                         const mensaje = document.getElementById('imagenMensaje');
 
-                        avatar.src = data.usuario.imagen; // Asignar la imagen desde la respuesta
-                        mensaje.style.display = data.usuario.imagen.includes('avatar_2x.png') ? 'block' : 'none';
+                        // Actualizar la imagen del perfil
+                        if (data.usuario.imagen) {
+                            avatar.src = '../../public/imag/' + data.usuario.imagen;
+                            mensaje.style.display = 'none';
+                        } else {
+                            avatar.src = '../../public/imag/default.jpeg';
+                            mensaje.style.display = 'block';
+                        }
                     } else {
                         alert('No se pudo cargar la información del perfil.');
                     }
@@ -123,6 +129,12 @@
         function uploadImage() {
             const form = document.getElementById('uploadForm');
             const formData = new FormData(form);
+            const input = document.getElementById('profileImageInput');
+            
+            if (!input.files || !input.files[0]) {
+                alert('Por favor, seleccione una imagen primero.');
+                return;
+            }
 
             fetch('../../controllers/php/guardar_imagen.php', {
                 method: 'POST',
@@ -131,8 +143,24 @@
             .then(response => response.json())
             .then(data => {
                 if (data.success) {
-                    alert('Imagen guardada exitosamente.');
-                    location.reload(); // Recargar la página para reflejar los cambios
+                    const avatar = document.getElementById('profile-avatar');
+                    // Mantener la imagen actual en el preview
+                    const currentPreview = avatar.src;
+                    
+                    // Crear una nueva imagen para verificar la carga
+                    const newImage = new Image();
+                    newImage.onload = function() {
+                        // Una vez que la nueva imagen se carga correctamente, actualizamos el avatar
+                        avatar.src = '../../public/imag/' + data.imagen;
+                        document.getElementById('imagenMensaje').style.display = 'none';
+                        alert('Imagen guardada exitosamente.');
+                    };
+                    newImage.onerror = function() {
+                        // Si hay error al cargar la nueva imagen, mantenemos la previsualización
+                        avatar.src = currentPreview;
+                        alert('La imagen se guardó.');
+                    };
+                    newImage.src = '../../public/imag/' + data.imagen;
                 } else {
                     alert('Error al guardar la imagen: ' + data.message);
                 }

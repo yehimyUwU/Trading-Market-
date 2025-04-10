@@ -612,5 +612,38 @@ body{
   }
   
   
+
+  /* Archivo: public/css/styles.css */
+
+
   
-  
+/* Contenedor más espacioso */
+#container {
+    margin-top: 20px;
+    padding: 20px;
+    background-color: #f8f9fa; /* Color de fondo claro */
+    border-radius: 10px;       /* Esquinas redondeadas */
+
+}
+
+/* Tabla ajustada */
+table {
+    border-collapse: separate;
+    border-spacing: 0; /* Espaciado entre celdas */
+}
+
+table thead {
+    font-weight: bold;
+    text-align: center;
+}
+
+table th, table td {
+    text-align: center; /* Centrar contenido de las celdas */
+    vertical-align: middle;
+    padding: 10px;
+    border: 1px solid #dee2e6; /* Líneas sutiles */
+}
+
+.h2-cli{
+    color: var(--blue);
+}

@@ -111,12 +111,18 @@ class ProductoModelo {
         $mensaje = array();
 
         try {
+            // Primero eliminar los comentarios relacionados
+            $objRespuesta = Conexion::conectar()->prepare("DELETE FROM comentarios WHERE id_producto = :idProducto");
+            $objRespuesta->bindParam(":idProducto", $idProducto);
+            $objRespuesta->execute();
+
+            // Luego eliminar el producto
             $objRespuesta = Conexion::conectar()->prepare("DELETE FROM producto WHERE id_producto = :idProducto");
             $objRespuesta->bindParam(":idProducto", $idProducto);
             if ($objRespuesta->execute()) {
                 $mensaje = array("codigo" => "200", "mensaje" => "Producto eliminado correctamente.");
             } else {
-                $mensaje = array("codigo" => "401", "mensaje" => "Error. No fue posible eliminar el producto.");
+                $mensaje = array("codigo" => "401", "mensaje" => "Error al eliminar el producto.");
             }
             $objRespuesta = null;
         } catch (Exception $e) {
