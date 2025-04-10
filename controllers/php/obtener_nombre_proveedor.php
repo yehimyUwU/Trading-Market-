@@ -1,5 +1,5 @@
 <?php
-require_once '../../config/conexion.php';
+require '../../config/php/conexion.php'; 
 
 if (isset($_GET['id'])) {
     $id = $_GET['id'];
@@ -7,7 +7,7 @@ if (isset($_GET['id'])) {
     $conexion = new Conexion();
     $db = $conexion->conectar();
 
-    $stmt = $db->prepare("SELECT nombre, apellido FROM usuario WHERE id = ?");
+    $stmt = $db->prepare("SELECT nombre, apellido FROM usuario WHERE id_usuario = ?");
     $stmt->execute([$id]);
     $proveedor = $stmt->fetch(PDO::FETCH_ASSOC);
 
