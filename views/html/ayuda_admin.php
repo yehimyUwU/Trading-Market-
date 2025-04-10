@@ -43,9 +43,9 @@ require '../../controllers/php/barra_admin.php';
                 <div class="help-card interactive">
                     <div class="card-header">
                         <ion-icon name="help-circle-outline"></ion-icon>
-                        <h3>Asistente Virtual</h3>
+                        <h3>Chat con proveedores</h3>
                     </div>
-                    <p>Chatea con nuestro asistente para resolver tus preguntas de manera instantánea.</p>
+                    <p>Chatea con nuestros proveedores para solucionar preguntas e inconvenientes.</p>
                     <button class="btn-action">Abrir Chat</button>
                 </div>
     
