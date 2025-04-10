@@ -250,6 +250,15 @@ body {
     background-color: #00000098;
 }
 
+#bannerSolo {
+  position: relative;
+  padding: 0;
+  backdrop-filter: blur(10px);
+  border-radius: 10px;
+  overflow: hidden;
+  margin: 0px;
+}
+
 .carousel {
     position: relative;
     width: 90%;
