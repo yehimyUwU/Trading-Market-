@@ -1,3 +1,6 @@
+
+<?php
+require '../../config/php/conexion.php';
 /**
  * Archivo: productoModelo.php
  * Descripción: Modelo para gestionar las operaciones CRUD de productos
@@ -7,9 +10,6 @@
  * - Se utiliza en: views/html/Misproductos.php
  * - Se utiliza en: views/html/tienda.php
  */
-
-<?php
-require '../../config/php/conexion.php';
 
 class ProductoModelo {
     /**

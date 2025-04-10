@@ -1,3 +1,6 @@
+
+<?php
+
 /**
  * Archivo: gestionar_solicitud_proveedor.php
  * Descripción: Controlador para gestionar las solicitudes de proveedores
@@ -12,7 +15,6 @@
  * 4. Retorna una respuesta JSON con el resultado
  */
 
-<?php
 require '../../config/php/conexion.php';
 header('Content-Type: application/json');
 

@@ -1,3 +1,5 @@
+
+<?php
 /**
  * Archivo: editar_producto.php
  * Descripción: Controlador para la edición de productos en el sistema
@@ -11,8 +13,6 @@
  * 3. Llama al modelo para actualizar el producto
  * 4. Retorna una respuesta JSON con el resultado
  */
-
-<?php
 
 require "../../models/productoModelo.php";
 

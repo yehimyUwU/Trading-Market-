@@ -94,6 +94,28 @@
     }
 }
 
+.boton-flotante {
+        position: fixed;
+        bottom: 20px;
+        left: 20px;
+        z-index: 1000;
+    }
+
+    .boton-flotante button {
+        background-color: #007bff;
+        color: white;
+        border: none;
+        padding: 12px 20px;
+        border-radius: 25px;
+        font-size: 14px;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
+        transition: background-color 0.3s ease;
+    }
+
+    .boton-flotante button:hover {
+        background-color: #0056b3;
+    }
+
     </style>
     <div id="nav-container"></div>
     <br>
@@ -136,7 +158,14 @@
     </div>
 </div>
 
-    
+
+<!-- Botón flotante en esquina inferior izquierda -->
+<div class="boton-flotante">
+    <button onclick="window.location.href='../../views/html/listaProveedores.html'">
+        Lista de proveedores guardados
+    </button>
+</div>
+
 
 <footer class="pie-pagina">
     <div class="grupo-1">
