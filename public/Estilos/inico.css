@@ -1299,6 +1299,7 @@ body {
 
 /* ChatBot */
 
+
 #openChatbot {
   width: 60px;
   height: 60px;
@@ -1599,4 +1600,15 @@ ion-icon{
 
 .estrella.seleccionada {
   color: gold;
+}
+
+
+#content_bot{
+  width: 90%;
+  max-width: 500px;
+  background: #ffffff;
+  padding: 20px;
+  border-radius: 10px;
+  text-align: center;
+  position: relative;
 }
