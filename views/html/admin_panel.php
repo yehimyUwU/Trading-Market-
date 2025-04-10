@@ -45,8 +45,8 @@ require '../../controllers/php/barra_admin.php';
         <div class="cardBox">
             <div class="card">
                 <div>
-                    <div class="numbers">1.000</div>
-                    <div class="cardName">Vistas diarias</div>
+                    <div class="numbers">100</div>
+                    <div class="cardName">Registros recientes</div>
                 </div>
 
                 <div class="iconBx">
@@ -54,21 +54,11 @@ require '../../controllers/php/barra_admin.php';
                 </div>
             </div>
 
-            <div class="card">
-                <div>
-                    <div class="numbers">12</div>
-                    <div class="cardName">Ventas</div>
-                </div>
-
-                <div class="iconBx">
-                    <ion-icon name="cart-outline"></ion-icon>
-                </div>
-            </div>
 
             <div class="card">
                 <div>
-                    <div class="numbers">235</div>
-                    <div class="cardName">Comentarios</div>
+                    <div class="numbers">25</div>
+                    <div class="cardName">Mensajes pendientes</div>
                 </div>
 
                 <div class="iconBx">
@@ -78,8 +68,8 @@ require '../../controllers/php/barra_admin.php';
 
             <div class="card">
                 <div>
-                    <div class="numbers">&4.23</div>
-                    <div class="cardName">Ganancias</div>
+                    <div class="numbers">12</div>
+                    <div class="cardName">Solicitudes</div>
                 </div>
 
                 <div class="iconBx">

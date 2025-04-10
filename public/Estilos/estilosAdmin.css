@@ -10,14 +10,14 @@
 
 
 /* Modo oscuro */
-:root.dark-mode {
-    --blue: #a5a0a0; /* Azul más oscuro */
-    --white: #252323; /* Fondo y letras de la barra oscuro */
-    --gray: #5a5252; /* Gris oscuro */
-    --black1: #fff; /* Texto claro */
-    --black2: #ccc; /* Texto secundario */
-}
 
+:root.dark-mode {
+    --blue: #252323; /* Azul más oscuro */
+    --white: #d8d8d8; /* Fondo y letras de la barra oscuro */
+    --gray: #5a5252; /* Gris oscuro */
+    --black1: #252323; /* Texto claro */
+    --black2: #252323; /* Texto secundario */
+}
 /* Botón para cambiar de modo */
 .modo-visual-btn {
     background-color: var(--blue);
@@ -266,51 +266,52 @@ body{
 }
 
 /*Tarjetas*/
-.cardBox{
+/* Tarjetas */
+.cardBox {
     position: relative;
     width: 100%;
     padding: 20px;
     display: grid;
-    grid-template-columns: repeat(4,1fr);
-    grid-gap: 30px;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); /* Distribución dinámica */
+    grid-gap: 30px; /* Espaciado entre tarjetas */
 }
 
-.cardBox .card{
+.cardBox .card {
     position: relative;
     background: var(--white);
     padding: 30px;
-    border-radius: 20px;
+    border-radius: 50px;
     display: flex;
     justify-content: space-between;
     cursor: pointer;
     box-shadow: 0 7px 25px rgba(0, 0, 0, 0.08);
 }
 
-.cardBox .card .numbers{
+.cardBox .card .numbers {
     position: relative;
     font-weight: 500;
     font-size: 2.5rem;
     color: var(--blue);
 }
 
-.cardBox .card .cardName{
+.cardBox .card .cardName {
     color: var(--blue);
     font-size: 1.1rem;
     margin-top: 5px;
 }
 
-.cardBox .card .iconBx{
+.cardBox .card .iconBx {
     font-size: 2.5rem;
     color: var(--black2);
 }
 
-.cardBox .card:hover{
+.cardBox .card:hover {
     background: var(--blue);
 }
 
 .cardBox .card:hover .numbers,
 .cardBox .card:hover .cardName,
-.cardBox .card:hover .iconBx{
+.cardBox .card:hover .iconBx {
     color: var(--white);
 }
 

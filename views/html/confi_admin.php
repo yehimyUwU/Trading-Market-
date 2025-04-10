@@ -49,6 +49,8 @@ require '../../controllers/php/barra_admin.php';
         <br>
         <br>
     
+
+        
         <!-- Contenido del apartado de configuraciones -->
         <div class="settings-container">
             <h2>Configuraciones Generales</h2>
