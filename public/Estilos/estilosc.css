@@ -9,16 +9,15 @@
 }
 
 
-
 /* Modo oscuro */
-:root.dark-mode {
-    --blue: #a5a0a0; /* Azul más oscuro */
-    --white: #252323; /* Fondo y letras de la barra oscuro */
-    --gray: #5a5252; /* Gris oscuro */
-    --black1: #fff; /* Texto claro */
-    --black2: #ccc; /* Texto secundario */
-}
 
+:root.dark-mode {
+    --blue: #252323; /* Azul más oscuro */
+    --white: #d8d8d8; /* Fondo y letras de la barra oscuro */
+    --gray: #5a5252; /* Gris oscuro */
+    --black1: #252323; /* Texto claro */
+    --black2: #252323; /* Texto secundario */
+}
 /* Botón para cambiar de modo */
 .modo-visual-btn {
     background-color: var(--blue);
@@ -614,36 +613,54 @@ body{
   
 
   /* Archivo: public/css/styles.css */
-
-
-  
 /* Contenedor más espacioso */
 #container {
     margin-top: 20px;
     padding: 20px;
-    background-color: #f8f9fa; /* Color de fondo claro */
-    border-radius: 10px;       /* Esquinas redondeadas */
-
+    background-color: var(--gray); /* Fondo similar a la tabla de mensajes */
+    border-radius: 10px;           /* Esquinas redondeadas */
+    box-shadow: 0 7px 25px rgba(0, 0, 0, 0.08); /* Sombra ligera */
 }
 
 /* Tabla ajustada */
 table {
-    border-collapse: separate;
-    border-spacing: 0; /* Espaciado entre celdas */
+    width: 100%;                  /* Que ocupe todo el ancho */
+    border-collapse: collapse;    /* Sin separación entre celdas */
+    margin-top: 10px;
+    border-radius: 8px;           /* Bordes redondeados */
+    overflow: hidden;             /* Para que los bordes redondeados sean visibles */
 }
 
 table thead {
-    font-weight: bold;
+    background-color: var(--blue); /* Fondo azul para el encabezado */
+    color: var(--white);           /* Texto blanco */
+    font-weight: 600;
     text-align: center;
+    border-bottom: 2px solid var(--white); /* Línea decorativa abajo */
 }
 
 table th, table td {
-    text-align: center; /* Centrar contenido de las celdas */
+    text-align: center;           /* Centrar contenido de las celdas */
     vertical-align: middle;
-    padding: 10px;
-    border: 1px solid #dee2e6; /* Líneas sutiles */
+    padding: 15px;                /* Más espacioso */
+    font-size: 0.9rem;
+    border-bottom: 1px solid #ddd; /* Líneas entre filas */
 }
 
-.h2-cli{
-    color: var(--blue);
+
+
+.h2-cli {
+    color: var(--blue);           /* Título en azul */
+    text-align: center;           /* Centrado */
+    font-size: 1.8rem;            /* Tamaño grande */
+    margin-bottom: 15px;          /* Espaciado abajo */
+}
+
+
+
+
+#container {
+    background-color: var(--bg-container);
+    border-radius: 10px;
+    transition: background-color 0.3s; /* Suave transición al cambiar de tema */
 }

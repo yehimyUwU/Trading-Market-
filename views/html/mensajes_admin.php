@@ -27,6 +27,8 @@
     </head>
 <body>
 
+
+
 <?php
 // Incluye la barra de navegación del administrador
 require '../../controllers/php/barra_admin.php'; 

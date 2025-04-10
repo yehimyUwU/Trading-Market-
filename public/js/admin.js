@@ -124,7 +124,7 @@ function logout() {
     .then(response => response.json())
     .then(data => {
         if (data.success) {
-            window.location.href = '../../views/html/longin.html'; // Redirige al HTML de login
+            window.location.href = '../../views/html/index.html'; // Redirige al HTML de login
         } else {
             alert('Error al cerrar sesión: ' + data.message);
         }

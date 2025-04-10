@@ -9,12 +9,13 @@
 }
 
 /* Modo oscuro */
+
 :root.dark-mode {
-    --blue: #a5a0a0; /* Azul más oscuro */
-    --white: #252323; /* Fondo y letras de la barra oscuro */
+    --blue: #252323; /* Azul más oscuro */
+    --white: #d8d8d8; /* Fondo y letras de la barra oscuro */
     --gray: #5a5252; /* Gris oscuro */
-    --black1: #fff; /* Texto claro */
-    --black2: #ccc; /* Texto secundario */
+    --black1: #252323; /* Texto claro */
+    --black2: #252323; /* Texto secundario */
 }
 
 
@@ -701,4 +702,9 @@ body{
 
 .help-container h2{
     color: var(--blue);
+}
+
+
+.help-container {
+    background-color: transparent; /* Fondo completamente transparente */
 }

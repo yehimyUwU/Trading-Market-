@@ -7,15 +7,16 @@
     --black2: #999;
 }
 
-/* Modo oscuro */
-:root.dark-mode {
-    --blue: #a5a0a0; /* Azul más oscuro */
-    --white: #252323; /* Fondo y letras de la barra oscuro */
-    --gray: #5a5252; /* Gris oscuro */
-    --black1: #fff; /* Texto claro */
-    --black2: #ccc; /* Texto secundario */
-}
 
+/* Modo oscuro */
+
+:root.dark-mode {
+    --blue: #252323; /* Azul más oscuro */
+    --white: #d8d8d8; /* Fondo y letras de la barra oscuro */
+    --gray: #5a5252; /* Gris oscuro */
+    --black1: #252323; /* Texto claro */
+    --black2: #252323; /* Texto secundario */
+}
 
 
 /* Botón para cambiar de modo */
@@ -697,7 +698,7 @@ body{
 
 /* Botón para responder */
 .btn-responder {
-    background-color: #d8b147;
+    background-color: var(--blue);
     color: var(--white);
     border: none;
     padding: 8px 12px;
@@ -708,7 +709,7 @@ body{
 }
 
 .btn-responder:hover {
-    background-color: #a38532;
+    background-color: #245678;
 }
 
 /* Formulario para responder */
@@ -777,6 +778,14 @@ body{
 }
 
 
+/* Cambiar estilo del botón cuando se pasa el mouse sobre una fila de la tabla */
+.tabla-mensajes table tr:hover .btn-responder {
+    background-color: var(--white); /* Cambia el fondo a blanco */
+    color: var(--blue); /* Cambia el texto a azul */
+
+}
+
+
 .botones {
     display: flex;
     gap: 10px; /* Espacio entre los botones */
@@ -808,3 +817,132 @@ body{
 .btn-limpiar:hover {
     background-color: #8f1320;
 }
+
+
+/* Ajustes de la tabla de mensajes */
+.tabla-mensajes table {
+    width: 100%;
+    border-collapse: collapse; /* Sin separación entre celdas */
+    margin-top: 10px;
+    background-color: transparent; /* Fondo transparente para la tabla */
+    border-radius: 8px;
+    overflow: hidden; /* Bordes redondeados visibles */
+}
+
+.tabla-mensajes table th,
+.tabla-mensajes table td {
+    padding: 15px;
+    text-align: left;
+    font-size: 0.9rem;
+    border-bottom: 1px solid #ddd; /* Líneas entre filas */
+    background-color: rgba(255, 255, 255, 0.1); /* Fondo semitransparente */
+    color: var(--black1); /* Texto que contraste con el fondo */
+}
+
+.tabla-mensajes table th {
+    background-color: var(--blue); /* Fondo azul para el encabezado */
+    color: var(--white); /* Texto blanco */
+    font-weight: 600;
+}
+
+.tabla-mensajes table tr:hover {
+    background-color: rgba(0, 0, 0, 0.2); /* Fondo ligeramente oscuro al pasar el mouse */
+    color: var(--white); /* Texto blanco */
+}
+
+/* Botón para responder */
+.btn-responder {
+    background-color: var(--blue); /* Fondo inicial azul */
+    color: var(--white); /* Texto blanco */
+    border: none;
+    padding: 8px 12px;
+    border-radius: 5px;
+    font-size: 0.8rem;
+    cursor: pointer;
+    transition: 0.3s ease; /* Transición suave */
+}
+
+.btn-responder:hover {
+    background-color: var(--white); /* Fondo blanco al pasar sobre el botón */
+    color: var(--blue); /* Texto azul */
+    border: 1px solid var(--blue); /* Borde azul */
+}
+
+/* Formulario para responder */
+.formulario-respuesta {
+    margin-top: 30px;
+    background: rgba(255, 255, 255, 0.1); /* Fondo semitransparente */
+    padding: 20px;
+    border-radius: 10px; /* Bordes redondeados */
+    box-shadow: 0 7px 25px rgba(0, 0, 0, 0.08); /* Sombra ligera */
+    color: var(--black1); /* Color del texto */
+    transition: background-color 0.3s ease; /* Transición suave para cambios */
+}
+
+.formulario-respuesta h2 {
+    font-size: 1.5rem;
+    color: var(--blue); /* Título azul */
+    margin-bottom: 15px;
+}
+
+.formulario-respuesta label {
+    display: block;
+    font-weight: 500;
+    margin-bottom: 5px;
+    color: var(--black1); /* Color del texto adaptado */
+}
+
+.formulario-respuesta input, 
+.formulario-respuesta textarea {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 15px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    font-size: 0.9rem;
+    background-color: rgba(255, 255, 255, 0.2); /* Fondo semitransparente */
+    color: var(--black1); /* Texto en modo claro */
+}
+
+.formulario-respuesta input:focus, 
+.formulario-respuesta textarea:focus {
+    outline: none;
+    border: 1px solid var(--blue); /* Resaltar al seleccionar */
+}
+
+.botones {
+    display: flex;
+    gap: 10px; /* Espacio entre los botones */
+    margin-top: 10px;
+}
+
+.btn-enviar {
+    background-color: var(--blue); /* Azul inicial */
+    color: var(--white);
+    border: none;
+    padding: 10px 15px;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.btn-enviar:hover {
+    background-color: #064a92; /* Azul oscuro al pasar el mouse */
+}
+
+.btn-limpiar {
+    background-color: #c02c3b; /* Fondo rojo */
+    color: white;
+    border: none;
+    padding: 10px 15px;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.btn-limpiar:hover {
+    background-color: #8f1320; /* Rojo más oscuro al pasar el mouse */
+}
+
+
+
