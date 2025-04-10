@@ -1,6 +1,4 @@
-<!DOCTYPE html>
-<?php
-/**
+<!--
  * Archivo: admin_panel.php
  * Descripción: Panel de administración principal del sistema
  * Conexiones:
@@ -13,7 +11,20 @@
  * - Gestión de usuarios
  * - Perfil de administrador
  * - Modo visual claro/oscuro
- */
+ */ -->
+
+<!DOCTYPE html>
+
+<html lang="es">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link href="../../public/css/bootstrap.min.css" rel="stylesheet">
+        <link rel="stylesheet" href="../../public/estilos/estilosAdmin.css">
+        <title>Panel de Administrador</title>
+    </head>
+<body>
+<?php
 session_start();
 $admin = $_SESSION['usuario'] ?? null;
 require '../../controllers/php/barra_admin.php'; 

@@ -1,4 +1,4 @@
-/**
+<!--
  * Archivo: mensajes_admin.php
  * Descripción: Panel de administración para gestionar solicitudes de proveedores
  * Conexiones:
@@ -7,8 +7,7 @@
  * - Se conecta con: controllers/php/gestionar_solicitud_proveedor.php (gestionar solicitudes)
  * - Utiliza estilos de: public/Estilos/estilos_mensajes.css
  * - Utiliza scripts de: public/js/admin.js, public/js/mensajes_admin.js, public/js/config.js
- */
-
+-->
 <!DOCTYPE html>
 <html lang="es">
     <head>
