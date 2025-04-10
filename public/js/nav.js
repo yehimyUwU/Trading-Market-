@@ -752,7 +752,7 @@ document.addEventListener("DOMContentLoaded", function () {
                         <div class="card-body text-center">
                             <h3 class="card-title">${proveedor.nombre} ${proveedor.apellido}</h3>
                             <button class="btn btn-primary mb-3" onclick="mostrarInfo(${proveedor.id_usuario})">Mostrar Información</button>
-                            <button class="btn btn-success mb-3">Productos Relacionados</button>
+                            <button class="btn btn-success mb-3" onclick="verProductos(${proveedor.id_usuario})">Productos Relacionados</button>
                         </div>
                     </div>
                 `;
@@ -866,4 +866,32 @@ function cargarComentarioUsuario(idProducto) {
             }
         });
 }
+
+document.addEventListener("DOMContentLoaded", function () {
+    const params = new URLSearchParams(window.location.search);
+    const idProveedor = params.get("id");
+
+    if (idProveedor) {
+        fetch(`../../controllers/php/obtener_nombre_proveedor.php?id=${idProveedor}`)
+            .then(response => response.json())
+            .then(data => {
+                if (data && data.nombre && data.apellido) {
+                    const titulo = document.getElementById("tituloProveedor");
+                    titulo.textContent = `Productos de ${data.nombre} ${data.apellido}`;
+                } else {
+                    console.error("Proveedor no encontrado.");
+                }
+            })
+            .catch(error => {
+                console.error("Error al obtener el nombre del proveedor:", error);
+            });
+    }
+});
+
+function verProductos(idProveedor) {
+    console.log("Redireccionando a productosProveedores.html con id:", idProveedor);
+    window.location.href = `productosProveedores.html?id=${idProveedor}`;
+}
+
+
 
