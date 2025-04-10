@@ -1,6 +1,6 @@
 <?php
 session_start();
-require_once '../../config/php/Conexion.php';
+require_once '../../models/php/modelo_usuario.php';
 
 $data = json_decode(file_get_contents("php://input"), true);
 
@@ -9,17 +9,7 @@ if (!isset($data['id_proveedor']) || !isset($_SESSION['usuario']['id'])) {
     exit;
 }
 
-$idUsuario = $_SESSION['usuario']['id'];
-$idProveedor = $data['id_proveedor'];
+$model = new ProveedorModel();
+$response = $model->eliminarProveedorGuardado($_SESSION['usuario']['id'], $data['id_proveedor']);
 
-try {
-    $db = new Conexion();
-    $conn = $db->conectar();
-
-    $stmt = $conn->prepare("DELETE FROM proveedor_guardado WHERE id_usuario = ? AND id_proveedor = ?");
-    $stmt->execute([$idUsuario, $idProveedor]);
-
-    echo json_encode(['success' => true, 'mensaje' => 'Proveedor eliminado de la lista']);
-} catch (PDOException $e) {
-    echo json_encode(['error' => $e->getMessage()]);
-}
+echo json_encode($response);
