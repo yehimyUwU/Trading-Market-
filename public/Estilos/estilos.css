@@ -8,7 +8,7 @@
 /*:::::Pie de Pagina*/
 .pie-pagina{
     width: 100%;
-    background-color: #0088ff;
+    background: linear-gradient(80deg, #306a91, hsl(189, 32%, 55%), #36558f, #306a91, #6d7ae9);
 }
 
 

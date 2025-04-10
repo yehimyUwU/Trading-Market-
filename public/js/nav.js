@@ -893,5 +893,205 @@ function verProductos(idProveedor) {
     window.location.href = `productosProveedores.html?id=${idProveedor}`;
 }
 
+document.addEventListener("DOMContentLoaded", function () {
+    const params = new URLSearchParams(window.location.search);
+    const idProveedor = params.get("id");
+
+    if (idProveedor) {
+        // Obtener nombre del proveedor
+        fetch(`../../controllers/php/obtener_nombre_proveedor.php?id=${idProveedor}`)
+            .then(response => response.json())
+            .then(data => {
+                if (data && data.nombre && data.apellido) {
+                    document.getElementById("tituloProveedor").textContent = `Productos de ${data.nombre} ${data.apellido}`;
+                }
+            });
+
+        // Obtener productos del proveedor y mostrarlos en tarjetas con detalles
+        fetch(`../../controllers/php/obtener_productos_por_proveedor.php?id=${idProveedor}`)
+            .then(response => response.json())
+            .then(productos => {
+                const container = document.getElementById("productosProveedor");
+                container.innerHTML = "";
+
+                if (productos.length === 0 || productos.error) {
+                    container.innerHTML = "<p>No hay productos disponibles.</p>";
+                    return;
+                }
+
+                productos.forEach(producto => {
+                    const productoCard = document.createElement('div');
+                    productoCard.classList.add('col-md-4', 'mb-4');
+
+                    // Construir la ruta correcta de la imagen
+                    const imagenUrl = producto.imagen
+                        ? `../../public/imag/${producto.imagen}`
+                        : "../../public/imagenes_P/default.jpeg";
+
+                    productoCard.innerHTML = `
+                        <div class="card h-100">
+                            <div class="img-container">
+                                <img src="${imagenUrl}" class="card-img-top" alt="${producto.nombre}"
+                                     onerror="this.onerror=null;this.src='../../public/imagenes_P/default.jpeg';">
+                            </div>
+                            <div class="card-body">
+                                <h5 class="card-title">${producto.nombre}</h5>
+                                <p class="card-text">${producto.descripcion}</p>
+                                <p class="card-text font-weight-bold">$${parseFloat(producto.precio).toFixed(2)}</p>
+                                <button class="btn btn-primary mb-2" onclick="verDetalles(
+                                    '${producto.nombre}',
+                                    '${producto.descripcion}',
+                                    '${producto.precio}',
+                                    '${imagenUrl}',
+                                    ${producto.id_producto}
+                                )">Ver Detalles</button>
+                                <button class="btn btn-success" onclick="agregarAlCarrito(${producto.id_producto}, '${producto.nombre}', ${producto.precio})">Agregar al Carrito</button>
+                            </div>
+                        </div>
+                    `;
+
+                    container.appendChild(productoCard);
+                });
+            })
+            .catch(error => {
+                console.error('Error al cargar productos del proveedor:', error);
+            });
+    }
+});
+
+let productoActual = null;
+
+async function mostrarInformacionProducto(nombre, descripcion, precio, imagen, productoId) {
+    productoActual = productoId;
+    document.getElementById("infoNombre").textContent = nombre;
+    document.getElementById("infoDescripcion").textContent = descripcion;
+    document.getElementById("infoPrecio").textContent = "$" + parseFloat(precio).toFixed(2);
+    document.getElementById("infoImagen").src = imagen;
+    document.getElementById("calificacionContainer").dataset.producto = productoId;
+
+    await cargarValoracion(productoId);
+    await cargarComentarios(productoId);
+
+    $("#detalleProducto").modal("show");
+}
+
+// Manejador para enviar calificación
+document.querySelectorAll("[data-califica]").forEach(estrella => {
+    estrella.addEventListener("click", async function () {
+        const puntaje = this.dataset.califica;
+        const id = document.getElementById("calificacionContainer").dataset.producto;
+
+        const res = await fetch("../../controllers/php/guardar_calificacion.php", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ id_producto: id, calificacion: puntaje })
+        });
+
+        const data = await res.json();
+        if (data.success) {
+            document.getElementById("alertaValoracion").style.display = "block";
+            document.getElementById("botonActualizarCalificacion").style.display = "inline-block";
+            resaltarPuntaje(puntaje);
+        } else {
+            alert(data.message || "Error al guardar calificación");
+        }
+    });
+});
+
+function resaltarPuntaje(valor) {
+    document.querySelectorAll("[data-califica]").forEach(estrella => {
+        estrella.classList.remove("fa-solid", "text-warning");
+        estrella.classList.add("fa-regular");
+        if (parseInt(estrella.dataset.califica) <= valor) {
+            estrella.classList.remove("fa-regular");
+            estrella.classList.add("fa-solid", "text-warning");
+        }
+    });
+}
+
+async function cargarValoracion(idProducto) {
+    const res = await fetch(`../../controllers/php/obtener_calificacion.php?id_producto=${idProducto}`);
+    const data = await res.json();
+
+    if (data.calificacion) {
+        resaltarPuntaje(data.calificacion);
+        document.getElementById("alertaValoracion").style.display = "block";
+        document.getElementById("botonActualizarCalificacion").style.display = "inline-block";
+    } else {
+        resaltarPuntaje(0);
+        document.getElementById("alertaValoracion").style.display = "none";
+        document.getElementById("botonActualizarCalificacion").style.display = "none";
+    }
+}
+
+async function borrarValoracion() {
+    const res = await fetch(`../../controllers/php/eliminar_calificacion.php?id_producto=${productoActual}`, { method: "DELETE" });
+    const data = await res.json();
+
+    if (data.success) {
+        resaltarPuntaje(0);
+        document.getElementById("alertaValoracion").style.display = "none";
+        document.getElementById("botonActualizarCalificacion").style.display = "none";
+    } else {
+        alert(data.message || "No se pudo eliminar la calificación.");
+    }
+}
+
+async function enviarComentario() {
+    const comentario = document.getElementById("textoComentario").value;
+    if (!comentario.trim()) return alert("Escribe un comentario válido.");
+
+    const res = await fetch("../../controllers/php/guardar_comentario.php", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ id_producto: productoActual, comentario })
+    });
+
+    const data = await res.json();
+    if (data.success) {
+        cargarComentarios(productoActual);
+    } else {
+        alert(data.message || "Error al guardar comentario");
+    }
+}
+
+async function cargarComentarios(idProducto) {
+    const res = await fetch(`../../controllers/php/obtener_comentarios.php?id_producto=${idProducto}`);
+    const data = await res.json();
+
+    const contenedor = document.getElementById("comentariosContenedor");
+    const inputComentario = document.getElementById("textoComentario");
+
+    contenedor.innerHTML = "";
+    inputComentario.value = "";
+
+    if (data.success && data.comentarios.length > 0) {
+        data.comentarios.forEach(com => {
+            const caja = document.createElement("div");
+            caja.classList.add("cuadro-comentario");
+
+            let estrellasHTML = '';
+            for (let i = 1; i <= 5; i++) {
+                estrellasHTML += `<i class="fa-star ${i <= com.calificacion ? 'fas text-warning' : 'far text-muted'} small"></i>`;
+            }
+
+            caja.innerHTML = `
+                <div class="estrellas-flotantes">${estrellasHTML}</div>
+                <strong>${com.nombre_usuario || "Anónimo"}:</strong><br>
+                ${com.comentario}<br>
+                <small class="text-muted">${com.fecha}</small>
+            `;
+
+            if (com.esPropio) {
+                inputComentario.value = com.comentario;
+            }
+
+            contenedor.appendChild(caja);
+        });
+    } else {
+        contenedor.innerHTML = "<p>No hay comentarios registrados.</p>";
+    }
+}
+
 
 
