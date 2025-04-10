@@ -5,8 +5,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
-    <link rel="stylesheet" href="../../public/Estilos/bootstrap.min.css">
-    <link rel="stylesheet" href="js/bootstrap.bundle.js">
+    <link rel="stylesheet" href="../../public/css/bootstrap.min.css">
     <title>Panel de Administrador</title>
     <!--Agregar unos estilos bien belicos-->
     <link rel="stylesheet" href="../../public/Estilos/estilosc.css" />
@@ -45,127 +44,33 @@ require '../../controllers/php/barra_admin.php';
             </div>
         </div>
 
-          <!--Pedidos recientes-->
-          <div class="details">
-            <div class="recentOrders">
-                <div class="cardHeader">
-                    <h2>Usuarios recientes</h2>
-                    <a href="#" class="btn">Todas las vistas</a>
-                </div>
-                <br>
-                <br>
+    <!--Pedidos recientes-->
+    <div id="container" class="container mt-4">
+    <h2 class="h2-cli">Clientes Registrados</h2>
+    <br>
+    <br>
 
-                <table>
-                    <thead>
-                        <tr>
-                            <td>Perfil</td>
-                            <td>Nombre</td>
-                            <td>Correo</td>
-                            <td>Telefono</td>
-                            <td>Estado</td>
+    <table id="clientesTable" class="table table-striped table-hover">
+    <thead class="table-dark">
+    <tr>
+        <th>ID</th>
+        <th>Tipo Documento</th>
+        <th>Documento</th>
+        <th>Nombre</th>
+        <th>Apellido</th>
+        <th>Fecha de Nacimiento</th>
+        <th>Género</th>
+        <th>Email</th>
+        <th>Acciones</th> <!-- Nueva columna -->
+    </tr>
+</thead>
 
-                        </tr>
-                    </thead>
+        <tbody>
+            <!-- Las filas dinámicas se agregarán aquí -->
+        </tbody>
+    </table>
+</div>
 
-                    <tbody>
-                        <tr>
-                            <td width="100px">
-                                <div class="user3">
-                                    <img src="../../public/imagenes/siuu.jpg" alt="">
-                                </div>
-                            </td>
-                            <td>Juan Esteban Castañeda Ortiz</td>
-                            <td>juanestebanstt@gmail.com</td>
-                            <td>3146889521</td>
-                            <td><span class="status delivered">Activo</span></td>
-                        </tr>
-
-                        <tr>
-                            <td width="100px">
-                                <div class="user3">
-                                    <img src="../../public/imagenes/cucu.jpg" alt="">
-                                </div>
-                            </td>
-                            <td>Yehimy Daniela Velandia Fagua</td>
-                            <td>danyyemi@gmail.com</td>
-                            <td>3456551209</td>
-                            <td><span class="status pending">Registrado</span></td>
-                        </tr>
-
-                        <tr>
-                            <td width="100px">
-                                <div class="user3">
-                                    <img src="../../public/imagenes/perfil.jpg" alt="">
-                                </div>
-                            </td>
-                            <td>Cristian Daniel Aguilar Molano</td>
-                            <td>crisda00@gmai.com</td>
-                            <td>3124281257</td>
-                            <td><span class="status pending">Registrado</span></td>
-                        </tr>
-
-                        <tr>
-                            <td width="100px">
-                                <div class="user3">
-                                    <img src="../../public/imagenes/perfil.png" alt="">
-                                </div>
-                            </td>
-                            <td>Silvia Daniela Gonzales Perez</td>
-                            <td>silvydany@gmail.com</td>
-                            <td>3105882367</td>
-                            <td><span class="status inProgress">En proceso</span></td>
-                        </tr>
-
-                        <tr>
-                            <td width="60px">
-                                <div class="user3">
-                                    <img src="../../public/imagenes/mm.jpg" alt="">
-                                </div>
-                            </td>
-                            <td>Maria Guadalupe Patiño Alcacerzer</td>
-                            <td>guadalupe2006@gmail.com</td>
-                            <td>3102288812</td>
-                            <td><span class="status delivered">Activo</span></td>
-                        </tr>
-
-                        <tr>
-                            <td width="60px">
-                                <div class="user3">
-                                    <img src="../../public/imagenes/nn.jpg" alt="">
-                                </div>
-                            </td>
-                            <td>Rafael Leopoldo Perez Garcia</td>
-                            <td>skibidirafa@gmail.com</td>
-                            <td>3147345910</td>
-                            <td><span class="status pending">Registrado</span></td>
-                        </tr>
-
-                        <tr>
-                            <td width="60px">
-                                <div class="user3">
-                                    <img src="../../public/imagenes/ll.jpg" alt="">
-                                </div>
-                            </td>
-                            <td>Samuel Sebastian Villamil Velandia</td>
-                            <td>papasotesamuel@gmail.com</td>
-                            <td>3506140678</td>
-                            <td><span class="status return">Inactivo</span></td>
-                        </tr>
-
-                        <tr>
-                            <td width="60px">
-                                <div class="user3">
-                                    <img src="../../public/imagenes/shopping (7).webp" alt="">
-                                </div>
-                            </td>
-                            <td>David Leonardo Pedraza Bello</td>
-                            <td>davidleo@gmail.com</td>
-                            <td>33419906523</td>
-                            <td><span class="status delivered">Activo</span></td>
-                        </tr>
-                    </tbody>
-                </table>
-            </div>
 
             <!--Modal para ver perfil-->  
 
@@ -213,6 +118,7 @@ require '../../controllers/php/barra_admin.php';
     <!--Scripts bien gotys-->
     <script src="../../public/js/admin.js"></script>
     <script src="../../public/js/config.js"></script>
+    <script src="../../public/js/clientes_admin.js"></script>
     <!--script para poder usar iconos bien bellaquitos // ionicons-->
     <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
     <script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
