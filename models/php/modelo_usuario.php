@@ -64,21 +64,22 @@ class ProveedorModel {
 
     public function obtenerProveedores($id = null) {
         if ($id) {
-            $stmt = $this->conn->prepare("SELECT id_usuario, nombre, apellido, email, genero, fecha_nacimiento, documento FROM usuario WHERE id_usuario = ?");
+            $stmt = $this->conn->prepare("SELECT id_usuario, nombre, apellido, email, genero, fecha_nacimiento, documento, imagen FROM usuario WHERE id_usuario = ?");
             $stmt->execute([$id]);
             return $stmt->fetch(PDO::FETCH_ASSOC);
         }
-
+    
         $stmt = $this->conn->query("
-            SELECT u.id_usuario, u.nombre, u.apellido, u.email 
+            SELECT u.id_usuario, u.nombre, u.apellido, u.email, u.imagen
             FROM usuario u
             INNER JOIN usuario_rol ur ON u.id_usuario = ur.id_usuario
             INNER JOIN rol_usuario r ON ur.id_rol = r.id_rol
             WHERE r.nombre = 'Proveedor'
         ");
-
+    
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
+    
 }
 
 ?>

@@ -767,20 +767,22 @@ document.addEventListener("DOMContentLoaded", function () {
                 card.classList.add("col-lg-4", "col-md-6", "col-sm-12", "mb-3");
 
                 card.innerHTML = `
-                    <div class="card position-relative">
-                        <button class="btn btn-light position-absolute top-0 end-0 m-2 rounded-circle shadow-sm"
-        title="Guardar proveedor"
-        onclick="guardarProveedor(${proveedor.id_usuario})">
-    <i class="fas fa-plus"></i>
-</button>
+    <div class="card position-relative">
+        <button class="btn btn-light position-absolute top-0 end-0 m-2 rounded-circle shadow-sm"
+            title="Guardar proveedor"
+            onclick="guardarProveedor(${proveedor.id_usuario})">
+            <i class="fas fa-plus"></i>
+        </button>
 
-                        <div class="card-body text-center">
-                            <h3 class="card-title">${proveedor.nombre} ${proveedor.apellido}</h3>
-                            <button class="btn btn-primary btn-sm mb-3" onclick="mostrarInfo(${proveedor.id_usuario})">Información personal</button>
-                            <button class="btn btn-success btn-sm mb-3" onclick="verProductos(${proveedor.id_usuario})">Productos Relacionado</button>
-                        </div>
-                    </div>
-                `;
+        <div class="card-body text-center">
+            <img src="${proveedor.imagen}" class="img-fluid rounded-circle mb-2" style="width: 120px; height: 120px; object-fit: cover;" alt="Foto del proveedor">
+            <h3 class="card-title">${proveedor.nombre} ${proveedor.apellido}</h3>
+            <button class="btn btn-primary btn-sm mb-3" onclick="mostrarInfo(${proveedor.id_usuario})">Información personal</button>
+            <button class="btn btn-success btn-sm mb-3" onclick="verProductos(${proveedor.id_usuario})">Productos Relacionado</button>
+        </div>
+    </div>
+`;
+
 
                 container.appendChild(card);
             });
