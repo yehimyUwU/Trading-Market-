@@ -959,149 +959,139 @@ document.addEventListener("DOMContentLoaded", function () {
     }
 });
 
-let idProductoSeleccionado = null;
+let productoActual = null;
 
-// Función para mostrar detalles del producto en el modal
-async function verDetalles(nombre, descripcion, precio, imagen, idProducto) {
-    idProductoSeleccionado = idProducto;
-    document.getElementById("modalNombre").textContent = nombre;
-    document.getElementById("modalDescripcion").textContent = descripcion;
-    document.getElementById("modalPrecio").textContent = "$" + parseFloat(precio).toFixed(2);
-    document.getElementById("modalImagen").src = imagen;
-    document.getElementById("estrellas").setAttribute("data-id-producto", idProducto);
+async function mostrarInformacionProducto(nombre, descripcion, precio, imagen, productoId) {
+    productoActual = productoId;
+    document.getElementById("infoNombre").textContent = nombre;
+    document.getElementById("infoDescripcion").textContent = descripcion;
+    document.getElementById("infoPrecio").textContent = "$" + parseFloat(precio).toFixed(2);
+    document.getElementById("infoImagen").src = imagen;
+    document.getElementById("calificacionContainer").dataset.producto = productoId;
 
-    // Mostrar calificación previa y comentarios
-    await mostrarCalificacion(idProducto);
-    await mostrarComentario(idProducto);
+    await cargarValoracion(productoId);
+    await cargarComentarios(productoId);
 
-    $("#productoModal").modal("show");
+    $("#detalleProducto").modal("show");
 }
 
-// Guardar calificación
-document.querySelectorAll(".estrella").forEach(estrella => {
+// Manejador para enviar calificación
+document.querySelectorAll("[data-califica]").forEach(estrella => {
     estrella.addEventListener("click", async function () {
-        const valor = this.getAttribute("data-valor");
-        const idProducto = document.getElementById("estrellas").getAttribute("data-id-producto");
+        const puntaje = this.dataset.califica;
+        const id = document.getElementById("calificacionContainer").dataset.producto;
 
-        const respuesta = await fetch("../../controllers/php/guardar_calificacion.php", {
+        const res = await fetch("../../controllers/php/guardar_calificacion.php", {
             method: "POST",
             headers: { "Content-Type": "application/json" },
-            body: JSON.stringify({ id_producto: idProducto, calificacion: valor })
+            body: JSON.stringify({ id_producto: id, calificacion: puntaje })
         });
 
-        const data = await respuesta.json();
+        const data = await res.json();
         if (data.success) {
-            document.getElementById("mensaje-calificacion").style.display = "block";
-            document.getElementById("btnEditarCalificacion").style.display = "inline-block";
-            marcarEstrellas(valor);
+            document.getElementById("alertaValoracion").style.display = "block";
+            document.getElementById("botonActualizarCalificacion").style.display = "inline-block";
+            resaltarPuntaje(puntaje);
         } else {
             alert(data.message || "Error al guardar calificación");
         }
     });
 });
 
-// Marcar visualmente las estrellas
-function marcarEstrellas(valor) {
-    document.querySelectorAll(".estrella").forEach(estrella => {
+function resaltarPuntaje(valor) {
+    document.querySelectorAll("[data-califica]").forEach(estrella => {
         estrella.classList.remove("fa-solid", "text-warning");
         estrella.classList.add("fa-regular");
-        if (parseInt(estrella.getAttribute("data-valor")) <= valor) {
+        if (parseInt(estrella.dataset.califica) <= valor) {
             estrella.classList.remove("fa-regular");
             estrella.classList.add("fa-solid", "text-warning");
         }
     });
 }
 
-// Mostrar calificación previa
-async function mostrarCalificacion(idProducto) {
+async function cargarValoracion(idProducto) {
     const res = await fetch(`../../controllers/php/obtener_calificacion.php?id_producto=${idProducto}`);
     const data = await res.json();
 
     if (data.calificacion) {
-        marcarEstrellas(data.calificacion);
-        document.getElementById("mensaje-calificacion").style.display = "block";
-        document.getElementById("btnEditarCalificacion").style.display = "inline-block";
+        resaltarPuntaje(data.calificacion);
+        document.getElementById("alertaValoracion").style.display = "block";
+        document.getElementById("botonActualizarCalificacion").style.display = "inline-block";
     } else {
-        marcarEstrellas(0);
-        document.getElementById("mensaje-calificacion").style.display = "none";
-        document.getElementById("btnEditarCalificacion").style.display = "none";
+        resaltarPuntaje(0);
+        document.getElementById("alertaValoracion").style.display = "none";
+        document.getElementById("botonActualizarCalificacion").style.display = "none";
     }
 }
 
-// Eliminar calificación
-async function editarCalificacion() {
-    const idProducto = idProductoSeleccionado;
-    const res = await fetch(`../../controllers/php/eliminar_calificacion.php?id_producto=${idProducto}`, { method: "DELETE" });
+async function borrarValoracion() {
+    const res = await fetch(`../../controllers/php/eliminar_calificacion.php?id_producto=${productoActual}`, { method: "DELETE" });
     const data = await res.json();
 
     if (data.success) {
-        marcarEstrellas(0);
-        document.getElementById("mensaje-calificacion").style.display = "none";
-        document.getElementById("btnEditarCalificacion").style.display = "none";
+        resaltarPuntaje(0);
+        document.getElementById("alertaValoracion").style.display = "none";
+        document.getElementById("botonActualizarCalificacion").style.display = "none";
     } else {
         alert(data.message || "No se pudo eliminar la calificación.");
     }
 }
 
-// Guardar comentario
-async function guardarComentario() {
-    const comentario = document.getElementById("comentarioTexto").value;
+async function enviarComentario() {
+    const comentario = document.getElementById("textoComentario").value;
     if (!comentario.trim()) return alert("Escribe un comentario válido.");
 
-    const respuesta = await fetch("../../controllers/php/guardar_comentario.php", {
+    const res = await fetch("../../controllers/php/guardar_comentario.php", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ id_producto: idProductoSeleccionado, comentario: comentario })
+        body: JSON.stringify({ id_producto: productoActual, comentario })
     });
 
-    const data = await respuesta.json();
+    const data = await res.json();
     if (data.success) {
-        mostrarComentario(idProductoSeleccionado);
+        cargarComentarios(productoActual);
     } else {
         alert(data.message || "Error al guardar comentario");
     }
 }
 
-// Mostrar comentarios (versión estilizada con estrellas y nombre del usuario)
-async function mostrarComentario(idProducto) {
-const res = await fetch(`../../controllers/php/obtener_comentarios.php?id_producto=${idProducto}`);
-const data = await res.json();
+async function cargarComentarios(idProducto) {
+    const res = await fetch(`../../controllers/php/obtener_comentarios.php?id_producto=${idProducto}`);
+    const data = await res.json();
 
-const lista = document.getElementById("listaComentarios");
-const textarea = document.getElementById("comentarioTexto");
+    const contenedor = document.getElementById("comentariosContenedor");
+    const inputComentario = document.getElementById("textoComentario");
 
-lista.innerHTML = "";
-textarea.value = "";
+    contenedor.innerHTML = "";
+    inputComentario.value = "";
 
-if (data.success && data.comentarios.length > 0) {
-    data.comentarios.forEach(c => {
-        const div = document.createElement("div");
-        div.classList.add("border", "p-2", "mb-2", "position-relative");
+    if (data.success && data.comentarios.length > 0) {
+        data.comentarios.forEach(com => {
+            const caja = document.createElement("div");
+            caja.classList.add("cuadro-comentario");
 
-        // Generar estrellas según calificación
-        let estrellasHTML = '';
-        for (let i = 1; i <= 5; i++) {
-            estrellasHTML += `<i class="fa-star ${i <= c.calificacion ? 'fas text-warning' : 'far text-muted'} small"></i>`;
-        }
+            let estrellasHTML = '';
+            for (let i = 1; i <= 5; i++) {
+                estrellasHTML += `<i class="fa-star ${i <= com.calificacion ? 'fas text-warning' : 'far text-muted'} small"></i>`;
+            }
 
-        div.innerHTML = `
-            <div class="position-absolute" style="top: 8px; right: 10px;">
-                ${estrellasHTML}
-            </div>
-            <strong>${c.nombre_usuario || "Anónimo"}:</strong><br>
-            ${c.comentario}<br>
-            <small class="text-muted">${c.fecha}</small>
-        `;
-        lista.appendChild(div);
+            caja.innerHTML = `
+                <div class="estrellas-flotantes">${estrellasHTML}</div>
+                <strong>${com.nombre_usuario || "Anónimo"}:</strong><br>
+                ${com.comentario}<br>
+                <small class="text-muted">${com.fecha}</small>
+            `;
 
-        // Si el comentario es del usuario actual, llenar el textarea
-        if (c.esPropio) {
-            textarea.value = c.comentario;
-        }
-    });
-} else {
-    lista.innerHTML = "<p>No hay comentarios aún.</p>";
+            if (com.esPropio) {
+                inputComentario.value = com.comentario;
+            }
+
+            contenedor.appendChild(caja);
+        });
+    } else {
+        contenedor.innerHTML = "<p>No hay comentarios registrados.</p>";
+    }
 }
-}
+
 
 
