@@ -51,8 +51,7 @@ require '../../controllers/php/barra_admin.php';
 
             <div class="user">
 
-                <img src="../../public/imagenes/cucu.jpg" alt="" id="profileImage">
-
+                <img src="../../public/imagenes/cucu.jpg">
             </div>
         </div>
         <!--Tarjetas bien bellacas-->
@@ -174,7 +173,7 @@ require '../../controllers/php/barra_admin.php';
             <!--Nuevos usuarios-->
             <div class="recentCustomers">
                 <div class="cardHeader">
-                    <h2>Usuarios recientcces</h2>
+                    <h2>Usuarios recientes</h2>
                 </div>
 
                 <table>

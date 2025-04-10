@@ -119,18 +119,28 @@ document.addEventListener('DOMContentLoaded', loadUserData);
 
 // Función para cerrar sesión
 function logout() {
-  fetch('../../controllers/php/logout_admin.php', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ action: "logout" })
-    })
-    .then(response => response.json())
-    .then(data => {
-        if (data.success) {
-            window.location.href = '../../views/html/index.html'; // Redirige al HTML de login
-        } else {
-            alert('Error al cerrar sesión: ' + data.message);
-        }
-    })
-    .catch(error => console.error('Error en el logout:', error));
+    // Mostrar mensaje de confirmación
+    const confirmLogout = confirm("¿Estás seguro de que quieres cerrar sesión?");
+
+    // Si el usuario confirma, proceder con el logout
+    if (confirmLogout) {
+        fetch('../../controllers/php/logout_admin.php', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ action: "logout" })
+        })
+        .then(response => response.json())
+        .then(data => {
+            if (data.success) {
+                window.location.href = '../../views/html/index.html'; // Redirige al HTML de login
+            } else {
+                alert('Error al cerrar sesión: ' + data.message);
+            }
+        })
+        .catch(error => console.error('Error en el logout:', error));
+    } else {
+        // Si el usuario cancela, no se hace nada
+        console.log("Cierre de sesión cancelado.");
+    }
 }
+
