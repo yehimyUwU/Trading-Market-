@@ -13,3 +13,4 @@ $idUsuario = $_SESSION['usuario']['id'];
 $model = new CalificacionModel();
 $response = $model->obtenerCalificacion($idUsuario, $idProducto);
 echo json_encode($response);
+?>

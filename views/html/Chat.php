@@ -12,8 +12,7 @@
 </head>
 <body>
 <?php
-    
-    require '../php/barra_prove.php'; 
+    require '../../controllers/php/barra_prove.php'; 
 ?>
     
     <section id="content">
