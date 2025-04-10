@@ -267,8 +267,7 @@
                                     producto.precio
                                 ).toFixed(2)}</p>
                                 <button class="btn btn-primary mb-3" onclick="verDetalles('${producto.nombre}', '${producto.descripcion}', '${producto.precio}', '../imagenes_P/${producto.imagen}', ${producto.id_producto})">Ver Detalles</button>
-                                    <button class="btn btn-primary agregar-carrito" data-id="${producto.id_producto
-                                }">Agregar al carrito</button>
+                                    <button class="btn btn-success mb-3" onclick="agregarAlCarrito(${producto.id_producto}, '${producto.nombre}', ${producto.precio})">Agregar al Carrito</button>
                                 </div>
                             </div>
                         `;
