@@ -44,6 +44,8 @@ require '../../controllers/php/barra_admin.php';
             </div>
         </div>
 
+
+
     <!--Pedidos recientes-->
     <div id="container" class="container mt-4">
     <h2 class="h2-cli">Clientes Registrados</h2>
