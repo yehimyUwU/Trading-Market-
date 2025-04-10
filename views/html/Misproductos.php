@@ -15,6 +15,7 @@
  * - Filtros y búsqueda
  * - Vista previa de productos
  */
+?>
 <html lang="es">
 <head>
     <meta charset="UTF-8">
