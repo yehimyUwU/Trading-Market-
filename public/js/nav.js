@@ -755,7 +755,7 @@ document.addEventListener("DOMContentLoaded", function () {
         .then(response => response.json())
         .then(proveedores => {
             const container = document.getElementById("proveedores-container");
-            container.classList.add("row", "justify-content-center"); // Centrar y organizar
+            container.classList.add("row", "justify-content-center");
 
             if (proveedores.error) {
                 container.innerHTML = "<p>Error al cargar los proveedores.</p>";
@@ -764,14 +764,20 @@ document.addEventListener("DOMContentLoaded", function () {
 
             proveedores.forEach(proveedor => {
                 const card = document.createElement("div");
-                card.classList.add("col-lg-4", "col-md-6", "col-sm-12", "mb-3"); // 3 por fila en grande, 2 en medianas, 1 en móviles
+                card.classList.add("col-lg-4", "col-md-6", "col-sm-12", "mb-3");
 
                 card.innerHTML = `
-                    <div class="card">
+                    <div class="card position-relative">
+                        <button class="btn btn-light position-absolute top-0 end-0 m-2 rounded-circle shadow-sm"
+        title="Guardar proveedor"
+        onclick="guardarProveedor(${proveedor.id_usuario})">
+    <i class="fas fa-plus"></i>
+</button>
+
                         <div class="card-body text-center">
                             <h3 class="card-title">${proveedor.nombre} ${proveedor.apellido}</h3>
-                            <button class="btn btn-primary mb-3" onclick="mostrarInfo(${proveedor.id_usuario})">Mostrar Información</button>
-                            <button class="btn btn-success mb-3" onclick="verProductos(${proveedor.id_usuario})">Productos Relacionados</button>
+                            <button class="btn btn-primary btn-sm mb-3" onclick="mostrarInfo(${proveedor.id_usuario})">Información personal</button>
+                            <button class="btn btn-success btn-sm mb-3" onclick="verProductos(${proveedor.id_usuario})">Productos Relacionado</button>
                         </div>
                     </div>
                 `;
@@ -910,4 +916,92 @@ document.addEventListener("DOMContentLoaded", function () {
 function verProductos(idProveedor) {
     console.log("Redireccionando a productosProveedores.html con id:", idProveedor);
     window.location.href = `productosProveedores.html?id=${idProveedor}`;
+}
+
+function guardarProveedor(idProveedor) {
+    fetch('../../controllers/php/guardar_proveedor_controller.php', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({ id_proveedor: idProveedor }) // asegúrate que `idProveedor` tenga valor
+    })
+    .then(res => res.json())
+    .then(data => {
+        console.log(data);
+        if (data.error) {
+            alert("Error: " + data.error);
+        } else {
+            alert(data.mensaje);
+        }
+    })
+    .catch(error => {
+        console.error("Error al guardar proveedor:", error);
+    });
+}
+
+document.addEventListener("DOMContentLoaded", function () {
+    fetch("../../controllers/php/obtener_proveedores_guardados_controller.php")
+        .then(response => response.json())
+        .then(proveedores => {
+            const tbody = document.getElementById("bodyProveedores");
+
+            if (proveedores.error) {
+                tbody.innerHTML = `<tr><td colspan="6">${proveedores.error}</td></tr>`;
+                return;
+            }
+
+            if (proveedores.length === 0) {
+                tbody.innerHTML = `<tr><td colspan="6">No tienes proveedores guardados.</td></tr>`;
+                return;
+            }
+
+            proveedores.forEach(p => {
+                const fila = `
+    <tr>
+        <td>${p.nombre}</td>
+        <td>${p.apellido}</td>
+        <td>${p.email}</td>
+        <td>${p.genero}</td>
+        <td>${p.fecha_nacimiento}</td>
+        <td>${p.documento}</td>
+        <td>
+            <button class="btn btn-danger btn-sm" onclick="eliminarProveedor(${p.id_usuario}, this)">
+                <i class="fas fa-trash-alt"></i> Quitar
+            </button>
+        </td>
+    </tr>
+`;
+
+                tbody.insertAdjacentHTML('beforeend', fila);
+            });
+        })
+        .catch(error => {
+            console.error("Error al cargar proveedores guardados:", error);
+        });
+});
+
+function eliminarProveedor(idProveedor, boton) {
+    if (!confirm("¿Estás seguro de quitar este proveedor de tu lista?")) return;
+
+    fetch('../../controllers/php/eliminar_proveedor_guardado_controller.php', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({ id_proveedor: idProveedor })
+    })
+    .then(res => res.json())
+    .then(data => {
+        if (data.success) {
+            // Borramos la fila del DOM
+            const fila = boton.closest("tr");
+            fila.remove();
+        } else {
+            alert("Error: " + (data.error || "No se pudo eliminar"));
+        }
+    })
+    .catch(error => {
+        console.error("Error al eliminar proveedor:", error);
+    });
 }
