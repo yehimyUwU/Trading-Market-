@@ -14,7 +14,6 @@
  */
 include_once '../../controllers/php/verificar_acceso.php';
 if (!verificarRol('Proveedor')) {
-if (!verificarRol('Proveedor')) { // Cambiado a "Proveedor"
     header('Location: ../../views/html/longin.html');
     exit;
 }
