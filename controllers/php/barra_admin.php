@@ -7,7 +7,8 @@
                 <li>
                     <a href="../../views/html/admin_panel.php">
                         <span class="icon">
-                            <ion-icon name="american-football-outline"></ion-icon></span>
+                            <img src="../../public/imagenes/logopng.png" alt="Trading Market Icon" style="width: 40px; height: 40px;">
+                        </span>
                         <span class="title">Trading Market</span>
                     </a>
                 </li>

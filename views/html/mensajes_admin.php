@@ -14,6 +14,8 @@
     </head>
 <body>
 
+
+
 <?php
 require '../../controllers/php/barra_admin.php'; 
 ?>
