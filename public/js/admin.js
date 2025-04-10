@@ -27,8 +27,11 @@ const closeModal = document.querySelector(".close");
 
 // Oculta el modal al cargar la página
 window.addEventListener("DOMContentLoaded", () => {
-  profileModal.style.display = "none"; // Asegura que el modal esté oculto inicialmente
+    if (profileModal) {
+        profileModal.style.display = "none"; // Oculta el modal de forma segura
+    }
 });
+
 
 // Muestra el modal al hacer clic en la imagen de perfil
 profileImage?.addEventListener("click", () => {

@@ -1,4 +1,19 @@
 <!DOCTYPE html>
+<?php
+/**
+ * Archivo: Chat.php
+ * Descripción: Sistema de mensajería entre usuarios
+ * Conexiones:
+ * - Se conecta con: controllers/php/barra_prove.php (para la barra de navegación)
+ * Funcionalidades:
+ * - Lista de contactos
+ * - Área de chat en tiempo real
+ * - Indicadores de estado (en línea/ausente)
+ * - Historial de mensajes
+ * - Búsqueda de contactos
+ */
+require '../../controllers/php/barra_prove.php'; 
+?>
 <html lang="es">
 <head>
     <meta charset="UTF-8">
@@ -11,9 +26,6 @@
     <link href='https://unpkg.com/boxicons@2.0.9/css/boxicons.min.css' rel='stylesheet'>
 </head>
 <body>
-<?php
-    require '../../controllers/php/barra_prove.php'; 
-?>
     
     <section id="content">
         <nav>

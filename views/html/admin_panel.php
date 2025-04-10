@@ -1,14 +1,28 @@
+<!--
+ * Archivo: admin_panel.php
+ * Descripción: Panel de administración principal del sistema
+ * Conexiones:
+ * - Se conecta con: controllers/php/barra_admin.php (para la barra de navegación)
+ * - Se conecta con: controllers/php/obtener_perfil.php (para datos del perfil)
+ * - Se conecta con: controllers/php/guardar_imagen.php (para subir imágenes)
+ * Funcionalidades:
+ * - Dashboard con estadísticas
+ * - Gestión de pedidos
+ * - Gestión de usuarios
+ * - Perfil de administrador
+ * - Modo visual claro/oscuro
+ */ -->
+
 <!DOCTYPE html>
-<html lang="en">
-<head>
 
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link href="../../public/css/bootstrap.min.css" rel="stylesheet">
-    <link rel="stylesheet" href="../../public/estilos/estilosAdmin.css" />
-    <title>Panel de Administrador</title>
-
-</head>
+<html lang="es">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link href="../../public/css/bootstrap.min.css" rel="stylesheet">
+        <link rel="stylesheet" href="../../public/estilos/estilosAdmin.css">
+        <title>Panel de Administrador</title>
+    </head>
 <body>
 <?php
 session_start();

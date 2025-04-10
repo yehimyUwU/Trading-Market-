@@ -1,4 +1,18 @@
 <?php
+/**
+ * Archivo: obtener_usuario.php
+ * Descripción: Controlador para obtener los datos del usuario actual
+ * Conexiones:
+ * - Se conecta con: config/php/conexion.php (para la conexión a la base de datos)
+ * - Se utiliza en: views/html/PerfilProv.php (para mostrar información del usuario)
+ * - Interactúa con la tabla: usuarios
+ * Flujo general:
+ * 1. Inicia la sesión
+ * 2. Verifica si hay un usuario logueado
+ * 3. Consulta los datos del usuario en la base de datos
+ * 4. Retorna los datos en formato JSON
+ */
+
 session_start(); // Inicia la sesión
 
 require '../../config/php/conexion.php'; // Asegúrate de que este archivo se incluya correctamente

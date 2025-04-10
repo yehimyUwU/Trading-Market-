@@ -1,4 +1,19 @@
 <?php
+/**
+ * Archivo: login.php
+ * Descripción: Controlador para el proceso de autenticación de usuarios
+ * Conexiones:
+ * - Se conecta con: config/php/conexion.php (para la conexión a la base de datos)
+ * - Se utiliza en: views/html/longin.html (para el formulario de inicio de sesión)
+ * - Interactúa con las tablas: usuario, usuario_rol, rol_usuario
+ * Flujo general:
+ * 1. Recibe credenciales vía POST (documento, password, role)
+ * 2. Verifica las credenciales en la base de datos
+ * 3. Valida el rol del usuario
+ * 4. Inicia sesión y redirige según el rol
+ * 5. Retorna respuesta JSON con el resultado
+ */
+
 header('Content-Type: application/json');
 require '../../config/php/conexion.php';
 

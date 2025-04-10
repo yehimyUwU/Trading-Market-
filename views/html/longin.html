@@ -1,4 +1,17 @@
 <!DOCTYPE html>
+<!--
+ * Archivo: longin.html
+ * Descripción: Página de inicio de sesión y registro de usuarios
+ * Conexiones:
+ * - Se conecta con: controllers/php/login.php (para autenticación)
+ * - Se conecta con: controllers/php/registro.php (para registro de usuarios)
+ * Funcionalidades:
+ * - Formulario de inicio de sesión
+ * - Formulario de registro
+ * - Validación de campos
+ * - Selección de rol (Administrador/Cliente/Proveedor)
+ * - Animaciones de transición
+ -->
 <html lang="en">
 <head>
 
@@ -16,6 +29,11 @@
 
     <div class="container" id="container">
         <!-- Botón para regresar a la página principal -->
+        <a href="../../views/html/index.html" class="btn-regresar">
+            <i class="icon ion-md-arrow-back"></i>
+            Regresar al inicio
+        </a>
+
         <!-- Formulario Sign Up (Registro) -->
         <div class="form-container sign-up-container">
             <form id="signupForm" method="POST" action="../../controllers/php/registro.php"> 
@@ -37,14 +55,13 @@
                 </select>
                 <input type="email" name="email" placeholder="Correo Electrónico" required />
                 <input type="password" name="password" placeholder="Contraseña" required minlength="7" oninvalid="this.setCustomValidity('La contraseña debe tener al menos 7 caracteres')" oninput="this.setCustomValidity('')" />
-                <select name="rol" required>
-                    <option value="" disabled selected>Seleccione su rol</option>
+                <select name="rol" required id="rolSelect">
+                    <option value="" disabled="" selected="">Seleccione su rol</option>
                     <option value="Cliente">Cliente</option>
-                    <option value="Administrador">Administrador</option>
-                    <option value="Proveedor">Proveedor</option> <!-- Asegúrate de usar "Proveedor" -->
+                    <option value="Proveedor">Proveedor</option>
                 </select>
                 <button type="submit">Registrarse</button>
-                <p id="signupMessage"></p> <!-- Mensaje de registro -->
+                <p id="signupMessage"></p>
             </form>
         </div>
         
@@ -59,7 +76,7 @@
                     <option value="" disabled selected>Seleccione su rol</option>
                     <option value="Administrador">Administrador</option>
                     <option value="Cliente">Cliente</option>
-                    <option value="Proveedor">Proveedor</option> <!-- Cambiado a "Proveedor" -->
+                    <option value="Proveedor">Proveedor</option>
                 </select>
                 <button type="button" onclick="verificarLogin()">Iniciar Sesión</button>
                 <p id="message"></p>
@@ -85,5 +102,16 @@
 
     <script src="../../public/js/login.js"></script> <!-- Asegúrate de que esta ruta sea correcta -->
     <script src="https://unpkg.com/ionicons@4.2.2/dist/ionicons.js"></script> <!-- Script de Ionicons -->
+    <script>
+        document.getElementById('rolSelect').addEventListener('change', function() {
+            if (this.value === 'Proveedor') {
+                if (confirm('¿Desea ser proveedor? Se informará a los administradores de su solicitud. Si es aceptado, podrá iniciar sesión como proveedor.')) {
+                    // El usuario puede continuar con el registro
+                } else {
+                    this.value = ''; // Limpiar la selección
+                }
+            }
+        });
+    </script>
 </body>
 </html>

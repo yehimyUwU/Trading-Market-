@@ -1,4 +1,19 @@
 <!DOCTYPE html>
+<?php
+/**
+ * Archivo: Mispedidos.php
+ * Descripción: Gestión de pedidos para proveedores
+ * Conexiones:
+ * - Se conecta con: controllers/php/barra_prove.php (para la barra de navegación)
+ * Funcionalidades:
+ * - Lista de pedidos pendientes
+ * - Estadísticas de pedidos
+ * - Seguimiento de ventas
+ * - Filtros y búsqueda
+ * - Gestión de estados de pedidos
+ */
+require '../../controllers/php/barra_prove.php'; 
+?>
 <!-- Coding By CodingNepal - youtube.com/@codingnepal -->
 <html lang="es">
 <head>
@@ -16,12 +31,6 @@
 <body>
   
 
-
-<?php
-    
-    require '../../controllers/php/barra_prove.php'; 
-?>
-  
 
 <!-- CONTENT -->
 <section id="content">

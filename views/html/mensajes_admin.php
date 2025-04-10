@@ -1,9 +1,21 @@
+<!--
+ * Archivo: mensajes_admin.php
+ * Descripción: Panel de administración para gestionar solicitudes de proveedores
+ * Conexiones:
+ * - Se conecta con: controllers/php/barra_admin.php (barra de navegación)
+ * - Se conecta con: controllers/php/obtener_solicitudes_proveedor.php (obtener solicitudes)
+ * - Se conecta con: controllers/php/gestionar_solicitud_proveedor.php (gestionar solicitudes)
+ * - Utiliza estilos de: public/Estilos/estilos_mensajes.css
+ * - Utiliza scripts de: public/js/admin.js, public/js/mensajes_admin.js, public/js/config.js
+-->
 <!DOCTYPE html>
 <html lang="es">
     <head>
-
+        <!-- Configuración básica del documento -->
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        
+        <!-- Enlaces a hojas de estilo -->
         <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
         <link rel="stylesheet" href="../../public/Estilos/bootstrap.min.css">
         <link rel="stylesheet" href="js/bootstrap.bundle.js">
@@ -17,6 +29,7 @@
 
 
 <?php
+// Incluye la barra de navegación del administrador
 require '../../controllers/php/barra_admin.php'; 
 ?>
 
@@ -50,32 +63,19 @@ require '../../controllers/php/barra_admin.php';
 
         <!-- Tabla de Mensajes -->
         <div class="tabla-mensajes">
+            <h2>Solicitudes de Proveedores</h2>
             <table>
                 <thead>
                     <tr>
                         <th>Nombre</th>
                         <th>Correo</th>
-                        <th>Mensaje</th>
-                        <th>Acción</th>
+                        <th>Documento</th>
+                        <th>Estado</th>
+                        <th>Acciones</th>
                     </tr>
                 </thead>
-                <tbody>
-                    <tr>
-                        <td>Juan Esteban</td>
-                        <td>juan.esteban@gmail.com</td>
-                        <td>Usted es un sapo hermano</td>
-                        <td>
-                            <button class="btn-responder" onclick="responderMensaje('Juan Esteban', 'juan.esteban@gmail.com')">Responder</button>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>Daniela Fagua</td>
-                        <td>daniela.fagua@yahoo.com</td>
-                        <td>Necesito ayuda con el pago.</td>
-                        <td>
-                            <button class="btn-responder" onclick="responderMensaje('Daniela Fagua', 'daniela.fagua@yahoo.com')">Responder</button>
-                        </td>
-                    </tr>
+                <tbody id="tablaSolicitudes">
+                    <!-- Las solicitudes se cargarán dinámicamente aquí -->
                 </tbody>
             </table>
         </div>
@@ -148,7 +148,123 @@ require '../../controllers/php/barra_admin.php';
     <script src="../../public/js/admin.js"></script>
     <script src="../../public/js/mensajes_admin.js"></script>
     <script src="../../public/js/config.js"></script>
-    <!--script para poder usar iconos bien bellaquitos // ionicons-->
+    <script>
+        /**
+         * Función: cargarSolicitudes()
+         * Descripción: Obtiene las solicitudes de proveedores del servidor y las muestra en la tabla
+         * Conexión: Realiza una petición GET a controllers/php/obtener_solicitudes_proveedor.php
+         * Flujo:
+         * 1. Hace una petición fetch al servidor
+         * 2. Procesa la respuesta JSON
+         * 3. Genera dinámicamente las filas de la tabla con los datos recibidos
+         * 4. Maneja errores y casos de datos vacíos
+         */
+        document.addEventListener("DOMContentLoaded", function() {
+            function cargarSolicitudes() {
+                fetch('../../controllers/php/obtener_solicitudes_proveedor.php')
+                    .then(response => {
+                        if (!response.ok) {
+                            throw new Error('Error en la respuesta del servidor');
+                        }
+                        return response.json();
+                    })
+                    .then(data => {
+                        const tabla = document.getElementById('tablaSolicitudes');
+                        tabla.innerHTML = '';
+                        
+                        if (!data.success) {
+                            tabla.innerHTML = '<tr><td colspan="5" class="text-center">Error al cargar las solicitudes</td></tr>';
+                            return;
+                        }
+
+                        if (!data.data || data.data.length === 0) {
+                            tabla.innerHTML = '<tr><td colspan="5" class="text-center">No hay solicitudes de proveedores pendientes</td></tr>';
+                            return;
+                        }
+                        
+                        data.data.forEach(solicitud => {
+                            const fila = document.createElement('tr');
+                            fila.setAttribute('data-id', solicitud.id);
+                            const botones = solicitud.estado === 'Pendiente' ? 
+                                `<button class="btn-aceptar" onclick="gestionarSolicitud(${solicitud.id}, 'aceptar')">Aceptar</button>
+                                 <button class="btn-negar" onclick="gestionarSolicitud(${solicitud.id}, 'negar')">Negar</button>` :
+                                '';
+                            
+                            fila.innerHTML = `
+                                <td>${solicitud.nombre}</td>
+                                <td>${solicitud.email}</td>
+                                <td>${solicitud.documento}</td>
+                                <td>${solicitud.estado}</td>
+                                <td>${botones}</td>
+                            `;
+                            tabla.appendChild(fila);
+                        });
+                    })
+                    .catch(error => {
+                        console.error('Error:', error);
+                        const tabla = document.getElementById('tablaSolicitudes');
+                        tabla.innerHTML = '<tr><td colspan="5" class="text-center">Error al cargar las solicitudes</td></tr>';
+                    });
+            }
+
+            // Cargar las solicitudes al iniciar la página
+            cargarSolicitudes();
+        });
+
+        /**
+         * Función: gestionarSolicitud(id, accion)
+         * Descripción: Procesa la aceptación o rechazo de una solicitud de proveedor
+         * Parámetros:
+         * - id: ID de la solicitud a gestionar
+         * - accion: 'aceptar' o 'negar'
+         * Conexión: Realiza una petición POST a controllers/php/gestionar_solicitud_proveedor.php
+         * Flujo:
+         * 1. Envía los datos al servidor
+         * 2. Actualiza la interfaz según la respuesta
+         * 3. Elimina o actualiza la fila de la tabla según la acción
+         */
+        function gestionarSolicitud(id, accion) {
+            fetch('../../controllers/php/gestionar_solicitud_proveedor.php', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/x-www-form-urlencoded',
+                },
+                body: `id=${id}&accion=${accion}`
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    alert(data.message);
+                    // Actualizar la tabla sin recargar
+                    const tabla = document.getElementById('tablaSolicitudes');
+                    const fila = tabla.querySelector(`tr[data-id="${id}"]`);
+                    
+                    if (fila) {
+                        if (accion === 'aceptar') {
+                            fila.remove(); // Eliminar la fila si se acepta
+                        } else if (accion === 'negar') {
+                            // Actualizar el estado a Cancelada y ocultar los botones
+                            const estadoCell = fila.querySelector('td:nth-child(4)');
+                            const accionesCell = fila.querySelector('td:nth-child(5)');
+                            estadoCell.textContent = 'Cancelada';
+                            accionesCell.innerHTML = '';
+                        }
+                    }
+
+                    // Verificar si quedan solicitudes
+                    if (tabla.children.length === 0) {
+                        tabla.innerHTML = '<tr><td colspan="5" class="text-center">No hay solicitudes de proveedores pendientes</td></tr>';
+                    }
+                } else {
+                    alert('Error: ' + data.message);
+                }
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                alert('Error al procesar la solicitud');
+            });
+        }
+    </script>
     <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
     <script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
 </body>
