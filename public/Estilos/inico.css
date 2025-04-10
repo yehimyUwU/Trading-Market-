@@ -247,6 +247,7 @@ body {
     border-radius: 10px;
     overflow: hidden;
     margin: 0px;
+    background-color: #00000098;
 }
 
 .carousel {
@@ -255,11 +256,11 @@ body {
     height: 300px;
     border-radius: 20px; /* Bordes redondeados para todo el carrusel */
     overflow: hidden; /* Asegura que los bordes redondeados se apliquen correctamente */
-    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3); /* Sombra para el carrusel */
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.767); /* Sombra para el carrusel */
     margin: 20px auto; /* Centrar el carrusel */
     border: 5px solid rgba(255, 255, 255, 0.5); /* Borde semitransparente */
     transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out; /* Animación al pasar el mouse */
-    background: linear-gradient(135deg, rgba(255, 255, 255, 0.1), rgba(0, 0, 0, 0.1)); /* Fondo degradado */
+    background: linear-gradient(135deg, rgba(0, 0, 0, 0.384), rgba(0, 0, 0, 0.555)); /* Fondo degradado */
     backdrop-filter: blur(10px); /* Efecto de desenfoque */
 }
 
@@ -1432,11 +1433,11 @@ ion-icon{
 .banner {
   text-align: center;
 /* Fondo negro sólido */
-  color: white;
+  color: rgb(255, 255, 255);
   padding: 80px 20px; /* Espaciado más amplio */
   min-height: 300px; /* Aumenta la altura del banner */
   border-radius: 10px;
-  box-shadow: 0 4px 10px rgba(255, 255, 255, 0.2);
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.308);
   opacity: 1; /* Eliminar cualquier transparencia */
   display: flex;
   flex-direction: column;
@@ -1599,3 +1600,67 @@ ion-icon{
 .estrella.seleccionada {
   color: gold;
 }
+
+/* Estilos generales para la tabla */
+#tablaProveedores {
+  width: 100%;
+  border-collapse: separate;
+  border-spacing: 0;
+  border-radius: 10px;
+  overflow: hidden;
+  box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+}
+
+/* Estilos para las celdas de encabezado */
+#tablaProveedores thead th {
+  background-color: #94a7ff;
+  color: white;
+  padding: 12px;
+  text-align: left;
+  font-size: 16px;
+}
+
+/* Estilos para las filas impares del cuerpo de la tabla */
+#tablaProveedores tbody tr:nth-child(odd) {
+  background-color: #f2f2f2;
+}
+
+/* Estilos para las celdas del cuerpo de la tabla */
+#tablaProveedores tbody td {
+  padding: 12px;
+  border-bottom: 1px solid #ddd;
+}
+
+/* Efecto al pasar el cursor sobre las filas */
+#tablaProveedores tbody tr:hover {
+  background-color: #ddd;
+}
+
+/* Estilos responsivos para pantallas pequeñas */
+@media screen and (max-width: 600px) {
+  #tablaProveedores thead {
+      display: none;
+  }
+  #tablaProveedores, #tablaProveedores tbody, #tablaProveedores tr, #tablaProveedores td {
+      display: block;
+      width: 100%;
+  }
+  #tablaProveedores tr {
+      margin-bottom: 15px;
+  }
+  #tablaProveedores td {
+      text-align: right;
+      padding-left: 50%;
+      position: relative;
+  }
+  #tablaProveedores td::before {
+      content: attr(data-label);
+      position: absolute;
+      left: 0;
+      width: 50%;
+      padding-left: 15px;
+      font-weight: bold;
+      text-align: left;
+  }
+}
+
