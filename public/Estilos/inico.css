@@ -5,7 +5,7 @@ body {
     margin: 0;
     padding: 0;
     background: rgb(12, 77, 255);
-    background: linear-gradient(150deg, #77ddeb 6%, rgba(54, 73, 184, 0.928) 64%,rgba(57, 11, 221, 0.928) 64%,rgba(120, 15, 241, 0.928) 74%, rgb(81, 132, 228) 95%);
+    background: linear-gradient(150deg, #b2d9df 6%, rgba(243, 243, 243, 0.928) 64%,rgba(255, 255, 255, 0.928) 74%, rgb(216, 228, 252) 95%);
     color: rgb(77, 133, 255);
     font-size: 12px; /* Ajusta el tamaño de la letra */
 }
@@ -66,7 +66,7 @@ body {
     justify-content: space-between;
     align-items: center;
     padding: 8px 30px; /* Reducir aún más el padding vertical */
-    background: linear-gradient(80deg, #306a91,hsl(234, 32%, 55%), #928fdb, #1f68ac, #71687a);
+    background: linear-gradient(80deg, #306a91,hsl(189, 32%, 55%), #36558f, #306a91, #6d7ae9);
     background-size: 400% 400%;
     animation: cambiarFondo 10s ease-in-out infinite;
     box-shadow: 0px 4px 15px rgba(55, 118, 255, 0.863);
@@ -464,7 +464,7 @@ body {
 
 .productos h2 {
     font-size: 2.5em;
-    color: #8CE8EB;
+    color: #306a91;
 }
 
 .productos-container {
@@ -485,7 +485,7 @@ body {
     width: 200px;
     height: 350px;
     text-align: center;
-    box-shadow: 0 4px 15px rgba(255, 137, 2, 0.24);
+    box-shadow: 0 4px 15px rgba(97, 164, 219, 0.397);
     transition: all 0.3s ease;
     margin: 15px auto;
     display: flex;
@@ -495,7 +495,7 @@ body {
 
 .producto:hover {
     transform: translateY(-5px);
-    background: rgba(253, 131, 31, 0.651);
+    background: rgba(102, 179, 252, 0.651);
     box-shadow: 0 6px 20px rgba(0, 0, 0, 0.3);
 }
 
@@ -538,7 +538,7 @@ body {
 }
 
 .producto .btn:hover {
-    background: rgba(190, 209, 14, 0.8);
+    background: rgba(14, 121, 209, 0.8);
 }
 
 /* Media queries para responsividad */
@@ -585,7 +585,7 @@ body {
 footer {
     text-align: center;
     padding: 20px;
-    background: linear-gradient(80deg,  #0059ff,#bdc7ff, #000fda, #6c69ff, #170080);
+    background: linear-gradient(80deg, #306a91, hsl(189, 32%, 55%), #36558f, #306a91, #6d7ae9);
     background-size: 400% 400%;
     animation: cambiarFondo 10s ease-in-out infinite;
     border-radius: 10px;
@@ -1012,7 +1012,7 @@ footer p {
   /* Estilos generales */
 body {
     font-family: Arial, sans-serif;
-    background-color: #bd5500;
+    background-color: #0097bd;
     margin: 0;
     padding: 0;
 }
@@ -1226,12 +1226,12 @@ body {
 
 
 .btn-primary {
-  background: #ff6600;
+  background: #0084ff;
   border: none;
   font-size: 18px;
 }
 .btn-primary:hover {
-  background: #cc5200;
+  background: #001fcc;
 }
 
 /* Ajustes responsivos para la barra de navegación */
@@ -1432,7 +1432,7 @@ ion-icon{
 
 .banner {
   text-align: center;
-  background-color: rgba(0, 0, 0, 0.658) !important; /* Fondo negro sólido */
+/* Fondo negro sólido */
   color: white;
   padding: 80px 20px; /* Espaciado más amplio */
   min-height: 300px; /* Aumenta la altura del banner */
