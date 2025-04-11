@@ -64,9 +64,20 @@ class ProveedorModel {
 
     public function obtenerProveedores($id = null) {
         if ($id) {
-            $stmt = $this->conn->prepare("SELECT id_usuario, nombre, apellido, email, genero, fecha_nacimiento, documento, imagen FROM usuario WHERE id_usuario = ?");
+            $stmt = $this->conn->prepare("
+                SELECT id_usuario, nombre, apellido, email, genero, fecha_nacimiento, documento, imagen
+                FROM usuario
+                WHERE id_usuario = ?
+            ");
             $stmt->execute([$id]);
-            return $stmt->fetch(PDO::FETCH_ASSOC);
+            $usuario = $stmt->fetch(PDO::FETCH_ASSOC);
+    
+            // Convertir imagen a base64 si existe
+            if ($usuario && $usuario['imagen']) {
+                $usuario['imagen'] = base64_encode($usuario['imagen']);
+            }
+    
+            return $usuario;
         }
     
         $stmt = $this->conn->query("
@@ -77,7 +88,16 @@ class ProveedorModel {
             WHERE r.nombre = 'Proveedor'
         ");
     
-        return $stmt->fetchAll(PDO::FETCH_ASSOC);
+        $proveedores = $stmt->fetchAll(PDO::FETCH_ASSOC);
+    
+        // Convertir imágenes a base64
+        foreach ($proveedores as &$proveedor) {
+            if ($proveedor['imagen']) {
+                $proveedor['imagen'] = base64_encode($proveedor['imagen']);
+            }
+        }
+    
+        return $proveedores;
     }
     
 }

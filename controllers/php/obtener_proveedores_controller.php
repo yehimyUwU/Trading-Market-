@@ -2,16 +2,28 @@
 require_once '../../models/php/modelo_usuario.php';
 
 $model = new ProveedorModel();
-$proveedores = $model->obtenerProveedores();
+$id = isset($_GET['id']) ? $_GET['id'] : null;
 
-// Si estás guardando la imagen en formato LONGBLOB, conviértela a base64
-foreach ($proveedores as &$proveedor) {
-    if (!empty($proveedor['imagen'])) {
-        $proveedor['imagen'] = 'data:image/jpeg;base64,' . base64_encode($proveedor['imagen']);
-    } else {
-        $proveedor['imagen'] = '../../public/imag/default.jpeg';
+$response = $model->obtenerProveedores($id);
+
+if (!$response) {
+    echo json_encode(['error' => $id ? 'Proveedor no encontrado' : 'No hay proveedores registrados']);
+    exit;
+}
+
+// Codificar la(s) imagen(es) en base64
+if ($id) {
+    // Solo un proveedor
+    if (isset($response['imagen']) && !empty($response['imagen'])) {
+        $response['imagen'] = base64_encode($response['imagen']);
+    }
+} else {
+    // Varios proveedores
+    foreach ($response as &$proveedor) {
+        if (isset($proveedor['imagen']) && !empty($proveedor['imagen'])) {
+            $proveedor['imagen'] = base64_encode($proveedor['imagen']);
+        }
     }
 }
 
-header('Content-Type: application/json');
-echo json_encode($proveedores);
+echo json_encode($response);
