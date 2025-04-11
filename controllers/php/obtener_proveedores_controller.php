@@ -11,19 +11,4 @@ if (!$response) {
     exit;
 }
 
-// Codificar la(s) imagen(es) en base64
-if ($id) {
-    // Solo un proveedor
-    if (isset($response['imagen']) && !empty($response['imagen'])) {
-        $response['imagen'] = base64_encode($response['imagen']);
-    }
-} else {
-    // Varios proveedores
-    foreach ($response as &$proveedor) {
-        if (isset($proveedor['imagen']) && !empty($proveedor['imagen'])) {
-            $proveedor['imagen'] = base64_encode($proveedor['imagen']);
-        }
-    }
-}
-
 echo json_encode($response);

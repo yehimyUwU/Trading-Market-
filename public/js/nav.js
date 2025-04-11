@@ -751,7 +751,7 @@ function verDetalles(nombre, descripcion, precio, imagen, id_producto) {
 
 
 document.addEventListener("DOMContentLoaded", function () {
-    fetch("../../controllers/php/obtener_proveedores_controller.php")
+    fetch("/Trading-Market-/controllers/php/obtener_proveedores_controller.php")
         .then(response => response.json())
         .then(proveedores => {
             const container = document.getElementById("proveedores-container");
@@ -766,6 +766,11 @@ document.addEventListener("DOMContentLoaded", function () {
                 const card = document.createElement("div");
                 card.classList.add("col-lg-4", "col-md-6", "col-sm-12", "mb-3");
 
+                // Mostrar imagen en base64
+                const imagenProveedor = proveedor.imagen
+    ? proveedor.imagen
+    : `/Trading-Market-/public/imag/default.jpeg`;
+
                 card.innerHTML = `
                     <div class="card position-relative h-100">
                         <button class="btn btn-light position-absolute top-0 end-0 m-2 rounded-circle shadow-sm"
@@ -774,7 +779,7 @@ document.addEventListener("DOMContentLoaded", function () {
                             <i class="fas fa-plus"></i>
                         </button>
                         <div class="card-body text-center">
-                            <img src="data:image/jpeg;base64,${proveedor.imagen}" class="img-fluid rounded-circle mb-3" style="width: 120px; height: 120px; object-fit: cover;" alt="Imagen del proveedor" />
+                            <img src="${imagenProveedor}" class="img-fluid rounded-circle mb-3" style="width: 120px; height: 120px; object-fit: cover;" alt="Imagen del proveedor" />
                             <h3 class="card-title">${proveedor.nombre} ${proveedor.apellido}</h3>
                             <button class="btn btn-primary btn-sm mb-3" onclick="mostrarInfo(${proveedor.id_usuario})">Información personal</button>
                             <button class="btn btn-success btn-sm mb-3" onclick="verProductos(${proveedor.id_usuario})">Productos Relacionado</button>
@@ -786,6 +791,10 @@ document.addEventListener("DOMContentLoaded", function () {
         })
         .catch(error => console.error("Error al obtener proveedores:", error));
 });
+
+
+
+
 
 function mostrarInfo(idProveedor) {
     fetch(`../../controllers/php/obtener_proveedores_controller.php?id=${idProveedor}`)

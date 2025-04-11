@@ -72,9 +72,16 @@ class ProveedorModel {
             $stmt->execute([$id]);
             $usuario = $stmt->fetch(PDO::FETCH_ASSOC);
     
-            // Convertir imagen a base64 si existe
             if ($usuario && $usuario['imagen']) {
-                $usuario['imagen'] = base64_encode($usuario['imagen']);
+                if (strlen($usuario['imagen']) < 255 && !str_contains($usuario['imagen'], "\0")) {
+                    // Es un nombre de archivo
+                    $usuario['imagen'] = '/Trading-Market-/public/imag/' . $usuario['imagen'];
+                } else {
+                    // Es binario
+                    $finfo = new finfo(FILEINFO_MIME_TYPE);
+                    $mime = $finfo->buffer($usuario['imagen']);
+                    $usuario['imagen'] = 'data:' . $mime . ';base64,' . base64_encode($usuario['imagen']);
+                }
             }
     
             return $usuario;
@@ -90,15 +97,26 @@ class ProveedorModel {
     
         $proveedores = $stmt->fetchAll(PDO::FETCH_ASSOC);
     
-        // Convertir imágenes a base64
         foreach ($proveedores as &$proveedor) {
             if ($proveedor['imagen']) {
-                $proveedor['imagen'] = base64_encode($proveedor['imagen']);
+                if (strlen($proveedor['imagen']) < 255 && !str_contains($proveedor['imagen'], "\0")) {
+                    // Es un nombre de archivo
+                    $proveedor['imagen'] = '/Trading-Market-/public/imag/' . $proveedor['imagen'];
+                } else {
+                    // Es binario
+                    $finfo = new finfo(FILEINFO_MIME_TYPE);
+                    $mime = $finfo->buffer($proveedor['imagen']);
+                    $proveedor['imagen'] = 'data:' . $mime . ';base64,' . base64_encode($proveedor['imagen']);
+                }
+            } else {
+                $proveedor['imagen'] = '/Trading-Market-/public/imag/default.jpeg'; // por si no tiene imagen
             }
         }
     
         return $proveedores;
     }
+    
+    
     
 }
 
