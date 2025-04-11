@@ -250,6 +250,16 @@ body {
     background-color: #00000098;
 }
 
+#content_bot{
+  width: 90%;
+  max-width: 500px;
+  background: #ffffff;
+  padding: 20px;
+  border-radius: 10px;
+  text-align: center;
+  position: relative;
+}
+
 #bannerSolo {
   position: relative;
   padding: 0;
