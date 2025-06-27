@@ -261,6 +261,30 @@ body {
   color: #ff3939;
 }
 
+/* Centrado del modal de detalles de producto */
+.modal-body .d-flex.flex-column.align-items-center {
+    align-items: center !important;
+    justify-content: center !important;
+}
+
+.modal-body img#modalImagen {
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    max-width: 300px;
+}
+
+#calificacion {
+    width: 100%;
+    max-width: 500px;
+    margin: 0 auto;
+}
+
+#listaComentarios {
+    width: 100%;
+    margin: 0 auto;
+}
+
 /* Banner y Carrusel */
 .banner {
   text-align: center;
