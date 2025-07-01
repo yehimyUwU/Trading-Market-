@@ -27,34 +27,23 @@
     </div>
 
     <!-- Filtros -->
-<div class="container mt-4">
-    <div class="row">
-        <!-- Ordenar alfabéticamente -->
-        <div class="col-md-4">
+    <div class="filtros-sidebar-container">
+        <div class="filtros-sidebar">
             <label for="ordenar">Ordenar:</label>
             <select id="ordenar" class="form-control">
                 <option value="az">A - Z</option>
                 <option value="za">Z - A</option>
             </select>
-        </div>
-
-        <!-- Filtrar por precio -->
-        <div class="col-md-4">
             <label for="precio-min">Precio mínimo:</label>
             <input type="number" id="precio-min" class="form-control" placeholder="0">
-        </div>
-        <div class="col-md-4">
             <label for="precio-max">Precio máximo:</label>
             <input type="number" id="precio-max" class="form-control" placeholder="100">
+            <button class="btn btn-primary mt-3" onclick="filtrarProductos()">Aplicar Filtros</button>
         </div>
-    </div>
-
-    <button class="btn btn-primary mt-3" onclick="filtrarProductos()">Aplicar Filtros</button>
-</div>
-
-    <div class="container mt-5">
-        <h2 class="text-center mb-4">Productos Destacados</h2>
-        <div id="productos-container" class="row" data-categoria="Construcción"></div>
+        <div class="container mt-5" style="flex:1;">
+            <h2 class="text-center mb-4">Productos Destacados</h2>
+            <div id="productos-container" class="row" data-categoria="Construcción"></div>
+        </div>
     </div>
 
 <!-- Modal de Detalles del Producto -->
@@ -138,6 +127,17 @@
                 <a href="#" class="fa fa-youtube"></a>
             </div>
         </div>
+    </div>
+    <div class="grupo-2">
+        <small>&copy; 2025 <b>Trading Market</b> - Todos los Derechos Reservados.</small>
+    </div>
+</footer>
+
+    <script src="../../public/js/nav.js"></script>
+    <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+</html>
     </div>
     <div class="grupo-2">
         <small>&copy; 2025 <b>Trading Market</b> - Todos los Derechos Reservados.</small>

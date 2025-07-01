@@ -1099,3 +1099,58 @@ ion-icon{
   }
 }
 
+/* Filtros como barra lateral */
+.filtros-sidebar-container {
+    display: flex;
+    flex-direction: row;
+    gap: 30px;
+    align-items: flex-start;
+    margin-top: 30px;
+}
+
+.filtros-sidebar {
+    min-width: 260px;
+    max-width: 320px;
+    background: #fff;
+    border-radius: 16px;
+    box-shadow: 0 4px 16px rgba(44, 105, 184, 0.08);
+    padding: 24px 18px 18px 18px;
+    margin-bottom: 0;
+    margin-right: 0;
+}
+
+.filtros-sidebar label {
+    font-weight: 600;
+    margin-top: 10px;
+    margin-bottom: 4px;
+    display: block;
+    color: #306a91;
+}
+
+.filtros-sidebar select,
+.filtros-sidebar input[type="number"] {
+    width: 100%;
+    margin-bottom: 16px;
+    border-radius: 8px;
+    border: 1px solid #dbeafe;
+    padding: 8px 12px;
+    font-size: 15px;
+}
+
+.filtros-sidebar .btn {
+    width: 100%;
+    margin-top: 10px;
+}
+
+@media (max-width: 900px) {
+    .filtros-sidebar-container {
+        flex-direction: column;
+        gap: 0;
+    }
+    .filtros-sidebar {
+        width: 100%;
+        max-width: 100%;
+        margin-bottom: 20px;
+    }
+}
+
