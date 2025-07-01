@@ -1154,3 +1154,39 @@ ion-icon{
     }
 }
 
+/* Limitar nombre, descripción y precio en tarjetas de producto a 2 líneas con puntos suspensivos */
+#productosGrid .card-title,
+#productosGrid .card-text,
+#productosGrid .card-price,
+.producto h3,
+.producto p,
+.producto .card-price,
+#productosGrid .card-body .card-title,
+#productosGrid .card-body .card-text,
+#productosGrid .card-body .card-price,
+.card-title,
+.card-text,
+.card-price {
+  display: -webkit-box;
+  -webkit-line-clamp: 2;           /* Limita a 2 líneas */
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: normal;              /* Permite saltos de línea */
+  max-width: 100%;
+}
+  max-width: 100%;
+  display: block;
+}
+
+/* Para tarjetas fuera de #productosGrid */
+.card-title,
+.card-text,
+.card-price {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  max-width: 100%;
+  display: block;
+}
+
