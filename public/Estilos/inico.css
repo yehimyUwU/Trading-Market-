@@ -631,267 +631,46 @@ body {
   border-radius: 16px;
   box-shadow: 0 4px 16px rgba(44, 105, 184, 0.08);
   transition: transform 0.2s, box-shadow 0.2s;
-  min-width: 260px;
-  max-width: 320px;
-  margin: 0 auto;
+  min-width: 0;         /* Permite que las tarjetas se encojan */
+  max-width: 100%;      /* Permite que las tarjetas ocupen el espacio disponible */
+  margin: 0;            /* Elimina margen lateral extra */
   display: flex;
   flex-direction: column;
   height: 100%;
 }
 
-#productosGrid .card:hover {
-  transform: translateY(-6px) scale(1.03);
-  box-shadow: 0 8px 32px rgba(44, 105, 184, 0.18);
-}
-
-#productosGrid .img-container {
-  width: 100%;
-  height: 250px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  overflow: hidden;
-  border-top-left-radius: 16px;
-  border-top-right-radius: 16px;
-  background: #f8f9fa;
-}
-
-#productosGrid .card-img-top {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  border-radius: 0;
-  box-shadow: none;
-  background: #fff;
-}
-
-#productosGrid .card-body {
-  flex: 1 1 auto;
-  display: flex;
-  flex-direction: column;
-  justify-content: flex-end;
-  align-items: center;
-  padding: 1.2rem 1rem 1.5rem 1rem;
-}
-
-#productosGrid .card-title {
-  font-size: 1.2rem;
-  font-weight: 600;
-  color: #222;
-  margin-bottom: 0.5rem;
-  text-align: center;
-}
-
-#productosGrid .card-text {
-  font-size: 1rem;
-  color: #306a91;
-  margin-bottom: 1rem;
-  text-align: center;
-}
-
-#productosGrid .btn {
-  width: 90%;
-  margin-bottom: 0.5rem;
-  font-size: 1rem;
-  border-radius: 8px;
-}
-
-#productosGrid .btn-success {
-  background: #218838;
-  border: none;
-}
-
-#productosGrid .btn-success:hover {
-  background: #176c2b;
-}
-
-/* Más separación entre tarjetas de productos en inico.html */
+/* Junta más las tarjetas y elimina separación horizontal excesiva */
 #productosGrid .col {
-  margin-bottom: 2.5rem;
+  margin-bottom: 2rem;
   display: flex;
   justify-content: center;
-  /* Aumenta la separación horizontal */
-  margin-right: 32px;
-  margin-left: 32px;
+  margin-right: 0;
+  margin-left: 0;
+  padding-left: 8px;
+  padding-right: 8px;
 }
 
-/* Opcional: si usas row-cols-5, puedes reducir el número de columnas en pantallas grandes para más separación:
-.row-cols-md-5 > .col {
-  flex: 0 0 18%;
-  max-width: 18%;
+/* Ajusta el padding del row para que no haya espacio extra */
+#productosGrid {
+  margin-left: -8px;
+  margin-right: -8px;
 }
-*/
 
-/* Imágenes de productos en tarjetas: tamaño fijo y uniforme */
-.producto img,
+/* Imágenes de productos en tarjetas: tamaño universal y uniforme */
+#productosGrid .card-img-top,
 .card-img-top {
-  width: 250px !important;
-  height: 250px !important;
-  max-width: 250px !important;
-  max-height: 250px !important;
-  min-width: 250px !important;
-  min-height: 250px !important;
+  width: 200px !important;
+  height: 200px !important;
+  max-width: 200px !important;
+  max-height: 200px !important;
+  min-width: 200px !important;
+  min-height: 200px !important;
   object-fit: cover !important;
   display: block;
   margin-left: auto;
   margin-right: auto;
   border-radius: 10px;
   box-shadow: 0 2px 10px rgba(0,0,0,0.08);
-}
-
-/* Imagen del modal de producto: tamaño y ajuste solo para el modal */
-#productoModal #modalImagen {
-  max-width: 350px !important;
-  max-height: 250px !important;
-  width: 100%;
-  height: auto;
-  object-fit: contain !important;
-  display: block;
-  margin: 0 auto 10px auto;
-  box-shadow: 0 2px 10px rgba(0,0,0,0.08);
-}
-
-/* Mejora visual para la sección de detalles del producto en el modal */
-#productoModal .modal-body .row {
-  background: #f8fafd;
-  border-radius: 18px;
-  box-shadow: 0 4px 24px rgba(44, 105, 184, 0.10);
-  padding: 32px 18px;
-  margin: 0;
-  gap: 0;
-}
-
-#productoModal .modal-body .col-md-7,
-#productoModal .modal-body .col-md-6,
-#productoModal .modal-body .col-md-5 {
-  background: #fff;
-  border-radius: 14px;
-  box-shadow: 0 2px 12px rgba(44, 105, 184, 0.06);
-  padding: 28px 18px 18px 18px;
-  margin: 0 8px;
-  min-height: 350px;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-}
-
-#productoModal .modal-body .col-md-7 {
-  border-right: 1px solid #e3eaf7;
-}
-
-#productoModal .modal-body .col-md-5 {
-  align-items: flex-start;
-}
-
-#productoModal #modalImagen {
-  border-radius: 12px;
-  box-shadow: 0 2px 10px rgba(44, 105, 184, 0.10);
-  margin-bottom: 18px;
-  background: #f4f8ff;
-  padding: 8px;
-}
-
-#productoModal h4,
-#productoModal h5,
-#productoModal p,
-#productoModal .text-primary {
-  margin-bottom: 10px;
-}
-
-#productoModal h4#modalNombre {
-  font-size: 1.5rem;
-  font-weight: 700;
-  color: #306a91;
-  margin-bottom: 8px;
-}
-
-#productoModal p#modalDescripcion {
-  font-size: 1.05rem;
-  color: #36558f;
-  margin-bottom: 12px;
-  min-height: 48px;
-}
-
-#productoModal h3#modalPrecio {
-  font-size: 1.4rem;
-  color: #176c2b;
-  font-weight: 700;
-  margin-bottom: 18px;
-}
-
-#productoModal #calificacion {
-  margin-top: 18px;
-  margin-bottom: 18px;
-  width: 100%;
-  text-align: center;
-}
-
-#productoModal #estrellas {
-  font-size: 1.6rem;
-  margin: 8px 0;
-}
-
-#productoModal .estrella {
-  color: #ccc;
-  cursor: pointer;
-  transition: color 0.2s;
-}
-
-#productoModal .estrella.seleccionada {
-  color: gold;
-}
-
-#productoModal #mensaje-calificacion {
-  margin-top: 8px;
-  font-size: 1rem;
-}
-
-#productoModal .btn-warning {
-  margin-top: 8px;
-  font-size: 0.95rem;
-}
-
-#productoModal .col-md-5 h5,
-#productoModal .col-md-5 textarea,
-#productoModal .col-md-5 button {
-  width: 100%;
-}
-
-#productoModal .col-md-5 textarea {
-  margin-bottom: 10px;
-  border-radius: 8px;
-  border: 1px solid #dbeafe;
-  font-size: 1rem;
-  min-height: 70px;
-}
-
-#productoModal .col-md-5 button {
-  margin-bottom: 12px;
-}
-
-#productoModal #listaComentarios {
-  background: #f4f8ff;
-  border-radius: 8px;
-  padding: 10px;
-  margin-top: 8px;
-  max-height: 260px;
-  overflow-y: auto;
-  width: 100%;
-  font-size: 0.98rem;
-}
-
-#productoModal #listaComentarios > div {
-  background: #fff;
-  border-radius: 6px;
-  box-shadow: 0 1px 4px rgba(44, 105, 184, 0.06);
-  margin-bottom: 8px;
-  padding: 8px 10px;
-}
-
-#productoModal .modal-footer {
-  border-top: 1px solid #e3eaf7;
-  background: #f8fafd;
-  border-radius: 0 0 18px 18px;
 }
 
 /* Responsive: apila columnas en móviles */
@@ -1409,5 +1188,315 @@ ion-icon{
   max-width: 420px;
   margin: auto;
   border-radius: 16px;
+
+      left: 0;
+      width: 50%;
+      padding-left: 15px;
+      font-weight: bold;
+      text-align: left;
+  }
+
+
+/* Modales de producto: menos anchos y alineados a la izquierda */
+#productoModal .modal-dialog.ancho-completo,
+#productoModal .modal-dialog {
+  max-width: 500px !important;
+  width: 95vw !important;
+  min-width: 320px;
+  margin: 0 auto !important;
+  position: fixed !important;
+  left: 50% !important;
+  top: 50% !important;
+  transform: translate(-50%, -50%) !important;
+  right: auto !important;
+  bottom: auto !important;
+  display: block !important;
+  align-items: center !important;
+  justify-content: center !important;
+  z-index: 1050;
 }
 
+/* Centrar el modal de Bootstrap cuando está visible */
+#productoModal.modal.fade.show {
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+}
+
+/* Excepción para el modal de productos: el nombre siempre visible y la imagen limitada */
+#productoModal .modal-header {
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+}
+
+#productoModal .modal-title {
+  width: 100%;
+  font-size: 2rem;
+  font-weight: bold;
+  color: #306a91;
+  margin-bottom: 0.5rem;
+  z-index: 2;
+  background: #fff;
+  padding: 0.5rem 0;
+  /* Opcional: agrega sombra para mejor visibilidad */
+  text-shadow: 0 2px 8px #fff, 0 1px 0 #fff;
+}
+
+#productoModal .modal-body {
+  padding-top: 0 !important;
+}
+
+/* Modal de producto: aumentar tamaño de ancho y alto */
+#productoModal .modal-dialog,
+#productoModal .modal-dialog.ancho-completo {
+  max-width: 700px !important;   /* antes 500px */
+  width: 98vw !important;        /* antes 95vw */
+  min-width: 350px;
+  margin: 0 auto !important;
+  position: static !important;
+  left: auto !important;
+  top: auto !important;
+  transform: none !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  height: 95vh;                 /* antes 100vh */
+}
+
+/* Centrar el modal de Bootstrap cuando está visible */
+#productoModal.modal.fade.show {
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+}
+
+/* Permite que el contenido del modal haga scroll si es necesario */
+#productoModal .modal-content {
+  max-height: 92vh;             /* antes 90vh */
+  overflow-y: auto;
+}
+
+/* Ajusta el modal para pantallas pequeñas */
+@media (max-width: 900px) {
+  #productoModal .modal-dialog,
+  #productoModal .modal-dialog.ancho-completo {
+    max-width: 99vw !important;
+    min-width: unset;
+    margin: 0 !important;
+    height: 98vh;
+  }
+  #productoModal .modal-content {
+    max-height: 97vh;
+  }
+}
+
+/* Filtros en barra lateral */
+.filtros-sidebar {
+    background: #fff;
+    border-radius: 16px;
+    box-shadow: 0 4px 16px rgba(44, 105, 184, 0.08);
+    padding: 24px 18px 18px 18px;
+    margin-bottom: 0;
+    margin-right: 0;
+}
+
+.filtros-sidebar label {
+    font-weight: 600;
+    margin-top: 10px;
+    margin-bottom: 4px;
+    display: block;
+    color: #306a91;
+}
+
+.filtros-sidebar select,
+.filtros-sidebar input[type="number"] {
+    width: 100%;
+    margin-bottom: 16px;
+    border-radius: 8px;
+    border: 1px solid #dbeafe;
+    padding: 8px 12px;
+    font-size: 15px;
+}
+
+.filtros-sidebar .btn {
+    width: 100%;
+    margin-top: 10px;
+}
+
+@media (max-width: 900px) {
+    .filtros-sidebar-container {
+        flex-direction: column;
+        gap: 0;
+    }
+    .filtros-sidebar {
+        width: 100%;
+        max-width: 100%;
+        margin-bottom: 20px;
+    }
+}
+
+/* Limitar nombre, descripción y precio en tarjetas de producto */
+#productosGrid .card-title,
+#productosGrid .card-text,
+#productosGrid .card-price,
+.producto h3,
+.producto p,
+.producto .card-price {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  max-width: 100%;
+  display: block;
+}
+
+/* Si usas .card-body para el texto, también aplica el límite */
+#productosGrid .card-body .card-title,
+#productosGrid .card-body .card-text,
+#productosGrid .card-body .card-price {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  max-width: 100%;
+  display: block;
+}
+
+/* Para tarjetas fuera de #productosGrid */
+.card-title,
+.card-text,
+.card-price {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  max-width: 100%;
+  display: block;
+}
+
+/* Para tarjetas fuera de #productosGrid */
+.card-title,
+.card-text,
+.card-price {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  max-width: 100%;
+  display: block;
+}
+
+/* Corrige el centrado del modal de perfil sin bloquear la página */
+#userProfileModal {
+  /* Elimina display: flex y centrado global que bloquea la página */
+  /* display: flex !important;
+  align-items: center !important;
+  justify-content: center !important; */
+}
+
+#userProfileModal .modal-dialog {
+  position: fixed !important;
+  top: 50% !important;
+  left: 50% !important;
+  transform: translate(-50%, -50%) !important;
+  margin: 0 !important;
+  min-height: unset !important;
+  display: block !important;
+  z-index: 1060;
+  width: auto;
+  max-width: 95vw;
+}
+
+/* Opcional: limitar el ancho máximo y mejorar el aspecto */
+#userProfileModal .modal-content {
+  max-width: 420px;
+  margin: auto;
+  border-radius: 16px;
+}
+
+/* 3D Slideshow */
+* {
+    margin: 0;
+    padding: 0;
+}
+
+html, body {
+    max-width: 100%;
+    overflow-x: hidden;
+    overflow-y: auto;
+}
+
+#slideshow {
+    margin: 60px auto 0 auto; /* ← este 40px da espacio arriba */
+    padding-top: 0px;
+    width: 100%;
+    box-sizing: border-box;
+}
+
+
+.entire-content {
+    margin: auto;
+    width: 190px;
+    perspective: 1000px;
+    position: relative;
+    padding: 10px 0 30px 0; /* Aumenta padding-bottom para crear espacio abajo */
+    height: 180px; /* Un poco más alto para que no se corte nada */
+}
+
+
+.content-carrousel {
+    width: 100%;
+    height: 100%;
+    position: relative; /* ✅ Esto es necesario para contener los figure con position absolute */
+    animation: rotar 15s infinite linear;
+    transform-style: preserve-3d;
+}
+
+.content-carrousel:hover {
+    animation-play-state: paused;
+    cursor: pointer;
+}
+
+.content-carrousel figure {
+    width: 100%;
+    height: 120px;
+    border: 1px solid #3b444b;
+    overflow: hidden;
+    position: absolute;
+    transition: transform 0.3s;
+}
+
+/* Posiciones en 3D */
+.content-carrousel figure:nth-child(1) { transform: rotateY(0deg) translateZ(300px); }
+.content-carrousel figure:nth-child(2) { transform: rotateY(40deg) translateZ(300px); }
+.content-carrousel figure:nth-child(3) { transform: rotateY(80deg) translateZ(300px); }
+.content-carrousel figure:nth-child(4) { transform: rotateY(120deg) translateZ(300px); }
+.content-carrousel figure:nth-child(5) { transform: rotateY(160deg) translateZ(300px); }
+.content-carrousel figure:nth-child(6) { transform: rotateY(200deg) translateZ(300px); }
+.content-carrousel figure:nth-child(7) { transform: rotateY(240deg) translateZ(300px); }
+.content-carrousel figure:nth-child(8) { transform: rotateY(280deg) translateZ(300px); }
+.content-carrousel figure:nth-child(9) { transform: rotateY(320deg) translateZ(300px); }
+.content-carrousel figure:nth-child(10) { transform: rotateY(360deg) translateZ(300px); }
+
+.content-carrousel img {
+    width: 100%;
+    height: 100%;
+    transition: all 300ms;
+    object-fit: cover;
+}
+
+.content-carrousel img:hover {
+    transform: scale(1.2);
+}
+
+.shadow {
+    position: absolute;
+    box-shadow: 0px 0px 20px 0px #000;
+    border-radius: 1px;
+}
+
+@keyframes rotar {
+    from {
+        transform: rotateY(0deg);
+    }
+    to {
+        transform: rotateY(360deg);
+    }
+}
