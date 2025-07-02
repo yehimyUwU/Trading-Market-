@@ -157,7 +157,7 @@ function agregarAlCarrito(id, nombre, precio) {
         }
         return response.json();
     })
-    .then(data => {
+    .then (data => {
         if (data.error) {
             alert(data.error);
         } else if (data.success) {
@@ -172,7 +172,7 @@ function agregarAlCarrito(id, nombre, precio) {
 function actualizarCarritoUI() {
     fetch('../../controllers/php/controlador_carrito.php', { method: 'GET' })
         .then(response => response.json())
-        .then(data => {
+        .then (data => {
             const contenidoCarrito = document.getElementById("contenidoCarrito");
             const totalCarrito = document.getElementById("totalCarrito");
             contenidoCarrito.innerHTML = ""; // Limpiar el contenido actual
@@ -566,8 +566,13 @@ function mostrarDetallesProducto(id) {
     if (!producto) return;
 
     document.getElementById("modalNombre").textContent = producto.nombre;
+    // Si tienes un h4 con id="modalNombreDetalle", también actualízalo:
+    if (document.getElementById("modalNombreDetalle")) {
+        document.getElementById("modalNombreDetalle").textContent = producto.nombre;
+    }
     document.getElementById("modalDescripcion").textContent = producto.descripcion;
     document.getElementById("modalPrecio").textContent = `$${producto.precio}`;
+    document.getElementById("modalStock").textContent = `Stock: ${producto.stock}`;
     document.getElementById("modalImagen").src = producto.imagen;
 
     const estrellasContainer = document.getElementById("estrellas");
@@ -587,7 +592,6 @@ function mostrarDetallesProducto(id) {
 
     // 💬 Cargar comentario del usuario en el textarea
     cargarComentarioUsuario(producto.id_producto);
-
 }
 
     
@@ -696,24 +700,27 @@ function cargarProductos() {
         .then(response => response.json())
         .then(data => {
             if (data.success) {
-                const productosGrid = document.getElementById('productosGrid');
+                const productosGrid = document.getElementById('productos-container');
                 productosGrid.innerHTML = '';
                 data.listaProductos.forEach(producto => {
                     const productoCard = document.createElement('div');
                     productoCard.classList.add('col-md-4', 'mb-4');
                     productoCard.innerHTML = `
-                        <div class="card">
-                            <img src="../imagenes_P/${producto.imagen || 'default.jpeg'}" class="card-img-top" alt="${producto.nombre}" onerror="this.onerror=null;this.src='../imagenes_P/default.jpeg';">
-                            <div class="card-body">
-                                <h5 class="card-title">${producto.nombre}</h5>
-                                <p class="card-subtitle text-muted">ID: ${producto.id_producto}</p>
-                                <p class="card-text">${producto.descripcion}</p>
-                                <p class="card-text font-weight-bold">$${producto.precio}</p>
-                                <button class="btn btn-primary mb-3" onclick="verDetalles('${producto.nombre}', '${producto.descripcion}', '${producto.precio}', '../imagenes_P/${producto.imagen}', ${producto.id_producto})">Ver Detalles</button>
-                                <button class="btn btn-success mb-3" onclick="agregarAlCarrito(${producto.id_producto}, '${producto.nombre}', ${producto.precio})">Agregar al Carrito</button>
-                            </div>
-                        </div>
-                    `;
+    <div class="card">
+        <img src="${producto.imagen}" class="card-img-top" alt="${producto.nombre}">
+
+        <div class="card-body">
+            <h5 class="card-title">${producto.nombre}</h5>
+            <p class="card-subtitle text-muted">ID: ${producto.id_producto}</p>
+            <p class="card-text">${producto.descripcion}</p>
+            <p class="card-text font-weight-bold">$${producto.precio}</p>
+            <p class="card-text text-secondary">Stock: ${producto.stock}</p>
+            <button class="btn btn-primary mb-3" onclick="verDetalles('${producto.nombre}', '${producto.descripcion}', '${producto.precio}', '${producto.imagen}', ${producto.id_producto}, ${producto.stock})">Ver Detalles</button>
+            <button class="btn btn-success mb-3" onclick="agregarAlCarrito(${producto.id_producto}, '${producto.nombre}', ${producto.precio})">Agregar al Carrito</button>
+        </div>
+    </div>
+`;
+
                     productosGrid.appendChild(productoCard);
                 });
             } else {
@@ -722,31 +729,31 @@ function cargarProductos() {
         });
 }
 
-function verDetalles(nombre, descripcion, precio, imagen, id_producto) {
+function verDetalles(nombre, descripcion, precio, imagen, id_producto, stock) {
     document.getElementById("modalNombre").textContent = nombre;
+    if (document.getElementById("modalNombreDetalle")) {
+        document.getElementById("modalNombreDetalle").textContent = nombre;
+    }
     document.getElementById("modalDescripcion").textContent = descripcion;
     document.getElementById("modalPrecio").textContent = `$${precio}`;
+    document.getElementById("modalStock").textContent = `Stock: ${stock}`;
     document.getElementById("modalImagen").src = imagen;
 
-    // Asigna el ID al contenedor de estrellas
     const estrellasContainer = document.getElementById("estrellas");
     estrellasContainer.setAttribute("data-id-producto", id_producto);
 
-    // Limpia mensaje y estrellas
     document.getElementById("mensaje-calificacion").style.display = "none";
     document.querySelectorAll(".estrella").forEach(e => e.classList.remove("seleccionada"));
 
-    // Mostrar modal
     $('#productoModal').modal('show');
 
-    // Calificación
     asignarEventosEstrellas();
     cargarCalificacionGuardada(id_producto);
 
-    // Comentarios
     cargarComentarios(id_producto);
     cargarComentarioUsuario(id_producto);
 }
+
 
 
 
