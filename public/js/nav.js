@@ -1022,32 +1022,32 @@ function eliminarProveedor(idProveedor, boton) {
 }
 
 
-  // Scroll manual
-  function scrollCarousel(direction) {
-    const carousel = document.getElementById("carousel");
-    const scrollAmount = 260;
-    carousel.scrollBy({ left: direction * scrollAmount, behavior: 'smooth' });
-  }
+function scrollCarousel(direction) {
+  const carousel = document.getElementById("carousel");
+  const scrollAmount = 280;
+  carousel.scrollBy({ left: direction * scrollAmount, behavior: 'smooth' });
+}
 
-  function scrollCarousel(direction) {
-    const carousel = document.getElementById("carousel");
-    const scrollAmount = 270;
-    carousel.scrollBy({ left: direction * scrollAmount, behavior: 'smooth' });
-  }
+// Preview flotante
+const preview = document.getElementById("carousel-preview");
+const previewImg = preview.querySelector("img");
 
-  // Preview flotante
-  const preview = document.getElementById("carousel-preview");
-  const previewImg = preview.querySelector("img");
+document.querySelectorAll(".carousel-track img").forEach(img => {
+  img.addEventListener("mousemove", e => {
+    preview.style.display = "block";
+    previewImg.src = img.src;
 
-  document.querySelectorAll(".carousel-track img").forEach(img => {
-    img.addEventListener("mousemove", e => {
-      preview.style.display = "block";
-      previewImg.src = img.src;
-      preview.style.top = `${e.pageY + 20}px`;
-      preview.style.left = `${e.pageX + 20}px`;
-    });
+    const previewWidth = 520;
+    const previewHeight = 380;
 
-    img.addEventListener("mouseleave", () => {
-      preview.style.display = "none";
-    });
+    const x = e.pageX + 20;
+    const y = e.pageY - previewHeight / 2;
+
+    preview.style.left = `${x}px`;
+    preview.style.top = `${Math.max(y, 40)}px`;
   });
+
+  img.addEventListener("mouseleave", () => {
+    preview.style.display = "none";
+  });
+});
