@@ -1411,92 +1411,120 @@ ion-icon{
   border-radius: 16px;
 }
 
-/* 3D Slideshow */
-* {
-    margin: 0;
-    padding: 0;
+body {
+  background: linear-gradient(135deg, #e6f0ff, #ffffff);
+  font-family: 'Segoe UI', sans-serif;
 }
 
-html, body {
-    max-width: 100%;
-    overflow-x: hidden;
-    overflow-y: auto;
+.carousel-section {
+  margin: 80px auto;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  position: relative;
 }
 
-#slideshow {
-    margin: 60px auto 0 auto; /* ← este 40px da espacio arriba */
-    padding-top: 0px;
-    width: 100%;
-    box-sizing: border-box;
+.carousel-container {
+  position: relative;
+  width: 90%;
+  max-width: 1400px;
+  overflow: hidden;
+  border-radius: 20px;
+  box-shadow: 0 12px 40px rgba(0, 0, 0, 0.2);
+  background: #fff;
+}
+
+.carousel-track {
+  display: flex;
+  gap: 24px;
+  overflow-x: auto;
+  scroll-behavior: smooth;
+  padding: 30px;
+  transition: all 0.3s ease-in-out;
+}
+
+.carousel-track::-webkit-scrollbar {
+  display: none;
+}
+
+.carousel-track a {
+  flex: 0 0 auto;
+  width: 250px;
+  height: 160px;
+  border-radius: 16px;
+  overflow: hidden;
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.15);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  background: #fff;
+}
+
+.carousel-track a:hover {
+  transform: scale(1.08);
+  box-shadow: 0 8px 28px rgba(0, 0, 0, 0.25);
+  z-index: 5;
+}
+
+.carousel-track img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+  transition: transform 0.3s ease;
+}
+
+.carousel-btn {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  font-size: 32px;
+  background: linear-gradient(135deg, #4a90e2, #357ab8);
+  color: white;
+  border: none;
+  padding: 12px 16px;
+  cursor: pointer;
+  z-index: 10;
+  border-radius: 50%;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+  transition: transform 0.3s ease, background 0.3s ease;
+}
+
+.carousel-btn:hover {
+  background: linear-gradient(135deg, #357ab8, #2a5d91);
+  transform: scale(1.1);
+}
+
+.carousel-btn.left {
+  left: 10px;
+}
+
+.carousel-btn.right {
+  right: 10px;
+}
+
+#carousel-preview {
+  display: none;
+  position: fixed;
+  z-index: 1000;
+  pointer-events: none;
+  border: 4px solid #357ab8;
+  background: white;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.25);
+  border-radius: 12px;
+  padding: 8px;
+  max-width: 90vw;
+  max-height: 90vh;
+  transition: all 0.2s ease;
+}
+
+#carousel-preview img {
+  display: block;
+  max-width: 80vw;
+  max-height: 80vh;
+  width: auto;
+  height: auto;
+  border-radius: 8px;
 }
 
 
-.entire-content {
-    margin: auto;
-    width: 190px;
-    perspective: 1000px;
-    position: relative;
-    padding: 10px 0 30px 0; /* Aumenta padding-bottom para crear espacio abajo */
-    height: 180px; /* Un poco más alto para que no se corte nada */
-}
 
 
-.content-carrousel {
-    width: 100%;
-    height: 100%;
-    position: relative; /* ✅ Esto es necesario para contener los figure con position absolute */
-    animation: rotar 15s infinite linear;
-    transform-style: preserve-3d;
-}
-
-.content-carrousel:hover {
-    animation-play-state: paused;
-    cursor: pointer;
-}
-
-.content-carrousel figure {
-    width: 100%;
-    height: 120px;
-    border: 1px solid #3b444b;
-    overflow: hidden;
-    position: absolute;
-    transition: transform 0.3s;
-}
-
-/* Posiciones en 3D */
-.content-carrousel figure:nth-child(1) { transform: rotateY(0deg) translateZ(300px); }
-.content-carrousel figure:nth-child(2) { transform: rotateY(40deg) translateZ(300px); }
-.content-carrousel figure:nth-child(3) { transform: rotateY(80deg) translateZ(300px); }
-.content-carrousel figure:nth-child(4) { transform: rotateY(120deg) translateZ(300px); }
-.content-carrousel figure:nth-child(5) { transform: rotateY(160deg) translateZ(300px); }
-.content-carrousel figure:nth-child(6) { transform: rotateY(200deg) translateZ(300px); }
-.content-carrousel figure:nth-child(7) { transform: rotateY(240deg) translateZ(300px); }
-.content-carrousel figure:nth-child(8) { transform: rotateY(280deg) translateZ(300px); }
-.content-carrousel figure:nth-child(9) { transform: rotateY(320deg) translateZ(300px); }
-.content-carrousel figure:nth-child(10) { transform: rotateY(360deg) translateZ(300px); }
-
-.content-carrousel img {
-    width: 100%;
-    height: 100%;
-    transition: all 300ms;
-    object-fit: cover;
-}
-
-.content-carrousel img:hover {
-    transform: scale(1.2);
-}
-
-.shadow {
-    position: absolute;
-    box-shadow: 0px 0px 20px 0px #000;
-    border-radius: 1px;
-}
-
-@keyframes rotar {
-    from {
-        transform: rotateY(0deg);
-    }
-    to {
-        transform: rotateY(360deg);
-    }
-}

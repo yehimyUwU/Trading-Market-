@@ -1021,11 +1021,33 @@ function eliminarProveedor(idProveedor, boton) {
     });
 }
 
-    const figures = document.querySelectorAll(".content-carrousel figure");
-    const total = figures.length;
-    const angle = 360 / total;
 
-    figures.forEach((figure, i) => {
-        const rotation = angle * i;
-        figure.style.transform = `rotateY(${rotation}deg) translateZ(300px)`;
+  // Scroll manual
+  function scrollCarousel(direction) {
+    const carousel = document.getElementById("carousel");
+    const scrollAmount = 260;
+    carousel.scrollBy({ left: direction * scrollAmount, behavior: 'smooth' });
+  }
+
+  function scrollCarousel(direction) {
+    const carousel = document.getElementById("carousel");
+    const scrollAmount = 270;
+    carousel.scrollBy({ left: direction * scrollAmount, behavior: 'smooth' });
+  }
+
+  // Preview flotante
+  const preview = document.getElementById("carousel-preview");
+  const previewImg = preview.querySelector("img");
+
+  document.querySelectorAll(".carousel-track img").forEach(img => {
+    img.addEventListener("mousemove", e => {
+      preview.style.display = "block";
+      previewImg.src = img.src;
+      preview.style.top = `${e.pageY + 20}px`;
+      preview.style.left = `${e.pageX + 20}px`;
     });
+
+    img.addEventListener("mouseleave", () => {
+      preview.style.display = "none";
+    });
+  });
