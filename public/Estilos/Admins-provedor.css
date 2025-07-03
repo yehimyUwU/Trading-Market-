@@ -258,17 +258,17 @@ body {
 
 #content main .box-info {
 	display: grid;
-	grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+	grid-template-columns: repeat(auto-fit, minmax(5px, 1fr));
 	grid-gap: 24px;
-	margin-top: 36px;
+	margin-top:6px;
 }
 #content main .box-info li {
-	padding: 24px;
+	
 	background: var(--light);
 	border-radius: 20px;
 	display: flex;
 	align-items: center;
-	grid-gap: 24px;
+	
 }
 #content main .box-info li .bx {
 	width: 80px;

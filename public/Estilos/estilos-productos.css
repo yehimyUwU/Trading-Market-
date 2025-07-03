@@ -9,9 +9,16 @@
     --dark-grey: #AAAAAA;
     --dark: #342E37;
     --red: #DB504A;
+    --degradado-naranja: linear-gradient(180deg, #ff7716 0%, #ffbf34 100%);
+    --naranja: #FF6B00;
+    --amarillo: #FFAE00;
+    --blanco: #fff;
+    --gris-oscuro: #222;
 }
 
-
+html {
+    font-size: 14px;
+}
 
 * {
     font-family: 'Arial', sans-serif; /* Esto puede estar sobrescribiendo */
@@ -21,17 +28,30 @@ body {
 }
 
 /* Reset y estilos generales */
-body {
-    margin: 0;
-    padding: 50px;
-    background: var(--grey);
+html, body {
+    height: 100%;
+    min-height: 100vh;
+    overflow-y: auto;
+    scrollbar-width: thin;
+    scrollbar-color: #888 #f1f1f1;
+}
+body::-webkit-scrollbar, html::-webkit-scrollbar {
+    width: 8px;
+}
+body::-webkit-scrollbar-thumb, html::-webkit-scrollbar-thumb {
+    background: #888;
+    border-radius: 4px;
+}
+body::-webkit-scrollbar-track, html::-webkit-scrollbar-track {
+    background: #f1f1f1;
+    border-radius: 4px;
 }
 
 /* Estructura principal */
 #content {
     position: relative;
     width: calc(100% - 280px);
-    left: 280px;
+    left: 110px;
     min-height: 100vh;
     transition: .3s ease;
 }
@@ -65,15 +85,16 @@ body {
     margin-bottom: 20px;
     flex-wrap: wrap;
     gap: 20px;
-    background: var(--light);
+    background: var(--degradado-naranja);
     padding: 20px;
     border-radius: 10px;
-    box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+    box-shadow: 0 4px 16px rgba(255, 107, 0, 0.08);
+    color: var(--blanco);
+    border: none;
 }
 
-.header-text h1 {
-    margin: 0;
-    color: var(--dark);
+.header-text h1, .header-text p, .header-text span {
+    color: var(--blanco) !important;
 }
 
 /* Perfil vendedor */
@@ -116,23 +137,30 @@ body {
 
 .stat-card {
     flex: 1;
-    background: var(--light);
+    background: var(--degradado-naranja);
     padding: 15px;
     border-radius: 8px;
     text-align: center;
-    box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+    box-shadow: 0 2px 12px rgba(255, 107, 0, 0.10);
+    color: var(--blanco);
+    transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.stat-card:hover {
+    transform: translateY(-4px) scale(1.03);
+    box-shadow: 0 6px 24px rgba(255, 107, 0, 0.18);
 }
 
 .stat-number {
     font-size: 24px;
     font-weight: 600;
-    color: var(--blue);
+    color: var(--blanco);
     display: block;
 }
 
 .stat-label {
     font-size: 14px;
-    color: var(--dark-grey);
+    color: #fffbe6;
 }
 
 /* Búsqueda y filtros */
@@ -173,24 +201,27 @@ body {
     margin-top: 16px;
 }
 
-.btn-neo {
+.btn-neo, .btn-primario {
     height: 40px;
     padding: 0 20px;
     border-radius: 8px;
-    background: var(--blue);
-    color: white;
+    background: var(--degradado-naranja) !important;
+    color: var(--blanco) !important;
     border: none;
     font-family: var(--poppins);
-    font-weight: 500;
+    font-weight: 600;
     cursor: pointer;
     display: inline-flex;
     align-items: center;
     gap: 8px;
-    transition: background 0.3s ease;
+    transition: background 0.3s, transform 0.2s;
+    box-shadow: 0 2px 8px rgba(255, 107, 0, 0.10);
 }
 
-.btn-neo:hover {
-    background: #2a7bc8;
+.btn-neo:hover, .btn-primario:hover {
+    background: linear-gradient(180deg, #FFAE00 0%, #FF6B00 100%) !important;
+    color: var(--blanco) !important;
+    transform: scale(1.04);
 }
 
 /* Grid de productos */
@@ -207,15 +238,18 @@ body {
 }
 
 .producto-card {
-    background: var(--light);
+    background: var(--blanco);
     border-radius: 12px;
     overflow: hidden;
-    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
-    transition: transform 0.3s ease;
+    box-shadow: 0 2px 12px rgba(255, 174, 0, 0.10);
+    transition: box-shadow 0.3s, border 0.3s, transform 0.2s;
+    border: 2px solid #fffbe6;
 }
 
 .producto-card:hover {
-    transform: translateY(-5px);
+    box-shadow: 0 8px 32px rgba(255, 107, 0, 0.18);
+    border: 2px solid var(--naranja);
+    transform: translateY(-6px) scale(1.03);
 }
 
 .producto-imagen {
@@ -229,6 +263,10 @@ body {
     height: 100%;
     object-fit: cover;
     transition: transform 0.3s ease;
+    border: 3px solid transparent;
+    background-image: var(--degradado-naranja);
+    background-clip: padding-box, border-box;
+    border-radius: 12px;
 }
 
 .producto-acciones {
@@ -303,159 +341,201 @@ body {
 }
 
 .badge.activo {
-    background: var(--light-blue);
-    color: var(--blue);
+    background: var(--degradado-naranja);
+    color: var(--blanco);
+    font-weight: 600;
+    border: none;
 }
 
-/* Modal */
+/* === AJUSTES DE LIMPIEZA Y SUAVIZADO PARA EL MODAL === */
+
 .modal {
-    display: none;
+    display: block;
     position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background-color: rgba(0,0,0,0.5);
     z-index: 2000;
-}
-
-.modal-contenido {
-    background-color: var(--light);
-    margin: 5% auto;
-    padding: 20px;
-    border-radius: 12px;
-    width: 90%;
-    max-width: 600px;
-    max-height: 80vh;
+    left: 0;
+    top: 0;
+    width: 100vw;
+    height: 100vh;
+    background: rgba(0,0,0,0.35);
     overflow-y: auto;
+    animation: fadeInBg 0.4s;
 }
 
-.modal-header {
+@keyframes fadeInBg {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+.animated-modal {
+    max-width: 540px;
+    min-width: 320px;
+    margin: 32px auto;
+    border-radius: 14px;
+    padding: 0 28px 18px 28px;
+    background: #fff !important;
+}
+
+/* Header degradado, visible y con padding */
+.custom-modal-header {
+    background: linear-gradient(90deg, #FF881A 0%, #FFD580 100%);
+    color: #fff;
+    border-radius: 14px 14px 0 0;
+    padding: 18px 28px 10px 28px;
+    font-size: 1.18em;
+    font-weight: 700;
+    position: relative;
+    min-height: 48px;
     display: flex;
-    justify-content: space-between;
     align-items: center;
-    margin-bottom: 20px;
-    padding-bottom: 10px;
-    border-bottom: 1px solid var(--grey);
+    justify-content: flex-start;
 }
 
-.modal-header h2 {
-    margin: 0;
-    font-size: 22px;
-    color: var(--dark);
-}
-
+/* Botón cerrar (X) en la esquina superior derecha */
 .btn-cerrar {
-    font-size: 24px;
-    font-weight: bold;
-    color: var(--dark-grey);
+    position: absolute;
+    top: 12px;
+    right: 18px;
+    font-size: 1.5rem;
+    color: #fff;
+    opacity: 0.8;
     background: none;
     border: none;
     cursor: pointer;
+    transition: opacity 0.2s, transform 0.2s;
+    z-index: 10;
+    margin: 0;
+}
+.btn-cerrar:hover {
+    opacity: 1;
+    color: #FFD580;
+    transform: scale(1.15);
 }
 
-/* Formulario */
+/* Título del modal con margen derecho para la X */
+.custom-modal-header h2 {
+    margin: 0;
+    padding-right: 32px;
+    font-size: 1.18em;
+    color: #fff;
+    font-weight: 700;
+}
+
 .form-group {
-    margin-bottom: 16px;
-}
-
-.form-group label {
-    display: block;
-    margin-bottom: 8px;
-    font-weight: 500;
-    color: var(--dark);
-}
-
-.form-group input,
-.form-group textarea,
-.form-group select {
-    width: 100%;
-    padding: 10px 15px;
-    border: 1px solid var(--grey);
-    border-radius: 8px;
-    font-family: var(--poppins);
+    margin-bottom: 18px;
 }
 
 .form-row {
     display: flex;
-    gap: 16px;
+    gap: 18px;
+    margin-bottom: 0;
+}
+.form-group.half {
+    flex: 1 1 0;
 }
 
-.half {
-    flex: 1;
-}
-
-.upload-container {
-    border: 2px dashed var(--grey);
+/* Inputs y textarea más modernos tipo Bootstrap */
+.form-group input,
+.form-group textarea,
+.form-group select {
+    border: 1px solid #e0e0e0;
+    background: #fff;
+    color: #222;
     border-radius: 8px;
-    padding: 20px;
-    text-align: center;
-    cursor: pointer;
-    transition: border-color 0.3s ease;
+    box-shadow: 0 1px 4px rgba(0,0,0,0.04);
+    padding: 12px 14px;
+    font-size: 1.08em;
+    transition: border 0.2s, box-shadow 0.2s;
+}
+.form-group input:focus,
+.form-group textarea:focus,
+.form-group select:focus {
+    border: 1.5px solid #FFAE00;
+    box-shadow: 0 0 0 2px #ffae0033, 0 2px 8px rgba(255, 174, 0, 0.08);
+    outline: none;
+    background: #fffdfa;
 }
 
-.upload-container:hover {
-    border-color: var(--blue);
+/* Placeholder más suave y moderno */
+.form-group input::placeholder,
+.form-group textarea::placeholder {
+    color: #bdbdbd;
+    opacity: 1;
+    font-size: 1em;
 }
 
-.upload-button {
-    display: inline-flex;
-    align-items: center;
-    gap: 8px;
-    color: var(--blue);
-    font-weight: 500;
-    margin-bottom: 8px;
+/* Textarea de descripción igual de ancho y altura que el input de nombre del producto */
+.form-group textarea {
+    min-height: 44px;
+    height: 44px;
+    max-height: 44px;
+    width: 100%;
+    resize: none;
+    box-sizing: border-box;
 }
 
-.file-info {
-    font-size: 12px;
-    color: var(--dark-grey);
-}
-
-.image-preview {
-    margin-top: 16px;
-    text-align: center;
-}
-
-.image-preview img {
+/* Selects más agradables */
+.form-group select {
     max-width: 100%;
-    max-height: 200px;
-    border-radius: 8px;
+    width: 100%;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    font-size: 1.05em;
+    padding-right: 36px;
+    box-sizing: border-box;
 }
 
 .form-actions {
-    display: flex;
-    justify-content: flex-end;
-    gap: 12px;
-    margin-top: 24px;
+    gap: 14px;
+    margin-top: 18px;
+}
+.btn-primario, .btn-secundario {
+    min-width: 120px;
+    font-size: 1.08em;
+    padding-top: 10px;
+    padding-bottom: 10px;
 }
 
-.btn-primario {
-    background: var(--blue);
-    color: white;
-    border: none;
-    padding: 10px 20px;
-    border-radius: 8px;
-    cursor: pointer;
+.upload-container {
+    padding: 16px;
+    margin-bottom: 10px;
+}
+
+.upload-button {
+    color: #FF881A;
     font-weight: 500;
+    margin-bottom: 4px;
+    font-size: 1em;
 }
 
-.btn-secundario {
-    background: var(--grey);
-    color: var(--dark);
-    border: none;
-    padding: 10px 20px;
-    border-radius: 8px;
-    cursor: pointer;
-    font-weight: 500;
+.file-info {
+    font-size: 11px;
+    color: #FFAE00;
 }
 
-.error-mensaje {
-    color: var(--red);
-    font-size: 12px;
-    margin-top: 5px;
-    display: block;
+.image-preview img {
+    border: 1.5px solid #FFD580;
+    border-radius: 6px;
+    max-width: 100%;
+    max-height: 140px;
+    margin-top: 6px;
 }
+
+/* Responsive para el modal */
+@media (max-width: 600px) {
+  .animated-modal {
+    max-width: 98vw;
+    min-width: unset;
+    padding: 0 6px 10px 6px;
+  }
+  .custom-modal-header {
+    padding: 10px 8px 6px 8px;
+    font-size: 1em;
+  }
+}
+
+/* === FIN DE AJUSTES DE LIMPIEZA Y SUAVIZADO === */
 
 /* Responsive */
 @media (max-width: 768px) {
@@ -467,6 +547,7 @@ body {
     
     .header-container {
         flex-direction: column;
+        padding: 10px;
     }
     
     .header-stats {
@@ -494,4 +575,95 @@ body {
     .half {
         width: 100%;
     }
+    
+    .productos-grid {
+        grid-template-columns: 1fr;
+    }
+    
+    .modal-contenido {
+        max-width: 98vw;
+        padding: 10px;
+    }
+}
+
+/* Animación sutil al mostrar tarjetas */
+.producto-card {
+    opacity: 0;
+    animation: fadeInCard 0.7s ease forwards;
+}
+@keyframes fadeInCard {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: none; }
+}
+
+/* Mejorar scroll en modal */
+.modal-contenido::-webkit-scrollbar {
+    width: 8px;
+    background: #fffbe6;
+}
+.modal-contenido::-webkit-scrollbar-thumb {
+    background: #FFAE00;
+    border-radius: 8px;
+}
+
+/* Labels principales en naranja */
+.form-group label,
+.form-row .form-group label {
+    color: #FF6B00 !important;
+    font-weight: 600;
+    letter-spacing: 0.01em;
+}
+
+/* Ajuste para el label de la imagen */
+.form-group label[for="imagenProducto"] {
+    color: #FF6B00 !important;
+}
+
+/* Input file más moderno tipo Bootstrap */
+input[type="file"] {
+    display: block;
+    width: 100%;
+    padding: 8px 12px;
+    font-size: 1em;
+    color: #FF6B00;
+    background: #fffbe6;
+    border: 1.5px solid #FFD580;
+    border-radius: 6px;
+    box-shadow: 0 1px 4px rgba(255, 174, 0, 0.06);
+    transition: border 0.2s, box-shadow 0.2s, background 0.2s;
+    cursor: pointer;
+}
+input[type="file"]:hover, input[type="file"]:focus {
+    border: 1.5px solid #FFAE00;
+    background: #fff7e0;
+    box-shadow: 0 0 0 2px #ffae0033;
+}
+
+/* Oculta el texto por defecto del input file en algunos navegadores y deja solo el nombre del archivo */
+input[type="file"]::-webkit-file-upload-button {
+    visibility: hidden;
+}
+input[type="file"]::before {
+    content: '\f093  Seleccionar archivo';
+    font-family: 'Font Awesome 5 Free', Arial, sans-serif;
+    font-weight: 900;
+    color: #fff;
+    background: linear-gradient(90deg, #FF881A 0%, #FFD580 100%);
+    border: none;
+    border-radius: 4px;
+    padding: 7px 16px;
+    margin-right: 10px;
+    display: inline-block;
+    font-size: 1em;
+    cursor: pointer;
+    transition: background 0.2s;
+}
+input[type="file"]:hover::before, input[type="file"]:focus::before {
+    background: linear-gradient(90deg, #FFD580 0%, #FF881A 100%);
+}
+
+/* Ajuste para el nombre del archivo seleccionado */
+input[type="file"]::-ms-value {
+    color: #FF6B00;
+    background: transparent;
 }

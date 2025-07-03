@@ -39,7 +39,6 @@ if (!verificarRol('Proveedor')) {
 <body>
   <!-- SIDEBAR -->
   <?php
-    
     require '../../controllers/php/barra_prove.php'; 
 ?>
   
@@ -48,29 +47,12 @@ if (!verificarRol('Proveedor')) {
     <!-- NAVBAR -->
 
     
-    <nav>
-    <div class="toggle">
-                <ion-icon name="menu-outline"></ion-icon>
-            </div>
-        <a href="#" class="nav-link">Bienvenido</a>
-        <form action="#">
-            <div class="form-input">
-                <input type="search" placeholder="Buscar contacto...">
-                <button type="submit" class="search-btn"><i class='bx bx-search'></i></button>
-            </div>
-        </form>
-        <a href="#" class="notification">
-            <i class='bx bxs-bell'></i>
-            <span class="num">3</span>
-        </a>
-       
-    </nav>
+ 
     <!-- NAVBAR -->
 
     <!-- MAIN -->
-    <main class="content">
-      <section class="welcome-section">
-          <div class="welcome-banner"></div>
+    <main class="content" style="margin-left: 240px; min-height: 100vh; ">
+      <section class="welcome-section" style="padding-top: 32px;">
           <div class="welcome-message">
               <?php
                   $nombreVendedor = isset($_SESSION['usuario']['nombre']) ? $_SESSION['usuario']['nombre'] : 'Vendedor';
@@ -79,9 +61,7 @@ if (!verificarRol('Proveedor')) {
               <p>Listo para impulsar tus ventas en Trading Market?</p>
           </div>
 
-           
             <div class="cardBox">
-        
                 <div class="card">
                     <div>
                         <div class="numbers">$1,200</div>
@@ -91,17 +71,15 @@ if (!verificarRol('Proveedor')) {
                         <ion-icon name="cash-outline"></ion-icon>
                     </div>
                 </div>
-        
                 <div class="card">
                     <div>
-                        <div class="numbers">Producto A</div>
+                        <div class="numbers">Producto mas vendido</div>
                         <div class="cardName">Más vendido</div>
                     </div>
                     <div class="iconBx">
                         <ion-icon name="trending-up-outline"></ion-icon>
                     </div>
                 </div>
-        
                 <div class="card">
                     <div>
                         <div class="numbers">500</div>
@@ -113,13 +91,10 @@ if (!verificarRol('Proveedor')) {
                 </div>
             </div>
 
-        
         <!-- Agrega Ionicons si aún no los tienes -->
         <script type="module" src="https://cdn.jsdelivr.net/npm/@ionic/core/dist/ionic/ionic.esm.js"></script>
         <script nomodule src="https://cdn.jsdelivr.net/npm/@ionic/core/dist/ionic/ionic.js"></script>
-        
-           
-          
+
           <div class="welcome-tutorials">
               <h2>Recursos útiles</h2>
               <ul>

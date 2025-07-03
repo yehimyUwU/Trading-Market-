@@ -1,4 +1,3 @@
-
 // Agregar clase a los hover//
 let list = document.querySelectorAll(".navigation li");
 
@@ -9,8 +8,6 @@ function activeLink(){
     this.classList.add("hovered");
 }
 
-
-
 list.forEach(item => item.addEventListener("mouseover", activeLink))
 
 //Menu plegable para el modal de ver perfil
@@ -20,8 +17,9 @@ let main = document.querySelector(".main");
 
 toggle.onclick = function(){
     navigation.classList.toggle("active");
-    main.classList.toggle("active");
+    if (main) main.classList.toggle("active");
 };
+
 fetch('../../views/html/barraprove.html')
   .then(response => response.text())
   .then(html => {

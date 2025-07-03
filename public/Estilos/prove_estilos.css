@@ -64,7 +64,7 @@
 
 .navigation:hover ul li:hover a,
 .navigation:hover ul li.hovered a {
-    color: var(--blue); /* Aplica el cambio solo si el mouse está sobre la barra */
+    color: var(--orange); /* Aplica el cambio solo si el mouse está sobre la barra */
 }
 
 .navigation ul li a .icon {

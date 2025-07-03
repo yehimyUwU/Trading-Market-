@@ -1,11 +1,24 @@
+/* Estilos unificados para el layout principal */
 #content {
-    margin-left: 350px; /* Asegúrate que sea el mismo ancho que la barra */
-    position: relative; /* Mantén el contenido dentro del flujo del documento */
-    transition: 0.5s ease; /* Para que responda al cambio de la barra activa */
+    margin-left: 300px;
+    transition: margin-left 0.3s ease;
+    min-height: 100vh;
+    background: #f8f9fa;
 }
 
 .navigation.active ~ #content {
-    margin-left: 100px; /* Ajusta el margen cuando la barra se contraiga */
+    margin-left: 80px;
+}
+
+/* Responsive para pantallas pequeñas */
+@media (max-width: 768px) {
+    #content {
+        margin-left: 0;
+    }
+    
+    .navigation.active ~ #content {
+        margin-left: 0;
+    }
 }
 
 main {

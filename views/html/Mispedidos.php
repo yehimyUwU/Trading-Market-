@@ -34,23 +34,7 @@ require '../../controllers/php/barra_prove.php';
 
 <!-- CONTENT -->
 <section id="content">
-  <!-- NAVBAR -->
-  <nav>
-            
-    <a href="#" class="nav-link">Mi Perfil</a>
-    <form action="#">
-        <div class="form-input">
-            <input type="search" placeholder="Buscar...">
-            <button type="submit" class="search-btn"><i class='bx bx-search'></i></button>
-        </div>
-    </form>
-    <a href="#" class="notification">
-        <i class='bx bxs-bell'></i>
-        <span class="num">3</span>
-    </a>
-</nav>
-
-  <!-- MAIN -->
+  
   <main>
    
 
