@@ -1020,3 +1020,12 @@ function eliminarProveedor(idProveedor, boton) {
         console.error("Error al eliminar proveedor:", error);
     });
 }
+
+    const figures = document.querySelectorAll(".content-carrousel figure");
+    const total = figures.length;
+    const angle = 360 / total;
+
+    figures.forEach((figure, i) => {
+        const rotation = angle * i;
+        figure.style.transform = `rotateY(${rotation}deg) translateZ(300px)`;
+    });

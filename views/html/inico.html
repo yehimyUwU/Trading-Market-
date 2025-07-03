@@ -25,50 +25,25 @@
 
 <body>
     <div id="nav-container"></div>
-    <br>
     <!-- Banner Principal -->
-    <div id="nav-container"></div>
-    <br>
-
-    <!-- Carrusel de Bootstrap -->
-    <div id="carouselExampleIndicators" class="carousel slide" data-ride="carousel">
-        <!-- Indicadores -->
-        <ol class="carousel-indicators">
-            <li data-target="#carouselExampleIndicators" data-slide-to="0" class="active"></li>
-            <li data-target="#carouselExampleIndicators" data-slide-to="1"></li>
-            <li data-target="#carouselExampleIndicators" data-slide-to="2"></li>
-        </ol>
-
-        <div class="carousel-inner">
-            <!-- Imagen 1 -->
-            <div class="carousel-item active">
-                <img src="../../public/imagenes/suavite.webp" class="d-block w-100" alt="Productos destacados" />
-            </div>
-
-            <!-- Imagen 2 -->
-            <div class="carousel-item">
-                <img src="../../public/imagenes/diseño.png" class="d-block w-100" alt="Ofertas especiales" />
-                
-            </div>
-
-            <!-- Imagen 3 -->
-            <div class="carousel-item">
-                <img src="../../public/imagenes/1in.avif" class="d-block w-100" alt="Nuevos productos" />
-                
-            </div>
+<!-- 3D Slideshow Section --> 
+<section id="slideshow">
+    <div class="entire-content">
+        <div class="content-carrousel" id="carousel">
+            <figure class="shadow"><img src="https://adnstudio.com/wp-content/uploads/2016/06/concepto-fresco-campana-de-publicidad-retail-en-el-punto-venta-para-aumentar-la-facturacion-cadena-supermercados-alimentacion-fresc-es-ratlla-1.jpg"/></figure>
+            <figure class="shadow"><img src="https://www.antevenio.com/wp-content/uploads/2021/01/Promoci%C3%B3n-producto.png"/></figure>
+            <figure class="shadow"><img src="https://marketplace.canva.com/EAFbwu3T1V4/2/0/1200w/canva-cartel-anuncio-heladeria-fotogr%C3%A1fico-rosado-chocolate-2B3pMtz5LUU.jpg"/></figure>
+            <figure class="shadow"><img src="https://images.pexels.com/photos/776653/pexels-photo-776653.jpeg?w=940&h=650&auto=compress&cs=tinysrgb"/></figure>
+            <figure class="shadow"><img src="https://images.pexels.com/photos/54630/japanese-cherry-trees-flowers-spring-japanese-flowering-cherry-54630.jpeg?w=940&h=650&auto=compress&cs=tinysrgb"/></figure>
+            <figure class="shadow"><img src="https://images.pexels.com/photos/131046/pexels-photo-131046.jpeg?w=940&h=650&auto=compress&cs=tinysrgb"/></figure>
+            <figure class="shadow"><img src="https://images.pexels.com/photos/302515/pexels-photo-302515.jpeg?w=940&h=650&auto=compress&cs=tinysrgb"/></figure>
+            <figure class="shadow"><img src="https://images.pexels.com/photos/301682/pexels-photo-301682.jpeg?w=940&h=650&auto=compress&cs=tinysrgb"/></figure>
+            <figure class="shadow"><img src="https://images.pexels.com/photos/933054/pexels-photo-933054.jpeg?w=940&h=650&auto=compress&cs=tinysrgb"/></figure>
         </div>
-
-        <!-- Controles de navegación -->
-        <a class="carousel-control-prev" href="#carouselExampleIndicators" role="button" data-slide="prev">
-            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-            <span class="sr-only">Anterior</span>
-        </a>
-        <a class="carousel-control-next" href="#carouselExampleIndicators" role="button" data-slide="next">
-            <span class="carousel-control-next-icon" aria-hidden="true"></span>
-            <span class="sr-only">Siguiente</span>
-        </a>
     </div>
-<br> 
+</section>
+
+
 <!-- Título de la sección de productos -->
 <div class="banner" id="bannerSolo">
     <h1>Nuestros Productos</h1>
@@ -78,7 +53,7 @@
 <!-- Contenedor de productos -->
 <section class="productos">
     <div class="container">
-        <div class="row row-cols-1 row-cols-md-5" id="productosGrid">
+        <div class="row row-cols-1 row-cols-sm-2 row-cols-md-4" id="productosGrid">
             <!-- Productos se cargarán aquí -->
         </div>
     </div>
@@ -97,7 +72,7 @@
         cursor: pointer;
         box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.3);
         z-index: 1000;
-      " onclick="scrollToTop()">
+        " onclick="scrollToTop()">
         <i class="fa fa-arrow-up"></i>
         <span style="flex: 1; text-align: center">Volver al inicio</span>
     </a>
@@ -159,53 +134,43 @@
 <!-- Modal de Detalles del Producto -->
 <div class="modal fade" id="productoModal" tabindex="-1" role="dialog" aria-labelledby="productoModalLabel" aria-hidden="true">
     <div class="modal-dialog ancho-completo" role="document">
-        <div class="modal-content" style="max-width: 70vw; min-height: 550px;">
-            <!-- Encabezado del modal -->
+        <div class="modal-content">
             <div class="modal-header">
                 <h5 class="modal-title" id="modalNombre"></h5>
                 <button type="button" class="close btn-cerrar-modal" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
-
-            <!-- Cuerpo del modal en dos columnas, más ancho que alto -->
-            <div class="modal-body" style="min-height: 500px;">
-                <div class="row w-100" style="max-width: 1200px; min-height: 500px; margin:auto;">
-                    <!-- Columna izquierda: imagen y detalles -->
-                    <div class="col-md-6 text-center border-right d-flex flex-column align-items-center justify-content-center" style="min-height: 500px;">
-                        <img id="modalImagen" class="img-fluid mb-3" src="" alt="Producto" style="max-width:350px; max-height:350px;">
-                        <h4 id="modalNombre"></h4>
-                        <p id="modalDescripcion"></p>
-                        <h3 class="text-primary font-weight-bold" id="modalPrecio"></h3>
-                        <div class="producto-detalles-extra">
-                            <div class="stock-info">
-                                <i class="fa fa-box"></i>
-                                <span id="modalStock"></span>
-                            </div>
-                            <div class="calificacion-ml" id="calificacionML">
-                                <!-- Estrellas y promedio se llenan por JS -->
-                            </div>
+            <div class="modal-body">
+                <div class="detalle-producto-modal">
+                    <img id="modalImagen" class="img-fluid mb-3" src="" alt="Producto">
+                    <h4 id="modalNombreDetalle"></h4>
+                    <p id="modalDescripcion"></p>
+                    <h3 class="text-primary font-weight-bold" id="modalPrecio"></h3>
+                    <p id="modalStock" class="font-weight-bold text-secondary"></p>
+                    <div id="calificacion" class="mt-3">
+                        <h5>Califica este producto:</h5>
+                        <div id="estrellas" data-id-producto="">
+                            <i class="fa-regular fa-star estrella" data-valor="1"></i>
+                            <i class="fa-regular fa-star estrella" data-valor="2"></i>
+                            <i class="fa-regular fa-star estrella" data-valor="3"></i>
+                            <i class="fa-regular fa-star estrella" data-valor="4"></i>
+                            <i class="fa-regular fa-star estrella" data-valor="5"></i>
                         </div>
+                        <div id="mensaje-calificacion" class="mt-2 text-success" style="display:none;">¡Gracias por calificar!</div>
+                        <button id="btnEditarCalificacion" class="btn btn-warning mt-2" style="display:none;" onclick="editarCalificacion()">Editar Calificación</button>
                     </div>
-                    <!-- Columna derecha: comentarios -->
-                    <div class="col-md-6 d-flex flex-column justify-content-center" style="min-height: 500px;">
-                        <div class="producto-detalles-extra">
-                            <div class="comentario-form">
-                                <h5>Deja un comentario:</h5>
-                                <textarea id="comentarioTexto" class="form-control" rows="4" placeholder="Escribe tu opinión..."></textarea>
-                                <button class="btn btn-primary mt-2" onclick="guardarComentario()">Enviar Comentario</button>
-                            </div>
-                            <div class="comentarios-ml">
-                                <h5>Comentarios anteriores:</h5>
-                                <div id="listaComentarios"></div>
-                            </div>
-                        </div>
+                    <div class="comentarios-producto-modal">
+                        <h5>Deja un comentario:</h5>
+                        <textarea id="comentarioTexto" class="form-control" rows="4" placeholder="Escribe tu opinión..."></textarea>
+                        <button class="btn btn-primary mt-2" onclick="guardarComentario()">Enviar Comentario</button>
+                        <h5 class="mt-4">Comentarios anteriores:</h5>
+                        <div id="listaComentarios"></div>
                     </div>
                 </div>
             </div>
-            <!-- Pie de modal con botón de cerrar -->
             <div class="modal-footer">
-                <button type="button" class="btn btn-cerrar" data-dismiss="modal" style="color: #ff0000;">Cerrar</button>
+                <button type="button" class="btn btn-cerrar" data-dismiss="modal">Cerrar</button>
             </div>
         </div>
     </div>
@@ -251,6 +216,7 @@
                                 ? `../../public/imag/${producto.imagen}`
                                 : "../../public/imagenes_P/default.jpeg";
 
+                            // Asegura pasar el stock (si existe) y la ruta correcta de imagen
                             productoCard.innerHTML = `
                             <div class="card h-100">
                                 <div class="img-container">
@@ -264,8 +230,8 @@
                                     <p class="card-text">$${parseFloat(
                                     producto.precio
                                 ).toFixed(2)}</p>
-                                <button class="btn btn-primary mb-3" onclick="verDetalles('${producto.nombre}', '${producto.descripcion}', '${producto.precio}', '../imagenes_P/${producto.imagen}', ${producto.id_producto})">Ver Detalles</button>
-                                    <button class="btn btn-success mb-3" onclick="agregarAlCarrito(${producto.id_producto}, '${producto.nombre}', ${producto.precio})">Agregar al Carrito</button>
+                                <button class="btn btn-primary mb-3" onclick="verDetalles('${producto.nombre.replace(/'/g, "\\'")}', '${producto.descripcion.replace(/'/g, "\\'")}', '${producto.precio}', '${imagenUrl}', ${producto.id_producto}, '${producto.stock || ''}')">Ver Detalles</button>
+                                <button class="btn btn-success mb-3" onclick="agregarAlCarrito(${producto.id_producto}, '${producto.nombre.replace(/'/g, "\\'")}', ${producto.precio})">Agregar al Carrito</button>
                                 </div>
                             </div>
                         `;
@@ -307,151 +273,145 @@
             }
         });
 
-        let idProductoSeleccionado = null;
+        // Haz global la función verDetalles
+        window.verDetalles = async function(nombre, descripcion, precio, imagen, idProducto, stock = "") {
+            window.idProductoSeleccionado = idProducto;
+            document.getElementById("modalNombre").textContent = nombre;
+            document.getElementById("modalDescripcion").textContent = descripcion;
+            document.getElementById("modalPrecio").textContent = "$" + parseFloat(precio).toFixed(2);
+            document.getElementById("modalImagen").src = imagen;
+            document.getElementById("modalStock").textContent = stock ? `Stock: ${stock}` : "";
+            document.getElementById("estrellas").setAttribute("data-id-producto", idProducto);
 
-    // Función para mostrar detalles del producto en el modal
-    async function verDetalles(nombre, descripcion, precio, imagen, idProducto) {
-        idProductoSeleccionado = idProducto;
-        document.getElementById("modalNombre").textContent = nombre;
-        document.getElementById("modalDescripcion").textContent = descripcion;
-        document.getElementById("modalPrecio").textContent = "$" + parseFloat(precio).toFixed(2);
-        document.getElementById("modalImagen").src = imagen;
-        document.getElementById("estrellas").setAttribute("data-id-producto", idProducto);
+            await mostrarCalificacion(idProducto);
+            await mostrarComentario(idProducto);
 
-        // Mostrar calificación previa y comentarios
-        await mostrarCalificacion(idProducto);
-        await mostrarComentario(idProducto);
+            $("#productoModal").modal("show");
+        };
 
-        $("#productoModal").modal("show");
-    }
+        async function mostrarCalificacion(idProducto) {
+            const res = await fetch(`../../controllers/php/obtener_calificacion.php?id_producto=${idProducto}`);
+            const data = await res.json();
 
-    // Guardar calificación
-    document.querySelectorAll(".estrella").forEach(estrella => {
-        estrella.addEventListener("click", async function () {
-            const valor = this.getAttribute("data-valor");
-            const idProducto = document.getElementById("estrellas").getAttribute("data-id-producto");
+            if (data.calificacion) {
+                marcarEstrellas(data.calificacion);
+                document.getElementById("mensaje-calificacion").style.display = "block";
+                document.getElementById("btnEditarCalificacion").style.display = "inline-block";
+            } else {
+                marcarEstrellas(0);
+                document.getElementById("mensaje-calificacion").style.display = "none";
+                document.getElementById("btnEditarCalificacion").style.display = "none";
+            }
+        }
 
-            const respuesta = await fetch("../../controllers/php/guardar_calificacion.php", {
+        function marcarEstrellas(valor) {
+            document.querySelectorAll(".estrella").forEach(estrella => {
+                estrella.classList.remove("fa-solid", "text-warning");
+                estrella.classList.add("fa-regular");
+                if (parseInt(estrella.getAttribute("data-valor")) <= valor) {
+                    estrella.classList.remove("fa-regular");
+                    estrella.classList.add("fa-solid", "text-warning");
+                }
+            });
+        }
+
+        async function editarCalificacion() {
+            const idProducto = idProductoSeleccionado;
+            const res = await fetch(`../../controllers/php/eliminar_calificacion.php?id_producto=${idProducto}`, { method: "DELETE" });
+            const data = await res.json();
+
+            if (data.success) {
+                marcarEstrellas(0);
+                document.getElementById("mensaje-calificacion").style.display = "none";
+                document.getElementById("btnEditarCalificacion").style.display = "none";
+            } else {
+                alert(data.message || "No se pudo eliminar la calificación.");
+            }
+        }
+
+        async function guardarComentario() {
+            const comentario = document.getElementById("comentarioTexto").value;
+            if (!comentario.trim()) return alert("Escribe un comentario válido.");
+
+            const respuesta = await fetch("../../controllers/php/guardar_comentario.php", {
                 method: "POST",
                 headers: { "Content-Type": "application/json" },
-                body: JSON.stringify({ id_producto: idProducto, calificacion: valor })
+                body: JSON.stringify({ id_producto: idProductoSeleccionado, comentario: comentario })
             });
 
             const data = await respuesta.json();
             if (data.success) {
-                document.getElementById("mensaje-calificacion").style.display = "block";
-                document.getElementById("btnEditarCalificacion").style.display = "inline-block";
-                marcarEstrellas(valor);
+                mostrarComentario(idProductoSeleccionado);
             } else {
-                alert(data.message || "Error al guardar calificación");
+                alert(data.message || "Error al guardar comentario");
             }
-        });
-    });
-
-    // Marcar visualmente las estrellas
-    function marcarEstrellas(valor) {
-        document.querySelectorAll(".estrella").forEach(estrella => {
-            estrella.classList.remove("fa-solid", "text-warning");
-            estrella.classList.add("fa-regular");
-            if (parseInt(estrella.getAttribute("data-valor")) <= valor) {
-                estrella.classList.remove("fa-regular");
-                estrella.classList.add("fa-solid", "text-warning");
-            }
-        });
-    }
-
-    // Mostrar calificación previa
-    async function mostrarCalificacion(idProducto) {
-        const res = await fetch(`../../controllers/php/obtener_calificacion.php?id_producto=${idProducto}`);
-        const data = await res.json();
-
-        if (data.calificacion) {
-            marcarEstrellas(data.calificacion);
-            document.getElementById("mensaje-calificacion").style.display = "block";
-            document.getElementById("btnEditarCalificacion").style.display = "inline-block";
-        } else {
-            marcarEstrellas(0);
-            document.getElementById("mensaje-calificacion").style.display = "none";
-            document.getElementById("btnEditarCalificacion").style.display = "none";
         }
-    }
 
-    // Eliminar calificación
-    async function editarCalificacion() {
-        const idProducto = idProductoSeleccionado;
-        const res = await fetch(`../../controllers/php/eliminar_calificacion.php?id_producto=${idProducto}`, { method: "DELETE" });
-        const data = await res.json();
+        async function mostrarComentario(idProducto) {
+            const res = await fetch(`../../controllers/php/obtener_comentarios.php?id_producto=${idProducto}`);
+            const data = await res.json();
 
-        if (data.success) {
-            marcarEstrellas(0);
-            document.getElementById("mensaje-calificacion").style.display = "none";
-            document.getElementById("btnEditarCalificacion").style.display = "none";
-        } else {
-            alert(data.message || "No se pudo eliminar la calificación.");
-        }
-    }
+            const lista = document.getElementById("listaComentarios");
+            const textarea = document.getElementById("comentarioTexto");
 
-    // Guardar comentario
-    async function guardarComentario() {
-        const comentario = document.getElementById("comentarioTexto").value;
-        if (!comentario.trim()) return alert("Escribe un comentario válido.");
+            lista.innerHTML = "";
+            textarea.value = "";
 
-        const respuesta = await fetch("../../controllers/php/guardar_comentario.php", {
-            method: "POST",
-            headers: { "Content-Type": "application/json" },
-            body: JSON.stringify({ id_producto: idProductoSeleccionado, comentario: comentario })
-        });
+            if (data.success && data.comentarios.length > 0) {
+                data.comentarios.forEach(c => {
+                    const div = document.createElement("div");
+                    div.classList.add("border", "p-2", "mb-2", "position-relative");
 
-        const data = await respuesta.json();
-        if (data.success) {
-            mostrarComentario(idProductoSeleccionado);
-        } else {
-            alert(data.message || "Error al guardar comentario");
-        }
-    }
+                    // Generar estrellas según calificación
+                    let estrellasHTML = '';
+                    for (let i = 1; i <= 5; i++) {
+                        estrellasHTML += `<i class="fa-star ${i <= c.calificacion ? 'fas text-warning' : 'far text-muted'} small"></i>`;
+                    }
 
-// Mostrar comentarios (versión estilizada con estrellas y nombre del usuario)
-async function mostrarComentario(idProducto) {
-    const res = await fetch(`../../controllers/php/obtener_comentarios.php?id_producto=${idProducto}`);
-    const data = await res.json();
+                    div.innerHTML = `
+                        <div class="position-absolute" style="top: 8px; right: 10px;">
+                            ${estrellasHTML}
+                        </div>
+                        <strong>${c.nombre_usuario || "Anónimo"}:</strong><br>
+                        ${c.comentario}<br>
+                        <small class="text-muted">${c.fecha}</small>
+                    `;
+                    lista.appendChild(div);
 
-    const lista = document.getElementById("listaComentarios");
-    const textarea = document.getElementById("comentarioTexto");
-
-    lista.innerHTML = "";
-    textarea.value = "";
-
-    if (data.success && data.comentarios.length > 0) {
-        data.comentarios.forEach(c => {
-            const div = document.createElement("div");
-            div.classList.add("border", "p-2", "mb-2", "position-relative");
-
-            // Generar estrellas según calificación
-            let estrellasHTML = '';
-            for (let i = 1; i <= 5; i++) {
-                estrellasHTML += `<i class="fa-star ${i <= c.calificacion ? 'fas text-warning' : 'far text-muted'} small"></i>`;
+                    // Si el comentario es del usuario actual, llenar el textarea
+                    if (c.esPropio) {
+                        textarea.value = c.comentario;
+                    }
+                });
+            } else {
+                lista.innerHTML = "<p>No hay comentarios aún.</p>";
             }
+        }
 
-            div.innerHTML = `
-                <div class="position-absolute" style="top: 8px; right: 10px;">
-                    ${estrellasHTML}
-                </div>
-                <strong>${c.nombre_usuario || "Anónimo"}:</strong><br>
-                ${c.comentario}<br>
-                <small class="text-muted">${c.fecha}</small>
-            `;
-            lista.appendChild(div);
+        // Asignar eventos a las estrellas después de cargar el DOM
+        document.addEventListener("DOMContentLoaded", function () {
+            document.querySelectorAll(".estrella").forEach(estrella => {
+                estrella.addEventListener("click", async function () {
+                    const valor = this.getAttribute("data-valor");
+                    const idProducto = document.getElementById("estrellas").getAttribute("data-id-producto");
 
-            // Si el comentario es del usuario actual, llenar el textarea
-            if (c.esPropio) {
-                textarea.value = c.comentario;
-            }
+                    const respuesta = await fetch("../../controllers/php/guardar_calificacion.php", {
+                        method: "POST",
+                        headers: { "Content-Type": "application/json" },
+                        body: JSON.stringify({ id_producto: idProducto, calificacion: valor })
+                    });
+
+                    const data = await respuesta.json();
+                    if (data.success) {
+                        document.getElementById("mensaje-calificacion").style.display = "block";
+                        document.getElementById("btnEditarCalificacion").style.display = "inline-block";
+                        marcarEstrellas(valor);
+                    } else {
+                        alert(data.message || "Error al guardar calificación");
+                    }
+                });
+            });
         });
-    } else {
-        lista.innerHTML = "<p>No hay comentarios aún.</p>";
-    }
-}
-
     </script>
 </body>
 </html>
