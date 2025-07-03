@@ -776,7 +776,7 @@ document.addEventListener("DOMContentLoaded", function () {
                 // Mostrar imagen en base64
                 const imagenProveedor = proveedor.imagen
     ? proveedor.imagen
-    : `/Trading-Market-/public/imag/default.jpeg`;
+    : `hola/Trading-Market-/public/imag/default.jpeg`;
 
                 card.innerHTML = `
                     <div class="card position-relative h-100">
