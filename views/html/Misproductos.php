@@ -15,6 +15,14 @@
  * - Filtros y búsqueda
  * - Vista previa de productos
  */
+session_start();
+
+if (!isset($_SESSION['usuario']['id'])) {
+    header("Location: ../../views/html/longin.html");
+    exit;
+}
+
+$id_proveedor = $_SESSION['usuario']['id'];
 ?>
 <html lang="es">
 <head>
@@ -33,31 +41,10 @@
 <body>
 <?php
     require '../../controllers/php/barra_prove.php'; 
-    // En el archivo que carga la página (ej: Misproductos.php)
-session_start();
-
-if (!isset($_SESSION['usuario']['id'])) {
-    header("Location: ../../views/html/longin.html");
-    exit;
-}
-
-$id_proveedor = $_SESSION['usuario']['id'];
 ?>
   
     <div id="content">
-        <nav>
-            <a href="#" class="nav-link">Mis productos</a>
-            <form action="#">
-                <div class="form-input">
-                    <input type="search" placeholder="Buscar contacto...">
-                    <button type="submit" class="search-btn"><i class='bx bx-search'></i></button>
-                </div>
-            </form>
-            <a href="#" class="notification">
-                <i class='bx bxs-bell'></i>
-                <span class="num">3</span>
-            </a>
-        </nav>
+        
 
         <main class="contenido">
             <div class="header-container">
@@ -116,9 +103,9 @@ $id_proveedor = $_SESSION['usuario']['id'];
     </div>
 
     <!-- Modal para nuevo/editar producto -->
-    <div id="modalProducto" class="modal">
-        <div class="modal-contenido">
-            <div class="modal-header">
+    <div id="modalProducto" class="modal" style="display: none;">
+        <div class="modal-contenido animated-modal">
+            <div class="modal-header custom-modal-header">
                 <h2 id="modalTitulo">Subir Nuevo Producto</h2>
                 <button class="btn-cerrar" onclick="cerrarModal()">&times;</button>
             </div>
@@ -129,15 +116,13 @@ $id_proveedor = $_SESSION['usuario']['id'];
                   <input type="hidden" id="id_proveedor_hidden" name="id_proveedor" value="<?php echo isset($_SESSION['usuario']['id']) ? $_SESSION['usuario']['id'] : ''; ?>">
                   <div class="form-group">
                       <label for="nombreProducto">Nombre del Producto*</label>
-                      <input type="text" id="nombreProducto" name="nombreProducto" required minlength="3" maxlength="100"
-                          placeholder="Ingrese el nombre del producto">
+                      <input type="text" id="nombreProducto" name="nombreProducto" required minlength="3" maxlength="100" placeholder="Ingrese el nombre del producto">
                       <span id="errorNombre" class="error-mensaje"></span>
                   </div>
           
                   <div class="form-group">
                       <label for="descripcion">Descripción*</label>
-                      <textarea id="descripcion" name="descripcion" rows="4" required minlength="10" maxlength="500"
-                          placeholder="Describa las características del producto"></textarea>
+                      <textarea id="descripcion" name="descripcion" rows="4" required minlength="10" maxlength="500" placeholder="Describa las características del producto"></textarea>
                       <span id="errorDescripcion" class="error-mensaje"></span>
                   </div>
           
@@ -178,12 +163,8 @@ $id_proveedor = $_SESSION['usuario']['id'];
                   <div class="form-group">
                       <label for="imagenProducto">Imagen del Producto*</label>
                       <div class="upload-container">
-                          <input type="file" id="imagenProducto" name="imagenProducto" accept="image/*"
-                              onchange="previsualizarImagen(event)">
-                          <div class="upload-button">
-                              <span class="material-symbols-outlined">upload</span>
-                              Seleccionar Imagen
-                          </div>
+                          <input type="file" id="imagenProducto" name="imagenProducto" accept="image/*" onchange="previsualizarImagen(event)">
+                          
                           <span class="file-info">Formatos aceptados: JPG, PNG. Máximo 2MB</span>
                       </div>
                       <div id="previewImagen" class="image-preview"></div>
