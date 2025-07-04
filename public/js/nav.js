@@ -1022,32 +1022,60 @@ function eliminarProveedor(idProveedor, boton) {
 }
 
 
-function scrollCarousel(direction) {
-  const carousel = document.getElementById("carousel");
+ const carousel = document.getElementById("carousel");
+  const preview = document.getElementById("carousel-preview");
+  const previewImg = preview.querySelector("img");
   const scrollAmount = 280;
-  carousel.scrollBy({ left: direction * scrollAmount, behavior: 'smooth' });
-}
 
-// Preview flotante
-const preview = document.getElementById("carousel-preview");
-const previewImg = preview.querySelector("img");
+  let autoScrollPaused = false;
+  let direction = 1;
+  let userInteracted = false;
 
-document.querySelectorAll(".carousel-track img").forEach(img => {
-  img.addEventListener("mousemove", e => {
-    preview.style.display = "block";
-    previewImg.src = img.src;
+  // FUNCIONALIDAD DE FLECHAS (pausa temporal el auto scroll)
+  function scrollCarousel(dir) {
+    userInteracted = true;
+    carousel.scrollBy({ left: dir * scrollAmount, behavior: 'smooth' });
 
-    const previewWidth = 520;
-    const previewHeight = 380;
+    // pausa el auto scroll por 2 segundos
+    autoScrollPaused = true;
+    clearTimeout(window.autoScrollTimeout);
+    window.autoScrollTimeout = setTimeout(() => {
+      autoScrollPaused = false;
+      userInteracted = false;
+    }, 2000);
+  }
 
-    const x = e.pageX + 20;
-    const y = e.pageY - previewHeight / 2;
+  // PREVIEW FLOTANTE Y PAUSA AUTO SCROLL
+  document.querySelectorAll(".carousel-track img").forEach(img => {
+    img.addEventListener("mousemove", e => {
+      preview.style.display = "block";
+      previewImg.src = img.src;
 
-    preview.style.left = `${x}px`;
-    preview.style.top = `${Math.max(y, 40)}px`;
+      const previewWidth = 520;
+      const previewHeight = 380;
+      const x = e.pageX + 20;
+      const y = e.pageY - previewHeight / 2;
+
+      preview.style.left = `${x}px`;
+      preview.style.top = `${Math.max(y, 40)}px`;
+
+      autoScrollPaused = true;
+    });
+
+    img.addEventListener("mouseleave", () => {
+      preview.style.display = "none";
+      if (!userInteracted) autoScrollPaused = false;
+    });
   });
 
-  img.addEventListener("mouseleave", () => {
-    preview.style.display = "none";
-  });
-});
+  // AUTO SCROLL SUAVE EN BUCLE
+  setInterval(() => {
+    if (autoScrollPaused) return;
+
+    const maxScrollLeft = carousel.scrollWidth - carousel.clientWidth;
+
+    if (carousel.scrollLeft >= maxScrollLeft) direction = -1;
+    if (carousel.scrollLeft <= 0) direction = 1;
+
+    carousel.scrollBy({ left: direction * 2, behavior: 'smooth' });
+  }, 20);
