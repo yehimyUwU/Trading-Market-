@@ -20,6 +20,8 @@ body {
     /* background-image: url('../imagenes/Imagen\ de\ WhatsApp\ 2025-02-13\ a\ las\ 08.43.13_2bd3c74d.jpg'); */
     background-size: cover;
     background-position: center;
+    /* Si tienes gradientes azules, cámbialos por naranjas */
+    background: linear-gradient(120deg, #FFAE00 0%, #FFB84D 40%, #FF6B00 80%, #f53b02 100%) !important;
 }
 
 #videoFondo {
@@ -41,6 +43,7 @@ body {
     width: 768px;
     max-width: 100%;
     min-height: 680px;
+    background: linear-gradient(120deg, #FFF3E0 0%, #FFB84D 40%, #FFAE00 80%, #f53b02 100%);
 }
 
 h1 {
@@ -129,13 +132,14 @@ span {
 }
 
 input, select {
-    background: rgba(255, 255, 255, 0.9);
-    border: none;
+    border: 1.5px solid #FFAE00;
+    background: #fff;
+    color: #FF6B00;
+    border-radius: 8px;
     padding: 12px 15px;
     margin: 6px 0;
     width: 100%;
     font-size: 14px;
-    border-radius: 5px;
 }
 
 button {
@@ -152,6 +156,10 @@ button {
     cursor: pointer;
     margin-top: 10px;
     margin-bottom: 10px;
+    background: linear-gradient(90deg, #FFAE00 0%, #FF6B00 100%);
+    color: #fff !important;
+    border: none;
+    box-shadow: 0 4px 16px rgba(255, 174, 0, 0.15);
 }
 
 button:active {
@@ -186,6 +194,7 @@ button.ghost {
     width: 200%;
     transform: translateX(0);
     transition: transform 0.6s ease-in-out;
+    background: linear-gradient(120deg, #FFAE00 0%, #FFB84D 40%, #FF6B00 80%, #f53b02 100%);
 }
 
 .overlay-panel {
@@ -201,15 +210,13 @@ button.ghost {
     text-align: center;
     transform: translateX(0);
     transition: transform 0.6s ease-in-out;
+    color: #FF6B00;
 }
 
-.overlay-right {
-    right: 0;
-    transform: translateX(0);
-}
-
-.overlay-left {
-    transform: translateX(-20%);
+.overlay-panel.overlay-left,
+.overlay-panel.overlay-right {
+    background: transparent;
+    color: #FF6B00;
 }
 
 /* Animaciones */
@@ -277,13 +284,13 @@ button.ghost {
     display: flex;
     align-items: center;
     padding: 12px 25px;
-    background-color: #2196F3;
-    color: white;
-    text-decoration: none;
+    background: linear-gradient(90deg, #FFAE00 0%, #FF6B00 100%);
+    color: #fff !important;
+    border: none;
+    box-shadow: 0 4px 16px rgba(255, 174, 0, 0.15);
     border-radius: 30px;
     font-weight: 600;
     transition: all 0.3s ease;
-    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
     z-index: 9999;
     font-size: 16px;
     border: 2px solid rgba(255, 255, 255, 0.2);
@@ -295,7 +302,8 @@ button.ghost {
 }
 
 .btn-regresar:hover {
-    background-color: #1976D2;
+    background: linear-gradient(90deg, #FF6B00 0%, #f53b02 100%);
+    color: #fff !important;
     transform: translateY(-3px);
     box-shadow: 0 6px 20px rgba(0, 0, 0, 0.3);
     border-color: rgba(255, 255, 255, 0.4);
@@ -304,4 +312,18 @@ button.ghost {
 .btn-regresar:active {
     transform: translateY(0);
     box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+}
+
+/* Títulos y textos */
+h1, h2, h3, h4, h5, h6, label {
+    color: #FF6B00 !important;
+}
+p, small, span, .text-muted {
+    color: #FFB84D !important;
+}
+
+/* Mensajes de error o éxito */
+#message, #signupMessage {
+    color: #f53b02 !important;
+    font-weight: bold;
 }
