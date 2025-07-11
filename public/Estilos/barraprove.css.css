@@ -1,6 +1,10 @@
 /* Importing Google Fonts - Poppins */
 @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap');
 
+/* Neutralización de estilos globales para permitir el diseño moderno del perfil */
+/* Eliminar o comentar reglas de body, .container, .card, etc. */
+/* Mantener solo lo necesario para la barra lateral */
+
 body {
   margin: 0;
   font-family: 'Poppins', sans-serif;
@@ -116,10 +120,10 @@ body {
 }
 
 .sidebar-nav .nav-link:hover, .sidebar-nav .nav-link.active {
-  background: linear-gradient(90deg, #FF6B00 0%, #FFAE00 100%);
-  color: #222;
-  transform: translateX(10px) scale(1.07);
-  box-shadow: 0 4px 16px rgba(255, 174, 0, 0.18);
+  background: linear-gradient(90deg, #FF6B00 0%, #FFAE00 100%) !important;
+  color: #222 !important;
+  transform: translateX(10px) scale(1.07) !important;
+  box-shadow: 0 4px 16px rgba(255, 174, 0, 0.18) !important;
 }
 
 .sidebar-nav .nav-link .nav-icon {
@@ -128,9 +132,9 @@ body {
   transition: color 0.3s, transform 0.2s;
 }
 
-.sidebar-nav .nav-link:hover .nav-icon {
-  color: #FF6B00;
-  transform: scale(1.2) rotate(-8deg);
+.sidebar-nav .nav-link:hover .nav-icon, .sidebar-nav .nav-link.active .nav-icon {
+  color: #FF6B00 !important;
+  transform: scale(1.2) rotate(-8deg) !important;
 }
 
 .sidebar-nav .nav-item {

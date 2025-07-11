@@ -1,5 +1,5 @@
 <?php
-// código...
+$current = basename($_SERVER['SCRIPT_NAME']);
 ?>
 <!--Barra de navegacion restaurada y mejorada-->
 <div class="container-fluid p-0">
@@ -11,31 +11,31 @@
           <ion-icon name="menu-outline" style="color: #FF6B00; font-size: 1.7rem;"></ion-icon>
         </span>
       </li>
-      <li>
+      <li<?php if($current=='BienvProv.php') echo ' class="hovered"'; ?>>
         <a href="../../views/html/BienvProv.php">
           <span class="icon"><ion-icon name="home-outline"></ion-icon></span>
           <span class="title">Principal</span>
         </a>
       </li>
-      <li>
+      <li<?php if($current=='Misproductos.php') echo ' class="hovered"'; ?>>
         <a href="../../views/html/Misproductos.php">
           <span class="icon"><ion-icon name="people-outline"></ion-icon></span>
           <span class="title">Mis productos</span>
         </a>
       </li>
-      <li>
+      <li<?php if($current=='Mispedidos.php') echo ' class="hovered"'; ?>>
         <a href="../../views/html/Mispedidos.php">
           <span class="icon"><ion-icon name="chatbubbles-outline"></ion-icon></span>
           <span class="title">Mis pedidos</span>
         </a>
       </li>
-      <li>
+      <li<?php if($current=='Chat.php') echo ' class="hovered"'; ?>>
         <a href="../../views/html/Chat.php">
           <span class="icon"><ion-icon name="help-outline"></ion-icon></span>
           <span class="title">Chat</span>
         </a>
       </li>
-      <li>
+      <li<?php if($current=='PerfilProv.php') echo ' class="hovered"'; ?>>
         <a href="../../views/html/PerfilProv.php">
           <span class="icon"><ion-icon name="settings-outline"></ion-icon></span>
           <span class="title">Perfil</span>

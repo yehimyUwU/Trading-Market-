@@ -1,4 +1,3 @@
-
 <?php
 require '../../config/php/conexion.php';
 /**
@@ -349,6 +348,282 @@ class ProductoModelo {
         }
 
         return $mensaje;
+    }
+
+    /**
+     * Función: mdlRegistrarProductoConPresentaciones
+     * Descripción: Registra un producto con múltiples presentaciones/tamaños
+     * Parámetros:
+     * - $nombre: Nombre del producto
+     * - $categoria: ID de la categoría
+     * - $descripcion: Descripción del producto
+     * - $subcategoria: ID de la subcategoría
+     * - $id_proveedor: ID del proveedor
+     * - $presentaciones: Array de presentaciones
+     */
+    public static function mdlRegistrarProductoConPresentaciones($nombre, $categoria, $descripcion, $subcategoria, $id_proveedor, $presentaciones) {
+        try {
+            error_log('[DEBUG] Iniciando registro de producto con presentaciones');
+            // Verificar si la categoría existe
+            $verificarCategoria = Conexion::conectar()->prepare("SELECT COUNT(*) FROM categoria WHERE id_categoria = :categoria");
+            $verificarCategoria->bindParam(":categoria", $categoria, PDO::PARAM_INT);
+            $verificarCategoria->execute();
+            $categoriaExiste = $verificarCategoria->fetchColumn();
+
+            if ($categoriaExiste == 0) {
+                error_log('[ERROR] La categoría seleccionada no existe.');
+                return ["success" => false, "message" => "La categoría seleccionada no existe."];
+            }
+
+            // Verificar que hay al menos una presentación
+            if (empty($presentaciones)) {
+                error_log('[ERROR] No se enviaron presentaciones.');
+                return ["success" => false, "message" => "Debe agregar al menos una presentación del producto."];
+            }
+
+            // Iniciar transacción
+            $pdo = Conexion::conectar();
+            $pdo->beginTransaction();
+            error_log('[DEBUG] Transacción iniciada');
+
+            // Insertar el producto principal (sin precio ni stock, ya que están en presentaciones)
+            $stmt = $pdo->prepare("INSERT INTO producto (nombre, id_categoria, id_subcategoria, descripcion, id_empresa) VALUES (:nombre, :categoria, :subcategoria, :descripcion, :id_empresa)");
+            $stmt->bindParam(":nombre", $nombre, PDO::PARAM_STR);
+            $stmt->bindParam(":categoria", $categoria, PDO::PARAM_INT);
+            $stmt->bindParam(":subcategoria", $subcategoria, PDO::PARAM_INT);
+            $stmt->bindParam(":descripcion", $descripcion, PDO::PARAM_STR);
+            $stmt->bindParam(":id_empresa", $id_proveedor, PDO::PARAM_INT);
+
+            if (!$stmt->execute()) {
+                $errorInfo = $stmt->errorInfo();
+                error_log('[ERROR] Error al registrar el producto principal: ' . $errorInfo[2]);
+                throw new Exception("Error al registrar el producto principal: " . $errorInfo[2]);
+            }
+
+            $id_producto = $pdo->lastInsertId();
+            error_log('[DEBUG] Producto insertado con id: ' . $id_producto);
+            $presentacionesCreadas = 0;
+            $imagenPrincipal = null;
+
+            // Procesar cada presentación
+            foreach ($presentaciones as $key => $presentacion) {
+                error_log('[DEBUG] Datos recibidos en presentación ' . ($key + 1) . ': ' . json_encode($presentacion));
+                // Validar datos de la presentación
+                if (empty($presentacion['tamano']) || empty($presentacion['unidad']) || 
+                    empty($presentacion['precio']) || empty($presentacion['stock'])) {
+                    error_log('[ERROR] Datos incompletos en la presentación ' . ($key + 1));
+                    throw new Exception("Datos incompletos en la presentación " . ($key + 1));
+                }
+
+                // Procesar imagen de la presentación
+                $nombreImagen = null;
+                if (isset($presentacion['imagen_file']) && $presentacion['imagen_file']['error'] === UPLOAD_ERR_OK) {
+                    $imagen = $presentacion['imagen_file'];
+                    $nombreImagen = "producto_" . $id_producto . "_presentacion_" . ($key + 1) . "_" . uniqid() . "_" . basename($imagen['name']);
+                    $rutaDestino = "../../public/imag/" . $nombreImagen;
+                    error_log('[DEBUG] Moviendo imagen de presentación: TMP=' . $imagen['tmp_name'] . ' DEST=' . $rutaDestino);
+                    if (!move_uploaded_file($imagen['tmp_name'], $rutaDestino)) {
+                        error_log('[ERROR] Error al subir la imagen de la presentación ' . ($key + 1) . '. TMP: ' . $imagen['tmp_name'] . ', Destino: ' . $rutaDestino);
+                        throw new Exception("Error al subir la imagen de la presentación " . ($key + 1) . ". TMP: " . $imagen['tmp_name'] . ", Destino: " . $rutaDestino);
+                    }
+                    // Guardar la imagen principal solo de la primera presentación
+                    if ($key === 0) {
+                        $imagenPrincipal = $nombreImagen;
+                    }
+                } else {
+                    error_log('[ERROR] Imagen requerida para la presentación ' . ($key + 1) . '. Error: ' . (isset($presentacion['imagen_file']['error']) ? $presentacion['imagen_file']['error'] : 'No file'));
+                    throw new Exception("Imagen requerida para la presentación " . ($key + 1) . ". Error: " . (isset($presentacion['imagen_file']['error']) ? $presentacion['imagen_file']['error'] : 'No file'));
+                }
+
+                // Insertar presentación
+                $stmtPresentacion = $pdo->prepare("
+                    INSERT INTO presentacion_producto (
+                        id_producto, tamano, unidad, precio, stock, 
+                        nombre_imagen, largo, ancho, alto, unidad_dimension
+                    ) VALUES (
+                        :id_producto, :tamano, :unidad, :precio, :stock,
+                        :nombre_imagen, :largo, :ancho, :alto, :unidad_dimension
+                    )
+                ");
+
+                $stmtPresentacion->bindParam(":id_producto", $id_producto, PDO::PARAM_INT);
+                $stmtPresentacion->bindParam(":tamano", $presentacion['tamano'], PDO::PARAM_STR);
+                $stmtPresentacion->bindParam(":unidad", $presentacion['unidad'], PDO::PARAM_STR);
+                $stmtPresentacion->bindParam(":precio", $presentacion['precio'], PDO::PARAM_STR);
+                $stmtPresentacion->bindParam(":stock", $presentacion['stock'], PDO::PARAM_INT);
+                $stmtPresentacion->bindParam(":nombre_imagen", $nombreImagen, PDO::PARAM_STR);
+                
+                // Dimensiones opcionales
+                $largo = !empty($presentacion['largo']) ? $presentacion['largo'] : null;
+                $ancho = !empty($presentacion['ancho']) ? $presentacion['ancho'] : null;
+                $alto = !empty($presentacion['alto']) ? $presentacion['alto'] : null;
+                $unidad_dimension = !empty($presentacion['unidad_dimension']) ? $presentacion['unidad_dimension'] : null;
+                
+                $stmtPresentacion->bindParam(":largo", $largo);
+                $stmtPresentacion->bindParam(":ancho", $ancho);
+                $stmtPresentacion->bindParam(":alto", $alto);
+                $stmtPresentacion->bindParam(":unidad_dimension", $unidad_dimension);
+
+                if (!$stmtPresentacion->execute()) {
+                    $errorInfo = $stmtPresentacion->errorInfo();
+                    error_log('[ERROR] Error al registrar la presentación ' . ($key + 1) . ': ' . $errorInfo[2]);
+                    throw new Exception("Error al registrar la presentación " . ($key + 1) . ": " . $errorInfo[2]);
+                }
+
+                $presentacionesCreadas++;
+                error_log('[DEBUG] Presentación ' . ($key + 1) . ' insertada correctamente');
+            }
+
+            // Si hay imagen principal, actualizar el producto con esa imagen
+            if ($imagenPrincipal) {
+                $stmtUpdate = $pdo->prepare("UPDATE producto SET imagen = :imagen WHERE id_producto = :id_producto");
+                $stmtUpdate->bindParam(":imagen", $imagenPrincipal, PDO::PARAM_STR);
+                $stmtUpdate->bindParam(":id_producto", $id_producto, PDO::PARAM_INT);
+                $stmtUpdate->execute();
+            }
+
+            // Confirmar transacción
+            $pdo->commit();
+            error_log('[DEBUG] Transacción confirmada');
+
+            return [
+                "success" => true, 
+                "message" => "¡Producto y presentaciones registrados exitosamente! 🎉",
+                "id_producto" => $id_producto,
+                "presentaciones_creadas" => $presentacionesCreadas
+            ];
+
+        } catch (Exception $e) {
+            // Revertir transacción en caso de error
+            if (isset($pdo)) {
+                $pdo->rollBack();
+                error_log('[ERROR] Transacción revertida');
+            }
+            error_log('[ERROR] Excepción: ' . $e->getMessage());
+            return ["success" => false, "message" => "Error: " . $e->getMessage(), "trace" => $e->getTraceAsString()];
+        }
+    }
+
+    /**
+     * Función: mdlListarProductosConPresentaciones
+     * Descripción: Obtiene los productos de un proveedor con sus presentaciones
+     * Parámetros:
+     * - $id_proveedor: ID del proveedor
+     */
+    public static function mdlListarProductosConPresentaciones($id_proveedor) {
+        $mensaje = array();
+    
+        try {
+            // Obtener productos con sus presentaciones
+            $objRespuesta = Conexion::conectar()->prepare("
+                SELECT 
+                    p.id_producto,
+                    p.nombre,
+                    p.descripcion,
+                    p.id_categoria,
+                    p.id_subcategoria,
+                    c.nombre AS nombre_categoria,
+                    sc.nombre AS nombre_subcategoria,
+                    pp.id_presentacion,
+                    pp.tamanio,
+                    pp.unidad,
+                    pp.precio,
+                    pp.stock,
+                    pp.nombre_imagen,
+                    pp.largo,
+                    pp.ancho,
+                    pp.alto,
+                    pp.unidad_dimension
+                FROM producto p 
+                INNER JOIN categoria c ON p.id_categoria = c.id_categoria
+                INNER JOIN subcategoria sc ON p.id_subcategoria = sc.id_subcategoria
+                LEFT JOIN presentacion_producto pp ON p.id_producto = pp.id_producto
+                WHERE p.id_empresa = :id_proveedor
+                ORDER BY p.id_producto, pp.id_presentacion
+            ");
+            
+            $objRespuesta->bindParam(":id_proveedor", $id_proveedor, PDO::PARAM_INT);
+            $objRespuesta->execute();
+            $resultados = $objRespuesta->fetchAll(PDO::FETCH_ASSOC);
+    
+            // Organizar productos con sus presentaciones
+            $productos = [];
+            foreach ($resultados as $row) {
+                $id_producto = $row['id_producto'];
+                
+                if (!isset($productos[$id_producto])) {
+                    $productos[$id_producto] = [
+                        'id_producto' => $row['id_producto'],
+                        'nombre' => $row['nombre'],
+                        'descripcion' => $row['descripcion'],
+                        'id_categoria' => $row['id_categoria'],
+                        'id_subcategoria' => $row['id_subcategoria'],
+                        'nombre_categoria' => $row['nombre_categoria'],
+                        'nombre_subcategoria' => $row['nombre_subcategoria'],
+                        'presentaciones' => []
+                    ];
+                }
+                
+                // Agregar presentación si existe
+                if ($row['id_presentacion']) {
+                    $productos[$id_producto]['presentaciones'][] = [
+                        'id_presentacion' => $row['id_presentacion'],
+                        'tamanio' => $row['tamanio'],
+                        'unidad' => $row['unidad'],
+                        'precio' => $row['precio'],
+                        'stock' => $row['stock'],
+                        'imagen' => $row['nombre_imagen'] ? "../../public/imag/" . $row['nombre_imagen'] : "../../public/imagenes_P/default.jpeg",
+                        'dimensiones' => [
+                            'largo' => $row['largo'],
+                            'ancho' => $row['ancho'],
+                            'alto' => $row['alto'],
+                            'unidad_dimension' => $row['unidad_dimension']
+                        ]
+                    ];
+                }
+            }
+    
+            $mensaje = array(
+                "codigo" => "200", 
+                "success" => true, 
+                "listaProductos" => array_values($productos)
+            );
+            
+        } catch (Exception $e) {
+            $mensaje = array(
+                "codigo" => "401", 
+                "success" => false, 
+                "mensaje" => "Error al listar productos: " . $e->getMessage()
+            );
+        }
+
+        return $mensaje;
+    }
+
+    public static function mdlObtenerProductoConPresentaciones($id_producto) {
+        try {
+            $pdo = Conexion::conectar();
+            // Obtener datos del producto
+            $stmt = $pdo->prepare("SELECT * FROM producto WHERE id_producto = :id_producto");
+            $stmt->bindParam(":id_producto", $id_producto, PDO::PARAM_INT);
+            $stmt->execute();
+            $producto = $stmt->fetch(PDO::FETCH_ASSOC);
+
+            if (!$producto) {
+                return ["success" => false, "message" => "Producto no encontrado"];
+            }
+
+            // Obtener presentaciones
+            $stmt2 = $pdo->prepare("SELECT *, CONCAT('../../public/imag/', nombre_imagen) as imagen FROM presentacion_producto WHERE id_producto = :id_producto");
+            $stmt2->bindParam(":id_producto", $id_producto, PDO::PARAM_INT);
+            $stmt2->execute();
+            $presentaciones = $stmt2->fetchAll(PDO::FETCH_ASSOC);
+
+            $producto['presentaciones'] = $presentaciones;
+            return ["success" => true, "producto" => $producto];
+        } catch (Exception $e) {
+            return ["success" => false, "message" => $e->getMessage()];
+        }
     }
 }
 

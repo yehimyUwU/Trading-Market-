@@ -23,7 +23,7 @@ if (!verificarRol('Proveedor')) {
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Bienvenido-Trading Market </title>
+  <title>Bienvenid-Trading Market </title>
   <link rel="stylesheet" href="../../public/Estilos/barraprove.css.css">
   <!-- Linking Google fonts for icons -->
   <link rel="stylesheet" href="../../public/Estilos/Admins-provedor.css">

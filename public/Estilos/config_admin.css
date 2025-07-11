@@ -531,7 +531,7 @@ body{
     position: absolute;
     top: 10px; /* Ajusta la posición superior */
     right: 15px; /* Ajusta la posición derecha */
-    font-size: 30px; /* Aumenta el tamaño de la fuente */
+    font-size: 30px; /* Aumenta el tamano de la fuente */
     font-weight: bold; /* Hace el carácter más destacado */
     color: #333; /* Cambia el color si lo deseas */
     cursor: pointer; /* Indica que es clicable */
@@ -575,7 +575,7 @@ body{
   
   /* Estilos para los botones */
   button {
-    padding: 10px 20px; /* Tamaño más equilibrado */
+    padding: 10px 20px; /* tamano más equilibrado */
     font-size: 16px; /* Texto más legible */
     background-color: var(--blue); /* Color principal */
     color: white; /* Color del texto */

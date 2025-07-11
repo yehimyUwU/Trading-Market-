@@ -1,10 +1,13 @@
-
+/* Neutralización de estilos globales para permitir el diseño moderno del perfil */
+/* Eliminar o comentar reglas de body, main, .card, .container, etc. */
+/* Mantener solo lo necesario para la barra lateral y navegación */
 
 * {
     font-family: 'Arial', sans-serif; /* Esto puede estar sobrescribiendo */
 }
 body {
     font-family: 'Times New Roman', serif;
+    background: #f8f9fa;
 }
 
 * {
@@ -263,12 +266,9 @@ body {
 	margin-top:6px;
 }
 #content main .box-info li {
-	
-	background: var(--light);
-	border-radius: 20px;
-	display: flex;
-	align-items: center;
-	
+    background: rgba(255,255,255,0.85);
+    border-radius: 15px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.04);
 }
 #content main .box-info li .bx {
 	width: 80px;
@@ -486,4 +486,13 @@ body {
 	#content main .table-data .todo .todo-list {
 		min-width: 420px;
 	}
+}
+
+/* Ajuste para evitar sobrescribir el chat moderno */
+#content .chat-card, #content .chat-layout, #content .chat-sidebar, #content .chat-main, #content .chat-messages-area, #content .chat-input-bar {
+    font-family: 'Segoe UI', Arial, sans-serif !important;
+    font-size: initial;
+    margin: 0;
+   
+    box-sizing: border-box;
 }

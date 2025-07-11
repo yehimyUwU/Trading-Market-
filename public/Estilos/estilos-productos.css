@@ -54,6 +54,7 @@ body::-webkit-scrollbar-track, html::-webkit-scrollbar-track {
     left: 110px;
     min-height: 100vh;
     transition: .3s ease;
+    background: #f8f9fa;
 }
 
 /* Barra de navegación */
@@ -91,10 +92,6 @@ body::-webkit-scrollbar-track, html::-webkit-scrollbar-track {
     box-shadow: 0 4px 16px rgba(255, 107, 0, 0.08);
     color: var(--blanco);
     border: none;
-}
-
-.header-text h1, .header-text p, .header-text span {
-    color: var(--blanco) !important;
 }
 
 /* Perfil vendedor */
@@ -319,6 +316,8 @@ body::-webkit-scrollbar-track, html::-webkit-scrollbar-track {
     justify-content: space-between;
     align-items: center;
     margin: 10px 0;
+    flex-wrap: wrap;
+    gap: 5px;
 }
 
 .precio {
@@ -666,4 +665,260 @@ input[type="file"]:hover::before, input[type="file"]:focus::before {
 input[type="file"]::-ms-value {
     color: #FF6B00;
     background: transparent;
+}
+
+/* Evitar conflicto de padding/margen/fuente con el chat moderno */
+.chat-card, .chat-layout {
+    font-family: 'Segoe UI', Arial, sans-serif !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    box-sizing: border-box !important;
+}
+
+/* === ESTILOS PARA PRESENTACIONES/TAMAÑOS === */
+
+.presentaciones-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 15px;
+}
+
+.presentaciones-header label {
+    color: #FF6B00 !important;
+    font-weight: 600;
+    font-size: 1.1em;
+    margin: 0;
+}
+
+.btn-agregar-presentacion {
+    background: linear-gradient(90deg, #FF881A 0%, #FFD580 100%);
+    color: #fff;
+    border: none;
+    border-radius: 8px;
+    padding: 8px 16px;
+    font-size: 0.9em;
+    font-weight: 600;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    transition: all 0.3s ease;
+    box-shadow: 0 2px 8px rgba(255, 107, 0, 0.15);
+}
+
+.btn-agregar-presentacion:hover {
+    background: linear-gradient(90deg, #FFD580 0%, #FF881A 100%);
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(255, 107, 0, 0.25);
+}
+
+.presentacion-item {
+    background: #fffbe6;
+    border: 2px solid #FFD580;
+    border-radius: 12px;
+    padding: 16px;
+    margin-bottom: 12px;
+    position: relative;
+    transition: all 0.3s ease;
+    animation: slideInPresentacion 0.4s ease-out;
+}
+
+@keyframes slideInPresentacion {
+    from {
+        opacity: 0;
+        transform: translateY(-20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.presentacion-item:hover {
+    border-color: #FFAE00;
+    box-shadow: 0 4px 16px rgba(255, 174, 0, 0.15);
+}
+
+.presentacion-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 12px;
+}
+
+.presentacion-titulo {
+    color: #FF6B00;
+    font-weight: 600;
+    font-size: 1em;
+    margin: 0;
+}
+
+.btn-eliminar-presentacion {
+    background: #DB504A;
+    color: #fff;
+    border: none;
+    border-radius: 50%;
+    width: 28px;
+    height: 28px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    font-size: 16px;
+}
+
+.btn-eliminar-presentacion:hover {
+    background: #c0392b;
+    transform: scale(1.1);
+}
+
+.presentacion-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+    margin-bottom: 12px;
+}
+
+.presentacion-grid.full-width {
+    grid-template-columns: 1fr;
+}
+
+.presentacion-input-group {
+    display: flex;
+    flex-direction: column;
+}
+
+.presentacion-input-group label {
+    color: #FF6B00;
+    font-weight: 600;
+    font-size: 0.9em;
+    margin-bottom: 6px;
+}
+
+.presentacion-input-group input,
+.presentacion-input-group select {
+    border: 1px solid #FFD580;
+    background: #fff;
+    color: #222;
+    border-radius: 6px;
+    padding: 8px 12px;
+    font-size: 0.9em;
+    transition: border 0.2s, box-shadow 0.2s;
+}
+
+.presentacion-input-group input:focus,
+.presentacion-input-group select:focus {
+    border: 1.5px solid #FFAE00;
+    box-shadow: 0 0 0 2px #ffae0033;
+    outline: none;
+}
+
+.presentacion-imagen {
+    grid-column: 1 / -1;
+}
+
+.presentacion-imagen input[type="file"] {
+    width: 100%;
+    padding: 8px;
+    border: 1.5px dashed #FFD580;
+    border-radius: 6px;
+    background: #fffbe6;
+    color: #FF6B00;
+    font-size: 0.85em;
+}
+
+.presentacion-imagen input[type="file"]:hover {
+    border-color: #FFAE00;
+    background: #fff7e0;
+}
+
+.presentacion-preview {
+    margin-top: 8px;
+    text-align: center;
+}
+
+.presentacion-preview img {
+    max-width: 80px;
+    max-height: 80px;
+    border-radius: 6px;
+    border: 2px solid #FFD580;
+}
+
+.dimensiones-opcionales {
+    grid-column: 1 / -1;
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 8px;
+    margin-top: 8px;
+    padding-top: 8px;
+    border-top: 1px solid #FFD580;
+}
+
+.dimensiones-opcionales .presentacion-input-group:last-child {
+    grid-column: 1 / -1;
+    max-width: 120px;
+    justify-self: center;
+}
+
+.dimensiones-opcionales .presentacion-input-group {
+    margin: 0;
+}
+
+.dimensiones-opcionales label {
+    font-size: 0.8em;
+    color: #FF6B00;
+}
+
+.dimensiones-opcionales input {
+    font-size: 0.8em;
+    padding: 6px 8px;
+}
+
+/* Responsive para presentaciones */
+@media (max-width: 768px) {
+    .presentacion-grid {
+        grid-template-columns: 1fr;
+    }
+    
+    .dimensiones-opcionales {
+        grid-template-columns: 1fr 1fr;
+    }
+    
+    .dimensiones-opcionales .presentacion-input-group:last-child {
+        grid-column: 1 / -1;
+        max-width: 100px;
+        justify-self: center;
+    }
+    
+    .presentaciones-header {
+        flex-direction: column;
+        gap: 10px;
+        align-items: flex-start;
+    }
+}
+
+/* Estilos para presentaciones en tarjetas de productos */
+.presentacion {
+    font-size: 0.8em;
+    color: #FF6B00;
+    background: #fffbe6;
+    padding: 2px 6px;
+    border-radius: 4px;
+    border: 1px solid #FFD580;
+}
+
+.sin-presentaciones {
+    font-size: 0.8em;
+    color: #DB504A;
+    font-style: italic;
+}
+
+.badge.presentaciones {
+    background: linear-gradient(90deg, #FF881A 0%, #FFD580 100%);
+    color: #fff;
+    font-size: 0.7em;
+    margin-left: 5px;
+    padding: 2px 6px;
 }

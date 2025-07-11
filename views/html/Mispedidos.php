@@ -30,7 +30,9 @@ require '../../controllers/php/barra_prove.php';
 </head>
 <body>
   
-
+  <!-- SIDEBAR -->
+  <?php require '../../controllers/php/barra_prove.php'; ?>
+  <!-- FIN SIDEBAR -->
 
 <!-- CONTENT -->
 <section id="content">

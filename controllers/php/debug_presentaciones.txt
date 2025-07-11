@@ -1,0 +1,24 @@
+Array
+(
+    [0] => Array
+        (
+            [unidad] => g
+            [precio] => 5000
+            [stock] => 23
+            [largo] => 45
+            [ancho] => 23
+            [alto] => 54
+            [unidad_dimension] => cm
+            [tamano] => 350
+            [imagen_file] => Array
+                (
+                    [name] => WhatsApp Image 2025-06-23 at 2.35.22 PM.jpeg
+                    [type] => image/jpeg
+                    [tmp_name] => C:\xampp\tmp\phpCD44.tmp
+                    [error] => 0
+                    [size] => 85575
+                )
+
+        )
+
+)

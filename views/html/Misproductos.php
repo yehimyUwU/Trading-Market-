@@ -47,7 +47,7 @@ $id_proveedor = $_SESSION['usuario']['id'];
         
 
         <main class="contenido">
-            <div class="header-container">
+            <div class="header-container" style=" padding-top: 120px;">
                 <div class="header-text">
                     <h1>Productos</h1>
                     <p>producto, <span id="nombreVendedor">Vendedor</span></p>
@@ -114,6 +114,8 @@ $id_proveedor = $_SESSION['usuario']['id'];
               <form id="formularioProducto">
                   <input type="hidden" id="productoId" name="productoId" value="">
                   <input type="hidden" id="id_proveedor_hidden" name="id_proveedor" value="<?php echo isset($_SESSION['usuario']['id']) ? $_SESSION['usuario']['id'] : ''; ?>">
+                  
+                  <!-- Datos generales del producto -->
                   <div class="form-group">
                       <label for="nombreProducto">Nombre del Producto*</label>
                       <input type="text" id="nombreProducto" name="nombreProducto" required minlength="3" maxlength="100" placeholder="Ingrese el nombre del producto">
@@ -124,23 +126,6 @@ $id_proveedor = $_SESSION['usuario']['id'];
                       <label for="descripcion">Descripción*</label>
                       <textarea id="descripcion" name="descripcion" rows="4" required minlength="10" maxlength="500" placeholder="Describa las características del producto"></textarea>
                       <span id="errorDescripcion" class="error-mensaje"></span>
-                  </div>
-          
-                  <div class="form-row">
-                      <div class="form-group half">
-                          <label for="precio">Precio*</label>
-                          <div class="input-group">
-                              <span class="currency-symbol">$</span>
-                              <input type="number" id="precio" name="precio" step="0.01" min="0.01" required placeholder="0.00">
-                          </div>
-                          <span id="errorPrecio" class="error-mensaje"></span>
-                      </div>
-          
-                      <div class="form-group half">
-                          <label for="stock">Stock Inicial*</label>
-                          <input type="number" id="stock" name="stock" min="1" required placeholder="Cantidad disponible">
-                          <span id="errorStock" class="error-mensaje"></span>
-                      </div>
                   </div>
           
                   <div class="form-row">
@@ -160,15 +145,19 @@ $id_proveedor = $_SESSION['usuario']['id'];
                       </div>
                   </div>
           
+                  <!-- Sección de presentaciones/tamaños -->
                   <div class="form-group">
-                      <label for="imagenProducto">Imagen del Producto*</label>
-                      <div class="upload-container">
-                          <input type="file" id="imagenProducto" name="imagenProducto" accept="image/*" onchange="previsualizarImagen(event)">
-                          
-                          <span class="file-info">Formatos aceptados: JPG, PNG. Máximo 2MB</span>
+                      <div class="presentaciones-header">
+                          <label>Presentaciones/Tamaños del Producto*</label>
+                          <button type="button" class="btn-agregar-presentacion" onclick="agregarPresentacion()">
+                              <span class="material-symbols-outlined">add</span>
+                              Agregar Presentación
+                          </button>
                       </div>
-                      <div id="previewImagen" class="image-preview"></div>
-                      <span id="errorImagen" class="error-mensaje"></span>
+                      <div id="presentaciones-container">
+                          <!-- Las presentaciones se agregarán aquí dinámicamente -->
+                      </div>
+                      <span id="errorPresentaciones" class="error-mensaje"></span>
                   </div>
           
                   <div class="form-actions">
@@ -188,10 +177,13 @@ $id_proveedor = $_SESSION['usuario']['id'];
         </div>
     </div>
 
+    <div id="toast-notification" style="display:none;position:fixed;bottom:30px;left:50%;transform:translateX(-50%);z-index:9999;min-width:220px;max-width:90vw;padding:16px 28px;border-radius:8px;font-size:1.1em;font-weight:500;box-shadow:0 4px 16px rgba(0,0,0,0.12);background:#fff;color:#222;transition:all 0.3s;align-items:center;gap:10px;"></div>
+
     <script>
     // Variables globales
     let modoEdicion = false;
     let productoActual = null;
+    let contadorPresentaciones = 0; // Este contador ya no se usará como índice, solo para IDs únicos
 
     // Función para abrir el modal en modo edición
     function abrirModalEdicion(producto) {
@@ -201,21 +193,39 @@ $id_proveedor = $_SESSION['usuario']['id'];
         // Configurar el modal para edición
         document.getElementById('modalTitulo').textContent = 'Editar Producto';
         document.getElementById('btnAccionTexto').textContent = 'Actualizar Producto';
-        document.getElementById('productoId').value = producto.id_producto;
-        document.getElementById('nombreProducto').value = producto.nombre || '';
-        document.getElementById('descripcion').value = producto.descripcion || '';
-        document.getElementById('precio').value = producto.precio || '';
-        document.getElementById('stock').value = producto.stock || '';
+        if (document.getElementById('productoId')) document.getElementById('productoId').value = producto.id_producto;
+        if (document.getElementById('nombreProducto')) document.getElementById('nombreProducto').value = producto.nombre || '';
+        if (document.getElementById('descripcion')) document.getElementById('descripcion').value = producto.descripcion || '';
 
         // Cargar categoría y subcategoría
         cargarCategoriasParaEdicion(producto.id_categoria, producto.id_subcategoria);
 
-        // Mostrar imagen actual si existe
-        const previewContainer = document.getElementById('previewImagen');
-        if (producto.imagen) {
-            previewContainer.innerHTML = `<img src="../imag/${producto.imagen}" alt="Imagen actual del producto" style="max-width: 100%; border-radius: 10px;">`;
-        } else {
-            previewContainer.innerHTML = ''; // Limpiar vista previa si no hay imagen
+        // Limpiar presentaciones anteriores
+        limpiarPresentaciones();
+
+        // Reconstruir presentaciones si existen
+        if (producto.presentaciones && producto.presentaciones.length > 0) {
+            producto.presentaciones.forEach((presentacion, idx) => {
+                agregarPresentacion(); // Agrega un bloque vacío
+                // Selecciona el último bloque agregado
+                const container = document.getElementById('presentaciones-container');
+                const presentaciones = container.querySelectorAll('.presentacion-item');
+                const presentacionDiv = presentaciones[presentaciones.length - 1];
+                // Llena los campos
+                presentacionDiv.querySelector('input[name*="[tamaño]"],input[name*="[tamano]"]').value = presentacion.tamano || '';
+                presentacionDiv.querySelector('select[name*="[unidad]"]').value = presentacion.unidad || '';
+                presentacionDiv.querySelector('input[name*="[precio]"]').value = presentacion.precio || '';
+                presentacionDiv.querySelector('input[name*="[stock]"]').value = presentacion.stock || '';
+                presentacionDiv.querySelector('input[name*="[largo]"]').value = presentacion.largo || '';
+                presentacionDiv.querySelector('input[name*="[ancho]"]').value = presentacion.ancho || '';
+                presentacionDiv.querySelector('input[name*="[alto]"]').value = presentacion.alto || '';
+                presentacionDiv.querySelector('select[name*="[unidad_dimension]"]').value = presentacion.unidad_dimension || '';
+                // Previsualizar la imagen si existe
+                const preview = presentacionDiv.querySelector('.presentacion-preview');
+                if (preview && presentacion.imagen) {
+                    preview.innerHTML = `<img src="${presentacion.imagen}" alt="Imagen presentación" style="max-width:80px;max-height:80px;">`;
+                }
+            });
         }
 
         // Mostrar el modal
@@ -292,24 +302,17 @@ $id_proveedor = $_SESSION['usuario']['id'];
 
         const nombre = document.getElementById('nombreProducto').value.trim();
         const descripcion = document.getElementById('descripcion').value.trim();
-        const precio = parseFloat(document.getElementById('precio').value);
         const categoriaGeneral = document.getElementById('categoriaGeneral').value;
         const subcategoria = document.getElementById('subcategoria').value;
-        const stock = parseInt(document.getElementById('stock').value);
-        const imagen = document.getElementById('imagenProducto').files[0];
         const productoId = document.getElementById('productoId').value;
 
-        // Validaciones
+        // Validaciones básicas del producto
         if (!nombre) {
             document.getElementById('errorNombre').textContent = 'El nombre del producto es obligatorio.';
             hayErrores = true;
         }
         if (!descripcion) {
             document.getElementById('errorDescripcion').textContent = 'La descripción es obligatoria.';
-            hayErrores = true;
-        }
-        if (isNaN(precio) || precio <= 0) {
-            document.getElementById('errorPrecio').textContent = 'Ingrese un precio válido.';
             hayErrores = true;
         }
         if (!categoriaGeneral) {
@@ -320,12 +323,9 @@ $id_proveedor = $_SESSION['usuario']['id'];
             document.getElementById('errorCategoria').textContent = 'Seleccione una subcategoría.';
             hayErrores = true;
         }
-        if (isNaN(stock) || stock <= 0) {
-            document.getElementById('errorStock').textContent = 'Ingrese un stock válido.';
-            hayErrores = true;
-        }
-        if (!modoEdicion && !imagen) {
-            document.getElementById('errorImagen').textContent = 'Seleccione una imagen.';
+
+        // Validar presentaciones
+        if (!validarPresentaciones()) {
             hayErrores = true;
         }
 
@@ -334,11 +334,33 @@ $id_proveedor = $_SESSION['usuario']['id'];
             formData.append('id_proveedor', idProveedor);
             formData.append('nombre', nombre);
             formData.append('descripcion', descripcion);
-            formData.append('precio', precio);
             formData.append('categoria', categoriaGeneral);
             formData.append('subcategoria', subcategoria);
-            formData.append('stock', stock);
-            if (imagen) formData.append('imagen', imagen);
+            
+            // Agregar presentaciones al FormData
+            const presentaciones = document.querySelectorAll('.presentacion-item');
+            presentaciones.forEach((presentacion, index) => {
+                const tamaño = presentacion.querySelector('input[name*="[tamaño]"]').value;
+                const unidad = presentacion.querySelector('select[name*="[unidad]"]').value;
+                const precio = presentacion.querySelector('input[name*="[precio]"]').value;
+                const stock = presentacion.querySelector('input[name*="[stock]"]').value;
+                const imagen = presentacion.querySelector('input[type="file"]').files[0];
+                const largo = presentacion.querySelector('input[name*="[largo]"]').value;
+                const ancho = presentacion.querySelector('input[name*="[ancho]"]').value;
+                const alto = presentacion.querySelector('input[name*="[alto]"]').value;
+                const unidad_dimension = presentacion.querySelector('select[name*="[unidad_dimension]"]').value;
+
+                formData.append(`presentaciones[${index}][tamaño]`, tamaño);
+                formData.append(`presentaciones[${index}][unidad]`, unidad);
+                formData.append(`presentaciones[${index}][precio]`, precio);
+                formData.append(`presentaciones[${index}][stock]`, stock);
+                // Cambia aquí: usa el nombre plano para la imagen
+                formData.append(`presentaciones_imagen_${index}`, imagen);
+                formData.append(`presentaciones[${index}][largo]`, largo);
+                formData.append(`presentaciones[${index}][ancho]`, ancho);
+                formData.append(`presentaciones[${index}][alto]`, alto);
+                formData.append(`presentaciones[${index}][unidad_dimension]`, unidad_dimension);
+            });
             
             // Agregar el ID del producto si estamos en modo edición
             if (modoEdicion) {
@@ -348,7 +370,11 @@ $id_proveedor = $_SESSION['usuario']['id'];
                 formData.append('accion', 'crear');
             }
 
-            const url = modoEdicion ? '../../controllers/php/editar_producto.php' : '../../controllers/php/productoControl.php';
+            // Siempre enviar a productoControl.php para crear y editar (ajustar si tienes un endpoint separado para editar)
+            const url = '../../controllers/php/productoControl.php';
+
+            // Log para depuración
+            console.log('Enviando datos a productoControl.php:', Array.from(formData.entries()));
 
             fetch(url, {
                 method: 'POST',
@@ -363,21 +389,20 @@ $id_proveedor = $_SESSION['usuario']['id'];
                 return response.json();
             })
             .then(data => {
+                console.log('Respuesta del backend:', data);
                 if (data.success) {
-                    alert(modoEdicion ? 'Producto actualizado exitosamente.' : 'Producto registrado exitosamente.');
+                    showToast('¡Producto registrado exitosamente!', 'success');
                     document.getElementById('formularioProducto').reset();
                     cerrarModal();
                     cargarProductos(); // Actualizar la lista de productos sin recargar
                 } else {
-                    alert('Error: ' + data.message);
+                    showToast('Error: ' + (data.message || 'No se pudo registrar el producto.'), 'error');
                     console.error('Error del servidor:', data);
                 }
             })
             .catch(error => {
-                alert(modoEdicion ? 'Producto actualizado exitosamente.' : 'Producto registrado exitosamente.');
-                    document.getElementById('formularioProducto').reset();
-                    cerrarModal();
-                    cargarProductos(); // Actualizar la lista de productos sin recargar
+                showToast('Error al registrar/actualizar el producto. Intenta de nuevo o contacta soporte.', 'error');
+                console.error('Error en fetch:', error);
             });
         }
     }
@@ -388,6 +413,7 @@ $id_proveedor = $_SESSION['usuario']['id'];
     function cargarProductos() {
         const formData = new FormData();
         formData.append('id_proveedor', idProveedor);
+        formData.append('listarConPresentaciones', 'ok');
         fetch('../../controllers/php/productoControl.php', {
             method: 'POST',
                 body: formData
@@ -399,13 +425,27 @@ $id_proveedor = $_SESSION['usuario']['id'];
                     productosGrid.innerHTML = ''; // Limpiar la lista actual
                     
                     data.listaProductos.forEach(producto => {
+                    // Mostrar la imagen principal del producto si existe, si no la de la primera presentación
+                    let imagenPrincipal = producto.imagen && producto.imagen !== '../../public/imagenes_P/default.jpeg' ? '../../public/imag/' + producto.imagen : null;
+                    if (!imagenPrincipal && producto.presentaciones && producto.presentaciones.length > 0) {
+                        imagenPrincipal = producto.presentaciones[0].imagen;
+                    }
+                    if (!imagenPrincipal) {
+                        imagenPrincipal = '../imagenes_P/default.jpeg';
+                    }
+                    const presentacionPrincipal = producto.presentaciones && producto.presentaciones.length > 0 
+                        ? producto.presentaciones[0] 
+                        : null;
+                    
                         const productoCard = document.createElement('div');
                         productoCard.classList.add('producto-card');
                         productoCard.innerHTML = `
                             <div class="producto-imagen">
-                                <img src="../imag/${producto.imagen}" alt="${producto.nombre}" onerror="this.onerror=null;this.src='../imagenes_P/default.jpeg';">
+                            <img src="${imagenPrincipal}" 
+                                 alt="${producto.nombre}" 
+                                 onerror="this.onerror=null;this.src='../imagenes_P/default.jpeg';">
                                 <div class="producto-acciones">
-                                    <button class="btn-editar" onclick="abrirModalEdicion(${JSON.stringify(producto).replace(/"/g, '&quot;')})">
+                                    <button class="btn-editar" onclick="editarProductoPorId(${producto.id_producto})">
                                         <span class="material-symbols-outlined">edit</span>
                                     </button>
                                     <button class="btn-eliminar" onclick="eliminarProducto(${producto.id_producto})">
@@ -416,11 +456,19 @@ $id_proveedor = $_SESSION['usuario']['id'];
                             <div class="producto-info">
                                 <h4>${producto.nombre}</h4>
                                 <div class="producto-detalles">
-                                    <span class="precio">$${producto.precio}</span>
-                                    <span class="stock">Stock: ${producto.stock}</span>
+                                ${presentacionPrincipal ? 
+                                    `<span class="precio">$${presentacionPrincipal.precio}</span>
+                                     <span class="stock">Stock: ${presentacionPrincipal.stock}</span>
+                                     <span class="presentacion">${presentacionPrincipal.tamano}${presentacionPrincipal.unidad}</span>` 
+                                    : '<span class="sin-presentaciones">Sin presentaciones</span>'
+                                }
                                 </div>
                                 <div class="producto-estado">
                                     <span class="badge activo">Activo</span>
+                                ${producto.presentaciones && producto.presentaciones.length > 1 ? 
+                                    `<span class="badge presentaciones">+${producto.presentaciones.length - 1} más</span>` 
+                                    : ''
+                                }
                                 </div>
                             </div>
                         `;
@@ -471,8 +519,8 @@ $id_proveedor = $_SESSION['usuario']['id'];
         document.getElementById('modalTitulo').textContent = 'Subir Nuevo Producto';
         document.getElementById('btnAccionTexto').textContent = 'Publicar Producto';
         document.getElementById('formularioProducto').reset();
-        document.getElementById('previewImagen').innerHTML = '';
         document.getElementById('productoId').value = '';
+        limpiarPresentaciones(); // Limpiar presentaciones anteriores
         
         // Mostrar el modal
         document.getElementById('modalProducto').style.display = 'block';
@@ -483,6 +531,7 @@ $id_proveedor = $_SESSION['usuario']['id'];
         document.getElementById('modalProducto').style.display = 'none';
         document.getElementById('formularioProducto').reset();
         document.getElementById('previewProducto').style.display = 'none';
+        limpiarPresentaciones(); // Limpiar presentaciones al cerrar
     }
 
     // Función para previsualizar la imagen
@@ -609,6 +658,226 @@ $id_proveedor = $_SESSION['usuario']['id'];
                 filtrarProductos();
             });
         }, 500);
+    }
+
+    // Función para agregar una nueva presentación
+    function agregarPresentacion() {
+        const container = document.getElementById('presentaciones-container');
+        const presentaciones = container.querySelectorAll('.presentacion-item');
+        const index = presentaciones.length; // SIEMPRE consecutivo
+        contadorPresentaciones++; // Solo para IDs únicos en el DOM
+        
+        const presentacionHTML = `
+            <div class="presentacion-item" id="presentacion-${contadorPresentaciones}">
+                <div class="presentacion-header">
+                    <h4 class="presentacion-titulo">Presentación ${index + 1}</h4>
+                    <button type="button" class="btn-eliminar-presentacion" onclick="eliminarPresentacion(${contadorPresentaciones})">
+                        <span class="material-symbols-outlined">close</span>
+                    </button>
+                </div>
+                
+                <div class="presentacion-grid">
+                    <div class="presentacion-input-group">
+                        <label for="tamanio-${contadorPresentaciones}">Tamaño/Volumen*</label>
+                        <input type="number" id="tamanio-${contadorPresentaciones}" name="presentaciones[${index}][tamaño]" step="0.01" min="0.01" required placeholder="500">
+                    </div>
+                    
+                    <div class="presentacion-input-group">
+                        <label for="unidad-${contadorPresentaciones}">Unidad*</label>
+                        <select id="unidad-${contadorPresentaciones}" name="presentaciones[${index}][unidad]" required>
+                            <option value="">Seleccionar</option>
+                            <option value="g">Gramos (g)</option>
+                            <option value="kg">Kilogramos (kg)</option>
+                            <option value="ml">Mililitros (ml)</option>
+                            <option value="L">Litros (L)</option>
+                            <option value="cm">Centímetros (cm)</option>
+                            <option value="in">Pulgadas (in)</option>
+                            <option value="unidad">Unidad</option>
+                            <option value="par">Par</option>
+                            <option value="docena">Docena</option>
+                            <option value="otro">Otro</option>
+                        </select>
+                    </div>
+                    
+                    <div class="presentacion-input-group">
+                        <label for="precio-${contadorPresentaciones}">Precio*</label>
+                        <div class="input-group">
+                            <span class="currency-symbol">$</span>
+                            <input type="number" id="precio-${contadorPresentaciones}" name="presentaciones[${index}][precio]" step="0.01" min="0.01" required placeholder="0.00">
+                        </div>
+                    </div>
+                    
+                    <div class="presentacion-input-group">
+                        <label for="stock-${contadorPresentaciones}">Stock*</label>
+                        <input type="number" id="stock-${contadorPresentaciones}" name="presentaciones[${index}][stock]" min="1" required placeholder="Cantidad">
+                    </div>
+                    
+                    <div class="presentacion-input-group presentacion-imagen">
+                        <label for="imagen-${contadorPresentaciones}">Imagen de esta presentación*</label>
+                        <input type="file" id="imagen-${contadorPresentaciones}" name="presentaciones[${index}][imagen]" accept="image/*" onchange="previsualizarPresentacion(${contadorPresentaciones}, event)">
+                        <div id="preview-presentacion-${contadorPresentaciones}" class="presentacion-preview"></div>
+                    </div>
+                    
+                    <div class="dimensiones-opcionales">
+                        <div class="presentacion-input-group">
+                            <label for="largo-${contadorPresentaciones}">Largo</label>
+                            <input type="number" id="largo-${contadorPresentaciones}" name="presentaciones[${index}][largo]" step="0.01" min="0" placeholder="0">
+                        </div>
+                        <div class="presentacion-input-group">
+                            <label for="ancho-${contadorPresentaciones}">Ancho</label>
+                            <input type="number" id="ancho-${contadorPresentaciones}" name="presentaciones[${index}][ancho]" step="0.01" min="0" placeholder="0">
+                        </div>
+                        <div class="presentacion-input-group">
+                            <label for="alto-${contadorPresentaciones}">Alto</label>
+                            <input type="number" id="alto-${contadorPresentaciones}" name="presentaciones[${index}][alto]" step="0.01" min="0" placeholder="0">
+                        </div>
+                        <div class="presentacion-input-group">
+                            <label for="unidad-dim-${contadorPresentaciones}">Unidad dim.</label>
+                            <select id="unidad-dim-${contadorPresentaciones}" name="presentaciones[${index}][unidad_dimension]">
+                                <option value="cm">cm</option>
+                                <option value="in">in</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        `;
+        
+        container.insertAdjacentHTML('beforeend', presentacionHTML);
+        renombrarIndicesPresentaciones();
+    }
+
+    // Función para eliminar una presentación
+    function eliminarPresentacion(id) {
+        const presentacion = document.getElementById(`presentacion-${id}`);
+        if (presentacion) {
+            presentacion.remove();
+            renombrarIndicesPresentaciones();
+        }
+    }
+
+    // Función para renombrar los índices de los name de las presentaciones para que sean consecutivos
+    function renombrarIndicesPresentaciones() {
+        const presentaciones = document.querySelectorAll('.presentacion-item');
+        presentaciones.forEach((presentacion, index) => {
+            // Cambiar el título
+            const titulo = presentacion.querySelector('.presentacion-titulo');
+            if (titulo) {
+                titulo.textContent = `Presentación ${index + 1}`;
+            }
+            // Cambiar los name de todos los inputs/selects
+            const campos = presentacion.querySelectorAll('input, select');
+            campos.forEach(campo => {
+                if (campo.name) {
+                    campo.name = campo.name.replace(/presentaciones\[\d+\]/, `presentaciones[${index}]`);
+                }
+            });
+        });
+    }
+
+    // Función para previsualizar imagen de presentación
+    function previsualizarPresentacion(id, event) {
+        const input = event.target;
+        const previewContainer = document.getElementById(`preview-presentacion-${id}`);
+        previewContainer.innerHTML = '';
+
+        if (input.files && input.files[0]) {
+            const reader = new FileReader();
+            reader.onload = function (e) {
+                const img = document.createElement('img');
+                img.src = e.target.result;
+                img.alt = 'Vista previa de la presentación';
+                previewContainer.appendChild(img);
+            };
+            reader.readAsDataURL(input.files[0]);
+        }
+    }
+
+    // Función para validar presentaciones
+    function validarPresentaciones() {
+        const presentaciones = document.querySelectorAll('.presentacion-item');
+        const errorElement = document.getElementById('errorPresentaciones');
+        
+        if (presentaciones.length === 0) {
+            errorElement.textContent = 'Debe agregar al menos una presentación del producto.';
+            return false;
+        }
+        
+        let hayErrores = false;
+        errorElement.textContent = '';
+        
+        presentaciones.forEach((presentacion, index) => {
+            const tamaño = presentacion.querySelector('input[name*="[tamaño]"]').value;
+            const unidad = presentacion.querySelector('select[name*="[unidad]"]').value;
+            const precio = presentacion.querySelector('input[name*="[precio]"]').value;
+            const stock = presentacion.querySelector('input[name*="[stock]"]').value;
+            const imagen = presentacion.querySelector('input[type="file"]').files[0];
+            
+            if (!tamaño || !unidad || !precio || !stock || !imagen) {
+                errorElement.textContent = `Complete todos los campos obligatorios de la presentación ${index + 1}.`;
+                hayErrores = true;
+            }
+        });
+        
+        return !hayErrores;
+    }
+
+    // Función para limpiar presentaciones al cerrar modal
+    function limpiarPresentaciones() {
+        const container = document.getElementById('presentaciones-container');
+        container.innerHTML = '';
+        contadorPresentaciones = 0;
+        document.getElementById('errorPresentaciones').textContent = '';
+    }
+
+    function showToast(message, type = 'success') {
+        const toast = document.getElementById('toast-notification');
+        toast.textContent = '';
+        toast.style.display = 'flex';
+        toast.style.justifyContent = 'center';
+        toast.style.alignItems = 'center';
+        toast.style.opacity = '1';
+        toast.style.pointerEvents = 'auto';
+        if (type === 'success') {
+            toast.style.background = 'linear-gradient(90deg,#FFAE00 0%,#FF6B00 100%)';
+            toast.style.color = '#fff';
+            toast.innerHTML = '<span style="font-size:1.4em;">✅</span> ' + message;
+        } else {
+            toast.style.background = '#DB504A';
+            toast.style.color = '#fff';
+            toast.innerHTML = '<span style="font-size:1.4em;">❌</span> ' + message;
+        }
+        setTimeout(() => {
+            toast.style.opacity = '0';
+            toast.style.pointerEvents = 'none';
+        }, 3000);
+        setTimeout(() => {
+            toast.style.display = 'none';
+        }, 3400);
+    }
+
+    // Nueva función para editar producto por id (carga datos completos del backend)
+    function editarProductoPorId(id_producto) {
+        const formData = new FormData();
+        formData.append('getProductoConPresentaciones', 'ok');
+        formData.append('id_producto', id_producto);
+
+        fetch('../../controllers/php/productoControl.php', {
+            method: 'POST',
+            body: formData
+        })
+        .then(response => response.json())
+        .then(data => {
+            if (data.success && data.producto) {
+                abrirModalEdicion(data.producto);
+            } else {
+                alert('No se pudo cargar el producto para editar');
+            }
+        })
+        .catch(error => {
+            alert('Error al cargar el producto para editar');
+            console.error(error);
+        });
     }
     </script>
 

@@ -1,0 +1,25 @@
+Array
+(
+    [id_proveedor] => 4
+    [nombre] => efrwfegrw
+    [descripcion] => egwe
+    [categoria] => 8
+    [subcategoria] => 22
+    [presentaciones] => Array
+        (
+            [0] => Array
+                (
+                    [tamaño] => 350
+                    [unidad] => g
+                    [precio] => 5000
+                    [stock] => 23
+                    [largo] => 45
+                    [ancho] => 23
+                    [alto] => 54
+                    [unidad_dimension] => cm
+                )
+
+        )
+
+    [accion] => crear
+)

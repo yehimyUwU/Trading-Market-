@@ -1,3 +1,4 @@
+/* Neutralización de estilos globales para permitir el diseño moderno del perfil */
 :root {
     --blue: #306a91;
     --white: #fff;
@@ -6,17 +7,24 @@
     --black2: #999;
 }
 
+/* SOLO barra lateral y navegación, el resto se comenta */
+
+/* .main, .main.active, .toggle, .brand-row .title, .brand-row:hover .title, .navigation, .navigation.active, .navigation ul, .navigation ul li, .navigation ul li a, .navigation ul li a .icon, .navigation ul li a .title, .navigation:hover ul li:hover, .navigation:hover ul li:hover a, .navigation:hover ul li:hover a::before, .navigation:hover ul li:hover a::after {
+    ...
+} */
+
+/* Eliminar o comentar cualquier regla que afecte body, main, .card, .container, etc. */
+
+/* El resto de los estilos de la barra lateral se mantienen aquí abajo si es necesario */
 
 /*Cambios barra de navegacion*/
-
 .navigation {
     position: fixed;
     width: 300px;
     height: 100%;
-    top: 0; /* Asegura que inicie desde la parte superior */
-    left: 0; /* Manténla pegada al lado izquierdo */
+    top: 0;
+    left: 0;
     background: var(--blue);
-    /* genera error border-left: 5px solid var(--blue); */
     transition: 0.5s;
     overflow: hidden;
 }
@@ -38,20 +46,18 @@
     list-style: none;
     border-top-left-radius: 30px;
     border-bottom-left-radius: 30px;
-    
+    background: transparent !important;
+    transition: background 0.3s;
+    overflow: visible !important;
 }
 
 .navigation:hover ul li:hover {
-    background-color: var(--white); /* Solo se activa si el mouse está dentro de .navigation */
+    background-color: var(--white);
 }
-
-
-
 
 .navigation ul li:nth-child(1) {
     margin-bottom: 30px;
 }
-
 
 .navigation ul li a {
     position: relative;
@@ -64,27 +70,25 @@
 
 .navigation:hover ul li:hover a,
 .navigation:hover ul li.hovered a {
-    color: var(--orange); /* Aplica el cambio solo si el mouse está sobre la barra */
+    color: var(--orange);
 }
 
 .navigation ul li a .icon {
     position: relative;
     display: block;
-    min-width: 28px; /* Ajusta según lo que necesites */
+    min-width: 28px;
     height: 60px;
     line-height: 60px;
     text-align: center;
-    min-width: 40px; /* Reduce el espacio mínimo */
+    min-width: 40px;
     margin-right: 10px;
-    
 }
-
 
 .navigation ul li a .icon ion-icon {
     font-size: 1.40rem; 
 }
 
-.navigation ul li a .title{  /*cierto problema */
+.navigation ul li a .title{
     position: relative;
     display: block;
     padding: 0 10px;
@@ -94,9 +98,8 @@
     white-space: nowrap;
 }
 
-/*Curva de la barra*/
-
-.navigation:hover ul li:hover a::before {
+/* Efecto borde curvo blanco SOLO en hover real, no en el activo */
+.navigation ul li:not(.hovered):hover > a::before {
     content: '';
     position: absolute;
     right: 0;
@@ -105,11 +108,11 @@
     height: 50px;
     background-color: transparent;
     border-radius: 50%;
-    box-shadow: 35px 35px 0 10px var(--white);
+    box-shadow: 35px 35px 0 10px #fff !important;
     pointer-events: none;
+    z-index: 2 !important;
 }
-
-.navigation:hover ul li:hover a::after {
+.navigation ul li:not(.hovered):hover > a::after {
     content: '';
     position: absolute;
     right: 0;
@@ -118,8 +121,9 @@
     height: 50px;
     background-color: transparent;
     border-radius: 50%;
-    box-shadow: 35px -35px 0 10px var(--white);
+    box-shadow: 35px -35px 0 10px #fff !important;
     pointer-events: none;
+    z-index: 2 !important;
 }
 
 .main{
@@ -145,4 +149,37 @@
     align-items: center;
     font-size: 2.5rem;
     cursor: pointer;
+}
+
+/* Sin cambios, solo comentario para compatibilidad con el chat moderno */
+
+/* Eliminar cualquier override de .chat-sidebar, .chat-card, etc. para que la barra lateral use solo los estilos globales */
+
+/* Estilo para el texto de la marca en la barra lateral, igual que en barraprove.css.css */
+.brand-row .title {
+  color: #ffffff !important;
+  font-size: 1.35rem;
+  font-weight: bold;
+  letter-spacing: 1px;
+  transition: none;
+}
+.brand-row:hover .title {
+  color: #fdf2e4 !important;
+}
+
+.navigation ul li.hovered {
+    background: #fff !important;
+    box-shadow: 0 2px 12px 0 #ffae0033;
+    border-top-left-radius: 30px;
+    border-bottom-left-radius: 30px;
+}
+.navigation ul li.hovered a,
+.navigation ul li.hovered a .icon,
+.navigation ul li.hovered a .title {
+    color: #FF6B00 !important;
+}
+.navigation ul li:not(.hovered) a,
+.navigation ul li:not(.hovered) a .icon,
+.navigation ul li:not(.hovered) a .title {
+    color: #fff !important;
 }

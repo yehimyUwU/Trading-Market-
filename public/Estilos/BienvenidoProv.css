@@ -1,3 +1,7 @@
+/* Neutralización de estilos globales para permitir el diseño moderno del perfil */
+/* Eliminar o comentar reglas de body, .content, .container, .card, etc. */
+/* Mantener solo lo necesario para la página de bienvenida, no para el perfil */
+
 * {
     margin: 0;
     padding: 0;
@@ -41,7 +45,7 @@ body {
     transform: translateY(-5px);
     box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
 }
- HEAD
+
 /* Estilos para los textos dentro de la tarjeta */
 .cardBox .card .numbers {
     font-size: 1.8rem;
