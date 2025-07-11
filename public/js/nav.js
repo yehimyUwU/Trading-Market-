@@ -776,7 +776,7 @@ document.addEventListener("DOMContentLoaded", function () {
                 // Mostrar imagen en base64
                 const imagenProveedor = proveedor.imagen
     ? proveedor.imagen
-    : `/Trading-Market-/public/imag/default.jpeg`;
+    : `hola/Trading-Market-/public/imag/default.jpeg`;
 
                 card.innerHTML = `
                     <div class="card position-relative h-100">
@@ -1021,11 +1021,61 @@ function eliminarProveedor(idProveedor, boton) {
     });
 }
 
-    const figures = document.querySelectorAll(".content-carrousel figure");
-    const total = figures.length;
-    const angle = 360 / total;
 
-    figures.forEach((figure, i) => {
-        const rotation = angle * i;
-        figure.style.transform = `rotateY(${rotation}deg) translateZ(300px)`;
+ const carousel = document.getElementById("carousel");
+  const preview = document.getElementById("carousel-preview");
+  const previewImg = preview.querySelector("img");
+  const scrollAmount = 280;
+
+  let autoScrollPaused = false;
+  let direction = 1;
+  let userInteracted = false;
+
+  // FUNCIONALIDAD DE FLECHAS (pausa temporal el auto scroll)
+  function scrollCarousel(dir) {
+    userInteracted = true;
+    carousel.scrollBy({ left: dir * scrollAmount, behavior: 'smooth' });
+
+    // pausa el auto scroll por 2 segundos
+    autoScrollPaused = true;
+    clearTimeout(window.autoScrollTimeout);
+    window.autoScrollTimeout = setTimeout(() => {
+      autoScrollPaused = false;
+      userInteracted = false;
+    }, 2000);
+  }
+
+  // PREVIEW FLOTANTE Y PAUSA AUTO SCROLL
+  document.querySelectorAll(".carousel-track img").forEach(img => {
+    img.addEventListener("mousemove", e => {
+      preview.style.display = "block";
+      previewImg.src = img.src;
+
+      const previewWidth = 520;
+      const previewHeight = 380;
+      const x = e.pageX + 20;
+      const y = e.pageY - previewHeight / 2;
+
+      preview.style.left = `${x}px`;
+      preview.style.top = `${Math.max(y, 40)}px`;
+
+      autoScrollPaused = true;
     });
+
+    img.addEventListener("mouseleave", () => {
+      preview.style.display = "none";
+      if (!userInteracted) autoScrollPaused = false;
+    });
+  });
+
+  // AUTO SCROLL SUAVE EN BUCLE
+  setInterval(() => {
+    if (autoScrollPaused) return;
+
+    const maxScrollLeft = carousel.scrollWidth - carousel.clientWidth;
+
+    if (carousel.scrollLeft >= maxScrollLeft) direction = -1;
+    if (carousel.scrollLeft <= 0) direction = 1;
+
+    carousel.scrollBy({ left: direction * 2, behavior: 'smooth' });
+  }, 20);

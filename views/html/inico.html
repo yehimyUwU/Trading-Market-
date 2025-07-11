@@ -27,21 +27,30 @@
     <div id="nav-container"></div>
     <!-- Banner Principal -->
 <!-- 3D Slideshow Section --> 
-<section id="slideshow">
-    <div class="entire-content">
-        <div class="content-carrousel" id="carousel">
-            <figure class="shadow"><img src="https://adnstudio.com/wp-content/uploads/2016/06/concepto-fresco-campana-de-publicidad-retail-en-el-punto-venta-para-aumentar-la-facturacion-cadena-supermercados-alimentacion-fresc-es-ratlla-1.jpg"/></figure>
-            <figure class="shadow"><img src="https://www.antevenio.com/wp-content/uploads/2021/01/Promoci%C3%B3n-producto.png"/></figure>
-            <figure class="shadow"><img src="https://marketplace.canva.com/EAFbwu3T1V4/2/0/1200w/canva-cartel-anuncio-heladeria-fotogr%C3%A1fico-rosado-chocolate-2B3pMtz5LUU.jpg"/></figure>
-            <figure class="shadow"><img src="https://images.pexels.com/photos/776653/pexels-photo-776653.jpeg?w=940&h=650&auto=compress&cs=tinysrgb"/></figure>
-            <figure class="shadow"><img src="https://images.pexels.com/photos/54630/japanese-cherry-trees-flowers-spring-japanese-flowering-cherry-54630.jpeg?w=940&h=650&auto=compress&cs=tinysrgb"/></figure>
-            <figure class="shadow"><img src="https://images.pexels.com/photos/131046/pexels-photo-131046.jpeg?w=940&h=650&auto=compress&cs=tinysrgb"/></figure>
-            <figure class="shadow"><img src="https://images.pexels.com/photos/302515/pexels-photo-302515.jpeg?w=940&h=650&auto=compress&cs=tinysrgb"/></figure>
-            <figure class="shadow"><img src="https://images.pexels.com/photos/301682/pexels-photo-301682.jpeg?w=940&h=650&auto=compress&cs=tinysrgb"/></figure>
-            <figure class="shadow"><img src="https://images.pexels.com/photos/933054/pexels-photo-933054.jpeg?w=940&h=650&auto=compress&cs=tinysrgb"/></figure>
-        </div>
+<section class="carousel-section">
+  <div class="carousel-container glass-effect">
+    <button class="carousel-btn left" onclick="scrollCarousel(-1)">&#10094;</button>
+
+    <div class="carousel-track neon-border" id="carousel">
+      <a href="vehiculos.html"><img src="https://hips.hearstapps.com/hmg-prod/images/anuncio-suzuki-lancia-delta-661417bb8bc73.jpg" alt="Vehículos"></a>
+      <a href="supermercado.html"><img src="https://openprint.com/wp-content/uploads/2023/08/stopper-supermercado.jpg" alt="Supermercado"></a>
+      <a href="Tecnologia.html"><img src="https://guru-soft.com/wp-content/uploads/2021/09/La-tecnologia-y-la-publicidad-una-relacion-que-crece.jpg" alt="Tecnología"></a>
+      <a href="Herramientas.html"><img src="https://img.freepik.com/foto-gratis/vista-martillo-acero-otros-elementos-herramientas-construccion_23-2150576410.jpg" alt="Herramientas"></a>
+      <a href="construccion.html"><img src="https://png.pngtree.com/thumb_back/fh260/background/20190223/ourmid/pngtree-simple-construction-city-advertising-background-backgroundsimplehand-paintedurban-constructionhelmetdrawingcurtainmechanical-image_73966.jpg" alt="Construcción"></a>
+      <a href="moda.html"><img src="https://img.freepik.com/psd-gratis/plantilla-facebook-moda-streetwear-degradado_23-2150534637.jpg" alt="Moda"></a>
+      <a href="animalesymascotas.html"><img src="https://img.freepik.com/foto-gratis/collaje-mascotas-muy-bonito-aislado_23-2150007407.jpg" alt="Mascotas"></a>
+      <a href="Electrodomesticos.html"><img src="https://img.freepik.com/vector-gratis/composicion-realista-electrodomesticos_1284-65307.jpg" alt="Electrodomésticos"></a>
+      <a href="Inmuebles.html"><img src="https://img.freepik.com/foto-gratis/mano-que-presenta-casa-modelo-campana-prestamos-hipotecarios_53876-104970.jpg" alt="Inmuebles"></a>
     </div>
+
+    <button class="carousel-btn right" onclick="scrollCarousel(1)">&#10095;</button>
+  </div>
+
+  <div id="carousel-preview"><img src="" alt="Preview"></div>
 </section>
+
+
+
 
 
 <!-- Título de la sección de productos -->
@@ -61,7 +70,8 @@
 
 
     <!-- Botón de volver arriba -->
-    <a class="btn d-flex align-items-center justify-content-between bg-primary text-white" style="
+    <a class="btn d-flex align-items-center justify-content-between text-white" style="
+    background-color: orange;
         position: fixed;
         bottom: 20px;
         left: 20px;
@@ -187,12 +197,12 @@
     <script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
 
     <script>
-        document.addEventListener("DOMContentLoaded", function () {
-            // Función para desplazarse al inicio
-            function scrollToTop() {
-                window.scrollTo({ top: 0, behavior: "smooth" });
-            }
+        // Hacer scrollToTop global para que el botón pueda llamarla
+        function scrollToTop() {
+            window.scrollTo({ top: 0, behavior: "smooth" });
+        }
 
+        document.addEventListener("DOMContentLoaded", function () {
             // Cargar productos
             cargarProductos();
 
@@ -409,6 +419,38 @@
                     } else {
                         alert(data.message || "Error al guardar calificación");
                     }
+                });
+            });
+        });
+
+        // Preview flotante para imágenes del carrusel
+        document.addEventListener("DOMContentLoaded", function () {
+            const preview = document.getElementById('carousel-preview');
+            const previewImg = preview.querySelector('img');
+            document.querySelectorAll('#carousel img').forEach(img => {
+                img.addEventListener('mouseenter', function (e) {
+                    previewImg.src = this.src;
+                    preview.style.display = 'block';
+                });
+                img.addEventListener('mousemove', function (e) {
+                    // Posiciona el preview cerca del mouse, pero sin salirse de la pantalla
+                    let x = e.clientX + 24;
+                    let y = e.clientY + 24;
+                    const padding = 20;
+                    const previewWidth = preview.offsetWidth || 400;
+                    const previewHeight = preview.offsetHeight || 400;
+                    if (x + previewWidth > window.innerWidth - padding) {
+                        x = window.innerWidth - previewWidth - padding;
+                    }
+                    if (y + previewHeight > window.innerHeight - padding) {
+                        y = window.innerHeight - previewHeight - padding;
+                    }
+                    preview.style.left = x + 'px';
+                    preview.style.top = y + 'px';
+                });
+                img.addEventListener('mouseleave', function () {
+                    preview.style.display = 'none';
+                    previewImg.src = '';
                 });
             });
         });

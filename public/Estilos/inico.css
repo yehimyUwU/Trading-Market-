@@ -4,7 +4,7 @@ body {
     font-family: 'Poppins', Arial, sans-serif;
     margin: 0;
     padding: 0;
-    background: linear-gradient(150deg, #f6feff 6%, rgba(243, 243, 243, 0.928) 64%,rgba(255, 255, 255, 0.928) 74%, rgb(216, 228, 252) 95%);
+    background: #fff;
     color: #333;
     font-size: 12px;
 }
@@ -91,11 +91,12 @@ body {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: 8px 30px; /* Reducir aún más el padding vertical */
-    background: linear-gradient(80deg, #306a91,hsl(189, 32%, 55%), #36558f, #306a91, #6d7ae9);
+    padding: 8px 30px;
+    /* Nuevo degradado de 4 colores: amarillo, naranja, amarillo quemado, naranja claro */
+    background: linear-gradient(90deg, #FFAE00 0%, #FF6B00 40%, #ff6822 60%, #f53b02 100%);
     background-size: 400% 400%;
     animation: cambiarFondo 10s ease-in-out infinite;
-    box-shadow: 0px 4px 15px rgba(55, 118, 255, 0.863);
+    box-shadow: 0px 4px 15px rgba(255, 110, 0, 0.5);
     border-radius: 10px;
     position: relative;
     color: #fff;
@@ -155,7 +156,7 @@ body {
   background-color: transparent;
 }
 .nav-links a:hover {
-  background-color: #003366; /* Azul oscuro */
+  background-color: #FF6B00;
   color: white;
   border-radius: 5px;
   transform: translateY(-3px);
@@ -178,7 +179,7 @@ body {
 .nav-links .dropdown-toggle:hover,
 .nav-links .dropdown-toggle:focus,
 .nav-links .dropdown-toggle[aria-expanded="true"] {
-  background-color: #003366 !important;
+  background-color: #FF6B00 !important;
   color: white !important;
   border-radius: 5px !important;
   transform: translateY(-3px);
@@ -214,7 +215,7 @@ body {
   font-weight: bold;
 }
 .dropdown-toggle:hover {
-  background-color: #003366;
+  background-color: #FF6B00;
   color: #000;
   transform: translateY(-3px);
 }
@@ -234,7 +235,7 @@ body {
   color: white;
 }
 .profile-btn {
-  background-color: #0EAFD1;
+  background-color: #FFAE00;
   display: flex;
   align-items: center;
   gap: 0.5rem;
@@ -243,22 +244,22 @@ body {
   font-size: 1.2em;
 }
 .profile-btn:hover {
-  background-color: #0c93b0;
+  background-color: #FF6B00;
   transform: translateY(-2px);
   box-shadow: 0 2px 5px rgba(0,0,0,0.2);
 }
 .logout-btn {
-  border: 1px solid #ff4444;
+  border: 1px solid #FF6B00;
   color: white;
 }
 .logout-btn:hover {
-  background-color: #ff4444;
+  background-color: #FF6B00;
 }
 
 
 .cart-icon {
   font-size: 30px; /* Aumentar el tamaño del ícono */
-  color: white; /* Asegurar que el color sea visible */
+  color: #FFAE00; /* Asegurar que el color sea visible */
   transition: transform 0.3s ease; /* Animación al pasar el mouse */
 }
 
@@ -347,17 +348,18 @@ body {
 /* Banner y Carrusel */
 .banner {
   text-align: center;
-  color: #fff;
+  /* Quitar fondo y dejar transparente */
+  background-color: transparent !important;
+  color: #FF6B00 !important;
   padding: 80px 20px;
   min-height: 300px;
   border-radius: 10px;
-  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.308);
+  box-shadow: none !important; /* Quita la sombra completamente */
   opacity: 1;
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  background-color: #a9baf0c5;
   position: relative;
 }
 .banner h1 {
@@ -397,7 +399,8 @@ body {
   margin: 20px auto;
   border: 5px solid rgba(255, 255, 255, 0.5);
   transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
-  background: linear-gradient(135deg, rgba(0, 0, 0, 0.384), rgba(0, 0, 0, 0.555));
+  /* Cambia el fondo del carrusel a un degradado naranja claro-medio-oscuro */
+  background: linear-gradient(90deg, #FFE5B4 0%, #FFAE00 40%, #FF6B00 80%, #f53b02 100%);
   backdrop-filter: blur(10px);
 }
 .carousel:hover {
@@ -508,7 +511,7 @@ body {
 
 /* Fondo de la página */
 body {
-  background-color: #121212;
+  background-color: #fff;
   color: white;
 }
 
@@ -549,7 +552,7 @@ body {
 
 .productos h2 {
     font-size: 2.5em;
-    color: #306a91;
+    color: #FF6B00;
 }
 
 .productos-container {
@@ -561,7 +564,8 @@ body {
 }
 
 .producto {
-    background: rgba(2, 91, 255, 0.3); /* Asegurar que el color sea semitransparente */
+    background: rgba(255, 174, 0, 0.3);
+    /* Asegurar que el color sea semitransparente */
     backdrop-filter: blur(5px); /* Efecto de desenfoque */
     padding: 15px;
     border-radius: 30px !important; /* Bordes redondeados */
@@ -570,7 +574,7 @@ body {
     width: 200px;
     height: 350px;
     text-align: center;
-    box-shadow: 0 4px 15px rgba(97, 164, 219, 0.397);
+    box-shadow: 0 4px 15px rgba(255, 107, 0, 0.25);
     transition: all 0.3s ease;
     margin: 15px auto;
     display: flex;
@@ -580,8 +584,8 @@ body {
 
 .producto:hover {
     transform: translateY(-5px);
-    background: rgba(102, 179, 252, 0.651);
-    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.3);
+    background: rgba(255, 174, 0, 0.651);
+    box-shadow: 0 6px 20px rgba(255, 107, 0, 0.3);
 }
 
 .producto img {
@@ -617,13 +621,40 @@ body {
 }
 
 .producto .btn {
-    background: rgba(14, 175, 209, 0.6);
+    background: rgba(255, 107, 0, 0.6);
     color: white;
     border: none;
 }
 
-.producto .btn:hover {
-    background: rgba(14, 121, 209, 0.8);
+/* Botón "Ver Detalles" naranja fuerte */
+#productosGrid .btn.btn-primary,
+.producto .btn.btn-primary,
+.btn.btn-primary {
+  background: #FF6B00 !important;
+  border: none !important;
+  color: #fff !important;
+  transition: background 0.2s;
+}
+#productosGrid .btn.btn-primary:hover,
+.producto .btn.btn-primary:hover,
+.btn.btn-primary:hover {
+  background: #ff6822 !important;
+}
+
+/* Botón "Agregar al carrito" naranja muy claro */
+#productosGrid .btn.btn-success,
+.producto .btn.btn-success,
+.btn.btn-success {
+  background: #FFE5B4 !important; /* naranja muy claro */
+  color: #FF6B00 !important;
+  border: none !important;
+  transition: background 0.2s;
+}
+#productosGrid .btn.btn-success:hover,
+.producto .btn.btn-success:hover,
+.btn.btn-success:hover {
+  background: #FFD699 !important;
+  color: #FF6B00 !important;
 }
 
 /* Tarjetas de productos estilo Bootstrap para inico.html */
@@ -731,7 +762,7 @@ body {
 footer, .pie-pagina {
     text-align: center;
     padding: 20px 0;
-    background: linear-gradient(80deg, #306a91, hsl(189, 32%, 55%), #36558f, #306a91, #6d7ae9);
+    background: linear-gradient(180deg, #FF6B00 0%, #FFAE00 100%);
     background-size: 400% 400%;
     animation: cambiarFondo 10s ease-in-out infinite;
     border-radius: 10px;
@@ -750,7 +781,7 @@ footer p, .pie-pagina {
     transition: color 0.3s ease, transform 0.3s ease;
 }
 .pie-pagina .red-social a:hover {
-    color: #ffcc00;
+    color: #FFAE00;
     transform: scale(1.2);
 }
 
@@ -758,7 +789,7 @@ footer p, .pie-pagina {
 #openChatbot {
   width: 60px;
   height: 60px;
-  background-color: #306a91; 
+  background-color: #FF6B00; 
   border: none;
   border-radius: 50%; 
   color: white;
@@ -774,7 +805,7 @@ footer p, .pie-pagina {
 }
 
 #openChatbot:hover {
-  background-color: #1c3d53; 
+  background-color: #FFAE00; 
 }
 
 #openChatbot i {
@@ -837,7 +868,7 @@ ion-icon{
 
 .hbot{
   font-weight: 600;
-  color: var(--blue);
+  color: #FF6B00;
 }
 
 /* Otros estilos útiles y únicos */
@@ -905,13 +936,13 @@ ion-icon{
 /* Estrellas */
 .estrella {
   font-size: 2rem;
-  color: #ccc;
+  color: #FFAE00;
   cursor: pointer;
   transition: color 0.2s ease;
 }
 
 .estrella.seleccionada {
-  color: gold;
+  color: #FF6B00;
 }
 
 /* Tabla de proveedores */
@@ -976,11 +1007,13 @@ ion-icon{
   }
 }
 
-/* Modales de producto: menos anchos y alineados a la izquierda */
+/* MODAL DE PRODUCTOS: MENOR ANCHO Y IMAGEN ORIGINAL */
+
+/* Solo para el modal de productos */
 #productoModal .modal-dialog.ancho-completo,
 #productoModal .modal-dialog {
-  max-width: 500px !important;
-  width: 95vw !important;
+  max-width: 400px !important; /* Más pequeño de ancho */
+  width: 98vw !important;
   min-width: 320px;
   margin: 0 auto !important;
   position: fixed !important;
@@ -993,6 +1026,28 @@ ion-icon{
   align-items: center !important;
   justify-content: center !important;
   z-index: 1050;
+}
+
+/* Imagen en el modal de productos: tamaño original, sin forzar ancho/alto */
+#productoModal .modal-body img#modalImagen {
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+  max-width: 100%;
+  max-height: 400px;
+  width: auto;
+  height: auto;
+  object-fit: contain;
+  border-radius: 10px;
+}
+
+/* Opcional: centrar el contenido del modal */
+#productoModal .modal-body .detalle-producto-modal,
+#productoModal .modal-body .mx-auto.d-flex.flex-column.align-items-center {
+  align-items: center !important;
+  justify-content: center !important;
+  display: flex !important;
+  flex-direction: column !important;
 }
 
 /* Centrar el modal de Bootstrap cuando está visible */
@@ -1013,7 +1068,7 @@ ion-icon{
   width: 100%;
   font-size: 2rem;
   font-weight: bold;
-  color: #306a91;
+  color: #FF6B00;
   margin-bottom: 0.5rem;
   z-index: 2;
   background: #fff;
@@ -1085,22 +1140,188 @@ ion-icon{
     margin-top: 10px;
     margin-bottom: 4px;
     display: block;
-    color: #306a91;
+    color: #FF6B00;
 }
 
 .filtros-sidebar select,
 .filtros-sidebar input[type="number"] {
+    border: 1px solid #FFAE00;
     width: 100%;
     margin-bottom: 16px;
     border-radius: 8px;
-    border: 1px solid #dbeafe;
     padding: 8px 12px;
     font-size: 15px;
 }
 
 .filtros-sidebar .btn {
+    background: linear-gradient(180deg, #FF6B00 0%, #FFAE00 100%);
+    color: #fff;
     width: 100%;
     margin-top: 10px;
+}
+
+@media (max-width: 900px) {
+    .filtros-sidebar-container {
+        flex-direction: column;
+        gap: 0;
+    }
+    .filtros-sidebar {
+        width: 100%;
+        max-width: 100%;
+        margin-bottom: 20px;
+    }
+}
+
+/* Carrusel sección y botones: todos los tonos de naranja */
+.carousel-section {
+  padding: 100px 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+}
+
+.carousel-container {
+  position: relative;
+  width: 90%;
+  max-width: 1300px;
+  border-radius: 20px;
+  overflow: hidden;
+  backdrop-filter: blur(12px);
+  background: linear-gradient(90deg, #FFE5B4 0%, #FFAE00 40%, #FF6B00 80%, #f53b02 100%);
+  border: 1px solid #FFAE00;
+  box-shadow: 0 0 30px rgba(255, 174, 0, 0.2);
+}
+
+.carousel-track {
+  display: flex;
+  gap: 24px;
+  overflow-x: auto;
+  scroll-behavior: smooth;
+  padding: 20px;
+  scrollbar-width: none;
+  box-shadow: 0 0 15px rgba(255, 174, 0, 0.4);
+}
+
+.carousel-track::-webkit-scrollbar {
+  display: none;
+}
+
+.carousel-track a {
+  flex: 0 0 auto;
+  width: 260px;
+  height: 160px;
+  border-radius: 16px;
+  overflow: hidden;
+  box-shadow: 0 0 15px rgba(255, 174, 0, 0.4);
+  transition: transform 0.4s ease, box-shadow 0.4s ease;
+}
+
+.carousel-track a:hover {
+  transform: scale(1.15) rotateZ(1deg);
+  box-shadow: 0 0 25px rgba(255, 107, 0, 0.7);
+  z-index: 10;
+}
+
+.carousel-track img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+  transition: transform 0.3s ease;
+}
+
+.carousel-btn {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  font-size: 36px;
+  background: linear-gradient(45deg, #FFAE00, #FF6B00, #ff6822, #f53b02);
+  color: #fff;
+  border: none;
+  padding: 12px 16px;
+  cursor: pointer;
+  z-index: 100;
+  border-radius: 50%;
+  box-shadow: 0 0 20px rgba(255, 174, 0, 0.6);
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+<<<<<<< HEAD
+/* Modal de producto: aumentar tamano de ancho y alto */
+#productoModal .modal-dialog,
+#productoModal .modal-dialog.ancho-completo {
+  max-width: 700px !important;   /* antes 500px */
+  width: 98vw !important;        /* antes 95vw */
+  min-width: 350px;
+  margin: 0 auto !important;
+  position: static !important;
+  left: auto !important;
+  top: auto !important;
+  transform: none !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  height: 95vh;                 /* antes 100vh */
+=======
+.carousel-btn:hover {
+  transform: translateY(-50%) scale(1.1);
+  box-shadow: 0 0 30px rgba(255, 235, 59, 0.9);
+>>>>>>> 6daf5ff9a7295fb33d67fb9cbf620f03b4d364c3
+}
+
+.carousel-btn.left {
+  left: 10px;
+}
+
+.carousel-btn.right {
+  right: 10px;
+}
+
+/* Preview flotante */
+#carousel-preview {
+  display: none;
+  position: fixed;
+  z-index: 9999;
+  pointer-events: none;
+  border: 5px solid #ffa726;
+  background: rgba(20, 10, 0, 0.95);
+  box-shadow:
+    0 0 60px rgba(255, 165, 0, 0.5),
+    0 0 120px rgba(255, 215, 0, 0.4);
+  border-radius: 20px;
+  padding: 14px;
+  max-width: 800px;
+  max-height: 540px;
+  transform: scale(1);
+  animation: popIn 0.3s ease-out;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+#carousel-preview img {
+  display: block;
+  max-width: 780px;
+  max-height: 520px;
+  width: auto;
+  height: auto;
+  border-radius: 16px;
+  box-shadow: 0 8px 24px rgba(255, 152, 0, 0.5);
+  transition: transform 0.3s ease-in-out;
+}
+
+#carousel-preview:hover {
+  transform: scale(1.05);
+}
+
+@keyframes popIn {
+  from {
+    transform: scale(0.8);
+    opacity: 0;
+  }
+  to {
+    transform: scale(1);
+    opacity: 1;
+  }
 }
 
 @media (max-width: 900px) {
@@ -1188,315 +1409,212 @@ ion-icon{
   max-width: 420px;
   margin: auto;
   border-radius: 16px;
-
-      left: 0;
-      width: 50%;
-      padding-left: 15px;
-      font-weight: bold;
-      text-align: left;
-  }
-
-
-/* Modales de producto: menos anchos y alineados a la izquierda */
-#productoModal .modal-dialog.ancho-completo,
-#productoModal .modal-dialog {
-  max-width: 500px !important;
-  width: 95vw !important;
-  min-width: 320px;
-  margin: 0 auto !important;
-  position: fixed !important;
-  left: 50% !important;
-  top: 50% !important;
-  transform: translate(-50%, -50%) !important;
-  right: auto !important;
-  bottom: auto !important;
-  display: block !important;
-  align-items: center !important;
-  justify-content: center !important;
-  z-index: 1050;
 }
 
-/* Centrar el modal de Bootstrap cuando está visible */
-#productoModal.modal.fade.show {
-  display: flex !important;
-  align-items: center !important;
-  justify-content: center !important;
+#modalPrecio{
+  color: #FF6B00;
+  font-size: 1.5rem;
 }
 
-/* Excepción para el modal de productos: el nombre siempre visible y la imagen limitada */
-#productoModal .modal-header {
-  flex-direction: column;
-  align-items: center;
-  text-align: center;
-}
-
-#productoModal .modal-title {
-  width: 100%;
-  font-size: 2rem;
-  font-weight: bold;
-  color: #306a91;
-  margin-bottom: 0.5rem;
-  z-index: 2;
-  background: #fff;
-  padding: 0.5rem 0;
-  /* Opcional: agrega sombra para mejor visibilidad */
-  text-shadow: 0 2px 8px #fff, 0 1px 0 #fff;
-}
-
-#productoModal .modal-body {
-  padding-top: 0 !important;
-}
-
-/* Modal de producto: aumentar tamano de ancho y alto */
-#productoModal .modal-dialog,
-#productoModal .modal-dialog.ancho-completo {
-  max-width: 700px !important;   /* antes 500px */
-  width: 98vw !important;        /* antes 95vw */
-  min-width: 350px;
-  margin: 0 auto !important;
-  position: static !important;
-  left: auto !important;
-  top: auto !important;
-  transform: none !important;
-  display: flex !important;
-  align-items: center !important;
-  justify-content: center !important;
-  height: 95vh;                 /* antes 100vh */
-}
-
-/* Centrar el modal de Bootstrap cuando está visible */
-#productoModal.modal.fade.show {
-  display: flex !important;
-  align-items: center !important;
-  justify-content: center !important;
-}
-
-/* Permite que el contenido del modal haga scroll si es necesario */
-#productoModal .modal-content {
-  max-height: 92vh;             /* antes 90vh */
-  overflow-y: auto;
-}
-
-/* Ajusta el modal para pantallas pequeñas */
-@media (max-width: 900px) {
-  #productoModal .modal-dialog,
-  #productoModal .modal-dialog.ancho-completo {
-    max-width: 99vw !important;
-    min-width: unset;
-    margin: 0 !important;
-    height: 98vh;
-  }
-  #productoModal .modal-content {
-    max-height: 97vh;
-  }
-}
-
-/* Filtros en barra lateral */
-.filtros-sidebar {
-    background: #fff;
-    border-radius: 16px;
-    box-shadow: 0 4px 16px rgba(44, 105, 184, 0.08);
-    padding: 24px 18px 18px 18px;
-    margin-bottom: 0;
-    margin-right: 0;
-}
-
-.filtros-sidebar label {
-    font-weight: 600;
-    margin-top: 10px;
-    margin-bottom: 4px;
-    display: block;
-    color: #306a91;
-}
-
-.filtros-sidebar select,
-.filtros-sidebar input[type="number"] {
-    width: 100%;
-    margin-bottom: 16px;
-    border-radius: 8px;
-    border: 1px solid #dbeafe;
-    padding: 8px 12px;
-    font-size: 15px;
-}
-
-.filtros-sidebar .btn {
-    width: 100%;
-    margin-top: 10px;
-}
-
-@media (max-width: 900px) {
-    .filtros-sidebar-container {
-        flex-direction: column;
-        gap: 0;
-    }
-    .filtros-sidebar {
-        width: 100%;
-        max-width: 100%;
-        margin-bottom: 20px;
-    }
-}
-
-/* Limitar nombre, descripción y precio en tarjetas de producto */
-#productosGrid .card-title,
-#productosGrid .card-text,
-#productosGrid .card-price,
-.producto h3,
-.producto p,
-.producto .card-price {
-  overflow: hidden;
-  text-overflow: ellipsis;
-  white-space: nowrap;
-  max-width: 100%;
-  display: block;
-}
-
-/* Si usas .card-body para el texto, también aplica el límite */
-#productosGrid .card-body .card-title,
-#productosGrid .card-body .card-text,
-#productosGrid .card-body .card-price {
-  overflow: hidden;
-  text-overflow: ellipsis;
-  white-space: nowrap;
-  max-width: 100%;
-  display: block;
-}
-
-/* Para tarjetas fuera de #productosGrid */
-.card-title,
-.card-text,
-.card-price {
-  overflow: hidden;
-  text-overflow: ellipsis;
-  white-space: nowrap;
-  max-width: 100%;
-  display: block;
-}
-
-/* Para tarjetas fuera de #productosGrid */
-.card-title,
-.card-text,
-.card-price {
-  overflow: hidden;
-  text-overflow: ellipsis;
-  white-space: nowrap;
-  max-width: 100%;
-  display: block;
-}
-
-/* Corrige el centrado del modal de perfil sin bloquear la página */
-#userProfileModal {
-  /* Elimina display: flex y centrado global que bloquea la página */
-  /* display: flex !important;
-  align-items: center !important;
-  justify-content: center !important; */
-}
-
-#userProfileModal .modal-dialog {
-  position: fixed !important;
-  top: 50% !important;
-  left: 50% !important;
-  transform: translate(-50%, -50%) !important;
-  margin: 0 !important;
-  min-height: unset !important;
-  display: block !important;
-  z-index: 1060;
-  width: auto;
-  max-width: 95vw;
-}
-
-/* Opcional: limitar el ancho máximo y mejorar el aspecto */
-#userProfileModal .modal-content {
-  max-width: 420px;
-  margin: auto;
-  border-radius: 16px;
-}
-
-/* 3D Slideshow */
-* {
-    margin: 0;
-    padding: 0;
-}
-
-html, body {
-    max-width: 100%;
-    overflow-x: hidden;
-    overflow-y: auto;
-}
-
-#slideshow {
-    margin: 60px auto 0 auto; /* ← este 40px da espacio arriba */
-    padding-top: 0px;
-    width: 100%;
-    box-sizing: border-box;
-}
-
-
-.entire-content {
-    margin: auto;
-    width: 190px;
-    perspective: 1000px;
+  .carousel-section {
+    padding: 30px 0; /* reducido */
+    display: flex;
+    justify-content: center;
+    align-items: center;
     position: relative;
-    padding: 10px 0 30px 0; /* Aumenta padding-bottom para crear espacio abajo */
-    height: 180px; /* Un poco más alto para que no se corte nada */
-}
+  }
 
-
-.content-carrousel {
-    width: 100%;
-    height: 100%;
-    position: relative; /* ✅ Esto es necesario para contener los figure con position absolute */
-    animation: rotar 15s infinite linear;
-    transform-style: preserve-3d;
-}
-
-.content-carrousel:hover {
-    animation-play-state: paused;
-    cursor: pointer;
-}
-
-.content-carrousel figure {
-    width: 100%;
-    height: 120px;
-    border: 1px solid #3b444b;
+  .carousel-container {
+    position: relative;
+    width: 90%;
+    max-width: 1300px;
+    border-radius: 20px;
     overflow: hidden;
-    position: absolute;
-    transition: transform 0.3s;
-}
+    backdrop-filter: blur(12px);
+    background: linear-gradient(90deg, #FFE5B4 0%, #FFAE00 40%, #FF6B00 80%, #f53b02 100%);
+    border: 1px solid #FFAE00;
+    box-shadow: 0 0 30px rgba(255, 174, 0, 0.2);
+  }
 
-/* Posiciones en 3D */
-.content-carrousel figure:nth-child(1) { transform: rotateY(0deg) translateZ(300px); }
-.content-carrousel figure:nth-child(2) { transform: rotateY(40deg) translateZ(300px); }
-.content-carrousel figure:nth-child(3) { transform: rotateY(80deg) translateZ(300px); }
-.content-carrousel figure:nth-child(4) { transform: rotateY(120deg) translateZ(300px); }
-.content-carrousel figure:nth-child(5) { transform: rotateY(160deg) translateZ(300px); }
-.content-carrousel figure:nth-child(6) { transform: rotateY(200deg) translateZ(300px); }
-.content-carrousel figure:nth-child(7) { transform: rotateY(240deg) translateZ(300px); }
-.content-carrousel figure:nth-child(8) { transform: rotateY(280deg) translateZ(300px); }
-.content-carrousel figure:nth-child(9) { transform: rotateY(320deg) translateZ(300px); }
-.content-carrousel figure:nth-child(10) { transform: rotateY(360deg) translateZ(300px); }
+  .carousel-track {
+    display: flex;
+    gap: 24px;
+    overflow-x: auto;
+    scroll-behavior: smooth;
+    padding: 16px;
+    scrollbar-width: none;
+    box-shadow: 0 0 15px rgba(255, 174, 0, 0.4);
+  }
 
-.content-carrousel img {
+  .carousel-track::-webkit-scrollbar {
+    display: none;
+  }
+
+  .carousel-track a {
+    flex: 0 0 auto;
+    width: 260px;
+    height: 160px;
+    border-radius: 16px;
+    overflow: hidden;
+    box-shadow: 0 0 15px rgba(255, 174, 0, 0.4);
+    transition: transform 0.4s ease, box-shadow 0.4s ease;
+  }
+
+  .carousel-track a:hover {
+    transform: scale(1.15) rotateZ(1deg);
+    box-shadow: 0 0 25px rgba(255, 107, 0, 0.7);
+    z-index: 10;
+  }
+
+  .carousel-track img {
     width: 100%;
     height: 100%;
-    transition: all 300ms;
     object-fit: cover;
-}
+    display: block;
+    transition: transform 0.3s ease;
+  }
 
-.content-carrousel img:hover {
-    transform: scale(1.2);
-}
-
-.shadow {
+  .carousel-btn {
     position: absolute;
-    box-shadow: 0px 0px 20px 0px #000;
-    border-radius: 1px;
-}
+    top: 50%;
+    transform: translateY(-50%);
+    font-size: 36px;
+    background: linear-gradient(45deg, #FFAE00, #FF6B00, #f53b02);
+    color: #fff;
+    border: none;
+    padding: 12px 16px;
+    cursor: pointer;
+    z-index: 100;
+    border-radius: 50%;
+    box-shadow: 0 0 20px rgba(255, 174, 0, 0.6);
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+  }
 
-@keyframes rotar {
+  .carousel-btn:hover {
+    transform: translateY(-50%) scale(1.1);
+    box-shadow: 0 0 30px rgba(255, 235, 59, 0.9);
+  }
+
+  .carousel-btn.left {
+    left: 10px;
+  }
+
+  .carousel-btn.right {
+    right: 10px;
+  }
+
+  /* Preview flotante */
+  #carousel-preview {
+    display: none;
+    position: fixed;
+    z-index: 9999;
+    pointer-events: none;
+    border: 5px solid #ffa726;
+    background: rgba(20, 10, 0, 0.95);
+    box-shadow:
+      0 0 60px rgba(255, 165, 0, 0.5),
+      0 0 120px rgba(255, 215, 0, 0.4);
+    border-radius: 20px;
+    padding: 14px;
+    max-width: 800px;
+    max-height: 540px;
+    transform: scale(1);
+    animation: popIn 0.3s ease-out;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+  }
+
+  #carousel-preview img {
+    display: block;
+    max-width: 780px;
+    max-height: 520px;
+    width: auto;
+    height: auto;
+    border-radius: 16px;
+    box-shadow: 0 8px 24px rgba(255, 152, 0, 0.5);
+    transition: transform 0.3s ease-in-out;
+  }
+
+  #carousel-preview:hover {
+    transform: scale(1.05);
+  }
+
+  @keyframes popIn {
     from {
-        transform: rotateY(0deg);
+      transform: scale(0.8);
+      opacity: 0;
     }
     to {
-        transform: rotateY(360deg);
+      transform: scale(1);
+      opacity: 1;
     }
+  }
+
+/* Comentarios en el modal de productos: más anchos y grandes */
+#productoModal .comentarios-producto-modal,
+#productoModal .modal-body .mt-4.w-100,
+#productoModal .modal-body .col-md-5 {
+  background: #fff;
+  border-radius: 18px;
+  box-shadow: 0 2px 12px rgba(255, 174, 0, 0.08);
+  padding: 32px 48px 32px 48px;
+  margin: 0 auto 18px auto;
+  width: 100%;
+  max-width: 650px;
+  min-width: 350px;
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
 }
+
+#productoModal .comentarios-producto-modal textarea,
+#productoModal .modal-body .col-md-5 textarea,
+#productoModal .modal-body .mt-4.w-100 textarea {
+  border-radius: 10px;
+  min-width: 100%;
+  max-width: 100%;
+  min-height: 80px;
+  font-size: 1.1rem;
+  resize: vertical;
+  margin-bottom: 16px;
+  padding: 14px 18px;
+  box-sizing: border-box;
+}
+
+#productoModal #listaComentarios,
+#productoModal .modal-body .col-md-5 #listaComentarios,
+#productoModal .comentarios-producto-modal #listaComentarios {
+  border-radius: 10px;
+  background: #f8f9fa;
+  padding: 16px 20px;
+  margin-top: 14px;
+  min-width: 100%;
+  max-width: 100%;
+  min-height: 80px;
+  box-sizing: border-box;
+  overflow-x: auto;
+}
+
+/* Estrellas más grandes y centradas */
+#productoModal #calificacion,
+#productoModal .modal-body #calificacion {
+  width: 100%;
+  max-width: 650px;
+  margin: 0 auto 24px auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+#productoModal #estrellas {
+  font-size: 2.8rem;
+  margin: 10px 0 10px 0;
+  display: flex;
+  justify-content: center;
+  gap: 12px;
+}
+
+#productoModal .estrella {
+  font-size: 2.8rem;
+  margin: 0 6px;
+}
+
