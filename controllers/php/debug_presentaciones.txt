@@ -3,20 +3,41 @@ Array
     [0] => Array
         (
             [unidad] => g
-            [precio] => 5000
+            [precio] => 23123
             [stock] => 23
-            [largo] => 45
-            [ancho] => 23
-            [alto] => 54
+            [largo] => 32
+            [ancho] => 32
+            [alto] => 655
             [unidad_dimension] => cm
-            [tamano] => 350
+            [tamano] => 123
             [imagen_file] => Array
                 (
-                    [name] => WhatsApp Image 2025-06-23 at 2.35.22 PM.jpeg
+                    [name] => ideita para dibujar miau _3.jpg
                     [type] => image/jpeg
-                    [tmp_name] => C:\xampp\tmp\phpCD44.tmp
+                    [tmp_name] => C:\xampp\tmp\phpD2FF.tmp
                     [error] => 0
-                    [size] => 85575
+                    [size] => 81261
+                )
+
+        )
+
+    [1] => Array
+        (
+            [unidad] => par
+            [precio] => 54
+            [stock] => 45
+            [largo] => 443
+            [ancho] => 34
+            [alto] => 34
+            [unidad_dimension] => cm
+            [tamano] => 454
+            [imagen_file] => Array
+                (
+                    [name] => doctor strange.png
+                    [type] => image/png
+                    [tmp_name] => C:\xampp\tmp\phpD300.tmp
+                    [error] => 0
+                    [size] => 160991
                 )
 
         )

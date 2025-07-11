@@ -220,16 +220,44 @@ $id_proveedor = $_SESSION['usuario']['id'];
                 presentacionDiv.querySelector('input[name*="[ancho]"]').value = presentacion.ancho || '';
                 presentacionDiv.querySelector('input[name*="[alto]"]').value = presentacion.alto || '';
                 presentacionDiv.querySelector('select[name*="[unidad_dimension]"]').value = presentacion.unidad_dimension || '';
+                // Asegura que presentacion.imagen tenga la ruta correcta
+                if (!presentacion.imagen && presentacion.nombre_imagen) {
+                    presentacion.imagen = '../../public/imag/' + presentacion.nombre_imagen;
+                }
                 // Previsualizar la imagen si existe
                 const preview = presentacionDiv.querySelector('.presentacion-preview');
+                console.log('Imagen previa para presentación', idx, ':', presentacion.imagen);
                 if (preview && presentacion.imagen) {
                     preview.innerHTML = `<img src="${presentacion.imagen}" alt="Imagen presentación" style="max-width:80px;max-height:80px;">`;
+                }
+                // Al reconstruir presentaciones en abrirModalEdicion, agrega el input hidden para id_presentacion si existe
+                if (presentacion.id_presentacion) {
+                    let inputId = document.createElement('input');
+                    inputId.type = 'hidden';
+                    inputId.name = `presentaciones[${idx}][id_presentacion]`;
+                    inputId.value = presentacion.id_presentacion;
+                    presentacionDiv.appendChild(inputId);
+                }
+                // Agrega input hidden para nombre_imagen si existe
+                if (presentacion.nombre_imagen) {
+                    let inputNombreImagen = document.createElement('input');
+                    inputNombreImagen.type = 'hidden';
+                    inputNombreImagen.name = `presentaciones[${idx}][nombre_imagen]`;
+                    inputNombreImagen.value = presentacion.nombre_imagen;
+                    presentacionDiv.appendChild(inputNombreImagen);
                 }
             });
         }
 
         // Mostrar el modal
         document.getElementById('modalProducto').style.display = 'block';
+        // Asignar el evento al botón publicarBtn cada vez que se abre el modal
+        setTimeout(() => {
+            const btn = document.getElementById('publicarBtn');
+            if (btn) {
+                btn.onclick = validarFormulario;
+            }
+        }, 100);
     }
 
     // Función para cargar categorías y seleccionar la correcta en modo edición
@@ -296,6 +324,7 @@ $id_proveedor = $_SESSION['usuario']['id'];
 
     // Función para manejar el envío del formulario (crear o actualizar)
     function validarFormulario() { 
+        console.log('validarFormulario ejecutándose');
         const mensajesError = document.querySelectorAll('.error-mensaje');
         mensajesError.forEach(mensaje => mensaje.textContent = '');
         let hayErrores = false;
@@ -329,6 +358,7 @@ $id_proveedor = $_SESSION['usuario']['id'];
             hayErrores = true;
         }
 
+        console.log('¿Hay errores?', hayErrores);
         if (!hayErrores) {
             const formData = new FormData();
             formData.append('id_proveedor', idProveedor);
@@ -340,6 +370,11 @@ $id_proveedor = $_SESSION['usuario']['id'];
             // Agregar presentaciones al FormData
             const presentaciones = document.querySelectorAll('.presentacion-item');
             presentaciones.forEach((presentacion, index) => {
+                // Si existe un id_presentacion (en modo edición), inclúyelo
+                const idPresentacionInput = presentacion.querySelector('input[name*="[id_presentacion]"]');
+                if (idPresentacionInput) {
+                    formData.append(`presentaciones[${index}][id_presentacion]`, idPresentacionInput.value);
+                }
                 const tamaño = presentacion.querySelector('input[name*="[tamaño]"]').value;
                 const unidad = presentacion.querySelector('select[name*="[unidad]"]').value;
                 const precio = presentacion.querySelector('input[name*="[precio]"]').value;
@@ -524,6 +559,13 @@ $id_proveedor = $_SESSION['usuario']['id'];
         
         // Mostrar el modal
         document.getElementById('modalProducto').style.display = 'block';
+        // Asignar el evento al botón publicarBtn cada vez que se abre el modal
+        setTimeout(() => {
+            const btn = document.getElementById('publicarBtn');
+            if (btn) {
+                btn.onclick = validarFormulario;
+            }
+        }, 100);
     }
 
     // Función para cerrar el modal
@@ -556,7 +598,7 @@ $id_proveedor = $_SESSION['usuario']['id'];
 
     // Event listeners
     document.getElementById('btnAbrirModal').addEventListener('click', abrirModalCreacion);
-    document.getElementById('publicarBtn').addEventListener('click', validarFormulario);
+    // Elimina cualquier addEventListener global para publicarBtn si existe
 
     window.onclick = function(event) {
         const modal = document.getElementById('modalProducto');
@@ -564,6 +606,13 @@ $id_proveedor = $_SESSION['usuario']['id'];
             cerrarModal();
         }
     }
+
+    // Delegación de eventos para asegurar que el botón funcione aunque se regenere el modal
+    document.addEventListener('click', function(e) {
+        if (e.target && e.target.id === 'publicarBtn') {
+            validarFormulario();
+        }
+    });
 
     // Cargar categorías al inicio
     document.addEventListener('DOMContentLoaded', function() {
@@ -811,9 +860,16 @@ $id_proveedor = $_SESSION['usuario']['id'];
             const unidad = presentacion.querySelector('select[name*="[unidad]"]').value;
             const precio = presentacion.querySelector('input[name*="[precio]"]').value;
             const stock = presentacion.querySelector('input[name*="[stock]"]').value;
-            const imagen = presentacion.querySelector('input[type="file"]').files[0];
-            
-            if (!tamaño || !unidad || !precio || !stock || !imagen) {
+            const imagenInput = presentacion.querySelector('input[type="file"]');
+            const imagen = imagenInput.files[0];
+            const preview = presentacion.querySelector('.presentacion-preview');
+            const tieneImagenPrevia = preview && preview.querySelector('img');
+
+            // Log de depuración
+            console.log(`Presentación ${index + 1}: tamaño=${tamaño}, unidad=${unidad}, precio=${precio}, stock=${stock}, imagen=${!!imagen}, tieneImagenPrevia=${!!tieneImagenPrevia}`);
+
+            // Validación: en edición, la imagen solo es obligatoria si no hay previa ni nueva
+            if (!tamaño || !unidad || !precio || !stock || (!imagen && !tieneImagenPrevia)) {
                 errorElement.textContent = `Complete todos los campos obligatorios de la presentación ${index + 1}.`;
                 hayErrores = true;
             }

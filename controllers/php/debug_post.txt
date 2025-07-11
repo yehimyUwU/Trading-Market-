@@ -1,21 +1,33 @@
 Array
 (
     [id_proveedor] => 4
-    [nombre] => efrwfegrw
-    [descripcion] => egwe
-    [categoria] => 8
-    [subcategoria] => 22
+    [nombre] => ewfgqe
+    [descripcion] => ewrfqer
+    [categoria] => 17
+    [subcategoria] => 51
     [presentaciones] => Array
         (
             [0] => Array
                 (
-                    [tamaño] => 350
+                    [tamaño] => 123
                     [unidad] => g
-                    [precio] => 5000
+                    [precio] => 23123
                     [stock] => 23
-                    [largo] => 45
-                    [ancho] => 23
-                    [alto] => 54
+                    [largo] => 32
+                    [ancho] => 32
+                    [alto] => 655
+                    [unidad_dimension] => cm
+                )
+
+            [1] => Array
+                (
+                    [tamaño] => 454
+                    [unidad] => par
+                    [precio] => 54
+                    [stock] => 45
+                    [largo] => 443
+                    [ancho] => 34
+                    [alto] => 34
                     [unidad_dimension] => cm
                 )
 

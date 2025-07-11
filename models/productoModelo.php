@@ -435,6 +435,8 @@ class ProductoModelo {
                     throw new Exception("Imagen requerida para la presentación " . ($key + 1) . ". Error: " . (isset($presentacion['imagen_file']['error']) ? $presentacion['imagen_file']['error'] : 'No file'));
                 }
 
+                error_log('[DEBUG] Nombre de imagen generado para presentacion ' . ($key + 1) . ': ' . $nombreImagen);
+
                 // Insertar presentación
                 $stmtPresentacion = $pdo->prepare("
                     INSERT INTO presentacion_producto (
@@ -464,6 +466,7 @@ class ProductoModelo {
                 $stmtPresentacion->bindParam(":alto", $alto);
                 $stmtPresentacion->bindParam(":unidad_dimension", $unidad_dimension);
 
+                error_log('[DEBUG] Insertando presentacion con nombre_imagen: ' . $nombreImagen);
                 if (!$stmtPresentacion->execute()) {
                     $errorInfo = $stmtPresentacion->errorInfo();
                     error_log('[ERROR] Error al registrar la presentación ' . ($key + 1) . ': ' . $errorInfo[2]);
@@ -614,14 +617,153 @@ class ProductoModelo {
             }
 
             // Obtener presentaciones
-            $stmt2 = $pdo->prepare("SELECT *, CONCAT('../../public/imag/', nombre_imagen) as imagen FROM presentacion_producto WHERE id_producto = :id_producto");
+            $stmt2 = $pdo->prepare("SELECT *, nombre_imagen as nombre_imagen, CONCAT('../../public/imag/', nombre_imagen) as imagen FROM presentacion_producto WHERE id_producto = :id_producto");
             $stmt2->bindParam(":id_producto", $id_producto, PDO::PARAM_INT);
             $stmt2->execute();
             $presentaciones = $stmt2->fetchAll(PDO::FETCH_ASSOC);
 
+            // Asegura que cada presentación tenga ambas propiedades
+            foreach ($presentaciones as &$pres) {
+                if (!isset($pres['nombre_imagen']) || !$pres['nombre_imagen']) {
+                    $pres['nombre_imagen'] = null;
+                }
+                if (!isset($pres['imagen']) || !$pres['nombre_imagen']) {
+                    $pres['imagen'] = '../../public/imagenes_P/default.jpeg';
+                }
+            }
+
             $producto['presentaciones'] = $presentaciones;
             return ["success" => true, "producto" => $producto];
         } catch (Exception $e) {
+            return ["success" => false, "message" => $e->getMessage()];
+        }
+    }
+
+    public static function mdlEditarProductoConPresentaciones($id_producto, $nombre, $categoria, $descripcion, $subcategoria, $id_proveedor, $presentaciones) {
+        try {
+            $pdo = Conexion::conectar();
+            $pdo->beginTransaction();
+
+            // Actualizar datos generales del producto
+            $stmt = $pdo->prepare("UPDATE producto SET nombre = :nombre, id_categoria = :categoria, id_subcategoria = :subcategoria, descripcion = :descripcion, id_empresa = :id_empresa WHERE id_producto = :id_producto");
+            $stmt->bindParam(":nombre", $nombre, PDO::PARAM_STR);
+            $stmt->bindParam(":categoria", $categoria, PDO::PARAM_INT);
+            $stmt->bindParam(":subcategoria", $subcategoria, PDO::PARAM_INT);
+            $stmt->bindParam(":descripcion", $descripcion, PDO::PARAM_STR);
+            $stmt->bindParam(":id_empresa", $id_proveedor, PDO::PARAM_INT);
+            $stmt->bindParam(":id_producto", $id_producto, PDO::PARAM_INT);
+            $stmt->execute();
+
+            // Obtener IDs de presentaciones actuales
+            $stmtIds = $pdo->prepare("SELECT id_presentacion FROM presentacion_producto WHERE id_producto = :id_producto");
+            $stmtIds->bindParam(":id_producto", $id_producto, PDO::PARAM_INT);
+            $stmtIds->execute();
+            $idsActuales = $stmtIds->fetchAll(PDO::FETCH_COLUMN);
+            $idsEnviados = [];
+            $imagenPrincipal = null;
+
+            foreach ($presentaciones as $key => $presentacion) {
+                // Si tiene id_presentacion, actualizar; si no, insertar
+                if (!empty($presentacion['id_presentacion'])) {
+                    $idsEnviados[] = $presentacion['id_presentacion'];
+                    // Si hay nueva imagen, procesarla
+                    $nombreImagen = $presentacion['nombre_imagen'] ?? null;
+                    if (isset($presentacion['imagen_file']) && $presentacion['imagen_file']['error'] === UPLOAD_ERR_OK) {
+                        $imagen = $presentacion['imagen_file'];
+                        $nombreImagen = "producto_" . $id_producto . "_presentacion_" . ($key + 1) . "_" . uniqid() . "_" . basename($imagen['name']);
+                        $rutaDestino = "../../public/imag/" . $nombreImagen;
+                        if (!move_uploaded_file($imagen['tmp_name'], $rutaDestino)) {
+                            throw new Exception("Error al subir la imagen de la presentación " . ($key + 1));
+                        }
+                    }
+                    // Si no hay nueva imagen y nombreImagen está vacío, consulta el valor anterior de la base de datos
+                    if (empty($nombreImagen)) {
+                        $stmtPrev = $pdo->prepare("SELECT nombre_imagen FROM presentacion_producto WHERE id_presentacion = :id_presentacion");
+                        $stmtPrev->bindParam(":id_presentacion", $presentacion['id_presentacion']);
+                        $stmtPrev->execute();
+                        $prev = $stmtPrev->fetch(PDO::FETCH_ASSOC);
+                        if ($prev && !empty($prev['nombre_imagen'])) {
+                            $nombreImagen = $prev['nombre_imagen'];
+                        }
+                    }
+                    // Actualizar presentación
+                    $stmtP = $pdo->prepare("UPDATE presentacion_producto SET tamano = :tamano, unidad = :unidad, precio = :precio, stock = :stock, nombre_imagen = :nombre_imagen, largo = :largo, ancho = :ancho, alto = :alto, unidad_dimension = :unidad_dimension WHERE id_presentacion = :id_presentacion AND id_producto = :id_producto");
+                    $stmtP->bindParam(":tamano", $presentacion['tamano']);
+                    $stmtP->bindParam(":unidad", $presentacion['unidad']);
+                    $stmtP->bindParam(":precio", $presentacion['precio']);
+                    $stmtP->bindParam(":stock", $presentacion['stock']);
+                    $stmtP->bindParam(":nombre_imagen", $nombreImagen);
+                    $largo = !empty($presentacion['largo']) ? $presentacion['largo'] : null;
+                    $ancho = !empty($presentacion['ancho']) ? $presentacion['ancho'] : null;
+                    $alto = !empty($presentacion['alto']) ? $presentacion['alto'] : null;
+                    $unidad_dimension = !empty($presentacion['unidad_dimension']) ? $presentacion['unidad_dimension'] : null;
+                    $stmtP->bindParam(":largo", $largo);
+                    $stmtP->bindParam(":ancho", $ancho);
+                    $stmtP->bindParam(":alto", $alto);
+                    $stmtP->bindParam(":unidad_dimension", $unidad_dimension);
+                    $stmtP->bindParam(":id_presentacion", $presentacion['id_presentacion']);
+                    $stmtP->bindParam(":id_producto", $id_producto);
+                    $stmtP->execute();
+                    if ($key === 0) {
+                        $imagenPrincipal = $nombreImagen;
+                    }
+                } else {
+                    // Insertar nueva presentación
+                    $nombreImagen = null;
+                    if (isset($presentacion['imagen_file']) && $presentacion['imagen_file']['error'] === UPLOAD_ERR_OK) {
+                        $imagen = $presentacion['imagen_file'];
+                        $nombreImagen = "producto_" . $id_producto . "_presentacion_" . ($key + 1) . "_" . uniqid() . "_" . basename($imagen['name']);
+                        $rutaDestino = "../../public/imag/" . $nombreImagen;
+                        if (!move_uploaded_file($imagen['tmp_name'], $rutaDestino)) {
+                            throw new Exception("Error al subir la imagen de la presentación nueva " . ($key + 1));
+                        }
+                    }
+                    $stmtP = $pdo->prepare("INSERT INTO presentacion_producto (id_producto, tamano, unidad, precio, stock, nombre_imagen, largo, ancho, alto, unidad_dimension) VALUES (:id_producto, :tamano, :unidad, :precio, :stock, :nombre_imagen, :largo, :ancho, :alto, :unidad_dimension)");
+                    $stmtP->bindParam(":id_producto", $id_producto);
+                    $stmtP->bindParam(":tamano", $presentacion['tamano']);
+                    $stmtP->bindParam(":unidad", $presentacion['unidad']);
+                    $stmtP->bindParam(":precio", $presentacion['precio']);
+                    $stmtP->bindParam(":stock", $presentacion['stock']);
+                    $stmtP->bindParam(":nombre_imagen", $nombreImagen);
+                    $largo = !empty($presentacion['largo']) ? $presentacion['largo'] : null;
+                    $ancho = !empty($presentacion['ancho']) ? $presentacion['ancho'] : null;
+                    $alto = !empty($presentacion['alto']) ? $presentacion['alto'] : null;
+                    $unidad_dimension = !empty($presentacion['unidad_dimension']) ? $presentacion['unidad_dimension'] : null;
+                    $stmtP->bindParam(":largo", $largo);
+                    $stmtP->bindParam(":ancho", $ancho);
+                    $stmtP->bindParam(":alto", $alto);
+                    $stmtP->bindParam(":unidad_dimension", $unidad_dimension);
+                    $stmtP->execute();
+                    if ($key === 0) {
+                        $imagenPrincipal = $nombreImagen;
+                    }
+                }
+            }
+
+            // Eliminar presentaciones que ya no están
+            $idsEliminar = array_diff($idsActuales, $idsEnviados);
+            if (!empty($idsEliminar)) {
+                $in = implode(',', array_fill(0, count($idsEliminar), '?'));
+                $stmtDel = $pdo->prepare("DELETE FROM presentacion_producto WHERE id_presentacion IN ($in) AND id_producto = ?");
+                foreach ($idsEliminar as $k => $idDel) {
+                    $stmtDel->bindValue($k + 1, $idDel, PDO::PARAM_INT);
+                }
+                $stmtDel->bindValue(count($idsEliminar) + 1, $id_producto, PDO::PARAM_INT);
+                $stmtDel->execute();
+            }
+
+            // Actualizar imagen principal del producto
+            if ($imagenPrincipal) {
+                $stmtUpdate = $pdo->prepare("UPDATE producto SET imagen = :imagen WHERE id_producto = :id_producto");
+                $stmtUpdate->bindParam(":imagen", $imagenPrincipal, PDO::PARAM_STR);
+                $stmtUpdate->bindParam(":id_producto", $id_producto, PDO::PARAM_INT);
+                $stmtUpdate->execute();
+            }
+
+            $pdo->commit();
+            return ["success" => true, "message" => "¡Producto y presentaciones actualizados exitosamente! 🎉"];
+        } catch (Exception $e) {
+            if (isset($pdo)) $pdo->rollBack();
             return ["success" => false, "message" => $e->getMessage()];
         }
     }

@@ -1,5 +1,7 @@
 Array
 (
+    [getProductoConPresentaciones] => ok
+    [id_producto] => 7
 )
 
 Array

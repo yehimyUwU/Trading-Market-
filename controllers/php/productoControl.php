@@ -191,6 +191,64 @@ if (isset($_POST['getProductoConPresentaciones']) && isset($_POST['id_producto']
     exit;
 }
 
+// --- FLUJO DE EDITAR PRODUCTO CON PRESENTACIONES ---
+if (
+    isset($_POST["accion"]) && $_POST["accion"] === "editar" &&
+    isset($_POST["id_producto"], $_POST["nombre"], $_POST["categoria"], $_POST["descripcion"], $_POST["subcategoria"], $_POST["id_proveedor"]) 
+) {
+    try {
+        $presentaciones = [];
+        if (isset($_POST['presentaciones']) && is_array($_POST['presentaciones'])) {
+            foreach ($_POST['presentaciones'] as $idx => $datos) {
+                $presentaciones[$idx] = $datos;
+                if (isset($presentaciones[$idx]['tamanio'])) {
+                    $presentaciones[$idx]['tamano'] = $presentaciones[$idx]['tamanio'];
+                    unset($presentaciones[$idx]['tamanio']);
+                }
+                if (isset($presentaciones[$idx]['tamaño'])) {
+                    $presentaciones[$idx]['tamano'] = $presentaciones[$idx]['tamaño'];
+                    unset($presentaciones[$idx]['tamaño']);
+                }
+            }
+        }
+        foreach ($_FILES as $key => $fileArr) {
+            if (preg_match('/^presentaciones_imagen_(\d+)$/', $key, $matches)) {
+                $idx = $matches[1];
+                $presentaciones[$idx]['imagen_file'] = $fileArr;
+            }
+            if ($key === 'presentaciones' && isset($fileArr['name'])) {
+                foreach ($fileArr['name'] as $idx => $arr) {
+                    if (isset($arr['imagen'])) {
+                        $presentaciones[$idx]['imagen_file'] = [
+                            'name' => $fileArr['name'][$idx]['imagen'],
+                            'type' => $fileArr['type'][$idx]['imagen'],
+                            'tmp_name' => $fileArr['tmp_name'][$idx]['imagen'],
+                            'error' => $fileArr['error'][$idx]['imagen'],
+                            'size' => $fileArr['size'][$idx]['imagen'],
+                        ];
+                    }
+                }
+            }
+        }
+        $presentaciones = array_values($presentaciones);
+        require_once '../../models/productoModelo.php';
+        $resultado = ProductoModelo::mdlEditarProductoConPresentaciones(
+            $_POST["id_producto"],
+            $_POST["nombre"],
+            $_POST["categoria"],
+            $_POST["descripcion"],
+            $_POST["subcategoria"],
+            $_POST["id_proveedor"],
+            $presentaciones
+        );
+        echo json_encode($resultado);
+        exit;
+    } catch (Throwable $e) {
+        echo json_encode(['success' => false, 'message' => 'Error fatal: ' . $e->getMessage()]);
+        exit;
+    }
+}
+
 if (isset($_POST["nombre"], $_POST["categoria"], $_POST["precio"], $_POST["descripcion"], $_POST["subcategoria"], $_POST["stock"], $_POST["id_proveedor"], $_FILES["imagen"])) {
     $objProducto = new ProductoControl();
     $objProducto->nombre = $_POST["nombre"];

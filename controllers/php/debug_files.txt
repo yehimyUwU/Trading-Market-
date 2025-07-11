@@ -2,11 +2,20 @@ Array
 (
     [presentaciones_imagen_0] => Array
         (
-            [name] => WhatsApp Image 2025-06-23 at 2.35.22 PM.jpeg
+            [name] => ideita para dibujar miau _3.jpg
             [type] => image/jpeg
-            [tmp_name] => C:\xampp\tmp\phpCD44.tmp
+            [tmp_name] => C:\xampp\tmp\phpD2FF.tmp
             [error] => 0
-            [size] => 85575
+            [size] => 81261
+        )
+
+    [presentaciones_imagen_1] => Array
+        (
+            [name] => doctor strange.png
+            [type] => image/png
+            [tmp_name] => C:\xampp\tmp\phpD300.tmp
+            [error] => 0
+            [size] => 160991
         )
 
 )
