@@ -31,11 +31,12 @@ function verificarLogin() {
     })
     .then(data => {
         if (data.success) {
-            mensaje.style.color = "blue";
+            mensaje.style.color = "#1bb700"; // Verde
             mensaje.textContent = data.message;
             setTimeout(() => {
+                mensaje.textContent = "";
                 window.location.href = data.redirect; // Redirigir según el rol
-            }, 1000);
+            }, 4000);
         } else {
             mensaje.style.color = "red";
             mensaje.textContent = data.message;
@@ -52,13 +53,23 @@ function verificarLogin() {
 document.addEventListener('DOMContentLoaded', function() {
     const signUpButton = document.getElementById('signUp');
     const signInButton = document.getElementById('signIn');
+    const goToRegister = document.getElementById('goToRegister');
+    const goToLogin = document.getElementById('goToLogin');
     const container = document.getElementById('container');
 
-    signUpButton.addEventListener('click', () => {
+    if (signUpButton) signUpButton.addEventListener('click', () => {
         container.classList.add("right-panel-active");
     });
 
-    signInButton.addEventListener('click', () => {
+    if (signInButton) signInButton.addEventListener('click', () => {
+        container.classList.remove("right-panel-active");
+    });
+
+    if (goToRegister) goToRegister.addEventListener('click', () => {
+        container.classList.add("right-panel-active");
+    });
+
+    if (goToLogin) goToLogin.addEventListener('click', () => {
         container.classList.remove("right-panel-active");
     });
 });

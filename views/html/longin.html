@@ -1,114 +1,119 @@
 <!DOCTYPE html>
-<!--
- * Archivo: longin.html
- * Descripción: Página de inicio de sesión y registro de usuarios
- * Conexiones:
- * - Se conecta con: controllers/php/login.php (para autenticación)
- * - Se conecta con: controllers/php/registro.php (para registro de usuarios)
- * Funcionalidades:
- * - Formulario de inicio de sesión
- * - Formulario de registro
- * - Validación de campos
- * - Selección de rol (Administrador/Cliente/Proveedor)
- * - Animaciones de transición
- -->
-<html lang="en">
+<html lang="es">
 <head>
-
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link href="https://unpkg.com/ionicons@4.2.2/dist/css/ionicons.min.css" rel="stylesheet"> <!-- Enlace a Ionicons -->
-    <link rel="stylesheet" href="../../public/Estilos/longin.css"> <!-- Asegúrate de que esta ruta sea correcta -->
-    <title>Login</title>
+    <link href="https://unpkg.com/ionicons@4.2.2/dist/css/ionicons.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="../../public/Estilos/longin.css">
+    <title>Acceso a Trading Market</title>
 </head>
-
 <body>
-    
-    <!-- Imagen de fondo -->
+    <!-- Fondo degradado y botón de regreso -->
     <img src="../../public/imagenes_P/fondito.jpeg" alt="Fondo" id="imagenFondo" style="position: fixed; top: 0; left: 0; width: 100%; height: 100%; object-fit: cover; z-index: -1;">
-
-    <!-- Botón para regresar a la página principal -->
     <a href="../../views/html/index.html" class="btn-regresar">
         <i class="icon ion-md-arrow-back"></i>
         Regresar al inicio
     </a>
-
-    <div class="container" id="container">
-        <!-- Formulario Sign Up (Registro) -->
-        <div class="form-container sign-up-container">
-            <form id="signupForm" method="POST" action="../../controllers/php/registro.php"> 
-                <h1>Registro de Nuevo Usuario</h1>
-                <select name="tipo_documento" required>
-                    <option value="" disabled selected>Seleccione el tipo de documento</option>
-                    <option value="Cédula">Cédula</option>
-                    <option value="Tarjeta de Identidad">Tarjeta de Identidad</option>
-                    <option value="Pasaporte">Pasaporte</option>
-                </select>
-                <input type="text" name="documento" placeholder="Número de Documento" required oninput="this.value = this.value.replace(/[^0-9]/g, '')" />
-                <input type="text" name="nombre" placeholder="Nombre" required />
-                <input type="text" name="apellido" placeholder="Apellido" required />
-                <input type="date" name="fecha_nacimiento" placeholder="Fecha de Nacimiento" required />
-                <select name="genero" required>
-                    <option value="Masculino">Masculino</option>
-                    <option value="Femenino">Femenino</option>
-                    <option value="Otro">Otro</option>
-                </select>
-                <input type="email" name="email" placeholder="Correo Electrónico" required />
-                <input type="password" name="password" placeholder="Contraseña" required minlength="7" oninvalid="this.setCustomValidity('La contraseña debe tener al menos 7 caracteres')" oninput="this.setCustomValidity('')" />
-                <select name="rol" required id="rolSelect">
-                    <option value="" disabled="" selected="">Seleccione su rol</option>
-                    <option value="Cliente">Cliente</option>
-                    <option value="Proveedor">Proveedor</option>
-                </select>
-                <button type="submit">Registrarse</button>
-                <p id="signupMessage"></p>
-            </form>
+    <div class="login-main-card">
+        <div class="login-tabs">
+            <button id="tabLogin" class="active">Iniciar Sesión</button>
+            <button id="tabRegister">Registrarse</button>
         </div>
-        
-        <!-- Formulario Sign In (Inicio de sesión) -->
-        <div class="form-container sign-in-container">
-            <form id="loginForm" action="javascript:void(0);">
-                <img src="../../public/imagenes/Logooriginal.png" alt="Logo" style="width: 150px; margin-bottom: 20px;">
-                <h1>Iniciar Sesión</h1>
-                <input type="text" id="username" placeholder="Documento" required>
-                <input type="password" id="password" placeholder="Contraseña" required>
-                <select id="role" required>
-                    <option value="" disabled selected>Seleccione su rol</option>
-                    <option value="Administrador">Administrador</option>
-                    <option value="Cliente">Cliente</option>
-                    <option value="Proveedor">Proveedor</option>
-                </select>
-                <button type="button" onclick="verificarLogin()">Iniciar Sesión</button>
-                <p id="message"></p>
+        <div class="login-content">
+            <!-- Login -->
+            <form id="loginForm" class="tab-content active" autocomplete="off" action="javascript:void(0);">
+                <img src="../../public/imagenes/Logooriginal.png" alt="Logo" class="login-logo">
+                <h2>Iniciar Sesión</h2>
+                <div class="input-group">
+                    <input type="text" id="username" placeholder="Documento" required>
+                </div>
+                <div class="input-group">
+                    <input type="password" id="password" placeholder="Contraseña" required>
+                </div>
+                <div class="input-group">
+                    <select id="role" required>
+                        <option value="" disabled selected>Seleccione su rol</option>
+                        <option value="Administrador">Administrador</option>
+                        <option value="Cliente">Cliente</option>
+                        <option value="Proveedor">Proveedor</option>
+                    </select>
+                </div>
+                <button type="button" class="btn-main" onclick="verificarLogin()">Iniciar Sesión</button>
+                <p id="message" class="msg"></p>
             </form>
-        </div>
-        
-        <!-- Panel de bienvenida -->
-        <div class="overlay-container">
-            <div class="overlay">
-                <div class="overlay-panel overlay-left">
-                    <h1>Bienvenido de nuevo</h1>
-                    <p>Para mantenerte conectado con nosotros, inicia sesión con tu información personal</p>
-                    <button class="ghost" id="signIn">Iniciar Sesión</button>
+            <!-- Registro -->
+            <form id="signupForm" class="tab-content" method="POST" action="../../controllers/php/registro.php" autocomplete="off">
+                <h2>Registro de Usuario</h2>
+                <div class="input-group">
+                    <select name="tipo_documento" required>
+                        <option value="" disabled selected>Seleccione el tipo de documento</option>
+                        <option value="Cédula">Cédula</option>
+                        <option value="Tarjeta de Identidad">Tarjeta de Identidad</option>
+                        <option value="Pasaporte">Pasaporte</option>
+                    </select>
                 </div>
-                <div class="overlay-panel overlay-right">
-                    <h1>Hola, Amigo</h1>
-                    <p>Ingresa tus datos personales y comienza tu viaje con nosotros</p>
-                    <button class="ghost" id="signUp">Registrarse</button>
+                <div class="input-group">
+                    <input type="text" name="documento" placeholder="Número de Documento" required oninput="this.value = this.value.replace(/[^0-9]/g, '')">
                 </div>
-            </div>
+                <div class="input-group">
+                    <input type="text" name="nombre" placeholder="Nombre" required>
+                </div>
+                <div class="input-group">
+                    <input type="text" name="apellido" placeholder="Apellido" required>
+                </div>
+                <div class="input-group">
+                    <input type="date" name="fecha_nacimiento" placeholder="Fecha de Nacimiento" required>
+                </div>
+                <div class="input-group">
+                    <select name="genero" required>
+                        <option value="Masculino">Masculino</option>
+                        <option value="Femenino">Femenino</option>
+                        <option value="Otro">Otro</option>
+                    </select>
+                </div>
+                <div class="input-group">
+                    <input type="email" name="email" placeholder="Correo Electrónico" required>
+                </div>
+                <div class="input-group">
+                    <input type="password" name="password" placeholder="Contraseña" required minlength="7" oninvalid="this.setCustomValidity('La contraseña debe tener al menos 7 caracteres')" oninput="this.setCustomValidity('')">
+                </div>
+                <div class="input-group">
+                    <select name="rol" required id="rolSelect">
+                        <option value="" disabled selected>Seleccione su rol</option>
+                        <option value="Cliente">Cliente</option>
+                        <option value="Proveedor">Proveedor</option>
+                    </select>
+                </div>
+                <button type="submit" class="btn-main">Registrarse</button>
+                <p id="signupMessage" class="msg"></p>
+            </form>
         </div>
     </div>
-
-    <script src="../../public/js/login.js"></script> <!-- Asegúrate de que esta ruta sea correcta -->
-    <script src="https://unpkg.com/ionicons@4.2.2/dist/ionicons.js"></script> <!-- Script de Ionicons -->
+    <script src="../../public/js/login.js"></script>
+    <script src="https://unpkg.com/ionicons@4.2.2/dist/ionicons.js"></script>
     <script>
+        // Tabs para cambiar entre login y registro
+        const tabLogin = document.getElementById('tabLogin');
+        const tabRegister = document.getElementById('tabRegister');
+        const loginForm = document.getElementById('loginForm');
+        const signupForm = document.getElementById('signupForm');
+        tabLogin.onclick = function() {
+            tabLogin.classList.add('active');
+            tabRegister.classList.remove('active');
+            loginForm.classList.add('active');
+            signupForm.classList.remove('active');
+        };
+        tabRegister.onclick = function() {
+            tabRegister.classList.add('active');
+            tabLogin.classList.remove('active');
+            signupForm.classList.add('active');
+            loginForm.classList.remove('active');
+        };
+        // Confirmación para rol proveedor
         document.getElementById('rolSelect').addEventListener('change', function() {
             if (this.value === 'Proveedor') {
-                if (confirm('¿Desea ser proveedor? Se informará a los administradores de su solicitud. Si es aceptado, podrá iniciar sesión como proveedor.')) {
-                    // El usuario puede continuar con el registro
-                } else {
-                    this.value = ''; // Limpiar la selección
+                if (!confirm('¿Desea ser proveedor? Se informará a los administradores de su solicitud. Si es aceptado, podrá iniciar sesión como proveedor.')) {
+                    this.value = '';
                 }
             }
         });

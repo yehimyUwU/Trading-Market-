@@ -1,5 +1,3 @@
 Array
 (
-    [id_proveedor] => 4
-    [listarConPresentaciones] => ok
 )
