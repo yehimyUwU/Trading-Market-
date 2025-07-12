@@ -2,20 +2,11 @@ Array
 (
     [presentaciones_imagen_0] => Array
         (
-            [name] => ideita para dibujar miau _3.jpg
+            [name] => fondoPrincipal.jpg
             [type] => image/jpeg
-            [tmp_name] => C:\xampp\tmp\phpD2FF.tmp
+            [tmp_name] => C:\xampp\tmp\phpBE14.tmp
             [error] => 0
-            [size] => 81261
-        )
-
-    [presentaciones_imagen_1] => Array
-        (
-            [name] => doctor strange.png
-            [type] => image/png
-            [tmp_name] => C:\xampp\tmp\phpD300.tmp
-            [error] => 0
-            [size] => 160991
+            [size] => 36920
         )
 
 )

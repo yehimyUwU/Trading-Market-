@@ -528,7 +528,7 @@ class ProductoModelo {
                     c.nombre AS nombre_categoria,
                     sc.nombre AS nombre_subcategoria,
                     pp.id_presentacion,
-                    pp.tamanio,
+                    pp.tamano,
                     pp.unidad,
                     pp.precio,
                     pp.stock,
@@ -571,7 +571,7 @@ class ProductoModelo {
                 if ($row['id_presentacion']) {
                     $productos[$id_producto]['presentaciones'][] = [
                         'id_presentacion' => $row['id_presentacion'],
-                        'tamanio' => $row['tamanio'],
+                        'tamano' => $row['tamano'],
                         'unidad' => $row['unidad'],
                         'precio' => $row['precio'],
                         'stock' => $row['stock'],

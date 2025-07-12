@@ -1,33 +1,21 @@
 Array
 (
     [id_proveedor] => 4
-    [nombre] => ewfgqe
-    [descripcion] => ewrfqer
-    [categoria] => 17
-    [subcategoria] => 51
+    [nombre] => eluli
+    [descripcion] => dwdvd
+    [categoria] => 19
+    [subcategoria] => 56
     [presentaciones] => Array
         (
             [0] => Array
                 (
-                    [tamaño] => 123
-                    [unidad] => g
-                    [precio] => 23123
-                    [stock] => 23
-                    [largo] => 32
-                    [ancho] => 32
-                    [alto] => 655
-                    [unidad_dimension] => cm
-                )
-
-            [1] => Array
-                (
-                    [tamaño] => 454
-                    [unidad] => par
-                    [precio] => 54
-                    [stock] => 45
-                    [largo] => 443
-                    [ancho] => 34
-                    [alto] => 34
+                    [tamano] => 121
+                    [unidad] => ml
+                    [precio] => 312
+                    [stock] => 213
+                    [largo] => 213
+                    [ancho] => 21
+                    [alto] => 12
                     [unidad_dimension] => cm
                 )
 

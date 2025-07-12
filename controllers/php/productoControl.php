@@ -104,6 +104,8 @@ class ProductoControl {
     // Nueva función para listar productos con presentaciones
     public function ctrListarProductosConPresentaciones() {
         $respuesta = ProductoModelo::mdlListarProductosConPresentaciones($this->id_proveedor);
+        // Log de depuración
+        file_put_contents(__DIR__ . '/debug_respuesta_listarConPresentaciones.txt', print_r($respuesta, true));
         echo json_encode($respuesta);
     }
 
@@ -111,6 +113,15 @@ class ProductoControl {
 
 // Log antes del if principal
 file_put_contents(__DIR__ . '/debug_antes_if.txt', print_r($_POST, true) . PHP_EOL . print_r($_FILES, true));
+file_put_contents(__DIR__ . '/debug_post_llegada.txt', print_r($_POST, true));
+
+// --- MANEJO PRIORITARIO: listar productos con presentaciones ---
+if (isset($_POST["listarConPresentaciones"]) && $_POST["listarConPresentaciones"] == "ok" && isset($_POST["id_proveedor"])) {
+    $objProducto = new ProductoControl();
+    $objProducto->id_proveedor = $_POST["id_proveedor"];
+    $objProducto->ctrListarProductosConPresentaciones();
+    exit;
+}
 
 // --- FLUJO DE CREAR PRODUCTO CON PRESENTACIONES (PRIORIDAD) ---
 if (
@@ -331,14 +342,6 @@ if (isset($_POST["ProductosEliminados"]) && $_POST["ProductosEliminados"] == "ok
 if (isset($_POST["subirProductos"]) && $_POST["subirProductos"] == "ok") {
     $objProducto = new ProductoControl();
     $objProducto->ctrSubirExcel();
-    exit;
-}
-
-// Nuevo manejo para listar productos con presentaciones
-if (isset($_POST["listarConPresentaciones"]) && $_POST["listarConPresentaciones"] == "ok" && isset($_POST["id_proveedor"])) {
-    $objProducto = new ProductoControl();
-    $objProducto->id_proveedor = $_POST["id_proveedor"];
-    $objProducto->ctrListarProductosConPresentaciones();
     exit;
 }
 

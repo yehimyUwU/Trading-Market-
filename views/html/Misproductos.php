@@ -37,13 +37,132 @@ $id_proveedor = $_SESSION['usuario']['id'];
     <link rel="stylesheet" href="../../public/Estilos/barraprove.css.css">
     <link rel="stylesheet" href="../../public/Estilos/estilos-productos.css">
     <link rel="stylesheet" href="../../public/Estilos/prove_estilos.css" />
+    <script src="https://cdn.jsdelivr.net/npm/fuse.js@7.0.0/dist/fuse.min.js"></script>
+    <style>
+.busqueda-controles.mejorada {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1.2rem;
+    align-items: center;
+    background: #fff;
+    border-radius: 18px;
+    box-shadow: 0 2px 16px rgba(0,0,0,0.07);
+    padding: 1.2rem 2rem 1.2rem 2rem;
+    margin-bottom: 1.5rem;
+}
+.smart-search {
+    position: relative;
+    display: flex;
+    align-items: center;
+    flex: 1 1 320px;
+    max-width: 420px;
+    min-width: 220px;
+}
+.smart-search input[type="text"] {
+    width: 100%;
+    padding: 0.7em 2.5em 0.7em 1.1em;
+    border: 1.5px solid #e0e0e0;
+    border-radius: 12px;
+    font-size: 1.08em;
+    transition: border 0.2s;
+    outline: none;
+    background: #fafbfc;
+}
+.smart-search input[type="text"]:focus {
+    border: 2px solid #28a745;
+    background: #fff;
+}
+#btn-search-icon {
+    position: absolute;
+    right: 0.5em;
+    background: none;
+    border: none;
+    color: #28a745;
+    font-size: 1.5em;
+    cursor: pointer;
+    padding: 0.2em 0.5em;
+    border-radius: 8px;
+    transition: background 0.2s;
+    z-index: 2;
+}
+#btn-search-icon:focus, #btn-search-icon:hover {
+    background: #eafbe7;
+}
+/* Animación para el indicador de búsqueda */
+@keyframes spin {
+    from { transform: rotate(0deg); }
+    to { transform: rotate(360deg); }
+}
+.search-suggestions {
+    position: absolute;
+    top: 110%;
+    left: 0;
+    width: 100%;
+    background: #fff;
+    border: 1.5px solid #e0e0e0;
+    border-radius: 0 0 12px 12px;
+    box-shadow: 0 4px 16px rgba(40,167,69,0.08);
+    z-index: 10;
+    max-height: 220px;
+    overflow-y: auto;
+    font-size: 1em;
+    display: none;
+}
+.search-suggestions.active {
+    display: block;
+    animation: fadeIn 0.18s;
+}
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(-8px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+#ordenarPor {
+    padding: 0.6em 1.2em;
+    border-radius: 10px;
+    border: 1.5px solid #e0e0e0;
+    font-size: 1.05em;
+    background: #fafbfc;
+    transition: border 0.2s;
+}
+#ordenarPor:focus {
+    border: 2px solid #28a745;
+    background: #fff;
+}
+#btn-buscar {
+    padding: 0.7em 1.7em;
+    border-radius: 10px;
+    font-size: 1.08em;
+    font-weight: 600;
+    background: linear-gradient(90deg, #28a745 60%, #51e67a 100%);
+    color: #fff;
+    border: none;
+    box-shadow: 0 2px 8px rgba(40,167,69,0.10);
+    cursor: pointer;
+    transition: background 0.2s, box-shadow 0.2s;
+}
+#btn-buscar:hover, #btn-buscar:focus {
+    background: linear-gradient(90deg, #218838 60%, #51e67a 100%);
+    box-shadow: 0 4px 16px rgba(40,167,69,0.18);
+}
+@media (max-width: 700px) {
+    .busqueda-controles.mejorada {
+        flex-direction: column;
+        gap: 0.7rem;
+        padding: 1.1rem 0.7rem;
+    }
+    .smart-search {
+        max-width: 100%;
+    }
+}
+</style>
 </head>
 <body>
 <?php
     require '../../controllers/php/barra_prove.php'; 
 ?>
   
-    <div id="content">
+    <div id="content" style="
+    top: 300px;
         
 
         <main class="contenido">
@@ -73,18 +192,21 @@ $id_proveedor = $_SESSION['usuario']['id'];
 
             <section class="busqueda-productos">
                 <h2 class="section-header">Gestión de Productos</h2>
-                <div class="busqueda-controles">
-                    <div class="search-box">
-                        <input type="text" id="search-input" placeholder="Buscar productos...">
-                        <button>🔍</button>
+                <div class="busqueda-controles mejorada">
+                    <div class="search-box smart-search">
+                        <input type="text" id="search-input" placeholder="Buscar productos, categorías o presentaciones..." aria-label="Buscar productos" autocomplete="off" />
+                        <button id="btn-search-icon" tabindex="0" aria-label="Buscar">
+                            <span class="material-symbols-outlined">search</span>
+                        </button>
+                        <div id="search-suggestions" class="search-suggestions" style="display:none;"></div>
                     </div>
-                    <select id="ordenarPor">
+                    <select id="ordenarPor" aria-label="Ordenar productos">
                         <option value="reciente">Más recientes</option>
                         <option value="antiguo">Más antiguos</option>
                         <option value="precio-asc">Precio: Menor a Mayor</option>
                         <option value="precio-desc">Precio: Mayor a Menor</option>
                     </select>
-                    <button class="btn-neo">Buscar</button>
+                    <button class="btn-neo" id="btn-buscar">Buscar</button>
                 </div>
                 <div class="publicar-producto">
                     <button id="btnAbrirModal" class="btn-neo">
@@ -184,6 +306,220 @@ $id_proveedor = $_SESSION['usuario']['id'];
     let modoEdicion = false;
     let productoActual = null;
     let contadorPresentaciones = 0; // Este contador ya no se usará como índice, solo para IDs únicos
+    let productosOriginales = [];
+    let fuse = null;
+
+    // Función para inicializar Fuse.js con los productos
+    function inicializarBuscadorFuse(productos) {
+        console.log('Inicializando Fuse.js con', productos.length, 'productos');
+        
+        const options = {
+            keys: [
+                'nombre',
+                'descripcion',
+                'nombre_categoria',
+                'presentaciones.tamano',
+                'presentaciones.unidad'
+            ],
+            threshold: 0.35, // tolerancia a errores
+            includeMatches: true,
+            minMatchCharLength: 2,
+            ignoreLocation: true,
+            useExtendedSearch: true
+        };
+        
+        try {
+            fuse = new Fuse(productos, options);
+            console.log('Fuse.js inicializado correctamente');
+        } catch (error) {
+            console.error('Error al inicializar Fuse.js:', error);
+            fuse = null;
+        }
+    }
+
+    // Función para renderizar productos (usada por búsqueda y carga inicial)
+    function renderizarProductos(productos, matches = null) {
+        const productosGrid = document.getElementById('productosGrid');
+        productosGrid.innerHTML = '';
+        if (!productos.length) {
+            productosGrid.innerHTML = '<div style="padding:2em;text-align:center;color:#888;font-size:1.2em;">No se encontraron productos. <br>¿Buscabas otra cosa?</div>';
+            return;
+        }
+        productos.forEach((producto, idx) => {
+            let imagenPrincipal = producto.imagen && producto.imagen !== '../../public/imagenes_P/default.jpeg' ? '../../public/imag/' + producto.imagen : null;
+            if (!imagenPrincipal && producto.presentaciones && producto.presentaciones.length > 0) {
+                imagenPrincipal = producto.presentaciones[0].imagen;
+            }
+            if (!imagenPrincipal) {
+                imagenPrincipal = '../imagenes_P/default.jpeg';
+            }
+            const presentacionPrincipal = producto.presentaciones && producto.presentaciones.length > 0 
+                ? producto.presentaciones[0] 
+                : null;
+            const numPresentaciones = producto.presentaciones ? producto.presentaciones.length : 0;
+            const textoPresentaciones = numPresentaciones === 0 ? 'Sin presentaciones' : (numPresentaciones === 1 ? '1 presentación' : `${numPresentaciones} presentaciones`);
+            const estado = producto.estado && producto.estado.toLowerCase() === 'inactivo' ? 'Inactivo' : 'Activo';
+            const badgeEstado = estado === 'Activo' ? '<span class="badge badge-estado activo">Activo</span>' : '<span class="badge badge-estado inactivo">Inactivo</span>';
+            const precio = presentacionPrincipal ? `$${presentacionPrincipal.precio}` : '';
+            const peso = presentacionPrincipal ? `${presentacionPrincipal.tamano || ''}${presentacionPrincipal.unidad || ''}` : '';
+
+            // Resaltado de coincidencias si hay matches
+            let nombreResaltado = producto.nombre;
+            let descResaltado = producto.descripcion;
+            if (matches && matches[idx] && matches[idx].matches) {
+                matches[idx].matches.forEach(m => {
+                    if (m.key === 'nombre') {
+                        nombreResaltado = resaltarCoincidencia(producto.nombre, m.indices);
+                    }
+                    if (m.key === 'descripcion') {
+                        descResaltado = resaltarCoincidencia(producto.descripcion, m.indices);
+                    }
+                });
+            }
+
+            const productoCard = document.createElement('div');
+            productoCard.classList.add('producto-card');
+            productoCard.innerHTML = `
+                <div class="producto-imagen">
+                <img src="${imagenPrincipal}" 
+                     alt="${producto.nombre}" 
+                     onerror="this.onerror=null;this.src='../imagenes_P/default.jpeg';">
+                    <div class="producto-acciones">
+                        <button class="btn-editar" onclick="editarProductoPorId(${producto.id_producto})">
+                            <span class="material-symbols-outlined">edit</span>
+                        </button>
+                        <button class="btn-eliminar" onclick="eliminarProducto(${producto.id_producto})">
+                            <span class="material-symbols-outlined">delete</span>
+                        </button>
+                    </div>
+                </div>
+                <div class="producto-info" style="display: flex; align-items: center; justify-content: space-between; gap: 8px;">
+                    <h4 style="margin: 0;">${nombreResaltado}</h4>
+                    ${badgeEstado}
+                </div>
+                <div class="producto-footer">
+                    ${precio ? `<div class="footer-item precio">${precio}</div>` : ''}
+                    ${peso ? `<div class="footer-item peso">${peso}</div>` : ''}
+                    <div class="footer-item presentaciones">${textoPresentaciones}</div>
+                </div>
+            `;
+            productosGrid.appendChild(productoCard);
+        });
+        document.getElementById('totalProductos').textContent = productos.length;
+    }
+
+    // Función para resaltar coincidencias
+    function resaltarCoincidencia(texto, indices) {
+        if (!indices || !indices.length) return texto;
+        let resultado = '';
+        let ultimo = 0;
+        indices.forEach(([ini, fin]) => {
+            resultado += texto.substring(ultimo, ini);
+            resultado += `<mark style='background:#ffe066;color:#d35400;border-radius:3px;'>${texto.substring(ini, fin + 1)}</mark>`;
+            ultimo = fin + 1;
+        });
+        resultado += texto.substring(ultimo);
+        return resultado;
+    }
+
+    // Búsqueda avanzada mejorada
+    function buscarProductosAvanzado() {
+        const searchInput = document.getElementById('search-input');
+        const searchTerm = searchInput.value.trim();
+        
+        console.log('Búsqueda avanzada iniciada con término:', searchTerm);
+        
+        // Mostrar indicador de búsqueda
+        mostrarIndicadorBusqueda(true);
+        
+        if (!searchTerm) {
+            console.log('Término vacío, mostrando todos los productos');
+            renderizarProductos(productosOriginales);
+            mostrarIndicadorBusqueda(false);
+            return;
+        }
+        
+        if (!fuse) {
+            console.log('Fuse.js no inicializado, usando búsqueda básica');
+            // Búsqueda básica como fallback
+            const resultados = productosOriginales.filter(producto => 
+                producto.nombre.toLowerCase().includes(searchTerm.toLowerCase()) ||
+                producto.descripcion.toLowerCase().includes(searchTerm.toLowerCase()) ||
+                producto.nombre_categoria.toLowerCase().includes(searchTerm.toLowerCase())
+            );
+            renderizarProductos(resultados);
+            mostrarIndicadorBusqueda(false);
+            return;
+        }
+        
+        console.log('Ejecutando búsqueda con Fuse.js');
+        const resultados = fuse.search(searchTerm);
+        console.log('Resultados de Fuse.js:', resultados);
+        
+        if (resultados.length > 0) {
+            const productosEncontrados = resultados.map(r => r.item);
+            renderizarProductos(productosEncontrados, resultados);
+            mostrarResultadosBusqueda(resultados.length, searchTerm);
+        } else {
+            // Sugerencias inteligentes
+            console.log('No se encontraron resultados exactos, buscando sugerencias...');
+            const sugerencias = productosOriginales.filter(producto => 
+                producto.nombre_categoria.toLowerCase().includes(searchTerm.toLowerCase()) ||
+                (producto.presentaciones && producto.presentaciones.some(p => 
+                    p.tamano && p.tamano.toString().includes(searchTerm)
+                ))
+            );
+            
+            if (sugerencias.length > 0) {
+                console.log('Mostrando sugerencias:', sugerencias.length);
+                renderizarProductos(sugerencias);
+                mostrarResultadosBusqueda(sugerencias.length, searchTerm, true);
+            } else {
+                console.log('No se encontraron sugerencias');
+                renderizarProductos([]);
+                mostrarResultadosBusqueda(0, searchTerm);
+            }
+        }
+        
+        mostrarIndicadorBusqueda(false);
+    }
+
+    // Función para mostrar/ocultar indicador de búsqueda
+    function mostrarIndicadorBusqueda(mostrar) {
+        const searchButton = document.getElementById('btn-search-icon');
+        if (searchButton) {
+            if (mostrar) {
+                searchButton.innerHTML = '<span class="material-symbols-outlined" style="animation: spin 1s linear infinite;">sync</span>';
+            } else {
+                searchButton.innerHTML = '<span class="material-symbols-outlined">search</span>';
+            }
+        }
+    }
+
+    // Función para mostrar resultados de búsqueda
+    function mostrarResultadosBusqueda(cantidad, termino, esSugerencia = false) {
+        const productosGrid = document.getElementById('productosGrid');
+        const mensaje = document.createElement('div');
+        mensaje.style.cssText = 'grid-column: 1 / -1; padding: 1rem; text-align: center; color: #666; font-size: 0.9em;';
+        
+        if (cantidad === 0) {
+            mensaje.innerHTML = `No se encontraron productos para "<strong>${termino}</strong>"`;
+        } else if (esSugerencia) {
+            mensaje.innerHTML = `Mostrando ${cantidad} sugerencias relacionadas con "<strong>${termino}</strong>"`;
+        } else {
+            mensaje.innerHTML = `Se encontraron ${cantidad} productos para "<strong>${termino}</strong>"`;
+        }
+        
+        // Insertar mensaje al inicio del grid
+        productosGrid.insertBefore(mensaje, productosGrid.firstChild);
+        
+        // Remover mensaje después de 3 segundos
+        setTimeout(() => {
+            if (mensaje.parentNode) {
+                mensaje.remove();
+            }
+        }, 3000);
+    }
 
     // Función para abrir el modal en modo edición
     function abrirModalEdicion(producto) {
@@ -212,7 +548,7 @@ $id_proveedor = $_SESSION['usuario']['id'];
                 const presentaciones = container.querySelectorAll('.presentacion-item');
                 const presentacionDiv = presentaciones[presentaciones.length - 1];
                 // Llena los campos
-                presentacionDiv.querySelector('input[name*="[tamaño]"],input[name*="[tamano]"]').value = presentacion.tamano || '';
+                presentacionDiv.querySelector('input[name*="[tamano]"]').value = presentacion.tamano || '';
                 presentacionDiv.querySelector('select[name*="[unidad]"]').value = presentacion.unidad || '';
                 presentacionDiv.querySelector('input[name*="[precio]"]').value = presentacion.precio || '';
                 presentacionDiv.querySelector('input[name*="[stock]"]').value = presentacion.stock || '';
@@ -375,7 +711,7 @@ $id_proveedor = $_SESSION['usuario']['id'];
                 if (idPresentacionInput) {
                     formData.append(`presentaciones[${index}][id_presentacion]`, idPresentacionInput.value);
                 }
-                const tamaño = presentacion.querySelector('input[name*="[tamaño]"]').value;
+                const tamaño = presentacion.querySelector('input[name*="[tamano]"]').value;
                 const unidad = presentacion.querySelector('select[name*="[unidad]"]').value;
                 const precio = presentacion.querySelector('input[name*="[precio]"]').value;
                 const stock = presentacion.querySelector('input[name*="[stock]"]').value;
@@ -385,7 +721,7 @@ $id_proveedor = $_SESSION['usuario']['id'];
                 const alto = presentacion.querySelector('input[name*="[alto]"]').value;
                 const unidad_dimension = presentacion.querySelector('select[name*="[unidad_dimension]"]').value;
 
-                formData.append(`presentaciones[${index}][tamaño]`, tamaño);
+                formData.append(`presentaciones[${index}][tamano]`, tamaño);
                 formData.append(`presentaciones[${index}][unidad]`, unidad);
                 formData.append(`presentaciones[${index}][precio]`, precio);
                 formData.append(`presentaciones[${index}][stock]`, stock);
@@ -449,74 +785,93 @@ $id_proveedor = $_SESSION['usuario']['id'];
         const formData = new FormData();
         formData.append('id_proveedor', idProveedor);
         formData.append('listarConPresentaciones', 'ok');
+        console.log('Enviando a productoControl.php:', Array.from(formData.entries()));
         fetch('../../controllers/php/productoControl.php', {
             method: 'POST',
-                body: formData
+            body: formData
         })
             .then(response => response.json())
             .then(data => {
+                console.log('Productos recibidos:', data.listaProductos);
                 if (data.success) {
-                    const productosGrid = document.getElementById('productosGrid');
-                    productosGrid.innerHTML = ''; // Limpiar la lista actual
-                    
-                    data.listaProductos.forEach(producto => {
-                    // Mostrar la imagen principal del producto si existe, si no la de la primera presentación
-                    let imagenPrincipal = producto.imagen && producto.imagen !== '../../public/imagenes_P/default.jpeg' ? '../../public/imag/' + producto.imagen : null;
-                    if (!imagenPrincipal && producto.presentaciones && producto.presentaciones.length > 0) {
-                        imagenPrincipal = producto.presentaciones[0].imagen;
-                    }
-                    if (!imagenPrincipal) {
-                        imagenPrincipal = '../imagenes_P/default.jpeg';
-                    }
-                    const presentacionPrincipal = producto.presentaciones && producto.presentaciones.length > 0 
-                        ? producto.presentaciones[0] 
-                        : null;
-                    
-                        const productoCard = document.createElement('div');
-                        productoCard.classList.add('producto-card');
-                        productoCard.innerHTML = `
-                            <div class="producto-imagen">
-                            <img src="${imagenPrincipal}" 
-                                 alt="${producto.nombre}" 
-                                 onerror="this.onerror=null;this.src='../imagenes_P/default.jpeg';">
-                                <div class="producto-acciones">
-                                    <button class="btn-editar" onclick="editarProductoPorId(${producto.id_producto})">
-                                        <span class="material-symbols-outlined">edit</span>
-                                    </button>
-                                    <button class="btn-eliminar" onclick="eliminarProducto(${producto.id_producto})">
-                                        <span class="material-symbols-outlined">delete</span>
-                                    </button>
-                                </div>
-                            </div>
-                            <div class="producto-info">
-                                <h4>${producto.nombre}</h4>
-                                <div class="producto-detalles">
-                                ${presentacionPrincipal ? 
-                                    `<span class="precio">$${presentacionPrincipal.precio}</span>
-                                     <span class="stock">Stock: ${presentacionPrincipal.stock}</span>
-                                     <span class="presentacion">${presentacionPrincipal.tamano}${presentacionPrincipal.unidad}</span>` 
-                                    : '<span class="sin-presentaciones">Sin presentaciones</span>'
-                                }
-                                </div>
-                                <div class="producto-estado">
-                                    <span class="badge activo">Activo</span>
-                                ${producto.presentaciones && producto.presentaciones.length > 1 ? 
-                                    `<span class="badge presentaciones">+${producto.presentaciones.length - 1} más</span>` 
-                                    : ''
-                                }
-                                </div>
-                            </div>
-                        `;
-                        productosGrid.appendChild(productoCard);
-                    });
+                    productosOriginales = data.listaProductos;
+                    console.log('Inicializando Fuse.js con', productosOriginales.length, 'productos');
+                    inicializarBuscadorFuse(productosOriginales);
+                    renderizarProductos(productosOriginales);
+                    // Inicializar eventos de búsqueda después de cargar productos
+                    inicializarEventosBusqueda();
                 } else {
-                    alert('No se pudieron cargar los productos');
+                    renderizarProductos([]);
                 }
             })
             .catch(error => {
                 console.error('Error al cargar los productos:', error);
-                alert('Error al cargar los productos');
+                renderizarProductos([]);
             });
+    }
+
+    // Función para inicializar eventos de búsqueda
+    function inicializarEventosBusqueda() {
+        const searchInput = document.getElementById('search-input');
+        const searchButton = document.getElementById('btn-buscar');
+        const ordenarSelect = document.getElementById('ordenarPor');
+        
+        console.log('Inicializando eventos de búsqueda...');
+        
+        // Evento de búsqueda en tiempo real
+        if (searchInput) {
+            searchInput.addEventListener('input', function() {
+                console.log('Buscando:', this.value);
+                buscarProductosAvanzado();
+            });
+        }
+        
+        // Evento del botón buscar
+        if (searchButton) {
+            searchButton.addEventListener('click', function(e) {
+                e.preventDefault();
+                console.log('Buscando (botón):', searchInput.value);
+                buscarProductosAvanzado();
+            });
+        }
+        
+        // Evento de ordenación
+        if (ordenarSelect) {
+            ordenarSelect.addEventListener('change', function() {
+                console.log('Ordenando por:', this.value);
+                ordenarProductos(this.value);
+            });
+        }
+    }
+
+    // Función para ordenar productos
+    function ordenarProductos(criterio) {
+        let productosOrdenados = [...productosOriginales];
+        
+        switch(criterio) {
+            case 'reciente':
+                productosOrdenados.sort((a, b) => new Date(b.fecha_creacion) - new Date(a.fecha_creacion));
+                break;
+            case 'antiguo':
+                productosOrdenados.sort((a, b) => new Date(a.fecha_creacion) - new Date(b.fecha_creacion));
+                break;
+            case 'precio-asc':
+                productosOrdenados.sort((a, b) => {
+                    const precioA = a.presentaciones && a.presentaciones.length > 0 ? parseFloat(a.presentaciones[0].precio) : 0;
+                    const precioB = b.presentaciones && b.presentaciones.length > 0 ? parseFloat(b.presentaciones[0].precio) : 0;
+                    return precioA - precioB;
+                });
+                break;
+            case 'precio-desc':
+                productosOrdenados.sort((a, b) => {
+                    const precioA = a.presentaciones && a.presentaciones.length > 0 ? parseFloat(a.presentaciones[0].precio) : 0;
+                    const precioB = b.presentaciones && b.presentaciones.length > 0 ? parseFloat(b.presentaciones[0].precio) : 0;
+                    return precioB - precioA;
+                });
+                break;
+        }
+        
+        renderizarProductos(productosOrdenados);
     }
 
     // Función para eliminar un producto
@@ -672,41 +1027,6 @@ $id_proveedor = $_SESSION['usuario']['id'];
             console.error('Error al cargar las subcategorías:', error);
             subcategoriaSelect.innerHTML = '<option value="">Error al cargar las subcategorías</option>';
         });
-
-        setTimeout(() => {
-            const searchInput = document.getElementById("search-input");
-            const searchButton = document.querySelector(".btn-neo"); // Botón de búsqueda
-
-            if (!searchInput || !searchButton) return;
-
-            // Función para filtrar productos
-            const filtrarProductos = () => {
-                const searchText = searchInput.value.toLowerCase().trim();
-                const products = document.querySelectorAll(".producto-card"); // Obtener productos actualizados
-
-                products.forEach(product => {
-                    const titleElement = product.querySelector("h4"); // Título del producto
-                    if (!titleElement) return;
-
-                    const title = titleElement.textContent.toLowerCase();
-                    
-                    if (title.includes(searchText) || searchText === "") {
-                        product.style.display = "flex";  // Mostrar la tarjeta
-                    } else {
-                        product.style.display = "none"; // Ocultar la tarjeta
-                    }
-                });
-            };
-
-            // Evento para buscar al escribir en el campo de búsqueda
-            searchInput.addEventListener("input", filtrarProductos);
-
-            // Evento para buscar al hacer clic en el botón
-            searchButton.addEventListener("click", (e) => {
-                e.preventDefault(); // Evitar el comportamiento predeterminado del botón
-                filtrarProductos();
-            });
-        }, 500);
     }
 
     // Función para agregar una nueva presentación
@@ -728,7 +1048,7 @@ $id_proveedor = $_SESSION['usuario']['id'];
                 <div class="presentacion-grid">
                     <div class="presentacion-input-group">
                         <label for="tamanio-${contadorPresentaciones}">Tamaño/Volumen*</label>
-                        <input type="number" id="tamanio-${contadorPresentaciones}" name="presentaciones[${index}][tamaño]" step="0.01" min="0.01" required placeholder="500">
+                        <input type="number" id="tamanio-${contadorPresentaciones}" name="presentaciones[${index}][tamano]" step="0.01" min="0.01" required placeholder="500">
                     </div>
                     
                     <div class="presentacion-input-group">
@@ -856,7 +1176,7 @@ $id_proveedor = $_SESSION['usuario']['id'];
         errorElement.textContent = '';
         
         presentaciones.forEach((presentacion, index) => {
-            const tamaño = presentacion.querySelector('input[name*="[tamaño]"]').value;
+            const tamaño = presentacion.querySelector('input[name*="[tamano]"]').value;
             const unidad = presentacion.querySelector('select[name*="[unidad]"]').value;
             const precio = presentacion.querySelector('input[name*="[precio]"]').value;
             const stock = presentacion.querySelector('input[name*="[stock]"]').value;

@@ -2,42 +2,21 @@ Array
 (
     [0] => Array
         (
-            [unidad] => g
-            [precio] => 23123
-            [stock] => 23
-            [largo] => 32
-            [ancho] => 32
-            [alto] => 655
+            [tamano] => 121
+            [unidad] => ml
+            [precio] => 312
+            [stock] => 213
+            [largo] => 213
+            [ancho] => 21
+            [alto] => 12
             [unidad_dimension] => cm
-            [tamano] => 123
             [imagen_file] => Array
                 (
-                    [name] => ideita para dibujar miau _3.jpg
+                    [name] => fondoPrincipal.jpg
                     [type] => image/jpeg
-                    [tmp_name] => C:\xampp\tmp\phpD2FF.tmp
+                    [tmp_name] => C:\xampp\tmp\phpBE14.tmp
                     [error] => 0
-                    [size] => 81261
-                )
-
-        )
-
-    [1] => Array
-        (
-            [unidad] => par
-            [precio] => 54
-            [stock] => 45
-            [largo] => 443
-            [ancho] => 34
-            [alto] => 34
-            [unidad_dimension] => cm
-            [tamano] => 454
-            [imagen_file] => Array
-                (
-                    [name] => doctor strange.png
-                    [type] => image/png
-                    [tmp_name] => C:\xampp\tmp\phpD300.tmp
-                    [error] => 0
-                    [size] => 160991
+                    [size] => 36920
                 )
 
         )

@@ -1,0 +1,396 @@
+Array
+(
+    [codigo] => 200
+    [success] => 1
+    [listaProductos] => Array
+        (
+            [0] => Array
+                (
+                    [id_producto] => 2
+                    [nombre] => gato
+                    [descripcion] => gatoncito
+                    [id_categoria] => 8
+                    [id_subcategoria] => 22
+                    [nombre_categoria] => Accesorios de Vehículos
+                    [nombre_subcategoria] => Sonido y multimedia
+                    [presentaciones] => Array
+                        (
+                            [0] => Array
+                                (
+                                    [id_presentacion] => 2
+                                    [tamano] => 350.00
+                                    [unidad] => g
+                                    [precio] => 5000.00
+                                    [stock] => 29
+                                    [imagen] => ../../public/imag/producto_2_presentacion_1_68728299b4b4f_Wat_Trek_Je_Aan_naar_een_70_s_Themafeest.webp
+                                    [dimensiones] => Array
+                                        (
+                                            [largo] => 45.00
+                                            [ancho] => 23.00
+                                            [alto] => 54.00
+                                            [unidad_dimension] => cm
+                                        )
+
+                                )
+
+                        )
+
+                )
+
+            [1] => Array
+                (
+                    [id_producto] => 3
+                    [nombre] => yu
+                    [descripcion] => dwqw
+                    [id_categoria] => 8
+                    [id_subcategoria] => 23
+                    [nombre_categoria] => Accesorios de Vehículos
+                    [nombre_subcategoria] => Interiores
+                    [presentaciones] => Array
+                        (
+                            [0] => Array
+                                (
+                                    [id_presentacion] => 4
+                                    [tamano] => 350.00
+                                    [unidad] => g
+                                    [precio] => 3500.00
+                                    [stock] => 3
+                                    [imagen] => ../../public/imag/producto_3_presentacion_1_6871850bc2c20_vampire house.jpg
+                                    [dimensiones] => Array
+                                        (
+                                            [largo] => 34.00
+                                            [ancho] => 43.00
+                                            [alto] => 56.00
+                                            [unidad_dimension] => cm
+                                        )
+
+                                )
+
+                        )
+
+                )
+
+            [2] => Array
+                (
+                    [id_producto] => 5
+                    [nombre] => ranas
+                    [descripcion] => wefwe
+                    [id_categoria] => 8
+                    [id_subcategoria] => 23
+                    [nombre_categoria] => Accesorios de Vehículos
+                    [nombre_subcategoria] => Interiores
+                    [presentaciones] => Array
+                        (
+                            [0] => Array
+                                (
+                                    [id_presentacion] => 5
+                                    [tamano] => 250.00
+                                    [unidad] => g
+                                    [precio] => 423.00
+                                    [stock] => 342
+                                    [imagen] => ../../public/imag/producto_5_presentacion_1_68718907d0edb_ideita para dibujar miau _3.jpg
+                                    [dimensiones] => Array
+                                        (
+                                            [largo] => 4343.00
+                                            [ancho] => 4.00
+                                            [alto] => 54.00
+                                            [unidad_dimension] => cm
+                                        )
+
+                                )
+
+                        )
+
+                )
+
+            [3] => Array
+                (
+                    [id_producto] => 6
+                    [nombre] => pollito
+                    [descripcion] => wdeqwe
+                    [id_categoria] => 11
+                    [id_subcategoria] => 31
+                    [nombre_categoria] => Moda
+                    [nombre_subcategoria] => Ropa
+                    [presentaciones] => Array
+                        (
+                            [0] => Array
+                                (
+                                    [id_presentacion] => 6
+                                    [tamano] => 350.00
+                                    [unidad] => g
+                                    [precio] => 2342.00
+                                    [stock] => 24
+                                    [imagen] => ../../public/imag/producto_6_presentacion_1_68718b45c41b6_realistic rich man.jpg
+                                    [dimensiones] => Array
+                                        (
+                                            [largo] => 232.00
+                                            [ancho] => 234.00
+                                            [alto] => 23.00
+                                            [unidad_dimension] => cm
+                                        )
+
+                                )
+
+                            [1] => Array
+                                (
+                                    [id_presentacion] => 7
+                                    [tamano] => 3242.00
+                                    [unidad] => kg
+                                    [precio] => 342.00
+                                    [stock] => 25
+                                    [imagen] => ../../public/imag/producto_6_presentacion_2_687189692467c_8d91f14fe6f79ffe92a0e79f0cf7daf7.jpg
+                                    [dimensiones] => Array
+                                        (
+                                            [largo] => 34.00
+                                            [ancho] => 23.00
+                                            [alto] => 32.00
+                                            [unidad_dimension] => cm
+                                        )
+
+                                )
+
+                            [2] => Array
+                                (
+                                    [id_presentacion] => 10
+                                    [tamano] => 350.00
+                                    [unidad] => kg
+                                    [precio] => 2423.00
+                                    [stock] => 32
+                                    [imagen] => ../../public/imag/producto_6_presentacion_3_6871949147551_Marvel-Studios.png
+                                    [dimensiones] => Array
+                                        (
+                                            [largo] => 34.00
+                                            [ancho] => 43.00
+                                            [alto] => 45.00
+                                            [unidad_dimension] => cm
+                                        )
+
+                                )
+
+                        )
+
+                )
+
+            [4] => Array
+                (
+                    [id_producto] => 7
+                    [nombre] => ewfgqe
+                    [descripcion] => ewrfqer
+                    [id_categoria] => 17
+                    [id_subcategoria] => 51
+                    [nombre_categoria] => Animales y Mascotas
+                    [nombre_subcategoria] => Accesorios
+                    [presentaciones] => Array
+                        (
+                            [0] => Array
+                                (
+                                    [id_presentacion] => 8
+                                    [tamano] => 123.00
+                                    [unidad] => g
+                                    [precio] => 23123.00
+                                    [stock] => 23
+                                    [imagen] => ../../public/imag/producto_7_presentacion_1_68718b3539992_doctor strange.png
+                                    [dimensiones] => Array
+                                        (
+                                            [largo] => 32.00
+                                            [ancho] => 32.00
+                                            [alto] => 655.00
+                                            [unidad_dimension] => cm
+                                        )
+
+                                )
+
+                            [1] => Array
+                                (
+                                    [id_presentacion] => 9
+                                    [tamano] => 454.00
+                                    [unidad] => par
+                                    [precio] => 54.00
+                                    [stock] => 45
+                                    [imagen] => ../../public/imag/producto_7_presentacion_2_68718b5b88735_WhatsApp Image 2025-06-23 at 2.35.22 PM.jpeg
+                                    [dimensiones] => Array
+                                        (
+                                            [largo] => 443.00
+                                            [ancho] => 34.00
+                                            [alto] => 34.00
+                                            [unidad_dimension] => cm
+                                        )
+
+                                )
+
+                        )
+
+                )
+
+            [5] => Array
+                (
+                    [id_producto] => 8
+                    [nombre] => yuca
+                    [descripcion] => wdwqdwq
+                    [id_categoria] => 14
+                    [id_subcategoria] => 40
+                    [nombre_categoria] => Productos Sustentables
+                    [nombre_subcategoria] => Hogar sustentable
+                    [presentaciones] => Array
+                        (
+                            [0] => Array
+                                (
+                                    [id_presentacion] => 12
+                                    [tamano] => 540.00
+                                    [unidad] => g
+                                    [precio] => 21312.00
+                                    [stock] => 21
+                                    [imagen] => ../../public/imag/producto_8_presentacion_1_6871c4fdefe2c_WhatsApp Image 2025-06-23 at 2.35.22 PM.jpeg
+                                    [dimensiones] => Array
+                                        (
+                                            [largo] => 123.00
+                                            [ancho] => 12.00
+                                            [alto] => 12.00
+                                            [unidad_dimension] => cm
+                                        )
+
+                                )
+
+                        )
+
+                )
+
+            [6] => Array
+                (
+                    [id_producto] => 9
+                    [nombre] => gaef
+                    [descripcion] => efw
+                    [id_categoria] => 11
+                    [id_subcategoria] => 33
+                    [nombre_categoria] => Moda
+                    [nombre_subcategoria] => Accesorios de moda
+                    [presentaciones] => Array
+                        (
+                            [0] => Array
+                                (
+                                    [id_presentacion] => 13
+                                    [tamano] => 123.00
+                                    [unidad] => ml
+                                    [precio] => 2312.00
+                                    [stock] => 231
+                                    [imagen] => ../../public/imag/producto_9_presentacion_1_6871c50b6a7d1_imagen_2025-06-15_194458786-removebg-preview.png
+                                    [dimensiones] => Array
+                                        (
+                                            [largo] => 1231.00
+                                            [ancho] => 123.00
+                                            [alto] => 21.00
+                                            [unidad_dimension] => cm
+                                        )
+
+                                )
+
+                        )
+
+                )
+
+            [7] => Array
+                (
+                    [id_producto] => 10
+                    [nombre] => svas
+                    [descripcion] => sacfsa
+                    [id_categoria] => 17
+                    [id_subcategoria] => 49
+                    [nombre_categoria] => Animales y Mascotas
+                    [nombre_subcategoria] => Alimentos
+                    [presentaciones] => Array
+                        (
+                            [0] => Array
+                                (
+                                    [id_presentacion] => 14
+                                    [tamano] => 31221.00
+                                    [unidad] => cm
+                                    [precio] => 2312.00
+                                    [stock] => 213
+                                    [imagen] => ../../public/imag/producto_10_presentacion_1_6871c84116ec5_Vision.png
+                                    [dimensiones] => Array
+                                        (
+                                            [largo] => 23.00
+                                            [ancho] => 123.00
+                                            [alto] => 12.00
+                                            [unidad_dimension] => cm
+                                        )
+
+                                )
+
+                            [1] => Array
+                                (
+                                    [id_presentacion] => 15
+                                    [tamano] => 23.00
+                                    [unidad] => g
+                                    [precio] => 123.00
+                                    [stock] => 213
+                                    [imagen] => ../../public/imag/producto_10_presentacion_2_6871c83568834_descarga (8).jpg
+                                    [dimensiones] => Array
+                                        (
+                                            [largo] => 213.00
+                                            [ancho] => 231.00
+                                            [alto] => 213.00
+                                            [unidad_dimension] => cm
+                                        )
+
+                                )
+
+                        )
+
+                )
+
+            [8] => Array
+                (
+                    [id_producto] => 11
+                    [nombre] => eluli
+                    [descripcion] => dwdvd
+                    [id_categoria] => 19
+                    [id_subcategoria] => 56
+                    [nombre_categoria] => Arte, Papelería y Mercería
+                    [nombre_subcategoria] => Papelería creativa
+                    [presentaciones] => Array
+                        (
+                            [0] => Array
+                                (
+                                    [id_presentacion] => 16
+                                    [tamano] => 121.00
+                                    [unidad] => ml
+                                    [precio] => 312.00
+                                    [stock] => 213
+                                    [imagen] => ../../public/imag/producto_11_presentacion_1_68727dc07eb20_fondoPrincipal.jpg
+                                    [dimensiones] => Array
+                                        (
+                                            [largo] => 213.00
+                                            [ancho] => 21.00
+                                            [alto] => 12.00
+                                            [unidad_dimension] => cm
+                                        )
+
+                                )
+
+                            [1] => Array
+                                (
+                                    [id_presentacion] => 17
+                                    [tamano] => 12312.00
+                                    [unidad] => kg
+                                    [precio] => 213.00
+                                    [stock] => 123
+                                    [imagen] => ../../public/imag/producto_11_presentacion_2_68727dd6d9803_031c0e0ab9304bb44248a56c500d1910.jpg
+                                    [dimensiones] => Array
+                                        (
+                                            [largo] => 231.00
+                                            [ancho] => 33.00
+                                            [alto] => 43.00
+                                            [unidad_dimension] => cm
+                                        )
+
+                                )
+
+                        )
+
+                )
+
+        )
+
+)
